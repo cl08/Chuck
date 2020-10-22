@@ -140,11 +140,11 @@ export default {
   color: white;
   }
 
-body * {
+/* body * {
 	transform-style: preserve-3d;
 }
 
-/* body {
+body {
   	background:
 		radial-gradient(
 			hsla(199,40%,90%,.7), 
