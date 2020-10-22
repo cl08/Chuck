@@ -20,6 +20,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.google.gson.Gson;
+import com.ssafy.chuck.error.exception.EntityNotFoundException;
 import com.ssafy.chuck.user.dto.Response;
 import com.ssafy.chuck.user.dto.UserDto;
 import com.ssafy.chuck.user.service.UserService;
@@ -61,9 +62,45 @@ public class UserAspect {
 	private void SignOut(JoinPoint point) {
 		logger.debug("카카오톡 연결 끊기 시작");
 		Object[] parameterValues = point.getArgs();
-		String refreshToken = String.valueOf(parameterValues[0]);
+		String refreshToken = String.valueOf(parameterValues[2]);
 		String accessToken = getAccessToken(refreshToken);
 		getUnlinkId(accessToken);
+	}
+
+	@Before("@annotation(com.ssafy.chuck.common.annotation.LogOut)")
+	private void Logout(JoinPoint point) {
+		logger.debug("카카오톡 로그아웃");
+		Object[] parameterValues = point.getArgs();
+		String refreshToken = String.valueOf(parameterValues[2]);
+		String accessToken = getAccessToken(refreshToken);
+		parameterValues[1] = logout(accessToken);
+	}
+
+	private long logout(String accessToken) {
+		String reqURL = "https://kapi.kakao.com/v1/user/logout";
+		long userId = 0;
+		try {
+			URL url = new URL(reqURL);
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("POST");
+			conn.setDoOutput(true);
+			conn.setDoInput(true);
+			conn.setUseCaches(false);
+
+			// Header에 포함될 내용
+			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
+
+			String temp = this.getResponseBody(conn);
+
+			Gson gson = new Gson();
+			Response response = gson.fromJson(temp, Response.class);
+
+			userId = Integer.parseInt(response.getId());
+		} catch (IOException e) {
+			e.printStackTrace();
+			throw new EntityNotFoundException(String.valueOf(userId));
+		}
+		return userId;
 	}
 
 	private String getResponseBody(HttpURLConnection conn) throws IOException {

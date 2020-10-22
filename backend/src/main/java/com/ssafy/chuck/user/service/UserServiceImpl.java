@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.LogOut;
 import com.ssafy.chuck.common.annotation.LoginCheck;
 import com.ssafy.chuck.common.annotation.PermissionChecking;
 import com.ssafy.chuck.common.annotation.SignOut;
@@ -96,4 +97,8 @@ public class UserServiceImpl implements UserService {
 			}
 		}
 	}
+
+	@LogOut
+	@Override
+	public void logout(String token, long userId, String refreshToken) {}
 }

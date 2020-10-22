@@ -127,4 +127,22 @@ public class UserController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+	@RequestMapping(method = RequestMethod.POST, value = "/logout", produces = "application/json")
+	@ApiOperation(value = "로그아웃", notes = "Refresh 토큰을 기반으로 Kakao에 로그아웃 요청", response = Long.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "refreshToken", value = "Kakao API에서 제공한 리프레시 토큰", required = true),
+		@ApiImplicitParam(name = "token", value = "회원 토큰", required = true)
+	})
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "로그아웃 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "로그아웃 실패")
+	})
+	private ResponseEntity<?> logOut(@RequestBody String refreshToken, @RequestHeader(value = "token") String token) {
+		logger.debug("로그아웃 호출");
+		service.logout(token, 0, refreshToken);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
 }

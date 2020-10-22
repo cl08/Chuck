@@ -18,4 +18,7 @@ public interface UserService {
 
 	// 회원 정보 삭제
 	void delete(String token, long userId, String refreshToken);
+
+	// 로그아웃
+	void logout(String token, long userId, String refreshToken);
 }
