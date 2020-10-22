@@ -14,7 +14,7 @@ public class UserDto {
 	@ApiModelProperty(value = "최근 방문일", example = "2020-07-23")
 	private Date lastDate;
 
-	@SerializedName("name")
+	@SerializedName("NAME")
 	@ApiModelProperty(value = "회원 닉네임", example = "바나나먹는몽키")
 	private String name;
 
