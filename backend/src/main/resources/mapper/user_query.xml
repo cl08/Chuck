@@ -14,7 +14,7 @@
         select * from USERS where ID = #{id}
     </select>
 
-    <update id="update" parameterType="com.ssafy.waple.user.dto.UserDto">
+    <update id="update" parameterType="com.ssafy.chuck.user.dto.UserDto">
         update USERS set NAME = #{name} where ID = #{id}
     </update>
 
