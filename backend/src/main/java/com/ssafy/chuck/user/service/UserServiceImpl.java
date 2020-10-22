@@ -4,10 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.LoginCheck;
+import com.ssafy.chuck.common.annotation.PermissionChecking;
+import com.ssafy.chuck.common.annotation.SignOut;
 import com.ssafy.chuck.error.exception.DuplicateKeyException;
 import com.ssafy.chuck.error.exception.EntityNotFoundException;
 import com.ssafy.chuck.error.exception.IncorrectFormatException;
-import com.ssafy.chuck.error.exception.InvalidValueException;
 import com.ssafy.chuck.user.dao.UserDao;
 import com.ssafy.chuck.user.dto.UserDto;
 
@@ -20,16 +22,22 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao dao;
 
+
+	@LoginCheck
 	@Override
-	public void create(UserDto user) {
-		try {
-			dao.create(user);
-		} catch (DataAccessException e) {
-			if(e.getMessage().contains(duplicateKey)) {
-				throw new DuplicateKeyException(String.valueOf(user.getUserId()));
-			} else {
-				throw new IncorrectFormatException("IncorrectFormatError");
+	public void create(String accessToken, long userId, String name, boolean signUp) {
+		if(signUp) {
+			try {
+				dao.create(new UserDto(userId, name));
+			} catch (DataAccessException e) {
+				if (e.getMessage().contains(duplicateKey)) {
+					throw new DuplicateKeyException(String.valueOf(userId));
+				} else {
+					throw new IncorrectFormatException("IncorrectFormatError");
+				}
 			}
+		} else {
+			dao.updateTime(userId);
 		}
 	}
 
@@ -67,7 +75,22 @@ public class UserServiceImpl implements UserService {
 			dao.update(user);
 		} catch (DataAccessException e) {
 			if(e.getMessage().contains(invalid)) {
-				throw new EntityNotFoundException(String.valueOf(user.getUserId()));
+				throw new EntityNotFoundException(String.valueOf(user.getId()));
+			} else {
+				throw e;
+			}
+		}
+	}
+
+	@SignOut
+	@PermissionChecking
+	@Override
+	public void delete(String token, long userId, String refreshToken) {
+		try {
+			dao.delete(userId);
+		} catch (DataAccessException e) {
+			if(e.getMessage().contains(invalid)) {
+				throw new EntityNotFoundException(String.valueOf(userId));
 			} else {
 				throw e;
 			}

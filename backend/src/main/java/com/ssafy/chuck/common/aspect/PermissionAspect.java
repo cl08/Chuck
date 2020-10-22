@@ -6,8 +6,6 @@ import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 
 import com.ssafy.chuck.common.PermissionCheck;
@@ -25,10 +23,10 @@ public class PermissionAspect {
 	private void UserPermissionCheck(JoinPoint point) {
 		logger.debug("사용자 권한 체크");
 		Object[] parameterValues = point.getArgs();
-		long userId = (Long)parameterValues[0];
-		String token = String.valueOf(parameterValues[1]);
+		long userId = (Long)parameterValues[1];
+		String token = String.valueOf(parameterValues[0]);
 
-		if(userId != permissionCheck.check(token).getUserId()) {
+		if(userId != permissionCheck.check(token).getId()) {
 			throw new AccessDeniedException("사용자 정보 불일치");
 		}
 	}

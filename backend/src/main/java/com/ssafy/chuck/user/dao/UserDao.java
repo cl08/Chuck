@@ -18,4 +18,7 @@ public interface UserDao {
 
 	// 회원 정보 수정
 	int update(UserDto user);
+
+	// 회원 정보 삭제
+	int delete(long userId);
 }
