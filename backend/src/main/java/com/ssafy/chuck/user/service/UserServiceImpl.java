@@ -60,4 +60,17 @@ public class UserServiceImpl implements UserService {
 		}
 		return user;
 	}
+
+	@Override
+	public void update(UserDto user) {
+		try {
+			dao.update(user);
+		} catch (DataAccessException e) {
+			if(e.getMessage().contains(invalid)) {
+				throw new EntityNotFoundException(String.valueOf(user.getUserId()));
+			} else {
+				throw e;
+			}
+		}
+	}
 }

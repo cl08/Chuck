@@ -12,4 +12,7 @@ public interface UserService {
 
 	// 회원 정보 조회
 	UserDto read(long userId);
+
+	// 회원 정보 수정
+	void update(UserDto user);
 }

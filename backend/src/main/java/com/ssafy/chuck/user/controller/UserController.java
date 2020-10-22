@@ -88,4 +88,27 @@ public class UserController {
 		UserDto user = service.read(userId);
 		return new ResponseEntity<>(user, HttpStatus.OK);
 	}
+
+	// @PermissionChecking
+	@RequestMapping(method = RequestMethod.PUT, value = "/{userId}",produces = "application/json")
+	@ApiOperation(value = "회원 정보 수정", notes = "회원 아이디를 기반으로 회원 정보 수정 (닉네임만 가능)",
+		response = UserDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "token", value = "회원 토큰", required = true),
+		@ApiImplicitParam(name = "user", value = "수정 할 유저 닉네임", required = true, dataTypeClass = UserDto.class),
+		@ApiImplicitParam(name = "userId", value = "회원 아이디", required = true, example = "1412733569")
+	})
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "회원정보 수정 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "회원정보 수정 실패")
+	})
+	private ResponseEntity<?> update(@PathVariable("userId") long userId, @RequestHeader(value = "token") String token,
+		@RequestBody UserDto user) {
+		logger.debug("회원정보 업데이트 호출");
+		service.update(user);
+		return new ResponseEntity<>(user, HttpStatus.CREATED);
+	}
 }

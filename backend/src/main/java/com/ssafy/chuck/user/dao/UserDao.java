@@ -15,4 +15,7 @@ public interface UserDao {
 
 	// 회원 정보 조회
 	UserDto read(long userId);
+
+	// 회원 정보 수정
+	int update(UserDto user);
 }
