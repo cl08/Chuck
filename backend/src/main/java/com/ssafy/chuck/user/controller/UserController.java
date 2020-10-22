@@ -62,4 +62,6 @@ public class UserController {
 		String token = ChuckJWT.getToken(userId, name);
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
+
+
 }

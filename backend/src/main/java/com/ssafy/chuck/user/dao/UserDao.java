@@ -9,4 +9,7 @@ public interface UserDao {
 
 	// 회원 정보 추가
 	int create(UserDto user);
+
+	// 최근 접속 업데이트
+	int updateTime(long userId);
 }
