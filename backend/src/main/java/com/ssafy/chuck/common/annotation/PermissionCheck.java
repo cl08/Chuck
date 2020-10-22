@@ -1,4 +1,4 @@
-package com.ssafy.chuck.common;
+package com.ssafy.chuck.common.annotation;
 
 import java.util.Base64;
 
