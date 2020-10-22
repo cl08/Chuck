@@ -27,7 +27,7 @@ def cluster(faces, userid):
 
     # 폴더 생성(이미 폴더가 있다면 생성 X), 폴더의 파일들을 읽는다.
     os.makedirs(userid, exist_ok=True)
-    files = os.listdir('C:/Users/multicampus/Desktop/python/' + userid)
+    files = os.listdir('C:/Users/multicampus/s03p31a206/backend/python/' + userid)
 
     # 폴더 내 파일들을 인코딩
     encodings = []
@@ -42,7 +42,7 @@ def cluster(faces, userid):
         encodings.extend(fr.face_encodings(image))
 
     for face in faces:
-        files = os.listdir('C:/Users/multicampus/Desktop/python/' + userid)
+        files = os.listdir('C:/Users/multicampus/s03p31a206/backend/python/' + userid)
         filepath = os.path.join(userid, str(len(files) + 1) + ".jpg")   # 파일 갯수를 이용하여 파일명 지정
         cv2.imwrite(filepath, face)  # 저장
 
@@ -95,7 +95,7 @@ def cluster(faces, userid):
 
 def main():
     face_list = []
-    face_list.extend(get_face(fr.load_image_file('wendy3.jpg')))
+    face_list.extend(get_face(fr.load_image_file('group1.jpg')))
     cluster(face_list, 'average10@naver.com')
 
     # plt.rcParams["figure.figsize"] = (5, 5)
