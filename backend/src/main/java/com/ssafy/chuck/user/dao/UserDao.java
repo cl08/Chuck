@@ -12,4 +12,7 @@ public interface UserDao {
 
 	// 최근 접속 업데이트
 	int updateTime(long userId);
+
+	// 회원 정보 조회
+	UserDto read(long userId);
 }

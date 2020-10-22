@@ -9,4 +9,7 @@ public interface UserService {
 
 	// 최근 접속 업데이트
 	void updateTime(long userId);
+
+	// 회원 정보 조회
+	UserDto read(long userId);
 }

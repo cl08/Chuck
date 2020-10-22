@@ -2,11 +2,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.user.dao.UserDao">
 
-    <insert id="create" parameterType="com.ssafy.waple.user.dto.UserDto">
+    <insert id="create" parameterType="com.ssafy.chuck.user.dto.UserDto">
         insert into USERS (user_id, last_date, name) values (#{userId}, now(), #{name})
     </insert>
 
     <update id="updateTime" parameterType="long">
         update USERS set last_date = now() where user_id = #{userId}
     </update>
+
+    <select id="read" resultType="com.ssafy.chuck.user.dto.UserDto" parameterType="long">
+        select * from USERS where user_id = #{userId}
+    </select>
+
+
 </mapper>

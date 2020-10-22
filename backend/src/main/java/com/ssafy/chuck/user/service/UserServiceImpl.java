@@ -5,6 +5,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.chuck.error.exception.DuplicateKeyException;
+import com.ssafy.chuck.error.exception.EntityNotFoundException;
 import com.ssafy.chuck.error.exception.IncorrectFormatException;
 import com.ssafy.chuck.error.exception.InvalidValueException;
 import com.ssafy.chuck.user.dao.UserDao;
@@ -38,10 +39,25 @@ public class UserServiceImpl implements UserService {
 			dao.updateTime(userId);
 		} catch (DataAccessException e) {
 			if(e.getMessage().contains(invalid)) {
-				throw new InvalidValueException(String.valueOf(userId));
+				throw new EntityNotFoundException(String.valueOf(userId));
 			} else {
 				throw new IncorrectFormatException("IncorrectFormatError");
 			}
 		}
+	}
+
+	@Override
+	public UserDto read(long userId) {
+		UserDto user = new UserDto();
+		try {
+			user = dao.read(userId);
+		} catch (DataAccessException e) {
+			if(e.getMessage().contains(invalid)) {
+				throw new EntityNotFoundException(String.valueOf(userId));
+			} else {
+				throw e;
+			}
+		}
+		return user;
 	}
 }
