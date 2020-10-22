@@ -53,6 +53,10 @@ holy.... got it?
 - 동영상, 노래, 다운로드 관련 이슈 해결
 
 
+#### 와이어프레임 프로토타입 링크
+https://xd.adobe.com/view/45bb03c3-da09-4b9b-8ec3-c1dc157e2a3a-10e8/?fullscreen&hints=off
+
+
 <br><br><br>
 #### 20201021 회의내용
 
