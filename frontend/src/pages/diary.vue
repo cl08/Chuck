@@ -25,13 +25,11 @@
   	<div id='page-2' class='page no-anim'>    
     	<div class='side-1' id='p3'>
       		<div class='content'>
-				<Test />
     		</div><!-- .content -->
     	</div><!-- .side-1 -->    
     	<div class='side-2' id='p4'>      
       		<div class='content'>
-				<h2>4헤더</h2>
-				<p>4본문</p>
+				<Calendar />
       		</div><!-- .content -->
     	</div><!-- .side-2 -->
 	</div><!-- #page-2 -->
@@ -78,10 +76,10 @@
 </template>
 
 <script>
-import Test from '@/components/test.vue'
+import Calendar from '@/components/calendar.vue'
 export default {
 	components: {
-		Test
+		Calendar
 	},
     mounted() {
 		$('.page > div').click(function(e) {
@@ -140,28 +138,9 @@ export default {
   color: white;
   }
 
-/* body * {
+body * {
 	transform-style: preserve-3d;
 }
-
-body {
-  	background:
-		radial-gradient(
-			hsla(199,40%,90%,.7), 
-			hsla(0,0%,100%,0)
-		)
-		no-repeat, 
-		linear-gradient(
-			60deg, 
-			purple, 
-			dodgerblue, 
-			violet
-		);
-	color: #222;
-	font-family: 'Gabriela', serif;
-	perspective: 70em;
-	overflow-y: hidden;
-} */
 
 h1, p {
 	margin: 5% 0;
@@ -212,8 +191,7 @@ h1, p {
     background-size: cover;
 }
 .side-2 {
-    transform:
-      rotateY(180deg);
+    transform: rotateY(180deg);
     /* box-shadow: inset -50px 0 50px rgba(0,0,0,.5); */
     background-image: url('../assets/leftpage.png');
     background-size: cover;
