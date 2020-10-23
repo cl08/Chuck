@@ -108,15 +108,15 @@ export default {
             events.push({
                 name: '추억3',
                 start: today,
-                color: 'green',
+                color: 'blue',
             })
+            // events.push({
+            //     name: '추억4',
+            //     start: today,
+            //     color: 'green',
+            // })
             events.push({
-                name: '추억4',
-                start: today,
-                color: 'green',
-            })
-            events.push({
-                name: '추억3',
+                name: '추억5',
                 start: yesterday,
                 color: 'red',
             })

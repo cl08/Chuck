@@ -37,8 +37,7 @@
   	<div id='page-3' class='page no-anim'>    
     	<div class='side-1' id='p5'>
       		<div class='content'>
-        		<h2>5헤더</h2>
-        		<p>5본문</p>
+        		<List />
 			</div><!-- .content -->
     	</div><!-- .side-1 -->    
     	<div class='side-2' id='p6'>      
@@ -77,9 +76,11 @@
 
 <script>
 import Calendar from '@/components/calendar.vue'
+import List from '@/components/list.vue'
 export default {
 	components: {
-		Calendar
+		Calendar,
+		List
 	},
     mounted() {
 		$('.page > div').click(function(e) {
@@ -180,7 +181,7 @@ h1, p {
 	position: absolute;
 	background-color: hsl(30,40%,70%);
 	backface-visibility: hidden;
-	overflow: auto;
+	overflow: hidden;
 }
 
 .side-1 {
