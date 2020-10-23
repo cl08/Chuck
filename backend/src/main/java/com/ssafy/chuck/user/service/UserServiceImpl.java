@@ -4,14 +4,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.google.gson.Gson;
+
 import com.ssafy.chuck.common.annotation.LogOut;
-import com.ssafy.chuck.common.annotation.LoginCheck;
 import com.ssafy.chuck.common.annotation.PermissionChecking;
 import com.ssafy.chuck.common.annotation.SignOut;
+import com.ssafy.chuck.common.aspect.UserAspect;
 import com.ssafy.chuck.error.exception.DuplicateKeyException;
 import com.ssafy.chuck.error.exception.EntityNotFoundException;
 import com.ssafy.chuck.error.exception.IncorrectFormatException;
 import com.ssafy.chuck.user.dao.UserDao;
+import com.ssafy.chuck.user.dto.Response;
 import com.ssafy.chuck.user.dto.UserDto;
 
 @Service
@@ -23,22 +26,35 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao dao;
 
-
-	@LoginCheck
 	@Override
-	public void create(String accessToken, long userId, String name, boolean signUp) {
-		if(signUp) {
-			try {
-				dao.create(new UserDto(userId, name));
-			} catch (DataAccessException e) {
-				if (e.getMessage().contains(duplicateKey)) {
-					throw new DuplicateKeyException(String.valueOf(userId));
-				} else {
-					throw new IncorrectFormatException("IncorrectFormatError");
-				}
-			}
+	public UserDto login(String accessToken) {
+		Gson gson = new Gson();
+		Response response = gson.fromJson(accessToken, Response.class);
+		Response userInfo = UserAspect.getUserInfo(response.getAccessToken());
+
+		long userId = Long.parseLong(userInfo.getId());
+		String name = userInfo.getData().get("nickname");
+
+		UserDto user = this.read(userId);
+		if(user != null) {
+			this.update(user);
 		} else {
-			dao.updateTime(userId);
+			user = new UserDto(userId, name);
+			this.create(userId, name);
+		}
+		return user;
+	}
+
+	@Override
+	public void create(Long userId, String name) {
+		try {
+			dao.create(new UserDto(userId, name));
+		} catch (DataAccessException e) {
+			if (e.getMessage().contains(duplicateKey)) {
+				throw new DuplicateKeyException(String.valueOf(userId));
+			} else {
+				throw new IncorrectFormatException("IncorrectFormatError");
+			}
 		}
 	}
 

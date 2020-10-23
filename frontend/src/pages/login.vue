@@ -4,14 +4,27 @@
         <!-- <h1>로그인페이지</h1> -->
         <!-- develop에서만 보이기-->
         <div id="login_bg"></div>
-        <div id="login_btn"><router-link to="/group"><img src="../assets/kakao_login_medium_narrow.png"></router-link>
+        <div id="login_btn">
+            <kakao-login
+              api-key='d1baf2cad3354a9138989baea6e65995'
+              :on-success=onSuccess
+              :on-failure=onFailure
+              image="kakao_account_login_btn_medium_narrow"
+            />
         </div>
-        
+
+        <!-- <router-link to="/group"><img src="../assets/kakao_login_medium_narrow.png"></router-link> -->
     </div>
 </template>
 
 <script>
+import KakaoLogin from 'vue-kakao-login';
+import api from '@/utils/api';
+
 export default {
+    components: {
+        KakaoLogin,
+    },
     mounted() {
         var w = window.innerWidth
         var h = window.innerHeight
@@ -26,6 +39,18 @@ export default {
             $('#login_page').height(h);
             $('#login_page').width(w);
         },
+        onSuccess(result) {
+        api.post('/users', {
+            access_token: result.access_token,
+        }).then(({ data }) => {
+            console.log(data);
+            this.$router.push({name: 'group'});
+        });
+    },
+    onFailure(result) {
+      console.error(result);
+    },
+
     }
 }
 </script>

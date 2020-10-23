@@ -1,11 +1,8 @@
 package com.ssafy.chuck.user.controller;
 
-
-import java.util.HashMap;
-import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,14 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.gson.Gson;
-import com.google.gson.annotations.SerializedName;
 import com.ssafy.chuck.common.ChuckJWT;
-import com.ssafy.chuck.common.annotation.LoginCheck;
-import com.ssafy.chuck.common.annotation.PermissionChecking;
-import com.ssafy.chuck.user.dto.Response;
 import com.ssafy.chuck.user.dto.UserDto;
 import com.ssafy.chuck.user.service.UserService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -52,13 +45,13 @@ public class UserController {
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 404, message = "로그인 또는 회원가입 실패")
 	})
-	private ResponseEntity<?> create(@RequestBody String accessToken, long userId, String name) {
+	private ResponseEntity<?> create(@RequestBody String accessToken) {
 		logger.debug("로그인 또는 회원가입 호출");
 
 		// DB 조회 후 없으면 추가 있으면 최근 접속 일자 업데이트
-		service.create(accessToken, userId, name, false);
+		UserDto user = service.login(accessToken);
 
-		String token = ChuckJWT.getToken(userId, name);
+		String token = ChuckJWT.getToken(user.getId(), user.getName());
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
 
