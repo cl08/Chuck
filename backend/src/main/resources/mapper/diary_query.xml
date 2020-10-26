@@ -19,4 +19,8 @@
     <delete id="delete" parameterType="int">
         delete from DIARIES where ID = #{id}
     </delete>
+
+    <select id="readAll" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE GROUP_ID = #{groupId}
+    </select>
 </mapper>

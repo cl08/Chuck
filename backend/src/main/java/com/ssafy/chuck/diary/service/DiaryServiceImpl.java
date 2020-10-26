@@ -1,5 +1,7 @@
 package com.ssafy.chuck.diary.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -48,5 +50,10 @@ public class DiaryServiceImpl implements DiaryService{
 		} catch (DataAccessException e) {
 			throw e;
 		}
+	}
+
+	@Override
+	public List<DiaryDto> readAll(int id) {
+		return dao.readAll(id);
 	}
 }

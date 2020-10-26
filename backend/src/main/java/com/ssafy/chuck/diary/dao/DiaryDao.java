@@ -1,5 +1,7 @@
 package com.ssafy.chuck.diary.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import com.ssafy.chuck.diary.dto.DiaryDto;
@@ -18,4 +20,7 @@ public interface DiaryDao {
 
 	// 4. 일기 삭제
 	int delete(int id);
+
+	// 5. 일기 전체 조회
+	List<DiaryDto> readAll(int id);
 }

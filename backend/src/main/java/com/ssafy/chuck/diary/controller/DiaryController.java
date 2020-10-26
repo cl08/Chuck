@@ -139,4 +139,22 @@ public class DiaryController {
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/group/{id}", produces = "application/json")
+	@ApiOperation(value = "다이어리 리스트 조회", notes = "그룹의 추억들 읽기", response = DiaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "token", value = "회원 토큰"),
+	})
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "다이어리 리스트 조회 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "다이어리 리스트 조회 실패")
+	})
+	private ResponseEntity<?> readAll(@PathVariable int id, @RequestHeader(value = "token") String token) {
+		logger.debug("다이어리 리스트 조회 호출");
+		// long userId = permissionCheck.check(token).getId();
+		List<DiaryDto> list = service.readAll(id);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
 }
