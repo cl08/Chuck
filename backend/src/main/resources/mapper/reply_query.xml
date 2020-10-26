@@ -4,7 +4,7 @@
 
 	<!-- 댓글 입력 -->
 	<insert id="insertComment">
-		insert replies(writer, comment, diary_id) values(#{writer}, #{comment}, #{diary_id})
+		insert replies(writer, comment, diary_id, date) values(#{writer}, #{comment}, #{diary_id}, #{date})
 	</insert>
 	
 	<!-- 특정 아이디의 댓글 리스트 반환 -->

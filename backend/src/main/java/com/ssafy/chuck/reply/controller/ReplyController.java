@@ -37,9 +37,15 @@ public class ReplyController {
     	return new ResponseEntity<Integer>(replyService.insertComment(replyDto.getWriter(), replyDto.getComment(), replyDto.getDiary_id()), HttpStatus.OK);
     }
 	
-	@GetMapping("/searchByWriter/{writer}")
+	@GetMapping("/searchByWriter")
 	@ApiOperation(value = "작성자 ID로 댓글 조회")
-	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(@PathVariable("writer") long writer) {
+	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(long writer) {
 		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByWriter(writer), HttpStatus.OK);
+	}
+	
+	@GetMapping("/searchByDiary")
+	@ApiOperation(value = "다이어리 ID로 댓글 조회")
+	public ResponseEntity<List<ReplyDto>> selectCommentByDiaryId(int diary_id) {
+		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByDiaryId(diary_id), HttpStatus.OK);
 	}
 }

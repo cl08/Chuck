@@ -1,5 +1,6 @@
 package com.ssafy.chuck.reply.service;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,8 @@ public class ReplyServiceImpl implements ReplyService{
 	
 	@Override
 	public int insertComment(Long writer, String comment, int diary_id) {
-		return replyDao.insertComment(writer, comment, diary_id);
+		Date date = new Date(System.currentTimeMillis());
+		return replyDao.insertComment(writer, comment, diary_id, date);
 	}
 
 	@Override
