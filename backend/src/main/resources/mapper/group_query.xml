@@ -1,4 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.group.dao.GroupDao">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ssafy.chuck.group.dto.GroupDto">
+        insert into `GROUPS`(USER_ID, NAME, INTRO) values (#{userId}, #{name}, #{intro})
+    </insert>
+
+    <update id="updateToken" parameterType="map">
+        update `GROUPS` SET TOKEN = #{token} where id = #{id}
+    </update>
+
+    <update id="update" parameterType="com.ssafy.chuck.group.dto.GroupDto">
+        update `GROUPS`
+        SET NAME = #{name},
+            INTRO = #{intro}
+        WHERE ID = #{id}
+    </update>
+
+    <select id="read" parameterType="int" resultType="com.ssafy.chuck.group.dto.GroupDto">
+        select * from `GROUPS` where ID = #{id}
+    </select>
+
+    <delete id="delete" parameterType="int">
+        delete from `GROUPS` where ID = #{id}
+    </delete>
+
+    <insert id="createMember" parameterType="com.ssafy.chuck.group.dto.MemberDto">
+        insert into GROUP_MEMBERS (USER_ID, GROUP_ID, FACE, IS_OWNER)
+                           values (#{userId}, #{groupId}, #{face}, #{isOwner})
+    </insert>
+
+    <select id="readAllMember" parameterType="int" resultType="com.ssafy.chuck.group.dto.MemberDto">
+        select * from GROUP_MEMBERS WHERE GROUP_ID = #{id}
+    </select>
+
+    <select id="readAllGroup" parameterType="long" resultType="com.ssafy.chuck.group.dto.GroupDto">
+        select G.*
+        from `GROUPS` G where exists
+                        (select GROUP_ID
+                         from GROUP_MEMBERS GM
+                         where GM.GROUP_ID = G.ID
+                         AND USER_ID = #{id})
+    </select>
 </mapper>
