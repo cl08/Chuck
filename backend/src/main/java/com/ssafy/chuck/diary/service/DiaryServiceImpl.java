@@ -23,4 +23,9 @@ public class DiaryServiceImpl implements DiaryService{
 			throw e;
 		}
 	}
+
+	@Override
+	public DiaryDto read(int id) {
+		return dao.read(id);
+	}
 }

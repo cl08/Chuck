@@ -10,4 +10,6 @@ public interface DiaryDao {
 	// 1. 일기 생성
 	int create(DiaryDto diary);
 
+	// 2. 일기 상세 조회
+	DiaryDto read(int id);
 }

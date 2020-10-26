@@ -5,4 +5,8 @@
         insert into DIARIES (IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
                             (#{image}, #{content}, #{writer}, #{groupId}, now())
     </insert>
+
+    <select id="read" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE ID = #{id}
+    </select>
 </mapper>
