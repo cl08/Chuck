@@ -56,4 +56,9 @@ public class DiaryServiceImpl implements DiaryService{
 	public List<DiaryDto> readAll(int id) {
 		return dao.readAll(id);
 	}
+
+	@Override
+	public List<DiaryDto> search(int id, String word) {
+		return dao.search(id, word);
+	}
 }

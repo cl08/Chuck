@@ -20,4 +20,7 @@ public interface DiaryService {
 
 	// 다이어리 리스트 조회
 	List<DiaryDto> readAll(int id);
+
+	// 다이어리 검색
+	List<DiaryDto> search(int id, String word);
 }

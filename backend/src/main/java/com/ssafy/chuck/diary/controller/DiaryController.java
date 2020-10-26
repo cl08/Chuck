@@ -151,10 +151,28 @@ public class DiaryController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "다이어리 리스트 조회 실패")
 	})
-	private ResponseEntity<?> readAll(@PathVariable int id, @RequestHeader(value = "token") String token) {
+	private ResponseEntity<?> readAll(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
 		logger.debug("다이어리 리스트 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
 		List<DiaryDto> list = service.readAll(id);
+		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/search/{word}/{id}", produces = "application/json")
+	@ApiOperation(value = "다이어리 검색", notes = "그룹의 추억 검색", response = DiaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "token", value = "회원 토큰"),
+	})
+	@ApiResponses({
+		@ApiResponse(code = 200, message = "다이어리 검색 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "다이어리 검색 실패")
+	})
+	private ResponseEntity<?> search(@PathVariable(value = "word") String word, @PathVariable(value = "id") int id) {
+		logger.debug("다이어리 검색 호출");
+		List<DiaryDto> list = service.search(id, word);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }

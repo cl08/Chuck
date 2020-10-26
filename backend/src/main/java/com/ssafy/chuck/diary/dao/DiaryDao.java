@@ -3,6 +3,7 @@ package com.ssafy.chuck.diary.dao;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.chuck.diary.dto.DiaryDto;
 
@@ -23,4 +24,7 @@ public interface DiaryDao {
 
 	// 5. 일기 전체 조회
 	List<DiaryDto> readAll(int id);
+
+	// 6. 일기 검색
+	List<DiaryDto> search(@Param(value = "id") int id, @Param(value = "word") String word);
 }

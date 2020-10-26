@@ -23,4 +23,8 @@
     <select id="readAll" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
         select * from DIARIES WHERE GROUP_ID = #{groupId}
     </select>
+
+    <select id="search" parameterType="map" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE GROUP_ID = #{groupId} AND CONTENT LIKE CONCAT('%', #{word}, '%')
+    </select>
 </mapper>
