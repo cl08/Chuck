@@ -6,6 +6,7 @@ import lombok.Data;
 
 @Data
 public class ReplyDto {
+	private int id;
 	private Long writer; 
 	private String comment;
 	private int diary_id;
