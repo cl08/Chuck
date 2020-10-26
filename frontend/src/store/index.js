@@ -58,6 +58,32 @@ export default new Vuex.Store({
                 date: '2020-10-14',
             },
         ],
+        comments: [
+            {
+                writer: '메뚜기',
+                comment: '오오오오 그렇구나',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '꼴뚜기',
+                comment: '아하 그렇구나',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '망둥어',
+                comment: '내용이 길면 어떻게 될까?? 내용이 길면 어떻게 될까?? 내용이 길면 어떻게 될까?? 내용이 길면 어떻게 될까?? 내용이 길면 어떻게 될까?? 내용이 길면 어떻게 될까?? ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+        ]
     },
     getters: {
         getChuckList(state) {
@@ -77,6 +103,9 @@ export default new Vuex.Store({
         },
         getVisibleWrite(state) {
             return state.visibleWrite
+        },
+        getComments(state) {
+            return state.comments
         }
     },
     mutations: {
@@ -98,7 +127,9 @@ export default new Vuex.Store({
         setVisibleWrite(state, payload) {
             state.visibleWrite = payload
         },
-
+        setComments(state, payload) {
+            state.comments = payload
+        }
     },
     actions: {}
 })
