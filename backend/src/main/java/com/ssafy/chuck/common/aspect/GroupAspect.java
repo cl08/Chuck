@@ -42,8 +42,9 @@ public class GroupAspect {
 		logger.debug("그룹장 체크");
 		Object[] parameterValues = point.getArgs();
 		GroupDto dto = (GroupDto)parameterValues[0];
-		long userId = service.read(dto.getId()).getUserId();
-		if(dto.getUserId() != userId) throw new AccessDeniedException("그룹장 확인 필요");
+		long userId = (long)parameterValues[1];
+		long originUserId = service.read(dto.getId()).getUserId();
+		if(userId != originUserId) throw new AccessDeniedException("그룹장 확인 필요");
 	}
 
 	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupMemberCheck)")

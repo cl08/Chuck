@@ -19,4 +19,7 @@ public interface GroupDao {
 
 	// 4. 그룹 상세 조회
 	GroupDto read(int id);
+
+	// 5. 그룹 삭제
+	int delete(int id);
 }

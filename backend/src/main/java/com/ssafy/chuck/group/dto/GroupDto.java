@@ -19,6 +19,12 @@ public class GroupDto {
 	@ApiModelProperty(value = "그룹 토큰", example = "비밀")
 	String token;
 
+	public GroupDto() {}
+
+	public GroupDto(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -37,7 +37,7 @@ public class GroupServiceImpl implements GroupService {
 
 	@GroupOwnerCheck
 	@Override
-	public void update(GroupDto group) {
+	public void update(GroupDto group, long userId) {
 		try {
 			dao.update(group);
 		} catch (DataAccessException e) {
@@ -49,5 +49,15 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public GroupDto read(int id) {
 		return dao.read(id);
+	}
+
+	@GroupOwnerCheck
+	@Override
+	public void delete(GroupDto group, long userId) {
+		try {
+			dao.delete(group.getId());
+		} catch (DataAccessException e) {
+			throw e;
+		}
 	}
 }

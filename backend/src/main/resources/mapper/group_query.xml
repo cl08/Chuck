@@ -19,4 +19,8 @@
     <select id="read" parameterType="int" resultType="com.ssafy.chuck.group.dto.GroupDto">
         select * from `GROUPS` where ID = #{id}
     </select>
+
+    <delete id="delete" parameterType="int">
+        delete from `GROUPS` where ID = #{id}
+    </delete>
 </mapper>

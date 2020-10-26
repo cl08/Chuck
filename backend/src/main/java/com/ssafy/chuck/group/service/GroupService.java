@@ -11,8 +11,11 @@ public interface GroupService {
 	void updateToken(int id, String token);
 
 	// 그룹 업데이트
-	void update(GroupDto group);
+	void update(GroupDto group, long userId);
 
 	// 그룹 상세 조회
 	GroupDto read(int id);
+
+	// 그룹 삭제
+	void delete(GroupDto group, long userId);
 }
