@@ -17,6 +17,7 @@ export default new Vuex.Store({
                 title: '오프라인 모임',
                 content: '모두 모여서 국밥을 먹었따. 팀장님은 자느라 지각함😒',
                 img: [
+                    'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg',
                     'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg'
                 ],
                 writer: '',
@@ -52,7 +53,9 @@ export default new Vuex.Store({
                 color: '#AFC4E7',
                 title: '기획중',
                 content: '기획은 역시 오프라인으로~~<br>사진은 없다',
-                img: [],
+                img: [
+                    ''
+                ],
                 writer: '',
                 group: 'chuck',
                 date: '2020-10-14',

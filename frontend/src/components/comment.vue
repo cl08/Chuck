@@ -2,12 +2,17 @@
     1. 댓글 좌우 번갈아 가면서 나오기
 -->
 <template>
-    <div style="margin:0px 0px 0px 30px;">
+    <div style="margin:0px 0px 0px 30px; height:717px;">
         <div v-for="(item, index) in getComments" :key="index" class="post-it">
             <p class="note">
                 <strong>{{ item.writer }}</strong><br>
                 {{ item.comment }}<br>
             </p>
+        </div>
+        <div class="comment">      
+            <v-text-field label="댓글" color="#EEAFAF">
+                <v-icon slot="append" color="#EEAFAF">mdi-comment</v-icon>
+            </v-text-field>
         </div>
     </div>
 </template>
@@ -23,10 +28,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .post-it {
     display: inline-block;
-    /* margin: 5em auto 0; */
     padding: 20px;
 }
 .note { 
@@ -63,6 +67,10 @@ export default {
     -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
     box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
 }
-
-
+.comment { 
+    position: absolute; 
+    bottom: 30px;
+    left: 50px;
+    width:450px;
+}
 </style>

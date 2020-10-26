@@ -22,6 +22,7 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@fortawesome/vue-fontawesome": "^2.0.0",
+    "@mdi/font": "^5.8.55",
     "@vue/cli-plugin-babel": "~4.5.0",
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
@@ -29,6 +30,7 @@
     "eslint": "^6.7.2",
     "eslint-plugin-vue": "^6.2.2",
     "expose-loader": "^1.0.1",
+    "install": "^0.13.0",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {
