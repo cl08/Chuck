@@ -6,9 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         selectedDay: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        selectedDiary: '',
+        visibleCalendar: true,
+        visibleDetail: false,
+        visibleWrite: false,
         chuckList: [
             {
-                id: '1',
+                id: '0',
                 color: '#EEAFAF',
                 title: '오프라인 모임',
                 content: '모두 모여서 국밥을 먹었따. 팀장님은 자느라 지각함😒',
@@ -20,7 +24,7 @@ export default new Vuex.Store({
                 date: '2020-10-13',
             },
             {
-                id: '2',
+                id: '1',
                 color: '#BAE7AF',
                 title: '저녁은 족발',
                 content: '여기 족발 존맛인듯👍',
@@ -32,7 +36,7 @@ export default new Vuex.Store({
                 date: '2020-10-13',
             },
             {
-                id: '3',
+                id: '2',
                 color: '#FCFFB0',
                 title: '두번째 모임',
                 content: '역삼역에 노브랜드버거 생김🍔🍔',
@@ -44,7 +48,7 @@ export default new Vuex.Store({
                 date: '2020-10-14',
             },
             {
-                id: '4',
+                id: '3',
                 color: '#AFC4E7',
                 title: '기획중',
                 content: '기획은 역시 오프라인으로~~<br>사진은 없다',
@@ -61,8 +65,40 @@ export default new Vuex.Store({
         },
         getSelectedDay(state) {
             return state.selectedDay
+        },
+        getSelectedDiary(state) {
+            return state.selectedDiary
+        },
+        getVisibleCalendar(state) {
+            return state.visibleCalendar
+        },
+        getVisibleDetail(state) {
+            return state.visibleDetail
+        },
+        getVisibleWrite(state) {
+            return state.visibleWrite
         }
     },
-    mutations: {},
+    mutations: {
+        setChuckList(state, payload) {
+            state.chuckList = payload
+        },
+        setSelectedDay(state, payload) {
+            state.selectedDay = payload
+        },
+        setSelectedDiary(state, payload) {
+            state.selectedDiary = payload
+        },
+        setVisibleCalendar(state, payload) {
+            state.visibleCalendar = payload
+        },
+        setVisibleDetail(state, payload) {
+            state.visibleDetail = payload
+        },
+        setVisibleWrite(state, payload) {
+            state.visibleWrite = payload
+        },
+
+    },
     actions: {}
 })
