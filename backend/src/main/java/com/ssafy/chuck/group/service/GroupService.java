@@ -1,5 +1,7 @@
 package com.ssafy.chuck.group.service;
 
+import java.util.List;
+
 import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
 
@@ -22,4 +24,7 @@ public interface GroupService {
 
 	// 그룹에 멤버 추가
 	void createMember(MemberDto member);
+
+	// 그룹내 멤버 리스트 조회
+	List<MemberDto> readAllMember(int id);
 }

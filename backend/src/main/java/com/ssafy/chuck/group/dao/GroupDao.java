@@ -1,5 +1,7 @@
 package com.ssafy.chuck.group.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -26,4 +28,7 @@ public interface GroupDao {
 
 	// 6. 그룹에 멤버 추가
 	int createMember(MemberDto member);
+
+	// 7. 그룹내 멤버 전체 조회
+	List<MemberDto> readAllMember(int id);
 }

@@ -1,5 +1,7 @@
 package com.ssafy.chuck.group.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -69,5 +71,10 @@ public class GroupServiceImpl implements GroupService {
 		} catch (DataAccessException e) {
 			throw e;
 		}
+	}
+
+	@Override
+	public List<MemberDto> readAllMember(int id) {
+		return dao.readAllMember(id);
 	}
 }

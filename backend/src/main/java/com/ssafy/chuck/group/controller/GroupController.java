@@ -1,5 +1,7 @@
 package com.ssafy.chuck.group.controller;
 
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -141,5 +143,21 @@ public class GroupController {
 		logger.debug("그룹 멤버 추가 호출");
 		service.createMember(member);
 		return new ResponseEntity<>(HttpStatus.CREATED);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}/members")
+	@ApiOperation(value = "그룹 멤버 리스트 조회", notes = "그룹멤버 리스트를 조회한다.")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "그룹 멤버 리스트 조회 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "그룹 멤버 리스트 조회 실패")
+	})
+	private ResponseEntity<?> readAllMember(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
+		logger.debug("그룹 멤버 리스트 조회 호출");
+		// long userId = permissionCheck.check(token).getId();
+		List<MemberDto> list = service.readAllMember(id);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }

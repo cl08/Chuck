@@ -28,4 +28,8 @@
         insert into GROUP_MEMBERS (USER_ID, GROUP_ID, FACE, IS_OWNER)
                            values (#{userId}, #{groupId}, #{face}, #{isOwner})
     </insert>
+
+    <select id="readAllMember" parameterType="int" resultType="com.ssafy.chuck.group.dto.MemberDto">
+        select * from GROUP_MEMBERS WHERE GROUP_ID = #{id}
+    </select>
 </mapper>
