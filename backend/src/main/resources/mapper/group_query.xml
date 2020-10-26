@@ -8,4 +8,11 @@
     <update id="updateToken" parameterType="map">
         update `GROUPS` SET TOKEN = #{token} where id = #{id}
     </update>
+
+    <update id="update" parameterType="com.ssafy.chuck.group.dto.GroupDto">
+        update `GROUPS`
+        SET NAME = #{name},
+            INTRO = #{intro}
+        WHERE ID = #{id}
+    </update>
 </mapper>

@@ -4,6 +4,7 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,14 @@ public class GroupAspect {
 			.withClaim("id", dto.getId())
 			.sign(Algorithm.HMAC256("chuck_project"));
 		service.updateToken(dto.getId(), token);
+	}
+
+	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupMemberCheck)")
+	private void checkUser(JoinPoint point) {
+		logger.debug("그룹 접근 권한 체크");
+		Object[] parameterValues = point.getArgs();
+		GroupDto dto = (GroupDto)parameterValues[0];
+
 	}
 
 }

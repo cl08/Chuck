@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
 import com.ssafy.chuck.group.dao.GroupDao;
 import com.ssafy.chuck.group.dto.GroupDto;
@@ -28,6 +29,16 @@ public class GroupServiceImpl implements GroupService {
 	public void updateToken(int id, String token) {
 		try {
 			dao.updateToken(id, token);
+		} catch (DataAccessException e) {
+			throw e;
+		}
+	}
+
+	@GroupMemberCheck
+	@Override
+	public void update(GroupDto group) {
+		try {
+			dao.update(group);
 		} catch (DataAccessException e) {
 			throw e;
 		}

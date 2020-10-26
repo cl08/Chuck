@@ -13,4 +13,7 @@ public interface GroupDao {
 
 	// 2. 업데이트 토큰
 	int updateToken(@Param(value = "id") int id, @Param(value = "token") String token);
+
+	// 3. 그룹 수정
+	int update(GroupDto group);
 }
