@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.diary.dao.DiaryDao;
 import com.ssafy.chuck.diary.dto.DiaryDto;
+import com.ssafy.chuck.error.exception.AccessDeniedException;
 
 @Service
 public class DiaryServiceImpl implements DiaryService{
@@ -27,5 +28,15 @@ public class DiaryServiceImpl implements DiaryService{
 	@Override
 	public DiaryDto read(int id) {
 		return dao.read(id);
+	}
+
+	@Override
+	public void update(long userId, DiaryDto diary) {
+		if(diary.getWriter() != userId) throw new AccessDeniedException("작성자가 아닙니다");
+		try {
+			dao.update(diary);
+		} catch (DataAccessException e) {
+			throw e;
+		}
 	}
 }

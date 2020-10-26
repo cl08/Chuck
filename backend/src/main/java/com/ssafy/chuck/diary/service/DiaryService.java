@@ -9,4 +9,7 @@ public interface DiaryService {
 
 	// 다이어리 상세 조회
 	DiaryDto read(int id);
+
+	// 다이어리 수정
+	void update(long userId, DiaryDto diary);
 }

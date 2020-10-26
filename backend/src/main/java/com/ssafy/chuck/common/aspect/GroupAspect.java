@@ -45,7 +45,7 @@ public class GroupAspect {
 		Object[] parameterValues = point.getArgs();
 		GroupDto dto = (GroupDto)parameterValues[0];
 		long userId = (long)parameterValues[1];
-		long originUserId = service.read(dto.getId()).getUserId();
+		long originUserId = service.readOwner(dto.getId());
 		if(userId != originUserId) throw new AccessDeniedException("그룹장 확인 필요");
 	}
 

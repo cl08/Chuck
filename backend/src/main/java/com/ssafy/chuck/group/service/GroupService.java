@@ -16,6 +16,9 @@ public interface GroupService {
 	// 그룹 업데이트
 	void update(GroupDto group, long userId);
 
+	// 그룹장 조회
+	long readOwner(int id);
+
 	// 그룹 상세 조회
 	GroupDto read(long userId, int num, int id);
 

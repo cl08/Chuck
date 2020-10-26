@@ -12,4 +12,7 @@ public interface DiaryDao {
 
 	// 2. 일기 상세 조회
 	DiaryDto read(int id);
+
+	// 3. 일기 수정
+	int update(DiaryDto dto);
 }

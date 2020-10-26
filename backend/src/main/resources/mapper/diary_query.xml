@@ -9,4 +9,10 @@
     <select id="read" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
         select * from DIARIES WHERE ID = #{id}
     </select>
+
+    <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
+        update DIARIES
+        SET CONTENT = #{content}
+        where ID = #{id}
+    </update>
 </mapper>

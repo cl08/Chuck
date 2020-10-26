@@ -98,4 +98,23 @@ public class DiaryController {
 		return new ResponseEntity<>(diary, HttpStatus.OK);
 	}
 
+	@RequestMapping(method = RequestMethod.PUT, value = "/{id}", produces = "application/json")
+	@ApiOperation(value = "다이어리 수정", notes = "그룹의 추억 수정", response = DiaryDto.class)
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "token", value = "회원 토큰"),
+		@ApiImplicitParam(name = "다이어리", value = "다이어리"),
+	})
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "다이어리 수정 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "다이어리 수정 실패")
+	})
+	private ResponseEntity<?> update(@RequestBody DiaryDto diary, @RequestHeader(value = "token") String token) {
+		logger.debug("다이어리 수정 호출");
+		long userId = permissionCheck.check(token).getId();
+		service.update(userId, diary);
+		return new ResponseEntity<>(diary, HttpStatus.OK);
+	}
 }
