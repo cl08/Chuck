@@ -10,6 +10,7 @@ import java.net.URL;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 
 import org.aspectj.lang.annotation.Before;
@@ -32,31 +33,6 @@ public class UserAspect {
 
 	@Autowired
 	UserService userService;
-
-	@Before("@annotation(com.ssafy.chuck.common.annotation.LoginCheck)")
-	private void LoginCheck(JoinPoint point) {
-		logger.debug("회원가입인지 로그인인지 체크");
-		Object[] parameterValues = point.getArgs();
-		String accessToken = String.valueOf(parameterValues[0]);
-
-		Gson gson = new Gson();
-		Response response = gson.fromJson(accessToken, Response.class);
-		Response userInfo = this.getUserInfo(response.getAccessToken());
-
-		long userId = Long.parseLong(userInfo.getId());
-		String name = userInfo.getData().get("nickname");
-
-		UserDto user = userService.read(userId);
-
-		parameterValues[1] = userId;
-		parameterValues[2] = name;
-
-		if(user != null) {
-			parameterValues[3] = false;
-		} else {
-			parameterValues[3] = true;
-		}
-	}
 
 	@After("@annotation(com.ssafy.chuck.common.annotation.SignOut)")
 	private void SignOut(JoinPoint point) {
@@ -103,7 +79,7 @@ public class UserAspect {
 		return userId;
 	}
 
-	private String getResponseBody(HttpURLConnection conn) throws IOException {
+	private static String getResponseBody(HttpURLConnection conn) throws IOException {
 		logger.debug("ResponseBody 요청 호출");
 		int responseCode = conn.getResponseCode();
 		System.out.println("responseCode : " + responseCode);
@@ -121,7 +97,7 @@ public class UserAspect {
 		return result;
 	}
 
-	private Response getUserInfo(String accessToken) {
+	public static Response getUserInfo(String accessToken) {
 		logger.debug("유저정보 요청 호출");
 		// Response Type 선언 (유저 정보 여러개 필요)
 		Response response = new Response();
@@ -134,7 +110,7 @@ public class UserAspect {
 			// Header에 포함될 내용
 			conn.setRequestProperty("Authorization", "Bearer " + accessToken);
 
-			String result = this.getResponseBody(conn);
+			String result = getResponseBody(conn);
 
 			Gson gson = new Gson();
 			response = gson.fromJson(result, Response.class);

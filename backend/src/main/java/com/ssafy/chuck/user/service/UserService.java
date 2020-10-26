@@ -4,8 +4,11 @@ import com.ssafy.chuck.user.dto.UserDto;
 
 public interface UserService {
 
+	// 로그인
+	UserDto login(String accessToken);
+
 	// 회원 정보 추가 (회원 가입)
-	void create(String accessToken, long userId, String name, boolean signUp);
+	void create(Long userId, String name);
 
 	// 최근 접속 업데이트
 	void updateTime(long userId);
