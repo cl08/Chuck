@@ -27,4 +27,7 @@ public interface GroupService {
 
 	// 그룹내 멤버 리스트 조회
 	List<MemberDto> readAllMember(int id);
+
+	// 유저의 모든 그룹 리스트 조회
+	List<GroupDto> readAllGroup(long id);
 }

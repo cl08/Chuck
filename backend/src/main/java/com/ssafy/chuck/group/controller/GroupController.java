@@ -69,6 +69,22 @@ public class GroupController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
+	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
+	@ApiOperation(value = "그룹 상세 조회", notes = "그룹 정보를 상세 조회한다.")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "그룹 상세 조회 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "그룹 상세 조회 실패")
+	})
+	private ResponseEntity<?> read(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
+		logger.debug("그룹 상세 조회 호출");
+		// long userId = permissionCheck.check(token).getId();
+		GroupDto group = service.read(id);
+		return new ResponseEntity<>(group, HttpStatus.OK);
+	}
+
 	@RequestMapping(method = RequestMethod.PUT, value = "/{id}")
 	@ApiOperation(value = "그룹 수정", notes = "그룹을 수정한다.")
 	@ApiResponses({
@@ -91,22 +107,6 @@ public class GroupController {
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
-	@RequestMapping(method = RequestMethod.GET, value = "/{id}")
-	@ApiOperation(value = "그룹 상세 조회", notes = "그룹 정보를 상세 조회한다.")
-	@ApiResponses({
-		@ApiResponse(code = 201, message = "그룹 상세 조회 성공"),
-		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
-		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
-		@ApiResponse(code = 403, message = "권한이 없습니다"),
-		@ApiResponse(code = 404, message = "그룹 상세 조회 실패")
-	})
-	private ResponseEntity<?> read(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
-		logger.debug("그룹 상세 조회 호출");
-		// long userId = permissionCheck.check(token).getId();
-		GroupDto group = service.read(id);
-		return new ResponseEntity<>(group, HttpStatus.OK);
-	}
-
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
 	@ApiOperation(value = "그룹 삭제", notes = "그룹을 삭제한다.")
 	@ApiResponses({
@@ -121,6 +121,22 @@ public class GroupController {
 		long userId = permissionCheck.check(token).getId();
 		service.delete(new GroupDto(id), userId);
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/of/groups")
+	@ApiOperation(value = "유저 그룹 리스트 조회", notes = "유저의 모든 그룹 리스트를 조회한다.")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "유저 그룹 리스트 조회 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "유저 그룹 리스트 조회 실패")
+	})
+	private ResponseEntity<?> readAllMember(@RequestHeader(value = "token") String token) {
+		logger.debug("그룹 멤버 리스트 조회 호출");
+		long userId = permissionCheck.check(token).getId();
+		List<GroupDto> list = service.readAllGroup(userId);
+		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, value = "/members")

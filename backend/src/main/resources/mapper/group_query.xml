@@ -32,4 +32,13 @@
     <select id="readAllMember" parameterType="int" resultType="com.ssafy.chuck.group.dto.MemberDto">
         select * from GROUP_MEMBERS WHERE GROUP_ID = #{id}
     </select>
+
+    <select id="readAllGroup" parameterType="long" resultType="com.ssafy.chuck.group.dto.GroupDto">
+        select G.*
+        from `GROUPS` G where exists
+                        (select GROUP_ID
+                         from GROUP_MEMBERS GM
+                         where GM.GROUP_ID = G.ID
+                         AND USER_ID = #{id})
+    </select>
 </mapper>

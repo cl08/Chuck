@@ -31,4 +31,7 @@ public interface GroupDao {
 
 	// 7. 그룹내 멤버 전체 조회
 	List<MemberDto> readAllMember(int id);
+
+	// 8. 유저의 모든 그룹리스트 조회
+	List<GroupDto> readAllGroup(long id);
 }

@@ -77,4 +77,9 @@ public class GroupServiceImpl implements GroupService {
 	public List<MemberDto> readAllMember(int id) {
 		return dao.readAllMember(id);
 	}
+
+	@Override
+	public List<GroupDto> readAllGroup(long id) {
+		return dao.readAllGroup(id);
+	}
 }
