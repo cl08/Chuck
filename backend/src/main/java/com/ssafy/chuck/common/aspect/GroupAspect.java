@@ -53,9 +53,9 @@ public class GroupAspect {
 	private void checkUser(JoinPoint point) {
 		logger.debug("그룹 접근 권한 체크");
 		Object[] parameterValues = point.getArgs();
-		if((int)parameterValues[1] == 1) {
+		if((int)parameterValues[1] == 0) {
 			// 그룹 조회
-		} else if((int)parameterValues[1] == 2){
+		} else if((int)parameterValues[1] == 1){
 			// 다이어리 관련
 		} else {
 			// 댓글 관련

@@ -17,7 +17,7 @@ public interface GroupService {
 	void update(GroupDto group, long userId);
 
 	// 그룹 상세 조회
-	GroupDto read(int id);
+	GroupDto read(long userId, int num, int id);
 
 	// 그룹 삭제
 	void delete(GroupDto group, long userId);
@@ -26,7 +26,7 @@ public interface GroupService {
 	void createMember(MemberDto member);
 
 	// 그룹내 멤버 리스트 조회
-	List<MemberDto> readAllMember(int id);
+	List<MemberDto> readAllMember(long userId, int num, int id);
 
 	// 유저의 모든 그룹 리스트 조회
 	List<GroupDto> readAllGroup(long id);

@@ -81,7 +81,7 @@ public class GroupController {
 	private ResponseEntity<?> read(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 상세 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
-		GroupDto group = service.read(id);
+		GroupDto group = service.read(0, 0, id);
 		return new ResponseEntity<>(group, HttpStatus.OK);
 	}
 
@@ -173,7 +173,7 @@ public class GroupController {
 	private ResponseEntity<?> readAllMember(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 멤버 리스트 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
-		List<MemberDto> list = service.readAllMember(id);
+		List<MemberDto> list = service.readAllMember(0, 0, id);
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 }
