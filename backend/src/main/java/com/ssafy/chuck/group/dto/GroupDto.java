@@ -11,13 +11,13 @@ public class GroupDto {
 	private long userId;
 
 	@ApiModelProperty(value = "그룹 이름", example = "쓰는척")
-	String name;
+	private String name;
 
 	@ApiModelProperty(value = "그룹 소개", example = "안녕하세요 척의 개발그룹 쓰는척입니다.")
-	String intro;
+	private String intro;
 
 	@ApiModelProperty(value = "그룹 토큰", example = "비밀")
-	String token;
+	private String token;
 
 	public GroupDto() {}
 

@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.chuck.common.PermissionCheck;
 import com.ssafy.chuck.group.dto.GroupDto;
+import com.ssafy.chuck.group.dto.MemberDto;
 import com.ssafy.chuck.group.service.GroupService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -100,8 +101,8 @@ public class GroupController {
 	private ResponseEntity<?> read(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 상세 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
-		service.read(id);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		GroupDto group = service.read(id);
+		return new ResponseEntity<>(group, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
@@ -117,6 +118,28 @@ public class GroupController {
 		logger.debug("그룹 삭제 호출");
 		long userId = permissionCheck.check(token).getId();
 		service.delete(new GroupDto(id), userId);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
+	@RequestMapping(method = RequestMethod.POST, value = "/members")
+	@ApiOperation(value = "그룹 멤버 추가", notes = "그룹에 멤버를 추가한다.")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "그룹 멤버 추가 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "그룹 멤버 추가 실패")
+	})
+	@ApiImplicitParams({
+		@ApiImplicitParam(
+			value = "추가될 멤버 정보",
+			required = true,
+			name = "member",
+			dataTypeClass = MemberDto.class)
+	})
+	private ResponseEntity<?> createMember(@RequestBody MemberDto member) {
+		logger.debug("그룹 멤버 추가 호출");
+		service.createMember(member);
 		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }

@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import com.ssafy.chuck.group.dto.GroupDto;
+import com.ssafy.chuck.group.dto.MemberDto;
 
 @Mapper
 public interface GroupDao {
@@ -22,4 +23,7 @@ public interface GroupDao {
 
 	// 5. 그룹 삭제
 	int delete(int id);
+
+	// 6. 그룹에 멤버 추가
+	int createMember(MemberDto member);
 }

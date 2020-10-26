@@ -23,4 +23,9 @@
     <delete id="delete" parameterType="int">
         delete from `GROUPS` where ID = #{id}
     </delete>
+
+    <insert id="createMember" parameterType="com.ssafy.chuck.group.dto.MemberDto">
+        insert into GROUP_MEMBERS (USER_ID, GROUP_ID, FACE, IS_OWNER)
+                           values (#{userId}, #{groupId}, #{face}, #{isOwner})
+    </insert>
 </mapper>

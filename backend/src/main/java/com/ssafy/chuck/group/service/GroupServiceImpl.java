@@ -9,6 +9,7 @@ import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
 import com.ssafy.chuck.group.dao.GroupDao;
 import com.ssafy.chuck.group.dto.GroupDto;
+import com.ssafy.chuck.group.dto.MemberDto;
 
 @Service
 public class GroupServiceImpl implements GroupService {
@@ -56,6 +57,15 @@ public class GroupServiceImpl implements GroupService {
 	public void delete(GroupDto group, long userId) {
 		try {
 			dao.delete(group.getId());
+		} catch (DataAccessException e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public void createMember(MemberDto member) {
+		try {
+			dao.createMember(member);
 		} catch (DataAccessException e) {
 			throw e;
 		}

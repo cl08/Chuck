@@ -1,6 +1,7 @@
 package com.ssafy.chuck.group.service;
 
 import com.ssafy.chuck.group.dto.GroupDto;
+import com.ssafy.chuck.group.dto.MemberDto;
 
 public interface GroupService {
 
@@ -18,4 +19,7 @@ public interface GroupService {
 
 	// 그룹 삭제
 	void delete(GroupDto group, long userId);
+
+	// 그룹에 멤버 추가
+	void createMember(MemberDto member);
 }
