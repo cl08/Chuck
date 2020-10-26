@@ -29,7 +29,7 @@ export default new Router({
         {
             path: '/diary',
             name: 'diary',
-            component: diary
+            component: diary,
         },
     ]
 })
