@@ -117,4 +117,26 @@ public class DiaryController {
 		service.update(userId, diary);
 		return new ResponseEntity<>(diary, HttpStatus.OK);
 	}
+
+	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}", produces = "application/json")
+	@ApiOperation(value = "다이어리 삭제", notes = "다이어리 삭제")
+	@ApiImplicitParams({
+		@ApiImplicitParam(name = "token", value = "회원 토큰"),
+		@ApiImplicitParam(name = "reviewId", value = "다이어리 아이디", example = "1")
+	})
+	@ApiResponses({
+		@ApiResponse(code = 204, message = "다이어리 삭제 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "다이어리 삭제 실패")
+	})
+	private ResponseEntity<?> delete(@PathVariable("id") int id, @RequestHeader(value = "token") String token) {
+		logger.debug("다이어리 삭제 호출");
+		long userId = permissionCheck.check(token).getId();
+		service.delete(userId, id);
+		fileService.delete(service.read(id).getImage()); //이미지 파일 삭제
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+	}
+
 }

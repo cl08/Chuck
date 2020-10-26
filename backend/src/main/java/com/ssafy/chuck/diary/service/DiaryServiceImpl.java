@@ -39,4 +39,14 @@ public class DiaryServiceImpl implements DiaryService{
 			throw e;
 		}
 	}
+
+	@Override
+	public void delete(long userId, int id) {
+		if(userId != this.read(id).getWriter()) throw new AccessDeniedException("작성자가 아닙니다");
+		try {
+			dao.delete(id);
+		} catch (DataAccessException e) {
+			throw e;
+		}
+	}
 }

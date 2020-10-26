@@ -15,4 +15,7 @@ public interface DiaryDao {
 
 	// 3. 일기 수정
 	int update(DiaryDto dto);
+
+	// 4. 일기 삭제
+	int delete(int id);
 }

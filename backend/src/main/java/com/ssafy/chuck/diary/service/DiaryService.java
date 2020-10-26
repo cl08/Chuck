@@ -12,4 +12,7 @@ public interface DiaryService {
 
 	// 다이어리 수정
 	void update(long userId, DiaryDto diary);
+
+	// 다이어리 삭제
+	void delete(long userId, int id);
 }

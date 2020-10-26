@@ -15,4 +15,8 @@
         SET CONTENT = #{content}
         where ID = #{id}
     </update>
+
+    <delete id="delete" parameterType="int">
+        delete from DIARIES where ID = #{id}
+    </delete>
 </mapper>
