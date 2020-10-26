@@ -5,6 +5,7 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
+import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
 import com.ssafy.chuck.group.dao.GroupDao;
 import com.ssafy.chuck.group.dto.GroupDto;
@@ -34,7 +35,7 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
-	@GroupMemberCheck
+	@GroupOwnerCheck
 	@Override
 	public void update(GroupDto group) {
 		try {
@@ -42,5 +43,11 @@ public class GroupServiceImpl implements GroupService {
 		} catch (DataAccessException e) {
 			throw e;
 		}
+	}
+
+	// @GroupMemberCheck
+	@Override
+	public GroupDto read(int id) {
+		return dao.read(id);
 	}
 }

@@ -16,4 +16,7 @@ public interface GroupDao {
 
 	// 3. 그룹 수정
 	int update(GroupDto group);
+
+	// 4. 그룹 상세 조회
+	GroupDto read(int id);
 }

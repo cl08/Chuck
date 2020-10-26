@@ -12,4 +12,7 @@ public interface GroupService {
 
 	// 그룹 업데이트
 	void update(GroupDto group);
+
+	// 그룹 상세 조회
+	GroupDto read(int id);
 }

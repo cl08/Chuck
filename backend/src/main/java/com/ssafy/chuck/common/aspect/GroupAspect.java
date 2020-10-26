@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ssafy.chuck.error.exception.AccessDeniedException;
 import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.service.GroupService;
 
@@ -36,12 +37,25 @@ public class GroupAspect {
 		service.updateToken(dto.getId(), token);
 	}
 
+	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupOwnerCheck)")
+	private void checkOwner(JoinPoint point) {
+		logger.debug("그룹장 체크");
+		Object[] parameterValues = point.getArgs();
+		GroupDto dto = (GroupDto)parameterValues[0];
+		long userId = service.read(dto.getId()).getUserId();
+		if(dto.getUserId() != userId) throw new AccessDeniedException("그룹장 확인 필요");
+	}
+
 	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupMemberCheck)")
 	private void checkUser(JoinPoint point) {
 		logger.debug("그룹 접근 권한 체크");
 		Object[] parameterValues = point.getArgs();
-		GroupDto dto = (GroupDto)parameterValues[0];
-
+		if((int)parameterValues[1] == 1) {
+			// 그룹 조회
+		} else if((int)parameterValues[1] == 2){
+			// 다이어리 관련
+		} else {
+			// 댓글 관련
+		}
 	}
-
 }
