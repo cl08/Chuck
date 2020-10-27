@@ -44,13 +44,19 @@ public class PictureController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/delete")
+	@DeleteMapping("/deleteByPath")
 	@ApiOperation(value = "사진의 경로로 사진 삭제")
-	public ResponseEntity<String> deletePicture(String path) {		
+	public ResponseEntity<String> deletePictureByPath(String path) {		
 		pictureService.deletePictureByPath(path);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/deleteById")
+	@ApiOperation(value = "사진의 ID로 사진 삭제")
+	public ResponseEntity<String> deletePictureById(int id) {		
+		pictureService.deletePictureById(id);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
 	
 	@PutMapping("/upload")
 	@ApiOperation(value = "사진 업로드")
