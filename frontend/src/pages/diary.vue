@@ -20,6 +20,7 @@
   	<div id='page-2' class='page no-anim'>    
     	<div class='side-1' id='p3'>
       		<div class='content'>
+				<Timeline />
     		</div>
     	</div>
     	<div class='side-2' id='p4'>      
@@ -77,6 +78,7 @@ import Detail from '@/components/detail.vue'
 import Comment from '@/components/comment.vue'
 import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
+import Timeline from '@/components/timeline.vue'
 export default {
 	components: {
 		Calendar,
@@ -85,6 +87,7 @@ export default {
 		Comment,
 		Write1,
 		Write2,
+		Timeline,
 	},
 	computed: {
         ...mapGetters([
@@ -140,7 +143,7 @@ export default {
 	position: relative;
 }
 
-::-webkit-scrollbar {width:12px}
+::-webkit-scrollbar {width:0px}
 ::-webkit-scrollbar-thumb {background: #222;}
 ::-webkit-scrollbar-track {background: transparent}
 
@@ -195,7 +198,7 @@ h1, p {
 	position: absolute;
 	background-color: hsl(30,40%,70%);
 	backface-visibility: hidden;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .side-1 {

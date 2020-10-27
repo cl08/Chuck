@@ -27,8 +27,6 @@
                     <v-list-item>
                         <v-list-item-title>수정하기</v-list-item-title>
                     </v-list-item>
-                </v-list>
-                <v-list>
                     <v-list-item>
                         <v-list-item-title>삭제하기</v-list-item-title>
                     </v-list-item>
