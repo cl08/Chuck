@@ -4,6 +4,7 @@ import landing from '@/pages/landing.vue'
 import login from '@/pages/login.vue'
 import group from '@/pages/group.vue'
 import diary from '@/pages/diary.vue'
+import test from '@/pages/diary copy.vue'
 
 Vue.use(Router)
 
@@ -30,6 +31,12 @@ export default new Router({
             path: '/diary',
             name: 'diary',
             component: diary,
+        },
+        // testpage
+        {
+            path: '/test',
+            name: 'test',
+            component: test
         },
     ]
 })
