@@ -16,7 +16,7 @@ public class PictureServiceImpl implements PictureService{
 	}
 
 	@Override
-	public int deletePicture(String path) {
-		return pictureDao.deletePicture(path);
+	public int deletePictureByPath(String path) {
+		return pictureDao.deletePictureByPath(path);
 	}
 }

@@ -8,8 +8,13 @@
 	</insert>
 	
 	<!-- 사진 삭제(사진의 path로 ) -->
-	<delete id="deletePicture">
+	<delete id="deletePictureByPath">
 		delete from pictures where path = #{path}
+	</delete>
+	
+	<!-- 사진 삭제(사진의 id로 ) -->
+	<delete id="deletePictureById">
+		delete from pictures where id = #{id}
 	</delete>
 	
 	<!-- 사진 삭제(다이어리의 아이디로) -->
