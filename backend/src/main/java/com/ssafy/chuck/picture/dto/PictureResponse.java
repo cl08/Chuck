@@ -1,10 +1,11 @@
 package com.ssafy.chuck.picture.dto;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
-public class PictureDto {
-	private int id;
+public class PictureResponse {
 	private int diary_id;
-	private String path;
+	private List<String> path_list;
 }
