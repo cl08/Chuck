@@ -41,4 +41,9 @@
                          where GM.GROUP_ID = G.ID
                          AND USER_ID = #{id})
     </select>
+
+    <select id="readOwner" parameterType="int" resultType="long">
+        select USER_ID
+        from `GROUPS` where ID = #{id}
+    </select>
 </mapper>

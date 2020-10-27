@@ -48,9 +48,14 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
+	@Override
+	public long readOwner(int id) {
+		return dao.readOwner(id);
+	}
+
 	// @GroupMemberCheck
 	@Override
-	public GroupDto read(int id) {
+	public GroupDto read(long userId, int num, int id) {
 		return dao.read(id);
 	}
 
@@ -74,7 +79,7 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@Override
-	public List<MemberDto> readAllMember(int id) {
+	public List<MemberDto> readAllMember(long userId, int num, int id) {
 		return dao.readAllMember(id);
 	}
 
