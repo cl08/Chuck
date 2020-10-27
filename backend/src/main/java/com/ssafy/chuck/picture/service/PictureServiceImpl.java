@@ -19,4 +19,10 @@ public class PictureServiceImpl implements PictureService{
 	public int deletePictureByPath(String path) {
 		return pictureDao.deletePictureByPath(path);
 	}
+
+	@Override
+	public int deletePictureById(int id) {
+		return pictureDao.deletePictureById(id);
+	}
+	
 }

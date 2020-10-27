@@ -6,4 +6,5 @@ import org.apache.ibatis.annotations.Mapper;
 public interface PictureDao {
 	public int insertPicture(int diary_id, String path);
 	public int deletePictureByPath(String path);
+	public int deletePictureById(int id);
 }
