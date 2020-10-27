@@ -17,7 +17,7 @@
                         </template>
                         <v-list>
                             <v-list-item>
-                                <v-list-item-title>여rl에는</v-list-item-title>
+                                <v-list-item-title>여기에는</v-list-item-title>
                             </v-list-item>
                             <v-list-item>
                                 <v-list-item-title>무엇이</v-list-item-title>

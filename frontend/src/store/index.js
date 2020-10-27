@@ -20,7 +20,7 @@ export default new Vuex.Store({
                     'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg',
                     'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg'
                 ],
-                writer: '김현대대',
+                writer: '김김현현대대',
                 group: 'chuck',
                 date: '2020-10-13',
             },
@@ -32,7 +32,7 @@ export default new Vuex.Store({
                 img: [
                     'https://image.auction.co.kr/itemimage/19/15/8d/19158d8796.jpg'
                 ],
-                writer: '김현대대',
+                writer: '김김현현대대',
                 group: 'chuck',
                 date: '2020-10-13',
             },
@@ -44,7 +44,7 @@ export default new Vuex.Store({
                 img: [
                     'https://cdn.clien.net/web/api/file/F01/8864280/32415ba78e5af9.jpg'
                 ],
-                writer: '김현대대',
+                writer: '김김현현대대',
                 group: 'chuck',
                 date: '2020-10-14',
             },
@@ -52,11 +52,11 @@ export default new Vuex.Store({
                 id: '3',
                 color: '#AFC4E7',
                 title: '기획중',
-                content: '기획은 역시 오프라인으로~~<br>사진은 없다',
+                content: '기획은 역시 오프라인으로~~<br>태그 테스트',
                 img: [
                     'https://d32gkk464bsqbe.cloudfront.net/8n5zJRAS_Zn37bM2TsV8AgKmiWg=/1000x600/contents/o/c380a0a7c63bcd4616e9e1488b4510769fed1a91.jpeg'
                 ],
-                writer: '김현대대',
+                writer: '김김현현대대',
                 group: 'chuck',
                 date: '2020-10-14',
             },

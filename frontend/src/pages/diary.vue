@@ -13,6 +13,7 @@
 		</div>    
     	<div class='side-2' id='p2'>      
 			<div class='content'>
+				<Intro />
 			</div>
 		</div>
 	</div>
@@ -79,6 +80,7 @@ import Comment from '@/components/comment.vue'
 import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
 import Timeline from '@/components/timeline.vue'
+import Intro from '@/components/intro.vue'
 export default {
 	components: {
 		Calendar,
@@ -88,6 +90,7 @@ export default {
 		Write1,
 		Write2,
 		Timeline,
+		Intro,
 	},
 	computed: {
         ...mapGetters([
