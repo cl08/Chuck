@@ -56,7 +56,7 @@
 		</div>  
 		<div class='side-2' id='p8'>      
 			<div class='content'>
-				<MakeAlbum />
+				<Album1 />
 			</div>
 		</div>
   	</div>
@@ -64,7 +64,7 @@
 	<div id='page-5' class='page no-anim'>    
     	<div class='side-1' id='p9'>
       		<div class='content'>
-        		<MakeVideo />
+        		<Video1 />
 			</div>
 		</div>    
   	</div>
@@ -81,8 +81,8 @@ import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
 import Timeline from '@/components/timeline.vue'
 import Intro from '@/components/intro.vue'
-import MakeAlbum from '@/components/makeAlbum.vue'
-import MakeVideo from '@/components/makeVideo.vue'
+import Album1 from '@/components/album/selectDate.vue'
+import Video1 from '@/components/video/selectDate.vue'
 export default {
 	components: {
 		Calendar,
@@ -93,6 +93,8 @@ export default {
 		Write2,
 		Timeline,
 		Intro,
+		Album1,
+		Video1,
 	},
 	computed: {
         ...mapGetters([

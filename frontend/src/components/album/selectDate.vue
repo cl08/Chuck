@@ -1,6 +1,6 @@
 <template>
     <div>
-        video
+        <h1>추억 간직하기</h1>
     </div>
 </template>
 
