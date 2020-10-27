@@ -56,7 +56,7 @@
 		</div>  
 		<div class='side-2' id='p8'>      
 			<div class='content'>
-				<h2>추억1</h2>
+				<MakeAlbum />
 			</div>
 		</div>
   	</div>
@@ -64,7 +64,7 @@
 	<div id='page-5' class='page no-anim'>    
     	<div class='side-1' id='p9'>
       		<div class='content'>
-        		<h2>추억2</h2>
+        		<MakeVideo />
 			</div>
 		</div>    
   	</div>
@@ -81,6 +81,8 @@ import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
 import Timeline from '@/components/timeline.vue'
 import Intro from '@/components/intro.vue'
+import MakeAlbum from '@/components/makeAlbum.vue'
+import MakeVideo from '@/components/makeVideo.vue'
 export default {
 	components: {
 		Calendar,
@@ -159,7 +161,7 @@ export default {
   color: white;
   }
 
-body * {
+* {
 	transform-style: preserve-3d;
 }
 
@@ -185,7 +187,7 @@ h1, p {
 
 .page {
 	height: 717px;
-	width: 593px;
+	width: 594px;
 	line-height: 1.5;
 	border-right: 10px solid transparent;
 	position: absolute;

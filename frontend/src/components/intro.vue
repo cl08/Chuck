@@ -2,7 +2,7 @@
 <div>
     <div class="left">
         <p>내용 그룹정보??</p>
-        <p>표지느낌이안나네</p>
+        <p>표지 느낌이 안나네</p>
     </div>
     <div class="right">
     </div>
