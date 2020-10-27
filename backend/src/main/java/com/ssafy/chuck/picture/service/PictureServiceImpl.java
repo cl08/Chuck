@@ -14,4 +14,9 @@ public class PictureServiceImpl implements PictureService{
 	public int insertPicture(int diary_id, String path) {
 		return pictureDao.insertPicture(diary_id, path);
 	}
+
+	@Override
+	public int deletePicture(String path) {
+		return pictureDao.deletePicture(path);
+	}
 }
