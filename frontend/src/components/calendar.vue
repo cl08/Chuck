@@ -42,6 +42,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { faAngleLeft } from '@fortawesome/free-solid-svg-icons'
 import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
@@ -54,7 +55,6 @@ export default {
         faAngleRight,
         focus: '',
         type: 'month',
-        
         events: [],
     }),
     mounted () {
@@ -62,7 +62,9 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getChuckList'
+            'getChuckList',
+            'getSelectedDiary',
+            'getVisibleCalendar',
         ]),
         calendarTitle: function() {
             if(this.$refs.calendar.title.length == 7){
@@ -74,8 +76,15 @@ export default {
         }
     },
     methods: {
+        ...mapMutations([
+            'setSelectedDay',
+            'setSelectedDiary',
+            'setVisibleCalendar',
+            'setVisibleDetail',
+            'setVisibleWrite',
+        ]),
         viewDay ({ date }) {
-            this.$store.state.selectedDay = date
+            this.setSelectedDay(date)
             this.focus = date
         },
         getEventColor (event) {
@@ -91,8 +100,10 @@ export default {
             this.$refs.calendar.next()
         },
         showEvent ({ nativeEvent, event }) {
-            var msg = event.index+'번 글\n'+event.name+'\n'+event.color+'\n'+event.start
-            alert(msg)
+            this.setSelectedDiary(event.index)
+            this.setVisibleDetail(true)
+            this.setVisibleCalendar(false)
+            this.setVisibleWrite(false)
         },
         updateRange ({ start, end }) {
             const events = []

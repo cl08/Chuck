@@ -29,7 +29,9 @@
     	</div><!-- .side-1 -->    
     	<div class='side-2' id='p4'>      
       		<div class='content'>
-				<Calendar />
+				<Calendar v-show="this.getVisibleCalendar" />
+				<Detail v-show="this.getVisibleDetail" />
+				<Write1 v-show="this.getVisibleWrite" />
       		</div><!-- .content -->
     	</div><!-- .side-2 -->
 	</div><!-- #page-2 -->
@@ -37,7 +39,9 @@
   	<div id='page-3' class='page no-anim'>    
     	<div class='side-1' id='p5'>
       		<div class='content'>
-        		<List />
+        		<List v-if="this.getVisibleCalendar" />
+				<Comment v-show="this.getVisibleDetail" />
+				<Write2 v-show="this.getVisibleWrite" />
 			</div><!-- .content -->
     	</div><!-- .side-1 -->    
     	<div class='side-2' id='p6'>      
@@ -75,12 +79,30 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 import Calendar from '@/components/calendar.vue'
 import List from '@/components/list.vue'
+import Detail from '@/components/detail.vue'
+import Comment from '@/components/comment.vue'
+import Write1 from '@/components/write1.vue'
+import Write2 from '@/components/write2.vue'
 export default {
 	components: {
 		Calendar,
-		List
+		List,
+		Detail,
+		Comment,
+		Write1,
+		Write2,
+	},
+	computed: {
+        ...mapGetters([
+            'getChuckList',
+            'getSelectedDiary',
+			'getVisibleCalendar',
+			'getVisibleDetail',
+			'getVisibleWrite',
+		]),
 	},
     mounted() {
 		$('.page > div').click(function(e) {

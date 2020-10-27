@@ -19,8 +19,8 @@
                         </v-card-actions>
                     </v-card>
                 </v-col> -->
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12">
-                    <v-card  :color="item.color">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail" style="cursor:pointer">
+                    <v-card :color="item.color">
                         <div class="d-flex flex-no-wrap justify-space-between">
                             <div>
                                 <v-card-title class="headline" v-text="item.title"></v-card-title>
@@ -36,10 +36,10 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12">
-                    <v-card class="mx-auto" outlined @click="move">
+                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px gray">
                         <v-avatar size="62" tile style="cursor:pointer">
                         <!-- <v-avatar class="ma-3" size="125" tile style="cursor:pointer"> -->
-                            <img src='../assets/add.png'></img>
+                            <img src='../assets/add.png'>
                         </v-avatar>
                     </v-card>
                 </v-col>
@@ -50,6 +50,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
     data: () => ({
         selectedChuckList: [],
@@ -78,8 +79,22 @@ export default {
         }
     },
     methods: {
-        move() {
-            alert("작성페이지로 이동")
+        ...mapMutations([
+            'setSelectedDay',
+            'setSelectedDiary',
+            'setVisibleCalendar',
+            'setVisibleDetail',
+            'setVisibleWrite',
+        ]),
+        detail() {
+            this.setVisibleDetail(true)
+            this.setVisibleCalendar(false)
+            this.setVisibleWrite(false)
+        },
+        write() {
+            this.setVisibleWrite(true)
+            this.setVisibleDetail(false)
+            this.setVisibleCalendar(false)
         }
     }
 }
