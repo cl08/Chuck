@@ -115,20 +115,5 @@ public class PictureController {
 		}
 	}
 	
-	// 유니코드 디코더
-//	public static String decode(String unicode) throws Exception {
-//	    StringBuffer str = new StringBuffer();
-//
-//	    char ch = 0;
-//	    for( int i= unicode.indexOf("\\u"); i > -1; i = unicode.indexOf("\\u") ){
-//	        ch = (char)Integer.parseInt( unicode.substring( i + 2, i + 6 ) ,16);
-//	        str.append( unicode.substring(0, i) );
-//	        str.append( String.valueOf(ch) );
-//	        unicode = unicode.substring(i + 6);
-//	    }
-//	    str.append( unicode );
-//	    return str.toString();
-//	}
-	
 	
 }
