@@ -3,7 +3,9 @@ package com.ssafy.chuck.picture.controller;
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,13 +16,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.ssafy.chuck.picture.dto.ClusterListResponse;
+import com.ssafy.chuck.picture.dto.ClusterResponse;
 import com.ssafy.chuck.picture.dto.PictureResponse;
 import com.ssafy.chuck.picture.service.PictureService;
 
@@ -36,6 +46,9 @@ public class PictureController {
 
 	@Autowired
 	private PictureService pictureService;
+	
+	@Autowired
+    RestTemplate restTemplate;
 
 	@PostMapping("/insert")
 	@ApiOperation(value = "사진 입력. path_list는 한 다이어리 안에 첨부된 사진들의 path list")
@@ -56,6 +69,30 @@ public class PictureController {
 	public ResponseEntity<String> deletePictureById(int id) {		
 		pictureService.deletePictureById(id);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
+	@GetMapping("/test")
+	@ApiOperation(value = "flask 통신")
+	public ResponseEntity<ClusterListResponse> test(String groupId) throws Exception {
+		List<ClusterResponse> clusterResponseList = new ArrayList<>();
+		
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId, String.class);
+		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
+		JsonArray jsonArray = jsonObject.get("info").getAsJsonArray();
+		System.out.println(jsonArray);
+		for(int i=0;i<jsonArray.size();i++) {
+			JsonObject element = (JsonObject) jsonArray.get(i);
+			String rep = element.get("rep").getAsString();
+			JsonArray list = element.getAsJsonArray("paths");
+			
+			List<String> pathList = new ArrayList<>();
+			for(int j=0;j<list.size();j++)  pathList.add(list.get(j).getAsString());
+			
+			clusterResponseList.add(new ClusterResponse(rep, pathList));
+    	}
+		
+		ClusterListResponse clusterListResponse = new ClusterListResponse(clusterResponseList);
+		return new ResponseEntity<ClusterListResponse>(clusterListResponse, HttpStatus.OK);
 	}
 	
 	@PutMapping("/upload")
