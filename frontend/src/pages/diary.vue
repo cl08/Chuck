@@ -3,38 +3,35 @@
 	<div id='page-0' class='page no-anim flipped'>
     	<div class='side-2' id='p0	'>      
 			<div class='content'>
-				<p>첫페이지 본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-2 -->
+			</div>
+		</div>
 	</div>
-  	<div id='page-1' class='page no-anim'>    
+  	<div id='page-1' class='page no-anim flipped'>    
     	<div class='side-1' id='p1'>
       		<div class='content'>
-        		<h2>1헤더</h2>
-        		<p>1본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-1 -->    
+			</div>
+		</div>    
     	<div class='side-2' id='p2'>      
 			<div class='content'>
-				<h2>2헤더</h2>
-				<p>2본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-2 -->
-	</div><!-- .page -->
+				<Intro />
+			</div>
+		</div>
+	</div>
 
   	<div id='page-2' class='page no-anim'>    
     	<div class='side-1' id='p3'>
       		<div class='content'>
-    		</div><!-- .content -->
-    	</div><!-- .side-1 -->    
+				<Timeline />
+    		</div>
+    	</div>
     	<div class='side-2' id='p4'>      
       		<div class='content'>
 				<Calendar v-show="this.getVisibleCalendar" />
 				<Detail v-show="this.getVisibleDetail" />
 				<Write1 v-show="this.getVisibleWrite" />
-      		</div><!-- .content -->
-    	</div><!-- .side-2 -->
-	</div><!-- #page-2 -->
+      		</div>
+    	</div>
+	</div>
   
   	<div id='page-3' class='page no-anim'>    
     	<div class='side-1' id='p5'>
@@ -42,39 +39,35 @@
         		<List v-if="this.getVisibleCalendar" />
 				<Comment v-show="this.getVisibleDetail" />
 				<Write2 v-show="this.getVisibleWrite" />
-			</div><!-- .content -->
-    	</div><!-- .side-1 -->    
+			</div>
+    	</div>
     	<div class='side-2' id='p6'>      
       		<div class='content'>
-        		<h2>6헤더</h2> 
-        		<p>6본문</p>
-    		</div><!-- .content -->
-    	</div><!-- .side-2 -->
-  	</div><!-- #page-3 -->
+        		<h2>사진첩1</h2>
+    		</div>
+    	</div>
+  	</div>
   
   	<div id='page-4' class='page no-anim'>    
     	<div class='side-1' id='p7'>
       		<div class='content'>
-        		<h2>7헤더</h2>
-        		<p>7본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-1 -->    
+        		<h2>사진첩2</h2>
+			</div>
+		</div>  
 		<div class='side-2' id='p8'>      
 			<div class='content'>
-				<h2>8헤더</h2>
-				<p>8본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-2 -->
-  	</div><!-- #page-4 -->
+				<h2>추억1</h2>
+			</div>
+		</div>
+  	</div>
 	
 	<div id='page-5' class='page no-anim'>    
     	<div class='side-1' id='p9'>
       		<div class='content'>
-        		<h2>9헤더</h2>
-        		<p>9본문</p>
-			</div><!-- .content -->
-		</div><!-- .side-1 -->    
-  	</div><!-- #page-4 -->
+        		<h2>추억2</h2>
+			</div>
+		</div>    
+  	</div>
 </div>
 </template>
 
@@ -86,6 +79,8 @@ import Detail from '@/components/detail.vue'
 import Comment from '@/components/comment.vue'
 import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
+import Timeline from '@/components/timeline.vue'
+import Intro from '@/components/intro.vue'
 export default {
 	components: {
 		Calendar,
@@ -94,6 +89,8 @@ export default {
 		Comment,
 		Write1,
 		Write2,
+		Timeline,
+		Intro,
 	},
 	computed: {
         ...mapGetters([
@@ -104,6 +101,7 @@ export default {
 			'getVisibleWrite',
 		]),
 	},
+
     mounted() {
 		$('.page > div').click(function(e) {
 			e.stopPropagation();
@@ -148,7 +146,7 @@ export default {
 	position: relative;
 }
 
-::-webkit-scrollbar {width:12px}
+::-webkit-scrollbar {width:0px}
 ::-webkit-scrollbar-thumb {background: #222;}
 ::-webkit-scrollbar-track {background: transparent}
 
@@ -203,7 +201,7 @@ h1, p {
 	position: absolute;
 	background-color: hsl(30,40%,70%);
 	backface-visibility: hidden;
-	overflow: hidden;
+	overflow: auto;
 }
 
 .side-1 {

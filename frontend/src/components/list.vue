@@ -19,7 +19,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-col> -->
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail" style="cursor:pointer">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
                     <v-card :color="item.color">
                         <div class="d-flex flex-no-wrap justify-space-between">
                             <div>
@@ -86,7 +86,8 @@ export default {
             'setVisibleDetail',
             'setVisibleWrite',
         ]),
-        detail() {
+        detail(id) {
+            this.setSelectedDiary(id)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)

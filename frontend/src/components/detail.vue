@@ -7,19 +7,19 @@
             </v-carousel>
         </div>
         <div class="mb-15">
-            <span class="float-left ml-10" style="font-size:x-large">
-            cl07
+            <span class="float-left ml-10" style="font-size:large">
+            {{ getChuckList[getSelectedDiary].writer }}
             </span>
             <span class="float-right mr-10">
-            <v-icon large>
+            <v-icon >
                 mdi-chat-outline
             </v-icon>
-            <v-icon large>
+            <v-icon >
                 mdi-download
             </v-icon>
             <v-menu offset-y>
                 <template v-slot:activator="{ on, attrs }">
-                    <v-icon large v-bind="attrs" v-on="on">
+                    <v-icon v-bind="attrs" v-on="on">
                         mdi-dots-horizontal
                     </v-icon>
                 </template>
@@ -27,8 +27,6 @@
                     <v-list-item>
                         <v-list-item-title>수정하기</v-list-item-title>
                     </v-list-item>
-                </v-list>
-                <v-list>
                     <v-list-item>
                         <v-list-item-title>삭제하기</v-list-item-title>
                     </v-list-item>
