@@ -40,8 +40,6 @@ def encode(groupId, imagePaths):
     f.write(pickle.dumps(data))
     f.close()
 
-    clustering(groupId)
-
 
 def clustering(groupId):
     data = pickle.loads(open(groupId + ".pickle", "rb").read())
@@ -67,7 +65,7 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
-            pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
+            pathNames.append(data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
             print(top, right, bottom, left)
             face = image[top:bottom, left:right]
@@ -77,14 +75,16 @@ def clustering(groupId):
         if labelID != -1:
             cv2.imwrite(groupId + "_faces/" + str(labelID) + ".jpg", faces[0])
             result.append({"rep" : "/home/ubuntu/s03p31a206/backend/python/" + groupId + "_faces/" + str(labelID) + ".jpg", "paths" : list(set(pathNames))})
-
+    
+    print(result)
     return {"info" : result}
 
 
 def main():
-    encode('average10@naver.com', ['dataset/1.jpg', 'dataset/2.jpg'])
-    result = cluster('average10@naver.com')
-    print(result)
+    res = encode('10', ['/home/ubuntu/s03p31a206/backend/python/1/20201028163235_1.jpg'])
+    # result = cluster('average10@naver.com')
+    # print(result)
+    print(res)
 
 if __name__ == "__main__":
     main()

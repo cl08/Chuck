@@ -11,7 +11,21 @@ def cluster():
     imagePath = request.args.get('imagePath', 'imagePath')
     print(groupId)
     print(imagePath)
-    return encode(groupId, [imagePath])
+
+    encode(groupId, [imagePath])
+    result = clustering(groupId)
+    print("결과!!!")
+    print(result)
+
+    return result
+
+
+@app.route('/getInfo')
+def getInfo():
+    groupId = request.args.get('groupId', 'groupId')
+    print(groupId)
+    result = clustering(groupId)
+    return result
 
 if __name__ == '__main__':
     app.run()
