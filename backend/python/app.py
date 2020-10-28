@@ -8,8 +8,10 @@ app = Flask(__name__)
 @app.route('/cluster')
 def cluster():
     groupId = request.args.get('groupId', 'groupId')
+    imagePath = request.args.get('imagePath', 'imagePath')
     print(groupId)
-    return clustering(groupId)
+    print(imagePath)
+    return encode(groupId, [imagePath])
 
 if __name__ == '__main__':
     app.run()
