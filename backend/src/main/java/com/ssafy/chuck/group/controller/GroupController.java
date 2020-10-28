@@ -50,18 +50,18 @@ public class GroupController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "그룹 생성 실패")
 	})
-	@ApiImplicitParams({
-		@ApiImplicitParam(
-			value = "생성할 그룹 정보",
-			required = true,
-			name = "group",
-			dataTypeClass = GroupDto.class),
-		@ApiImplicitParam(
-			value = "사용자 정보 JWT 헤더",
-			required = true,
-			name = "User"
-		)
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(
+	// 		value = "생성할 그룹 정보",
+	// 		required = true,
+	// 		name = "group",
+	// 		dataTypeClass = GroupDto.class),
+	// 	@ApiImplicitParam(
+	// 		value = "사용자 정보 JWT 헤더",
+	// 		required = true,
+	// 		name = "User"
+	// 	)
+	// })
 	private ResponseEntity<?> create(@RequestBody GroupDto group, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 생성 호출");
 		group.setUserId(permissionCheck.check(token).getId());
@@ -94,13 +94,13 @@ public class GroupController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "그룹 수정 실패")
 	})
-	@ApiImplicitParams({
-		@ApiImplicitParam(
-			value = "수정할 그룹 정보",
-			required = true,
-			name = "group",
-			dataTypeClass = GroupDto.class)
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(
+	// 		value = "수정할 그룹 정보",
+	// 		required = true,
+	// 		name = "group",
+	// 		dataTypeClass = GroupDto.class)
+	// })
 	private ResponseEntity<?> update(@RequestBody GroupDto group, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 수정 호출");
 		service.update(group, permissionCheck.check(token).getId());
@@ -148,13 +148,13 @@ public class GroupController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "그룹 멤버 추가 실패")
 	})
-	@ApiImplicitParams({
-		@ApiImplicitParam(
-			value = "추가될 멤버 정보",
-			required = true,
-			name = "member",
-			dataTypeClass = MemberDto.class)
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(
+	// 		value = "추가될 멤버 정보",
+	// 		required = true,
+	// 		name = "member",
+	// 		dataTypeClass = MemberDto.class)
+	// })
 	private ResponseEntity<?> createMember(@RequestBody MemberDto member) {
 		logger.debug("그룹 멤버 추가 호출");
 		service.createMember(member);
