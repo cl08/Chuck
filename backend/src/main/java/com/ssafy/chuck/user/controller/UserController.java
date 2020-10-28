@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.chuck.common.ChuckJWT;
+import com.ssafy.chuck.user.dto.Response;
 import com.ssafy.chuck.user.dto.UserDto;
 import com.ssafy.chuck.user.service.UserService;
 
@@ -45,12 +46,16 @@ public class UserController {
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 404, message = "로그인 또는 회원가입 실패")
 	})
-	private ResponseEntity<?> create(@RequestBody String accessToken) {
+	private ResponseEntity<?> create(@RequestBody Response response) {
 		logger.debug("로그인 또는 회원가입 호출");
-
-		// DB 조회 후 없으면 추가 있으면 최근 접속 일자 업데이트
-		UserDto user = service.login(accessToken);
-
+		// 테스트 계정
+		UserDto user = new UserDto();
+		if(response.getAccessToken().equals("1")) {
+			user = new UserDto(1,"test");
+		} else {
+			// DB 조회 후 없으면 추가 있으면 최근 접속 일자 업데이트
+			user = service.login(response);
+		}
 		String token = ChuckJWT.getToken(user.getId(), user.getName());
 		return new ResponseEntity<>(token, HttpStatus.OK);
 	}
@@ -133,9 +138,11 @@ public class UserController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "로그아웃 실패")
 	})
-	private ResponseEntity<?> logOut(@RequestBody String refreshToken, @RequestHeader(value = "token") String token) {
+	private ResponseEntity<?> logOut(@RequestBody Response response, @RequestHeader(value = "token") String token) {
 		logger.debug("로그아웃 호출");
-		service.logout(token, 0, refreshToken);
+		if(!response.getRefreshToken().equals("1")) {
+			service.logout(token, 0, response.getRefreshToken());
+		}
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
