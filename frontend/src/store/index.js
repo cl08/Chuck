@@ -10,6 +10,10 @@ export default new Vuex.Store({
         visibleCalendar: true,
         visibleDetail: false,
         visibleWrite: false,
+        visibleChoice: true,
+        visibleAlbum: false,
+        visibleVideo: false,
+        visiblePreview: false,
         chuckList: [
             {
                 id: '0',
@@ -104,11 +108,23 @@ export default new Vuex.Store({
         getVisibleDetail(state) {
             return state.visibleDetail
         },
+        getComments(state) {
+            return state.comments
+        },
         getVisibleWrite(state) {
             return state.visibleWrite
         },
-        getComments(state) {
-            return state.comments
+        getVisibleChoice(state) {
+            return state.visibleChoice
+        },
+        getVisibleAlbum(state) {
+            return state.visibleAlbum
+        },
+        getVisibleVideo(state) {
+            return state.visibleVideo
+        },
+        getVisiblePreview(state) {
+            return state.visiblePreview
         }
     },
     mutations: {
@@ -127,11 +143,23 @@ export default new Vuex.Store({
         setVisibleDetail(state, payload) {
             state.visibleDetail = payload
         },
+        setComments(state, payload) {
+            state.comments = payload
+        },
         setVisibleWrite(state, payload) {
             state.visibleWrite = payload
         },
-        setComments(state, payload) {
-            state.comments = payload
+        setyVisibleChoice(state, payload) {
+            state.visibleChoice = payload
+        },
+        setVisibleAlbum(state, payload) {
+            state.visibleAlbum = payload
+        },
+        setVisibleVideo(state, payload) {
+            state.visibleVideo = payload
+        },
+        setVisiblePreview(state, payload) {
+            state.visiblePreview = payload
         }
     },
     actions: {}
