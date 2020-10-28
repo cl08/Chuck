@@ -46,7 +46,7 @@ export default new Vuex.Store({
                 ],
                 writer: '김김현현대대',
                 group: 'chuck',
-                date: '2020-10-14',
+                date: '2020-10-13',
             },
             {
                 id: '3',

@@ -3,6 +3,9 @@ import App from './App.vue'
 import router from './router'
 import store from './store'
 import Vuetify from 'vuetify'
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import locale from 'element-ui/lib/locale/lang/ko'
 import 'vuetify/dist/vuetify.min.css'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
@@ -16,6 +19,7 @@ library.add(far)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuetify);
+Vue.use(ElementUI, {locale});
 
 // vue-turnjs install
 import { FlippingWidgets } from "vue-turnjs";

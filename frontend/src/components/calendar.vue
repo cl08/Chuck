@@ -1,9 +1,8 @@
 <!--
-0. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
-1. 날짜 연산 : https://dororongju.tistory.com/116
-2. 아이콘
-3. 년도/월 표현식
-4. 년/월 이동
+    1. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
+    2. 날짜 연산 : https://dororongju.tistory.com/116
+    3. 년/월 이동
+    4. 일 단위 클릭
 -->
 <template>
     <v-row class="fill-height" style="margin:0px 30px 0px 0px;">
