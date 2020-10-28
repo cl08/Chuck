@@ -74,6 +74,22 @@ public class PictureController {
 	@GetMapping("/test")
 	@ApiOperation(value = "flask 통신")
 	public ResponseEntity<ClusterListResponse> test(String groupId) throws Exception {
+		
+		
+		//1. 그룹 ID의 폴더 생성
+		String path = "C:\\Users\\multicampus\\Desktop\\" + groupId;
+		File folder = new File(path);
+		if(!folder.exists()) {
+			try {
+				folder.mkdir();
+				System.out.println("폴더 생성");
+			} catch(Exception e) {
+				e.getStackTrace();
+			}
+		}
+		else System.out.println("이미 폴더가 있습니다.");
+		
+		//3. flask와 연결하여 클러스터링한 결과 반환
 		List<ClusterResponse> clusterResponseList = new ArrayList<>();
 		
 		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId, String.class);
@@ -98,6 +114,11 @@ public class PictureController {
 	@PutMapping("/upload")
 	@ApiOperation(value = "사진 업로드")
 	public ResponseEntity<String> fileUpload(@RequestParam("filename") MultipartFile mFile, HttpServletRequest request){
+		
+		
+		
+		
+		
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date nowdate = new Date();
 		String dateString = formatter.format(nowdate);	//현재시간 문자열
