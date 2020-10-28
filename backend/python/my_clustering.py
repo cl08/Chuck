@@ -60,7 +60,7 @@ def clustering(groupId):
     os.makedirs(groupId + "_faces", exist_ok=True)
     result = []
 
-    im = cv2.imread('dataset\99333550.1.jpg')
+    im = cv2.imread('dataset/99333550.1.jpg')
     print(im)
 
     for labelID in labelIDs:
