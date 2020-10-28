@@ -120,6 +120,7 @@ def clustering(groupId):
             print(data[i]["imagePath"])
             pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
+            print(top, right, bottom, left)
             face = image[top:bottom, left:right]
             face = cv2.resize(face, (96, 96))
             faces.append(face)
