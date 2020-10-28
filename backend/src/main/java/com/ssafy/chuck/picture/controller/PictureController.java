@@ -96,9 +96,35 @@ public class PictureController {
 		return new ResponseEntity<ClusterListResponse>(clusterListResponse, HttpStatus.OK);
 	}
 	
+	@GetMapping("/person_clustering")
+	@ApiOperation(value = "인물 분류 페이지")
+	public ResponseEntity<ClusterListResponse> personClustering(int groupId) throws Exception {
+		
+		//3. flask와 연결하여 클러스터링한 결과 반환
+		List<ClusterResponse> clusterResponseList = new ArrayList<>();
+		
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId, String.class);
+		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
+		JsonArray jsonArray = jsonObject.get("info").getAsJsonArray();
+		System.out.println(jsonArray);
+		for(int i=0;i<jsonArray.size();i++) {
+			JsonObject element = (JsonObject) jsonArray.get(i);
+			String rep = element.get("rep").getAsString();
+			JsonArray list = element.getAsJsonArray("paths");
+			
+			List<String> pathList = new ArrayList<>();
+			for(int j=0;j<list.size();j++)  pathList.add(list.get(j).getAsString());
+			
+			clusterResponseList.add(new ClusterResponse(rep, pathList));
+    	}
+		
+		ClusterListResponse clusterListResponse = new ClusterListResponse(clusterResponseList);
+		return new ResponseEntity<ClusterListResponse>(clusterListResponse, HttpStatus.OK);
+	}
+	
 	@PutMapping("/upload")
 	@ApiOperation(value = "사진 업로드")
-	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, String groupId, int diary_id){
+	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int groupId, int diary_id){
 		
 		//1. 그룹 ID의 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/" + groupId;
@@ -117,12 +143,9 @@ public class PictureController {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date nowdate = new Date();
 		String dateString = formatter.format(nowdate);	//현재시간 문자열
-
 		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + groupId + "/" + 
 				dateString + "_" + mFile.getOriginalFilename();			//경로 + 날짜시간 + _ +파일이름으로 저장
-
 		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + mFile.getOriginalFilename();
-		
 		
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
