@@ -19,7 +19,6 @@ import pymysql;
 def encode(groupId, imagePaths):
 
     files = os.listdir('/home/ubuntu/s03p31a206/backend/python/')
-
     # imagePaths = list(paths.list_images("dataset"))
     data = []
 
@@ -41,7 +40,7 @@ def encode(groupId, imagePaths):
     f.write(pickle.dumps(data))
     f.close()
 
-    cluster(groupId)
+    clustering(groupId)
 
 
 def clustering(groupId):
@@ -60,9 +59,6 @@ def clustering(groupId):
     os.makedirs(groupId + "_faces", exist_ok=True)
     result = []
 
-    im = cv2.imread('dataset/99333550.1.jpg')
-    print(im)
-
     for labelID in labelIDs:
         print("[INFO] faces for face ID: {}".format(labelID))
         idxs = np.where(clt.labels_ == labelID)[0]
@@ -71,9 +67,6 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
-            print("check")
-            print(data[i]["imagePath"])
-            print(image)
             pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
             print(top, right, bottom, left)
@@ -89,7 +82,7 @@ def clustering(groupId):
 
 
 def main():
-    # encode('average10@naver.com', ['dataset/1.jpg', 'dataset/2.jpg'])
+    encode('average10@naver.com', ['dataset/1.jpg', 'dataset/2.jpg'])
     result = cluster('average10@naver.com')
     print(result)
 
