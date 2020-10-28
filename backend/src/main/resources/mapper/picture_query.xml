@@ -4,17 +4,17 @@
 
 	<!-- 사진 입력 -->
 	<insert id="insertPicture">
-		insert pictures(diary_id, path) values(#{diary_id}, #{path})
+		insert PICTURES(DIARY_ID, PATH) values(#{diary_id}, #{path})
 	</insert>
 	
 	<!-- 사진 삭제(사진의 path로 ) -->
 	<delete id="deletePictureByPath">
-		delete from pictures where path = #{path}
+		delete from PICTURES where PATH = #{path}
 	</delete>
 	
 	<!-- 사진 삭제(사진의 id로 ) -->
 	<delete id="deletePictureById">
-		delete from pictures where id = #{id}
+		delete from PICTURES where ID = #{id}
 	</delete>
 	
 	<!-- 사진 삭제(다이어리의 아이디로) -->
