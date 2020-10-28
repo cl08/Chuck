@@ -13,6 +13,9 @@
             />
         </div>
 
+        <div id="test_login" @click="testLogin">
+            <button> 테스트 아이디로 로그인하기 </button>
+        </div>
         <!-- <router-link to="/group"><img src="../assets/kakao_login_medium_narrow.png"></router-link> -->
     </div>
 </template>
@@ -20,6 +23,8 @@
 <script>
 import KakaoLogin from 'vue-kakao-login';
 import api from '@/utils/api';
+import jwt from 'jwt-decode';
+import store from '@/store';
 
 export default {
     components: {
@@ -32,7 +37,19 @@ export default {
         $('#login_page').width(w);
         window.addEventListener("resize", this.handleResize)
     },
-    methods:{
+    methods: {
+        testLogin() {
+            store.dispatch('updateRefreshToken', '1');
+            api.post('/users', {
+                accessToken: '1',
+            }).then(({ data }) => {
+                store.dispatch('updateToken', data);
+                var decode = jwt(data);
+                store.dispatch('updateId', decode.ID);
+                store.dispatch('updateName', decode.NAME);
+                this.$router.push({name: 'group'});
+            });
+        },
         handleResize(e){
             var w = window.innerWidth
             var h = window.innerHeight
@@ -40,17 +57,23 @@ export default {
             $('#login_page').width(w);
         },
         onSuccess(result) {
-        api.post('/users', {
-            access_token: result.access_token,
-        }).then(({ data }) => {
-            console.log(data);
-            this.$router.push({name: 'group'});
-        });
-    },
-    onFailure(result) {
-      console.error(result);
-    },
-
+            store.dispatch('updateRefreshToken', result.refresh_token);
+            api.post('/users', {
+                accessToken: result.access_token,
+            }).then(({ data }) => {
+                store.dispatch('updateToken', data);
+                var decode = jwt(data);
+                store.dispatch('updateId', decode.ID);
+                store.dispatch('updateName', decode.NAME);
+                this.$router.push({name: 'group'});
+            });
+        },
+        onFailure(result) {
+            console.error(result);
+        },
+        logout() {
+            store.dispatch('logout');
+        },
     }
 }
 </script>
@@ -75,5 +98,9 @@ export default {
 }
 #login_page {
     background-color:#FEF9F5
+}
+#test_login {
+    position: absolute;
+    left: 1%;
 }
 </style>

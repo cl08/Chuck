@@ -1,10 +1,15 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import api from '@/utils/api'
 
 Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
+        token: sessionStorage.getItem('token'),
+        ID: sessionStorage.getItem('ID'),
+        NAME: sessionStorage.getItem('NAME'),
+        refreshToken: sessionStorage.getItem('refreshToken'),
         selectedDay: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
         selectedDiary: '',
         visibleCalendar: true,
@@ -89,6 +94,18 @@ export default new Vuex.Store({
         ]
     },
     getters: {
+        getRefreshToken(state) {
+            return state.refreshToken
+        },
+        getToken(state) {
+            return state.token
+        },
+        getId(state) {
+            return state.ID
+        },
+        getName(state) {
+            return state.NAME
+        },
         getChuckList(state) {
             return state.chuckList
         },
@@ -112,6 +129,22 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        setRefreshToken(state, payload) {
+            state.refreshToken = payload;
+            sessionStorage.setItem('refreshToken', payload)
+        },
+        setToken(state, payload) {
+            state.token = payload
+            sessionStorage.setItem('token', payload)
+        },
+        setId(state, payload) {
+            state.ID = payload
+            sessionStorage.setItem('ID', payload)
+        },
+        setName(state, payload) {
+            state.NAME = payload
+            sessionStorage.setItem('NAME', payload)
+        },
         setChuckList(state, payload) {
             state.chuckList = payload
         },
@@ -132,7 +165,37 @@ export default new Vuex.Store({
         },
         setComments(state, payload) {
             state.comments = payload
-        }
+        },
+        deleteUser(state) {
+            state.NAME = ''
+            state.token = ''
+            state.ID = ''
+            sessionStorage.clear
+        },
     },
-    actions: {}
+    actions: {
+        updateRefreshToken({commit}, item) {
+            commit('setRefreshToken', item)
+        },
+        updateToken({commit}, item) {
+            commit('setToken', item)
+        },
+        updateId({commit}, item) {
+            commit('setId', item)
+        },
+        updateName({commit}, item) {
+            commit('setName', item)
+        },
+        logout({commit}) {
+            api.post(`/users/logout`, {
+                refreshToken: sessionStorage.getItem('refreshToken')
+            }, {
+                headers: {
+                    token: sessionStorage.getItem('token')
+                },
+            }).then(() => {
+                commit('deleteUser');
+            })
+        }
+    }
 })
