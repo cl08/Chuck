@@ -118,6 +118,7 @@ def clustering(groupId):
             image = cv2.imread(data[i]["imagePath"])
             print("check")
             print(data[i]["imagePath"])
+            print(image)
             pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
             print(top, right, bottom, left)
