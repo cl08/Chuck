@@ -98,7 +98,7 @@ public class PictureController {
 	
 	@PutMapping("/upload")
 	@ApiOperation(value = "사진 업로드")
-	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, String groupId){
+	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, String groupId, int diary_id){
 		
 		//1. 그룹 ID의 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/" + groupId;
@@ -123,9 +123,11 @@ public class PictureController {
 
 		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + mFile.getOriginalFilename();
 		
+		
 		try {
-			mFile.transferTo(new File(real_path));							//실제경로로 파일을 저장
-			return new ResponseEntity<String>(access_path, HttpStatus.OK);	//접근경로 return
+			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
+			pictureService.insertPicture(diary_id, access_path);			// DB에 접근경로 Insert
+			return new ResponseEntity<String>(access_path, HttpStatus.OK);	// 접근경로 return
 		} catch (IOException e) {
 			System.out.println("파일 업로드 실패");
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
