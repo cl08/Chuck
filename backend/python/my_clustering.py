@@ -18,7 +18,7 @@ import pymysql;
 
 def encode(groupId, imagePaths):
 
-    files = os.listdir('C:/Users/multicampus/s03p31a206/backend/python/')
+    files = os.listdir('/home/ubuntu/s03p31a206/backend/python/')
 
     imagePaths = list(paths.list_images("dataset"))
     data = []
@@ -94,7 +94,7 @@ def encode(groupId, imagePaths):
 
 def clustering(groupId):
     data = pickle.loads(open(groupId + ".pickle", "rb").read())
-    # print(data)
+    print(data)
     data = np.array(data)
     encodings = [d["encoding"] for d in data]
 
@@ -116,6 +116,7 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
+            print(data[i]["imagePath"])
             pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
             face = image[top:bottom, left:right]
