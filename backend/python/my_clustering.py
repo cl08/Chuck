@@ -116,6 +116,7 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
+            print("check")
             print(data[i]["imagePath"])
             pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
