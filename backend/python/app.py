@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from my_clustering import cluster, clustering
+from my_clustering import encode, clustering
 # from urllib.parse import quote # url 한글 인코딩 Error 해결
 
 app = Flask(__name__)
