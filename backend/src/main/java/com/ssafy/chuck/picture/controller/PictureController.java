@@ -72,12 +72,12 @@ public class PictureController {
 	
 	@GetMapping("/test")
 	@ApiOperation(value = "flask 통신")
-	public ResponseEntity<ClusterListResponse> test(String groupId) throws Exception {
+	public ResponseEntity<ClusterListResponse> test(int groupId, String imagePath) throws Exception {
 		
 		//3. flask와 연결하여 클러스터링한 결과 반환
 		List<ClusterResponse> clusterResponseList = new ArrayList<>();
 		
-		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId, String.class);
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + imagePath, String.class);
 		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
 		JsonArray jsonArray = jsonObject.get("info").getAsJsonArray();
 		System.out.println(jsonArray);
