@@ -6,9 +6,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +20,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
@@ -75,20 +74,6 @@ public class PictureController {
 	@ApiOperation(value = "flask 통신")
 	public ResponseEntity<ClusterListResponse> test(String groupId) throws Exception {
 		
-		
-		//1. 그룹 ID의 폴더 생성
-		String path = "C:\\Users\\multicampus\\Desktop\\" + groupId;
-		File folder = new File(path);
-		if(!folder.exists()) {
-			try {
-				folder.mkdir();
-				System.out.println("폴더 생성");
-			} catch(Exception e) {
-				e.getStackTrace();
-			}
-		}
-		else System.out.println("이미 폴더가 있습니다.");
-		
 		//3. flask와 연결하여 클러스터링한 결과 반환
 		List<ClusterResponse> clusterResponseList = new ArrayList<>();
 		
@@ -113,20 +98,31 @@ public class PictureController {
 	
 	@PutMapping("/upload")
 	@ApiOperation(value = "사진 업로드")
-	public ResponseEntity<String> fileUpload(@RequestParam("filename") MultipartFile mFile, HttpServletRequest request){
+	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, String groupId){
 		
+		//1. 그룹 ID의 폴더 생성
+		String path = "/home/ubuntu/s03p31a206/backend/python/" + groupId;
+		File folder = new File(path);
+		if(!folder.exists()) {
+			try {
+				folder.mkdir();
+				System.out.println("폴더 생성");
+			} catch(Exception e) {
+				e.getStackTrace();
+			}
+		}
+		else System.out.println("이미 폴더가 있습니다.");
 		
-		
-		
-		
+		//2. 그룹 폴더 안에 사진 저장
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date nowdate = new Date();
 		String dateString = formatter.format(nowdate);	//현재시간 문자열
 
-		String real_path = "/home/ubuntu/s03p31a206/back/src/main/webapp/resources/postRep/" + 
-				dateString + "_" + mFile.getOriginalFilename();	//경로 + 날짜시간 + _ +파일이름으로 저장
+		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + groupId + "/" + 
+				dateString + "_" + mFile.getOriginalFilename();			//경로 + 날짜시간 + _ +파일이름으로 저장
 
-		String access_path = "http://k3a206.p.ssafy.io/images/postRep/" + dateString + "_" + mFile.getOriginalFilename();
+		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + mFile.getOriginalFilename();
+		
 		try {
 			mFile.transferTo(new File(real_path));							//실제경로로 파일을 저장
 			return new ResponseEntity<String>(access_path, HttpStatus.OK);	//접근경로 return
