@@ -116,7 +116,7 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
-            pathNames.append(data[i]["imagePath"])
+            pathNames.append("/home/ubuntu/s03p31a206/backend/python/" + data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
             face = image[top:bottom, left:right]
             face = cv2.resize(face, (96, 96))
@@ -124,7 +124,7 @@ def clustering(groupId):
             
         if labelID != -1:
             cv2.imwrite(groupId + "_faces/" + str(labelID) + ".jpg", faces[0])
-            result.append({"rep" : groupId + "_faces/" + str(labelID) + ".jpg", "paths" : list(set(pathNames))})
+            result.append({"rep" : "/home/ubuntu/s03p31a206/backend/python/" + groupId + "_faces/" + str(labelID) + ".jpg", "paths" : list(set(pathNames))})
 
     return {"info" : result}
 
