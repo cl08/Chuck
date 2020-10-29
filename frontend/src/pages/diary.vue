@@ -1,7 +1,7 @@
 <template>
 <div class='book'>
 	<div id='page-0' class='page no-anim flipped'>
-    	<div class='side-2' id='p0	'>      
+    	<div class='side-2' id='p0'>      
 			<div class='content'>
 			</div>
 		</div>
@@ -36,7 +36,7 @@
   	<div id='page-3' class='page no-anim'>    
     	<div class='side-1' id='p5'>
       		<div class='content'>
-        		<List v-if="this.getVisibleCalendar" />
+        		<List v-show="this.getVisibleCalendar" />
 				<Comment v-show="this.getVisibleDetail" />
 				<Write2 v-show="this.getVisibleWrite" />
 			</div>
@@ -56,7 +56,10 @@
 		</div>  
 		<div class='side-2' id='p8'>      
 			<div class='content'>
-				<h2>추억1</h2>
+				<Album1 v-show="this.getVisibleChoice" />
+				<Album2 v-show="this.getVisibleAlbum" />
+        		<Video2 v-show="this.getVisibleVideo" />
+        		<Video4 v-show="this.getVisiblePreview" />
 			</div>
 		</div>
   	</div>
@@ -64,7 +67,10 @@
 	<div id='page-5' class='page no-anim'>    
     	<div class='side-1' id='p9'>
       		<div class='content'>
-        		<h2>추억2</h2>
+        		<Video1 v-show="this.getVisibleChoice" />
+				<Album3 v-show="this.getVisibleAlbum" />
+        		<Video3 v-show="this.getVisibleVideo" />
+        		<Video5 v-show="this.getVisiblePreview" />
 			</div>
 		</div>    
   	</div>
@@ -81,6 +87,15 @@ import Write1 from '@/components/write1.vue'
 import Write2 from '@/components/write2.vue'
 import Timeline from '@/components/timeline.vue'
 import Intro from '@/components/intro.vue'
+import Album1 from '@/components/album/pick.vue'
+import Album2 from '@/components/album/selectPerson.vue'
+import Album3 from '@/components/album/preview.vue'
+import Video1 from '@/components/video/pick.vue'
+import Video2 from '@/components/video/selectPerson.vue'
+import Video3 from '@/components/video/selectImage.vue'
+import Video4 from '@/components/video/selectMusic.vue'
+import Video5 from '@/components/video/preview.vue'
+
 export default {
 	components: {
 		Calendar,
@@ -91,6 +106,14 @@ export default {
 		Write2,
 		Timeline,
 		Intro,
+		Album1,
+		Album2,
+		Album3,
+		Video1,
+		Video2,
+		Video3,
+		Video4,
+		Video5,
 	},
 	computed: {
         ...mapGetters([
@@ -99,6 +122,10 @@ export default {
 			'getVisibleCalendar',
 			'getVisibleDetail',
 			'getVisibleWrite',
+			'getVisibleChoice',
+			'getVisibleAlbum',
+			'getVisibleVideo',
+			'getVisiblePreview'
 		]),
 	},
 
@@ -159,7 +186,7 @@ export default {
   color: white;
   }
 
-body * {
+* {
 	transform-style: preserve-3d;
 }
 
@@ -168,9 +195,9 @@ h1, p {
 }
 
 .book {
-	height: 800px;
 	/* max-height: 1200px;
 	min-height: 300px; */
+	height: 812px;
 	width: 1420px;
 	background: url('../assets/layout1.png');
 	background-size: cover;
@@ -184,13 +211,14 @@ h1, p {
 }
 
 .page {
-	height: 717px;
-	width: 593px;
+	height: 767px;
+	width: 636px;
 	line-height: 1.5;
 	border-right: 10px solid transparent;
+	/* background-color: red; */
 	position: absolute;
-	top: 49px;
-	right: 99px;
+	top: 29px;
+	right: 79px;
 	transform-origin: 0 50%;
 	transition: .8s;
 	/*animation: unflip .3s linear;*/
@@ -208,7 +236,7 @@ h1, p {
     z-index: 2;
     /* box-shadow: inset 50px 0 50px rgba(0,0,0,.5); */
     transition: .5s;
-    background-image: url('../assets/rightpage.png');
+	background-image: url('../assets/rightpage.png');
     background-size: cover;
 }
 .side-2 {
@@ -230,7 +258,7 @@ h1, p {
 	background: url('../assets/1.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 600px; right: -53px;
+	top: 0; bottom: 600px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -246,7 +274,7 @@ h1, p {
 	background: url('../assets/2.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 400px; right: -53px;
+	top: 0; bottom: 400px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -262,7 +290,7 @@ h1, p {
 	background: url('../assets/3.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 200px; right: -53px;
+	top: 0; bottom: 200px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -278,7 +306,7 @@ h1, p {
 	background: url('../assets/4.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 0px; right: -53px;
+	top: 0; bottom: 0px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;

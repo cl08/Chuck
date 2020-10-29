@@ -7,7 +7,7 @@
             </v-carousel>
         </div>
         <div class="mb-15">
-            <span class="float-left ml-10" style="font-size:large">
+            <span v-if="getChuckList[getSelectedDiary]" class="float-left ml-10" style="font-size:large">
             {{ getChuckList[getSelectedDiary].writer }}
             </span>
             <span class="float-right mr-10">
