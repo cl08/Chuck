@@ -1,6 +1,3 @@
-<!--
-    1. 레이아웃 범위 지정 (ex:form)
--->
 <template>
     <div style="margin:30px 30px 0px 0px;">
         <font size=9>사진첩 만들기</font>
