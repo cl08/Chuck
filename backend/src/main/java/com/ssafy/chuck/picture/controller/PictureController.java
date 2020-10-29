@@ -53,7 +53,7 @@ public class PictureController {
 	@ApiOperation(value = "사진 입력. path_list는 한 다이어리 안에 첨부된 사진들의 path list")
 	public ResponseEntity<String> insertPicture(@RequestBody PictureResponse pictureResponse) {		
 		for(int i=0;i<pictureResponse.getPath_list().size();i++) pictureService.insertPicture(pictureResponse.getDiary_id(), pictureResponse.getPath_list().get(i));
-		return new ResponseEntity<String>("success", HttpStatus.OK);
+		return new ResponseEntity<String>("success", HttpStatus.OK);	
 	}
 	
 	@DeleteMapping("/deleteByPath")
@@ -123,8 +123,8 @@ public class PictureController {
 	}
 	
 	@PutMapping("/upload")
-	@ApiOperation(value = "사진 업로드")
-	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int groupId, int diary_id){
+	@ApiOperation(value = "사진 업로드 - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장 후 flask와 연결해 인물 재분류")
+	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int groupId){
 		
 		//1. 그룹 ID의 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/" + groupId;
@@ -149,7 +149,8 @@ public class PictureController {
 		
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
-			pictureService.insertPicture(diary_id, access_path);			// DB에 접근경로 Insert
+			// 3. flask와 연결하여 클러스터링
+			String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
 			return new ResponseEntity<String>(access_path, HttpStatus.OK);	// 접근경로 return
 		} catch (IOException e) {
 			System.out.println("파일 업로드 실패");
