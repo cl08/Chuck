@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.log.dao.LogDao">
+    <insert id="create" parameterType="com.ssafy.chuck.log.dto.LogDto">
+        insert into LOGS (GROUP_ID, CONTENT) VALUES (#{groupId}, #{content})
+    </insert>
 </mapper>
