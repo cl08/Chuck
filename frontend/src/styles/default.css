@@ -24,8 +24,8 @@
     font-style: normal;
 }
 .dash{
-    margin: 10px;
-    padding: 10px;
+    margin: 5px 25px 5px 25px;
+    padding: 5px;
     border: 2px dashed #DCDFE6;
     border-radius: 3px;
     /* margin: 0px 10px 0px 10px;
@@ -36,6 +36,6 @@
     box-sizing: border-box;
     min-width: 0; */
 }
-.el-input__inner{
+/* .el-input__inner{
     text-align: center;  
-}
+} */

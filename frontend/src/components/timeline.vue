@@ -1,5 +1,5 @@
 <template>
-    <div style="margin:30px 0px 0px 30px;">
+    <div style="margin:35px 0px 0px 35px;">
         <div class="text-left ml-5">
             <font size=9>TimeLine</font>
         </div>

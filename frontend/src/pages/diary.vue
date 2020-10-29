@@ -195,9 +195,9 @@ h1, p {
 }
 
 .book {
-	height: 800px;
 	/* max-height: 1200px;
 	min-height: 300px; */
+	height: 812px;
 	width: 1420px;
 	background: url('../assets/layout1.png');
 	background-size: cover;
@@ -211,13 +211,14 @@ h1, p {
 }
 
 .page {
-	height: 717px;
-	width: 594px;
+	height: 767px;
+	width: 636px;
 	line-height: 1.5;
 	border-right: 10px solid transparent;
+	/* background-color: red; */
 	position: absolute;
-	top: 49px;
-	right: 99px;
+	top: 29px;
+	right: 79px;
 	transform-origin: 0 50%;
 	transition: .8s;
 	/*animation: unflip .3s linear;*/
@@ -235,7 +236,7 @@ h1, p {
     z-index: 2;
     /* box-shadow: inset 50px 0 50px rgba(0,0,0,.5); */
     transition: .5s;
-    background-image: url('../assets/rightpage.png');
+	background-image: url('../assets/rightpage.png');
     background-size: cover;
 }
 .side-2 {
@@ -257,7 +258,7 @@ h1, p {
 	background: url('../assets/1.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 600px; right: -53px;
+	top: 0; bottom: 600px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -273,7 +274,7 @@ h1, p {
 	background: url('../assets/2.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 400px; right: -53px;
+	top: 0; bottom: 400px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -289,7 +290,7 @@ h1, p {
 	background: url('../assets/3.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 200px; right: -53px;
+	top: 0; bottom: 200px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
@@ -305,7 +306,7 @@ h1, p {
 	background: url('../assets/4.png');
 	background-size: cover;
 	position: absolute;
-	top: 0; bottom: 0px; right: -53px;
+	top: 0; bottom: 0px; right: -50px;
 	margin: auto;
 	color: white;
 	text-shadow: 0 -1px 0 #222;
