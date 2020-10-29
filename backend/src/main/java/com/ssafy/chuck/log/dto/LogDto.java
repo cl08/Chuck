@@ -19,8 +19,12 @@ public class LogDto {
 	@ApiModelProperty(value = "해당 이벤트 다이어리 또는 댓글 아이디", example = "1")
 	private int writeId;
 
-	@ApiModelProperty(value = "이벤트 상태", example = "Chuck")
-	private String state;
+	public LogDto() {}
+
+	public LogDto(int groupId, String content) {
+		this.groupId = groupId;
+		this.content = content;
+	}
 
 	public int getId() {
 		return id;
@@ -62,13 +66,6 @@ public class LogDto {
 		this.writeId = writeId;
 	}
 
-	public String getState() {
-		return state;
-	}
-
-	public void setState(String state) {
-		this.state = state;
-	}
 
 	@Override
 	public String toString() {
@@ -78,7 +75,6 @@ public class LogDto {
 			", content='" + content + '\'' +
 			", userId=" + userId +
 			", writeId=" + writeId +
-			", state='" + state + '\'' +
 			'}';
 	}
 }
