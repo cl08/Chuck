@@ -1,7 +1,7 @@
 <template>
 <div class='book'>
 	<div id='page-0' class='page no-anim flipped'>
-    	<div class='side-2' id='p0	'>      
+    	<div class='side-2' id='p0'>      
 			<div class='content'>
 			</div>
 		</div>

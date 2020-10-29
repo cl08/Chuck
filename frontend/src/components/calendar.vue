@@ -4,11 +4,13 @@
     3. 일 단위 클릭
 -->
 <template>
-    <v-row class="fill-height" style="margin:0px 30px 0px 0px;">
+    <div class="fill-height" style="margin:30px 30px 0px 0px;">
         <v-col>
             <v-sheet height="64">
                 <v-toolbar flat>
-                    <span @click="setToday" style="font-size:x-large; cursor:pointer;">Calendar</span>
+                    <span @click="setToday" style="cursor:pointer;">
+                        <font size=9>Calendar</font>
+                    </span>
                     <v-spacer></v-spacer>
                     <v-btn fab text small color="grey darken-2" @click="prev">
                         <font-awesome-icon :icon="faAngleLeft" />
@@ -35,7 +37,7 @@
                 ></v-calendar>
             </v-sheet>
         </v-col>
-    </v-row>
+    </div>
 </template>
 
 <script>

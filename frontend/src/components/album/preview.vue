@@ -4,7 +4,14 @@
             <font size=4>미리보기</font>
         </div>
         <div class="dash" style="height:620px;">
-            사쥔
+            <el-carousel indicator-position="none">
+                <el-carousel-item v-for="(chuck, index) in getChuckList" :key="index">
+                    <img :src="chuck.img[0]">
+                </el-carousel-item>
+            </el-carousel>
+            {{ getChuckList[0].title }}
+            
+            {{ getChuckList[0].content}}
         </div>
         <div class="dash">
             <font size=4>PDF로 내려받기</font>
@@ -13,8 +20,13 @@
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
-
+    computed: {
+        ...mapGetters([
+            'getChuckList',
+        ])
+    },
 }
 </script>
 
