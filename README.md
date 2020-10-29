@@ -61,3 +61,39 @@ https://xd.adobe.com/view/45bb03c3-da09-4b9b-8ec3-c1dc157e2a3a-10e8/?fullscreen&
 - 아무래도 그룹, 사람들이 모이는 공간이기때문에 커뮤니티 적인 요소가 필요해도 좋겠다 싶음. 예를들어 채팅방이라던지? 
 - 혹은 낙서장? 처럼 칠판배경또는 낙서 전용 다이어리 페이지를 만들어 글을 쓰고 댓글을 다는 그런 형식이거나 댓글없이 글만 쓰면서?
 - 위 항목들 생각하면서 그룹원의 아이디를 누르면 그사람에게 낙서할 수 있는 롤링페이퍼를 만들고 한마디를 작성 할 수 있는 페이지가 있으면 더 재밌지않을까?
+
+
+
+#### Language Convention
+1) Back-End
+- Using Language : Java
+- Using Java Convention : Naver Hack-Day Convention
+  (https://naver.github.io/hackday-conventions-java/)
+
+2) Front-End
+- Using Language : JavaScript
+- Using JavaScript Convention : Vue.js Style Guide
+  (https://kr.vuejs.org/v2/style-guide/index.html)
+
+
+#### Git 정책
+1) 브랜치
+master - develop    - feature/BE/기능
+                    - feature/FE/기능
+
+
+2) Git Commit [예약어] 지라 이슈 번호 : 제목(한 일)
+- 제목의 길이는 최대 40글자까지 한글로 간단 명료하게 작성
+- 제목을 작성하고 반드시 빈 줄 한 줄을 만들어야 함
+- 제목에 .(마침표) 금지
+- 예약어 리스트
+- feature : 새로운 기능
+- bug : 버그 수정
+- update : 비즈니스 로직 변경
+- docs : 문서 (문서 추가, 수정, 삭제)
+- test : 테스트
+- etc : 기타 변경사항
+
+
+
+
