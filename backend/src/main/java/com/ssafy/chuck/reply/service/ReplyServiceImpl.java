@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.ReplyLog;
 import com.ssafy.chuck.reply.dao.ReplyDao;
 import com.ssafy.chuck.reply.dto.ReplyDto;
 
@@ -14,7 +15,8 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Autowired
 	private ReplyDao replyDao;
-	
+
+	@ReplyLog
 	@Override
 	public int insertComment(Long writer, String comment, int diary_id) {
 		Date date = new Date(System.currentTimeMillis());

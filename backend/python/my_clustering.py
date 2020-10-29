@@ -8,6 +8,8 @@ import pickle
 from PIL import Image
 from imutils import build_montages
 from imutils import paths
+# pip install PyMySQL
+import pymysql;
 
 #pip install dlib  < 파일로 다운받아야 함.
 #pip install face_recognition
@@ -16,9 +18,8 @@ from imutils import paths
 
 def encode(groupId, imagePaths):
 
-    files = os.listdir('C:/Users/multicampus/s03p31a206/backend/python/')
-
-    imagePaths = list(paths.list_images("dataset"))
+    files = os.listdir('/home/ubuntu/s03p31a206/backend/python/')
+    # imagePaths = list(paths.list_images("dataset"))
     data = []
 
     for (i, imagePath) in enumerate(imagePaths):
@@ -39,11 +40,10 @@ def encode(groupId, imagePaths):
     f.write(pickle.dumps(data))
     f.close()
 
-    cluster(groupId)
 
-def cluster(groupId):
+def clustering(groupId):
     data = pickle.loads(open(groupId + ".pickle", "rb").read())
-    # print(data)
+    print(data)
     data = np.array(data)
     encodings = [d["encoding"] for d in data]
 
@@ -67,30 +67,24 @@ def cluster(groupId):
             image = cv2.imread(data[i]["imagePath"])
             pathNames.append(data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
+            print(top, right, bottom, left)
             face = image[top:bottom, left:right]
             face = cv2.resize(face, (96, 96))
             faces.append(face)
             
         if labelID != -1:
             cv2.imwrite(groupId + "_faces/" + str(labelID) + ".jpg", faces[0])
-            result.append({"rep" : groupId + "_faces/" + str(labelID) + ".jpg", "paths" : list(set(pathNames))})
-        
-
-        # 분류된 사진을 보고 싶다면, 해당 주석을 풀면 됌
-        # montage = build_montages(faces, (96, 96), (5, 5))[0]
-        # title = "Face ID #{}".format(labelID)
-        # title = "Unknown Faces" if labelID == -1 else title
-        # cv2.imshow(title, montage)
-        # cv2.waitKey(0)
-
-    #return해주는 데이터 : {rep : 대표얼굴의 경로, paths : [해당 얼굴이 포함된 사진들의 경로]} 의 리스트.
+            result.append({"rep" : "/home/ubuntu/s03p31a206/backend/python/" + groupId + "_faces/" + str(labelID) + ".jpg", "paths" : list(set(pathNames))})
+    
     print(result)
+    return {"info" : result}
 
 
 def main():
-    # encode('average10@naver.com', ['dataset/1.jpg', 'dataset/2.jpg'])
-    result = cluster('average10@naver.com')
-    print(result)
+    res = encode('10', ['/home/ubuntu/s03p31a206/backend/python/1/20201028163235_1.jpg'])
+    # result = cluster('average10@naver.com')
+    # print(result)
+    print(res)
 
 if __name__ == "__main__":
     main()

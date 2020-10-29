@@ -27,9 +27,7 @@ public class UserServiceImpl implements UserService {
 	UserDao dao;
 
 	@Override
-	public UserDto login(String accessToken) {
-		Gson gson = new Gson();
-		Response response = gson.fromJson(accessToken, Response.class);
+	public UserDto login(Response response) {
 		Response userInfo = UserAspect.getUserInfo(response.getAccessToken());
 
 		long userId = Long.parseLong(userInfo.getId());

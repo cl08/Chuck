@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -54,17 +55,17 @@ public class DiaryController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "이미지 업로드 실패")
 	})
-	private ResponseEntity<?> create(@RequestParam(value = "file") MultipartFile image) {
+	private ResponseEntity<?> create(@RequestPart(value = "file") MultipartFile image) {
 		logger.debug("이미지 업로드 호출");
 		return new ResponseEntity<>(fileService.store(image), HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ApiOperation(value = "다이어리 생성", notes = "그룹의 추억 쌓기", response = DiaryDto.class)
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-		@ApiImplicitParam(name = "review", value = "일기 내용", dataTypeClass = DiaryDto.class)
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(name = "token", value = "회원 토큰",),
+	// 	@ApiImplicitParam(name = "review", value = "일기 내용", dataTypeClass = DiaryDto.class)
+	// })
 	@ApiResponses({
 		@ApiResponse(code = 201, message = "다이어리 생성 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
@@ -85,7 +86,7 @@ public class DiaryController {
 		@ApiImplicitParam(name = "token", value = "회원 토큰"),
 	})
 	@ApiResponses({
-		@ApiResponse(code = 201, message = "다이어리 상세 조회 성공"),
+		@ApiResponse(code = 200, message = "다이어리 상세 조회 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
@@ -102,7 +103,7 @@ public class DiaryController {
 	@ApiOperation(value = "다이어리 수정", notes = "그룹의 추억 수정", response = DiaryDto.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-		@ApiImplicitParam(name = "다이어리", value = "다이어리"),
+		// @ApiImplicitParam(name = "다이어리", value = "다이어리", dataTypeClass = DiaryDto.class),
 	})
 	@ApiResponses({
 		@ApiResponse(code = 201, message = "다이어리 수정 성공"),
@@ -115,14 +116,14 @@ public class DiaryController {
 		logger.debug("다이어리 수정 호출");
 		long userId = permissionCheck.check(token).getId();
 		service.update(userId, diary);
-		return new ResponseEntity<>(diary, HttpStatus.OK);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@RequestMapping(method = RequestMethod.DELETE, value = "/{id}", produces = "application/json")
 	@ApiOperation(value = "다이어리 삭제", notes = "다이어리 삭제")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-		@ApiImplicitParam(name = "reviewId", value = "다이어리 아이디", example = "1")
+		// @ApiImplicitParam(name = "id", value = "다이어리 아이디", example = "1")
 	})
 	@ApiResponses({
 		@ApiResponse(code = 204, message = "다이어리 삭제 성공"),
@@ -141,9 +142,9 @@ public class DiaryController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/group/{id}", produces = "application/json")
 	@ApiOperation(value = "다이어리 리스트 조회", notes = "그룹의 추억들 읽기", response = DiaryDto.class)
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(name = "token", value = "회원 토큰"),
+	// })
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "다이어리 리스트 조회 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
@@ -160,9 +161,9 @@ public class DiaryController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search/{word}/{id}", produces = "application/json")
 	@ApiOperation(value = "다이어리 검색", notes = "그룹의 추억 검색", response = DiaryDto.class)
-	@ApiImplicitParams({
-		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-	})
+	// @ApiImplicitParams({
+	// 	@ApiImplicitParam(name = "token", value = "회원 토큰"),
+	// })
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "다이어리 검색 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),

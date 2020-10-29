@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.DiaryLog;
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.diary.dao.DiaryDao;
 import com.ssafy.chuck.diary.dto.DiaryDto;
@@ -17,6 +18,7 @@ public class DiaryServiceImpl implements DiaryService{
 	@Autowired
 	DiaryDao dao;
 
+	@DiaryLog
 	@GroupMemberCheck
 	@Override
 	public void create(long userId, int num, DiaryDto diary) {
