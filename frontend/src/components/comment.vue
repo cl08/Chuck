@@ -1,5 +1,6 @@
 <!--
     1. 댓글 좌우 번갈아 가면서 나오기
+    2. 크기고정 + 스크롤
 -->
 <template>
     <div style="margin:0px 0px 0px 30px; height:717px;">
@@ -10,9 +11,12 @@
             </p>
         </div>
         <div class="comment">      
-            <v-text-field label="댓글" color="#EEAFAF">
-                <v-icon slot="append" color="#EEAFAF">mdi-comment</v-icon>
-            </v-text-field>
+            <!-- <v-text-field label="댓글" color="#EEAFAF">
+                <v-icon slot="append" color="#EEAFAF" style="cursor:pointer" @click="comment">mdi-comment</v-icon>
+            </v-text-field> -->
+            <el-input placeholder="Please input" v-model="input">
+                <template slot="append" icon="el-icon-search"><i class="el-icon-edit"></i></template>
+            </el-input>
         </div>
     </div>
 </template>
@@ -20,10 +24,20 @@
 <script>
 import { mapGetters } from 'vuex'
 export default {
+    data() {
+        return{
+            input:'',
+        }
+    },
     computed: {
         ...mapGetters([
             'getComments'
         ]),
+    },
+    methods: {
+        comment() {
+            alert("ㅋㅋ")
+        }
     }
 }
 </script>
@@ -50,8 +64,6 @@ export default {
     -ms-transform: rotate(2deg);
     transform: rotate(2deg);
     width: 180px;
-    font-family: 'The Girl Next Door', cursive; /*originally with brain flower font*/
-    font-size: 1em;
 }
 .note:after {
     display: block;

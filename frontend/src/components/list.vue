@@ -1,7 +1,8 @@
 <!--
-    1. 색
-    2. content 길 경우 문제. grid 지정
-    3. 스크롤
+    1. content 길 경우 문제. grid 지정
+    2. 검색버튼
+    3. 글쓰기버튼
+    4. 카드형식으로 바꾸기(와이어프레임 참고)
 -->
 <template>
     <div style="margin:30px 0px 0px 30px;">
@@ -19,7 +20,7 @@
                         </v-card-actions>
                     </v-card>
                 </v-col> -->
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail" style="cursor:pointer">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
                     <v-card :color="item.color">
                         <div class="d-flex flex-no-wrap justify-space-between">
                             <div>
@@ -36,7 +37,7 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12">
-                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px gray">
+                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px #DCDFE6;">
                         <v-avatar size="62" tile style="cursor:pointer">
                         <!-- <v-avatar class="ma-3" size="125" tile style="cursor:pointer"> -->
                             <img src='../assets/add.png'>
@@ -86,7 +87,8 @@ export default {
             'setVisibleDetail',
             'setVisibleWrite',
         ]),
-        detail() {
+        detail(id) {
+            this.setSelectedDiary(id)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)

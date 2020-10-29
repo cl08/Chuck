@@ -1,16 +1,16 @@
 <!--
-0. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
-1. 날짜 연산 : https://dororongju.tistory.com/116
-2. 아이콘
-3. 년도/월 표현식
-4. 년/월 이동
+    1. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
+    2. 날짜 연산 : https://dororongju.tistory.com/116
+    3. 일 단위 클릭
 -->
 <template>
-    <v-row class="fill-height" style="margin:0px 30px 0px 0px;">
+    <div class="fill-height" style="margin:30px 30px 0px 0px;">
         <v-col>
             <v-sheet height="64">
                 <v-toolbar flat>
-                    <span @click="setToday" style="font-size:x-large; cursor:pointer;">Calendar</span>
+                    <span @click="setToday" style="cursor:pointer;">
+                        <font size=9>Calendar</font>
+                    </span>
                     <v-spacer></v-spacer>
                     <v-btn fab text small color="grey darken-2" @click="prev">
                         <font-awesome-icon :icon="faAngleLeft" />
@@ -37,7 +37,7 @@
                 ></v-calendar>
             </v-sheet>
         </v-col>
-    </v-row>
+    </div>
 </template>
 
 <script>
@@ -58,7 +58,7 @@ export default {
         events: [],
     }),
     mounted () {
-          this.$refs.calendar.checkChange()
+        this.$refs.calendar.checkChange()
     },
     computed: {
         ...mapGetters([
@@ -84,6 +84,7 @@ export default {
             'setVisibleWrite',
         ]),
         viewDay ({ date }) {
+            console.log(date)
             this.setSelectedDay(date)
             this.focus = date
         },
@@ -99,7 +100,7 @@ export default {
         next () {
             this.$refs.calendar.next()
         },
-        showEvent ({ nativeEvent, event }) {
+        showEvent ({ nativeEvent, event, date }) {
             this.setSelectedDiary(event.index)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
