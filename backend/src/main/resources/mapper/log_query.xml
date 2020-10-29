@@ -4,4 +4,16 @@
     <insert id="create" parameterType="com.ssafy.chuck.log.dto.LogDto">
         insert into LOGS (GROUP_ID, CONTENT) VALUES (#{groupId}, #{content})
     </insert>
+
+    <select id="readAll" parameterType="int" resultType="com.ssafy.chuck.log.dto.LogDto">
+        SELECT
+        ID,
+        GROUP_ID,
+        REGEXP_REPLACE(
+        REPLACE(CONTENT, SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1), (select NAME from USERS where id = SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1))), '[0-9()]', '') 'CONTENT',
+        SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1) "USER_ID",
+        if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', if(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 3), ' ', -1), '(', 1) like 'Chuck', 'Chuck', 'reply'), '') "STATE",
+        if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1), -1) "WRITE_ID"
+        from LOGS where GROUP_ID = {id}
+    </select>
 </mapper>

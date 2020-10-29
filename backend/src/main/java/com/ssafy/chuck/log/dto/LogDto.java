@@ -13,17 +13,14 @@ public class LogDto {
 	@ApiModelProperty(value = "로그 내용", example = "OOO님이 OO그룹에 가입하셨습니다.")
 	private String content;
 
-	@ApiModelProperty(value = "그룹장 아이디", example = "412487687")
-	private long ownerId;
-
 	@ApiModelProperty(value = "해당 이벤트 유저 아이디", example = "12468731")
 	private long userId;
 
-	@ApiModelProperty(value = "해당 이벤트 다이어리 아이디", example = "1")
-	private int diaryId;
+	@ApiModelProperty(value = "해당 이벤트 다이어리 또는 댓글 아이디", example = "1")
+	private int writeId;
 
-	@ApiModelProperty(value = "해당 이벤트 댓글 아이디", example = "1")
-	private int replyId;
+	@ApiModelProperty(value = "이벤트 상태", example = "Chuck")
+	private String state;
 
 	public int getId() {
 		return id;
@@ -49,14 +46,6 @@ public class LogDto {
 		this.content = content;
 	}
 
-	public long getOwnerId() {
-		return ownerId;
-	}
-
-	public void setOwnerId(long ownerId) {
-		this.ownerId = ownerId;
-	}
-
 	public long getUserId() {
 		return userId;
 	}
@@ -65,20 +54,20 @@ public class LogDto {
 		this.userId = userId;
 	}
 
-	public int getDiaryId() {
-		return diaryId;
+	public int getWriteId() {
+		return writeId;
 	}
 
-	public void setDiaryId(int diaryId) {
-		this.diaryId = diaryId;
+	public void setWriteId(int writeId) {
+		this.writeId = writeId;
 	}
 
-	public int getReplyId() {
-		return replyId;
+	public String getState() {
+		return state;
 	}
 
-	public void setReplyId(int replyId) {
-		this.replyId = replyId;
+	public void setState(String state) {
+		this.state = state;
 	}
 
 	@Override
@@ -87,10 +76,9 @@ public class LogDto {
 			"id=" + id +
 			", groupId=" + groupId +
 			", content='" + content + '\'' +
-			", ownerId=" + ownerId +
 			", userId=" + userId +
-			", diaryId=" + diaryId +
-			", replyId=" + replyId +
+			", writeId=" + writeId +
+			", state='" + state + '\'' +
 			'}';
 	}
 }
