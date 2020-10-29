@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.StringTokenizer;
+
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -50,9 +52,13 @@ public class PictureController {
     RestTemplate restTemplate;
 
 	@PostMapping("/insert")
-	@ApiOperation(value = "사진 입력. path_list는 한 다이어리 안에 첨부된 사진들의 path list")
+	@ApiOperation(value = "다이어리에서 글 작성을 완료할 때, 사진들의 path list를 DB에 저장. ////"
+			+ "사진을 업로드할 때 얻은 accessPath를 넣으면, realPath로 변경해서 DB에 저장하는 로직")
 	public ResponseEntity<String> insertPicture(@RequestBody PictureResponse pictureResponse) {		
-		for(int i=0;i<pictureResponse.getPath_list().size();i++) pictureService.insertPicture(pictureResponse.getDiary_id(), pictureResponse.getPath_list().get(i));
+		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
+			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
+			pictureService.insertPicture(pictureResponse.getDiary_id(), real_path);
+		}
 		return new ResponseEntity<String>("success", HttpStatus.OK);	
 	}
 	
@@ -70,34 +76,8 @@ public class PictureController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-	@GetMapping("/test")
-	@ApiOperation(value = "flask 통신")
-	public ResponseEntity<ClusterListResponse> test(int groupId, String imagePath) throws Exception {
-		
-		//3. flask와 연결하여 클러스터링한 결과 반환
-		List<ClusterResponse> clusterResponseList = new ArrayList<>();
-		
-		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + imagePath, String.class);
-		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
-		JsonArray jsonArray = jsonObject.get("info").getAsJsonArray();
-		System.out.println(jsonArray);
-		for(int i=0;i<jsonArray.size();i++) {
-			JsonObject element = (JsonObject) jsonArray.get(i);
-			String rep = element.get("rep").getAsString();
-			JsonArray list = element.getAsJsonArray("paths");
-			
-			List<String> pathList = new ArrayList<>();
-			for(int j=0;j<list.size();j++)  pathList.add(list.get(j).getAsString());
-			
-			clusterResponseList.add(new ClusterResponse(rep, pathList));
-    	}
-		
-		ClusterListResponse clusterListResponse = new ClusterListResponse(clusterResponseList);
-		return new ResponseEntity<ClusterListResponse>(clusterListResponse, HttpStatus.OK);
-	}
-	
 	@GetMapping("/person_clustering")
-	@ApiOperation(value = "인물 분류 페이지")
+	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
 	public ResponseEntity<ClusterListResponse> personClustering(int groupId) throws Exception {
 		
 		//3. flask와 연결하여 클러스터링한 결과 반환
@@ -123,7 +103,7 @@ public class PictureController {
 	}
 	
 	@PutMapping("/upload")
-	@ApiOperation(value = "사진 업로드 - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장 후 flask와 연결해 인물 재분류")
+	@ApiOperation(value = "사진 업로드(사진이 업로드 될 때마다) - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장 후 flask와 연결해 인물 재분류")
 	public ResponseEntity<String> fileUpload(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int groupId){
 		
 		//1. 그룹 ID의 폴더 생성
