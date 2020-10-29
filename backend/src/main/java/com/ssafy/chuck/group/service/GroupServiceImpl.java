@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
+import com.ssafy.chuck.common.annotation.JoinLog;
+import com.ssafy.chuck.common.annotation.SignOutLog;
 import com.ssafy.chuck.group.dao.GroupDao;
 import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
@@ -59,6 +61,7 @@ public class GroupServiceImpl implements GroupService {
 		return dao.read(id);
 	}
 
+	@SignOutLog
 	@GroupOwnerCheck
 	@Override
 	public void delete(GroupDto group, long userId) {
@@ -69,6 +72,7 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
+	@JoinLog
 	@Override
 	public void createMember(MemberDto member) {
 		try {
