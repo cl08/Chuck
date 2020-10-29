@@ -33,7 +33,7 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:320px; overflow:auto;">
+        <div class="dash" style="height:318px; overflow:auto;">
             <el-avatar :size="90" style="margin:8px;" color="black">ALL</el-avatar>
             <el-avatar v-for="(face, index) in faces" :key="index" :size="90" :src="face" style="margin:7px;"></el-avatar>
         </div>

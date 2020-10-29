@@ -6,7 +6,7 @@
         <div class="dash" style="height:620px;">
             <el-avatar v-for="(image, index) in images" :key="index" shape="square" :size=90 :src="image" style="margin:7px"></el-avatar>
         </div>
-        <div class="dash">
+        <div class="dash pointer" @click="nextStep">
             <font size=4>다음으로</font>
         </div>
     </div>
@@ -14,6 +14,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 export default {
     data () {
         return {
@@ -43,6 +44,20 @@ export default {
             'getChuckList',
         ])
     },
+    methods: {
+        ...mapMutations([
+            'setVisibleChoice',
+            'setVisibleAlbum',
+            'setVisibleVideo',
+            'setVisiblePreview',
+        ]),
+        nextStep() {
+            this.setVisibleChoice(false)
+            this.setVisibleAlbum(false)
+            this.setVisibleVideo(false)
+            this.setVisiblePreview(true)
+        }
+    }
 }
 </script>
 
