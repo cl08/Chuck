@@ -1,7 +1,7 @@
 <!--
-    1. 레이아웃 범위 지정 (ex:form 형식처럼)
-    3. 날짜 선택
-    4. 기간 내 총 게시물
+    1. 레이아웃 범위 지정 (ex:form)
+    2. 범위 선택 ?? 
+    3. 기간 내 총 게시물
 -->
 <template>
     <div style="margin:30px 30px 0px 0px;">
@@ -11,18 +11,18 @@
         </div>
         <div class="dash" style="height:210px; text-align:left; overflow:auto;">
             <div style="margin:10px">
-                일별 선택 : 
-                <el-date-picker type="dates" v-model="dates" change="test" placeholder="날짜 선택" align="right">
+                <!-- 일별 선택 :  -->
+                날짜 선택 : 
+                <el-date-picker type="dates" v-model="dates" change="test" placeholder="날짜 선택" align="right" value-format="yyyy-MM-dd">
                 </el-date-picker>
             </div>
-            <div style="margin:10px">
+            <!-- <div style="margin:10px">
                 범위 선택 : 
-                <el-date-picker v-model="dates" type="daterange" change="test" start-placeholder="시작일" end-placeholder="종료일">
+                <el-date-picker v-model="dates" type="daterange" change="test" start-placeholder="시작일" end-placeholder="종료일" value-format="yyyy-MM-dd">
                 </el-date-picker>
-            </div>
+            </div> -->
             <div style="margin:10px">
-                {{ dates }}
-                <!-- <el-tag v-for="(tag, index) in tags" :key="index" closable @close="removeTag(tag)" type="info" style="margin:2px;">{{ tag }}</el-tag> -->
+                <el-tag v-for="(tag, index) in dates" :key="index" closable @close="removeTag(tag)" type="info" style="margin:2px;">{{ tag }}</el-tag>
             </div>
             <div style="margin:10px">
                 기간 내 총 게시물 : 52134개
@@ -44,13 +44,12 @@
 export default {
     data () {
         return {
-            dates: '',
-            tags: ['2020.09.29', '2020.09.30', '2020.10.01', '2020.10.02']
+            dates: [],
         }
     },
     methods: {
         removeTag(tag) {
-            this.tags.splice(this.tags.indexOf(tag), 1);
+            this.dates.splice(this.dates.indexOf(tag), 1);
         }
     }
   }
