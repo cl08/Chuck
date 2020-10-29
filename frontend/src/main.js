@@ -24,7 +24,7 @@ Vue.use(ElementUI, {locale});
 // vue-turnjs install
 import { FlippingWidgets } from "vue-turnjs";
 import "vue-turnjs/dist/vue-turnjs.esm.css";
-// import "./styles/default.css";
+import "./styles/default.css";
 
 Vue.config.productionTip = false
 Vue.use(FlippingWidgets);

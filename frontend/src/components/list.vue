@@ -37,7 +37,7 @@
                     </v-card>
                 </v-col>
                 <v-col cols="12">
-                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px gray">
+                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px #DCDFE6;">
                         <v-avatar size="62" tile style="cursor:pointer">
                         <!-- <v-avatar class="ma-3" size="125" tile style="cursor:pointer"> -->
                             <img src='../assets/add.png'>

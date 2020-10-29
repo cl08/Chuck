@@ -22,7 +22,7 @@ export default new Vuex.Store({
                 content: '모두 모여서 국밥을 먹었따. 팀장님은 자느라 지각함😒',
                 img: [
                     'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg',
-                    'https://img.insight.co.kr/static/2019/08/12/700/y8jzfe6100x3yvgq39el.jpg'
+                    'https://i.ytimg.com/vi/iFNARGg-zwM/hqdefault.jpg'
                 ],
                 writer: '김김현현대대',
                 group: 'chuck',
@@ -34,7 +34,10 @@ export default new Vuex.Store({
                 title: '저녁은 족발',
                 content: '여기 족발 존맛인듯👍',
                 img: [
-                    'https://image.auction.co.kr/itemimage/19/15/8d/19158d8796.jpg'
+                    'https://image.auction.co.kr/itemimage/19/15/8d/19158d8796.jpg',
+                    'https://img.hani.co.kr/imgdb/resize/2018/1230/00501800_20181230.JPG',
+                    'https://sikdorak365.co.kr/web/upload/NNEditor/20180607/jok01.jpg'
+
                 ],
                 writer: '김김현현대대',
                 group: 'chuck',
@@ -46,7 +49,8 @@ export default new Vuex.Store({
                 title: '두번째 모임',
                 content: '역삼역에 노브랜드버거 생김🍔🍔',
                 img: [
-                    'https://cdn.clien.net/web/api/file/F01/8864280/32415ba78e5af9.jpg'
+                    'https://cdn.clien.net/web/api/file/F01/8864280/32415ba78e5af9.jpg',
+                    'https://img1.daumcdn.net/thumb/R720x0.q80/?scode=mtistory2&fname=http%3A%2F%2Fcfile6.uf.tistory.com%2Fimage%2F9973C13359F03E0F01DFFB'
                 ],
                 writer: '김김현현대대',
                 group: 'chuck',
@@ -149,7 +153,7 @@ export default new Vuex.Store({
         setVisibleWrite(state, payload) {
             state.visibleWrite = payload
         },
-        setyVisibleChoice(state, payload) {
+        setVisibleChoice(state, payload) {
             state.visibleChoice = payload
         },
         setVisibleAlbum(state, payload) {

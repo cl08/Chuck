@@ -1,19 +1,41 @@
 *,
 *:after,
 *:before {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  -ms-overflow-style: none;
-  overflow: auto;
-}
-body,
-html {
-  font-size: 100%;
-  padding: 0;
-  margin: 0;
-  height: 100%;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 ::-webkit-scrollbar {
-  display: none;
+    display: none;
+}
+#app {
+    /* background:  linear-gradient(rgba(255, 255, 255, 0.3), rgba(255, 255, 255, 0.3)), url('./assets/bg3.jpg'); */
+    background-color: #FEF9F5;
+    font-family: MaplestoryOTFLight, Avenir, Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-align: center;
+    color: #2c3e50;
+}
+@font-face {
+    font-family: 'MaplestoryOTFLight';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFLight.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+.dash{
+    margin: 10px;
+    padding: 10px;
+    border: 2px dashed #DCDFE6;
+    border-radius: 3px;
+    /* margin: 0px 10px 0px 10px;
+    display: flex;
+    flex-direction: row;
+    flex: 1;
+    flex-basis: auto;
+    box-sizing: border-box;
+    min-width: 0; */
+}
+.el-input__inner{
+    text-align: center;  
 }

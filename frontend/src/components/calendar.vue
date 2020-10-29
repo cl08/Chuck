@@ -1,8 +1,7 @@
 <!--
     1. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
     2. 날짜 연산 : https://dororongju.tistory.com/116
-    3. 년/월 이동
-    4. 일 단위 클릭
+    3. 일 단위 클릭
 -->
 <template>
     <v-row class="fill-height" style="margin:0px 30px 0px 0px;">
@@ -57,7 +56,7 @@ export default {
         events: [],
     }),
     mounted () {
-          this.$refs.calendar.checkChange()
+        this.$refs.calendar.checkChange()
     },
     computed: {
         ...mapGetters([
@@ -83,6 +82,7 @@ export default {
             'setVisibleWrite',
         ]),
         viewDay ({ date }) {
+            console.log(date)
             this.setSelectedDay(date)
             this.focus = date
         },
@@ -98,7 +98,7 @@ export default {
         next () {
             this.$refs.calendar.next()
         },
-        showEvent ({ nativeEvent, event }) {
+        showEvent ({ nativeEvent, event, date }) {
             this.setSelectedDiary(event.index)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
