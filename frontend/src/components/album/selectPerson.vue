@@ -1,6 +1,3 @@
-<!--
-    1. 레이아웃 범위 지정 (ex:form)
--->
 <template>
     <div style="margin:30px 30px 0px 0px;">
         <font size=9>사진첩 만들기</font>
@@ -36,10 +33,10 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:320px; text-align:left; overflow:auto;">
-            <el-avatar :size="86" bordered style="margin:5px 10px 5px 10px;" color="black">ALL</el-avatar>
-            <span v-for="(face, index) in faces" :key="index">
-                <el-avatar :size="86" :src="face" bordered style="margin:5px 10px 5px 10px;"></el-avatar>
+        <div class="dash" style="height:320px;">
+            <span class="face pointer" @click="selectAll">ALL</span>
+            <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
+                <img :id="'albumFace'+index" class="albumFaceNoneDisplay" src="../../assets/check_circle.svg">
             </span>
         </div>
     </div>
@@ -82,6 +79,16 @@ export default {
         },
         pickType2(){
             this.value1 = ''
+        },
+        selectAll() {
+            for(let i=0; i<this.faces.length; i++){
+                let el = document.getElementById('albumFace'+i)
+                el.setAttribute('class', '')
+            }
+        },
+        select(index) {
+            let el = document.getElementById('albumFace'+index)
+            el.classList.toggle("albumFaceNoneDisplay")
         }
     }
   }
@@ -92,5 +99,26 @@ export default {
     text-align: left;
     overflow: auto;
     font-size: 3;
+}
+.face {
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    margin: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    background: #C0C4CC;
+    background-size: cover;
+    font-size: 26px;
+    overflow: hidden;
+}
+.face img {
+    height: 100%;
+}
+.albumFaceNoneDisplay {
+    display: none;
 }
 </style>

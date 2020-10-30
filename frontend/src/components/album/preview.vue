@@ -10,7 +10,7 @@
                 </el-carousel-item>
             </el-carousel> -->
         </div>
-        <div class="dash">
+        <div class="dash pointer">
             <font size=4>PDF로 내려받기</font>
         </div>
     </div>

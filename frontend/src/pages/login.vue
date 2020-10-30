@@ -1,10 +1,6 @@
 <template>
     <div id="login_page">
-        <!-- 로그인 하면 select push 로 이동 -->
-        <!-- <h1>로그인페이지</h1> -->
-        <!-- develop에서만 보이기-->
-        <div id="login_bg"></div>
-        <div id="login_btn">
+        <div id="login_kakao">
             <kakao-login
               api-key='d1baf2cad3354a9138989baea6e65995'
               :on-success=onSuccess
@@ -13,10 +9,9 @@
             />
         </div>
 
-        <div id="test_login" @click="testLogin">
-            <button> 테스트 아이디로 로그인하기 </button>
+        <div id="login_test" @click="testLogin">
+            테스트 계정으로 둘러보기
         </div>
-        <!-- <router-link to="/group"><img src="../assets/kakao_login_medium_narrow.png"></router-link> -->
     </div>
 </template>
 
@@ -79,28 +74,23 @@ export default {
 </script>
 
 <style scoped>
-#login_bg {
+#login_page {
     background: url('../assets/login_bg.png');
-    background-size: cover;
-    position:absolute;
-    height: 810px;
-    width: 1440px;
-    bottom: 0px;
-    left:50%;
-    margin-left:-720px;
+    background-position: bottom center;
 }
-#login_btn {
+#login_kakao {
     position:absolute;
     left: 50%;
-    margin-left:-91px;
-    bottom: 200px;
+    margin-left: -110px;
+    bottom: 220px;
     cursor: pointer;
 }
-#login_page {
-    background-color:#FEF9F5
-}
-#test_login {
+#login_test {
     position: absolute;
-    left: 1%;
+    left: 50%;
+    margin-left: -80px;
+    bottom: 190px;
+    cursor: pointer;
+    color: white;
 }
 </style>
