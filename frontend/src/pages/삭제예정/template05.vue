@@ -2,7 +2,7 @@
   <div class="container">
   <div class="book-wrapper">
     <div class="book-cover">
-      <img src="../assets/layout1.png" alt="">
+      <img src="../../assets/layout1.png" alt="">
     </div>
     <div class="pages-container">
       <div class="pages">
@@ -3449,25 +3449,25 @@ img {
 }
 
 .page-num-1 {
-    background-image: url("../assets/rightpage.png");
+    background-image: url("../../assets/rightpage.png");
     background-size: auto 100%;
     /* position: relative; */
 }
 
 .page-num-2 {
-    background-image: url("../assets/leftpage.png");
+    background-image: url("../../assets/leftpage.png");
     background-size: auto 100%;
     /* position: relative; */
 }
 
 .page-num-3 {
-    background-image: url("../assets/rightpage.png");
+    background-image: url("../../assets/rightpage.png");
     background-size: auto 100%;
     /* position: relative; */
 }
 
 .page-num-4 {
-    background-image: url("../assets/leftpage.png");
+    background-image: url("../../assets/leftpage.png");
     background-size: auto 100%;
     /* position: relative; */
 }
@@ -3514,7 +3514,7 @@ img {
 .tap1 {
 	width: 50px;
 	height: 100px;
-	background: url('../assets/1.png');
+	background: url('../../assets/1.png');
 	background-size: cover;
 	position: absolute;
   left: 567px;
