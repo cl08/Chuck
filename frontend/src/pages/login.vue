@@ -1,14 +1,6 @@
 <template>
     <div id="login_page">
-<<<<<<< HEAD
         <div id="login_kakao">
-=======
-        <!-- 로그인 하면 select push 로 이동 -->
-        <!-- <h1>로그인페이지</h1> -->
-        <!-- develop에서만 보이기-->
-        <div id="login_bg"></div>
-        <div id="login_btn">
->>>>>>> 16615dd72fa58d37282ed5479eca46e0f6b3fdb8
             <kakao-login
               api-key='d1baf2cad3354a9138989baea6e65995'
               :on-success=onSuccess
@@ -17,16 +9,9 @@
             />
         </div>
 
-<<<<<<< HEAD
         <div id="login_test" @click="testLogin">
             테스트 계정으로 둘러보기
         </div>
-=======
-        <div id="test_login" @click="testLogin">
-            <button> 테스트 아이디로 로그인하기 </button>
-        </div>
-        <!-- <router-link to="/group"><img src="../assets/kakao_login_medium_narrow.png"></router-link> -->
->>>>>>> 16615dd72fa58d37282ed5479eca46e0f6b3fdb8
     </div>
 </template>
 
