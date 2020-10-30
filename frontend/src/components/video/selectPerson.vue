@@ -94,12 +94,6 @@ export default {
   }
 </script>
 <style scoped>
-.content {
-    height: 220px;
-    text-align: left;
-    overflow: auto;
-    font-size: 3;
-}
 .face {
     height: 90px;
     width: 90px;
