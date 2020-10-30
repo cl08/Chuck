@@ -4,8 +4,6 @@ import landing from '@/pages/landing.vue'
 import login from '@/pages/login.vue'
 import group from '@/pages/group.vue'
 import diary from '@/pages/diary.vue'
-import test from '@/pages/diary2.vue'
-// import test from '@/pages/삭제예정/template05.vue'
 
 Vue.use(Router)
 
@@ -32,12 +30,6 @@ export default new Router({
             path: '/diary',
             name: 'diary',
             component: diary,
-        },
-        // testpage
-        {
-            path: '/test',
-            name: 'test',
-            component: test
         },
     ]
 })

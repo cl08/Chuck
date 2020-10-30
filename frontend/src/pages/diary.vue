@@ -1,354 +1,265 @@
 <template>
-<div class='book'>
-	<div id='page-0' class='page no-anim flipped'>
-    	<div class='side-2' id='p0'>      
-			<div class='content'>
-			</div>
-		</div>
-	</div>
-  	<div id='page-1' class='page no-anim flipped'>    
-    	<div class='side-1' id='p1'>
-      		<div class='content'>
-			</div>
-		</div>    
-    	<div class='side-2' id='p2'>      
-			<div class='content'>
-				<Intro />
-			</div>
-		</div>
-	</div>
+  <div id="canvas">
+    <div id="book-zoom">
+      <div class="sample-docs animated">
+        <!-- tabs area -->
+        <div ignore="1" class="tabs">
+          <div class="left">
+            <button
+              ref="btn0"
+              v-on:click="movePage(0)"
+              v-show="!buttonArray[0]"
+              id="timeline"
+              :style="{
+                background: 'url(' + this.backgroundImageArray[0] + ')',
+                top: '60px',
+              }"
+            ></button>
+            <button
+              ref="btn1"
+              v-on:click="movePage(1)"
+              v-show="!buttonArray[1]"
+              id="calender"
+              :style="{
+                background: 'url(' + this.backgroundImageArray[1] + ')',
+                top: '120px',
+              }"
+            ></button>
+            <button
+              ref="btn2"
+              v-on:click="movePage(2)"
+              v-show="!buttonArray[2]"
+              id="album"
+              :style="{
+                background: 'url(' + this.backgroundImageArray[2] + ')',
+                top: '180px',
+              }"
+            ></button>
+            <button
+              ref="btn3"
+              v-on:click="movePage(3)"
+              v-show="!buttonArray[3]"
+              id="chuck"
+              :style="{
+                background: 'url(' + this.backgroundImageArray[3] + ')',
+                top: '240px',
+              }"
+            ></button>
+            <button
+              ref="btn4"
+              v-on:click="movePage(4)"
+              v-show="!buttonArray[4]"
+              id="info"
+              :style="{
+                background: 'url(' + this.backgroundImageArray[4] + ')',
+                top: '300px',
+              }"
+            ></button>
+          </div>
+          <div class="right">
+            <button
+              v-on:click="movePage(0)"
+              v-show="buttonArray[0]"
+              id="timeline"
+            ></button>
+            <button
+              v-on:click="movePage(1)"
+              v-show="buttonArray[1]"
+              id="calender"
+            ></button>
+            <button
+              v-on:click="movePage(2)"
+              v-show="buttonArray[2]"
+              id="album"
+            ></button>
+            <button
+              v-on:click="movePage(3)"
+              v-show="buttonArray[3]"
+              id="chuck"
+            ></button>
+            <button
+              v-on:click="movePage(4)"
+              v-show="buttonArray[4]"
+              id="info"
+            ></button>
+          </div>
+        </div>
 
-  	<div id='page-2' class='page no-anim'>    
-    	<div class='side-1' id='p3'>
-      		<div class='content'>
-				<Timeline />
-    		</div>
-    	</div>
-    	<div class='side-2' id='p4'>      
-      		<div class='content'>
-				<Calendar v-show="this.getVisibleCalendar" />
-				<Detail v-show="this.getVisibleDetail" />
-				<Write1 v-show="this.getVisibleWrite" />
-      		</div>
-    	</div>
-	</div>
-  
-  	<div id='page-3' class='page no-anim'>    
-    	<div class='side-1' id='p5'>
-      		<div class='content'>
-        		<List v-show="this.getVisibleCalendar" />
-				<Comment v-show="this.getVisibleDetail" />
-				<Write2 v-show="this.getVisibleWrite" />
-			</div>
-    	</div>
-    	<div class='side-2' id='p6'>      
-      		<div class='content'>
-        		<h2>사진첩1</h2>
-    		</div>
-    	</div>
-  	</div>
-  
-  	<div id='page-4' class='page no-anim'>    
-    	<div class='side-1' id='p7'>
-      		<div class='content'>
-        		<h2>사진첩2</h2>
-			</div>
-		</div>  
-		<div class='side-2' id='p8'>      
-			<div class='content'>
-				<Album1 v-show="this.getVisibleChoice" />
-				<Album2 v-show="this.getVisibleAlbum" />
-        		<Video2 v-show="this.getVisibleVideo" />
-        		<Video4 v-show="this.getVisiblePreview" />
-			</div>
-		</div>
-  	</div>
-	
-	<div id='page-5' class='page no-anim'>    
-    	<div class='side-1' id='p9'>
-      		<div class='content'>
-        		<Video1 v-show="this.getVisibleChoice" />
-				<Album3 v-show="this.getVisibleAlbum" />
-        		<Video3 v-show="this.getVisibleVideo" />
-        		<Video5 v-show="this.getVisiblePreview" />
-			</div>
-		</div>    
-  	</div>
-</div>
+        <!-- book area -->
+        <div class="hard"></div>
+        <!-- timeline -->
+        <div><Intro /></div>
+        <div><Timeline /></div>
+        <!-- calender -->
+        <div>
+          <Calendar v-show="this.getVisibleCalendar" />
+          <Detail v-show="this.getVisibleDetail" />
+          <Write1 v-show="this.getVisibleWrite" />
+        </div>
+        <div>
+          <List v-if="this.getVisibleCalendar" />
+          <Comment v-show="this.getVisibleDetail" />
+          <Write2 v-show="this.getVisibleWrite" />
+        </div>
+        <!-- galary -->
+        <div>
+          <PersonClassification></PersonClassification>
+        </div>
+        <div>
+          <NoResult v-show="!this.getPersonClassificationResult"></NoResult>
+          <ResultGallery
+            v-show="this.getPersonClassificationResult"
+          ></ResultGallery>
+        </div>
+        <!-- chuck -->
+        <div>
+          <Album1 v-show="this.getVisibleChoice" />
+          <Album2 v-show="this.getVisibleAlbum" />
+          <Video2 v-show="this.getVisibleVideo" />
+          <Video4 v-show="this.getVisiblePreview" />
+        </div>
+        <div>
+          <Video1 v-show="this.getVisibleChoice" />
+          <Album3 v-show="this.getVisibleAlbum" />
+          <Video3 v-show="this.getVisibleVideo" />
+          <Video5 v-show="this.getVisiblePreview" />
+        </div>
+        <!-- info -->
+        <div>그룹정보</div>
+        <div>그룹정보 본문</div>
+        <div class="hard p29"></div>
+        <div class="hard p30"></div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import Calendar from '@/components/calendar.vue'
-import List from '@/components/list.vue'
-import Detail from '@/components/detail.vue'
-import Comment from '@/components/comment.vue'
-import Write1 from '@/components/write1.vue'
-import Write2 from '@/components/write2.vue'
-import Timeline from '@/components/timeline.vue'
-import Intro from '@/components/intro.vue'
-import Album1 from '@/components/album/pick.vue'
-import Album2 from '@/components/album/selectPerson.vue'
-import Album3 from '@/components/album/preview.vue'
-import Video1 from '@/components/video/pick.vue'
-import Video2 from '@/components/video/selectPerson.vue'
-import Video3 from '@/components/video/selectImage.vue'
-import Video4 from '@/components/video/selectMusic.vue'
-import Video5 from '@/components/video/preview.vue'
+import $ from "jquery";
+import { turn } from "@/plugins/turn.min.js";
+import { mapGetters } from "vuex";
+// calender
+import Calendar from "@/components/calendar.vue";
+import List from "@/components/list.vue";
+import Detail from "@/components/detail.vue";
+import Comment from "@/components/comment.vue";
+import Write1 from "@/components/write1.vue";
+import Write2 from "@/components/write2.vue";
+// album
+import PersonClassification from "@/components/album/personClassification.vue";
+import NoResult from "@/components/album/noResult.vue";
+import ResultGallery from "@/components/album/resultAlbum.vue";
 
+import Timeline from "@/components/timeline.vue";
+import Intro from "@/components/intro.vue";
+import Album1 from "@/components/album/pick.vue";
+import Album2 from "@/components/album/selectPerson.vue";
+import Album3 from "@/components/album/preview.vue";
+import Video1 from "@/components/video/pick.vue";
+import Video2 from "@/components/video/selectPerson.vue";
+import Video3 from "@/components/video/selectImage.vue";
+import Video4 from "@/components/video/selectMusic.vue";
+import Video5 from "@/components/video/preview.vue";
 export default {
-	components: {
-		Calendar,
-		List,
-		Detail,
-		Comment,
-		Write1,
-		Write2,
-		Timeline,
-		Intro,
-		Album1,
-		Album2,
-		Album3,
-		Video1,
-		Video2,
-		Video3,
-		Video4,
-		Video5,
-	},
-	computed: {
-        ...mapGetters([
-            'getChuckList',
-            'getSelectedDiary',
-			'getVisibleCalendar',
-			'getVisibleDetail',
-			'getVisibleWrite',
-			'getVisibleChoice',
-			'getVisibleAlbum',
-			'getVisibleVideo',
-			'getVisiblePreview'
-		]),
-	},
-
-    mounted() {
-		$('.page > div').click(function(e) {
-			e.stopPropagation();
-		});
-        $('.page').click(function() {
-			var num = this.id
-			num = num.substring(5,6);
-			if( $(this).hasClass('flipped') ){
-				for(var i=num*1+1; i<6; i++){
-					$('#page-'+i).addClass('no-anim').removeClass('flipped');
-				}
-			}
-			else {
-				for(var i=0; i<=num; i++){
-					$('#page-'+i).removeClass('no-anim').addClass('flipped');
-				}
-			}
-       		reorder()
-        });
-        function reorder(){
-          	$(".book").each(function(){
-				var pages=$(this).find(".page")
-              	var pages_flipped=$(this).find(".flipped")
-              	pages.each(function(i){
-					$(this).css("z-index",pages.length-i)
-              	})
-              	pages_flipped.each(function(i){
-					$(this).css("z-index",i+1)
-              	})
-          	});    
+  components: {
+    Calendar,
+    List,
+    Detail,
+    Comment,
+    Write1,
+    Write2,
+    PersonClassification,
+    NoResult,
+    ResultGallery,
+    Timeline,
+    Intro,
+    Album1,
+    Album2,
+    Album3,
+    Video1,
+    Video2,
+    Video3,
+    Video4,
+    Video5,
+  },
+  data() {
+    return {
+      // 타임라인, 캘린더, 사진첩, 추억, 그룹정보
+      buttonArray: [false, true, true, true, true],
+      buttonName: ["timeline", "calendar", "gallery", "studio", "groupset"],
+      backgroundImageArray: [],
+    };
+  },
+  computed: {
+    ...mapGetters([
+      "getChuckList",
+      "getSelectedDiary",
+      "getVisibleCalendar",
+      "getVisibleDetail",
+      "getVisibleWrite",
+      "getPersonClassificationResult",
+      "getVisibleChoice",
+      "getVisibleAlbum",
+      "getVisibleVideo",
+      "getVisiblePreview",
+    ]),
+  },
+  methods: {
+    movePage(num) {
+      $(".sample-docs").turn("disable", false);
+      $(".sample-docs").turn("page", 2 + 2 * num);
+      for (let i = 0; i < 5; i++) {
+        if (i < num) {
+          this.$set(this.buttonArray, i, false);
+          this.$set(
+            this.backgroundImageArray,
+            i,
+            require("@/assets/img_tab/" +
+              this.buttonName[i] +
+              "_left_nonselected.png")
+          );
+        } else if (i == num) {
+          // 클릭한 탭 background img 변경
+          this.$set(this.buttonArray, i, false);
+          this.$set(
+            this.backgroundImageArray,
+            i,
+            require("@/assets/img_tab/" +
+              this.buttonName[i] +
+              "_left_selected.png")
+          );
+        } else {
+          this.$set(this.buttonArray, i, true);
         }
-        reorder()
+      }
+      $(".sample-docs").turn("disable", true);
+    },
+  },
+  mounted() {
+    $(".sample-docs").turn({
+      elevation: 50,
+      acceleration: false,
+      gradients: true,
+      autoCenter: true,
+      duration: 1000,
+      pages: 30,
+      page: 2,
+      when: {},
+    });
+    // turn 기능 막기
+    $(".sample-docs").turn("disable", true);
+
+    // url -> base64 encode
+    for (let index = 0; index < this.buttonName.length; index++) {
+      const element = this.buttonName[index];
+      this.backgroundImageArray.push(
+        require("@/assets/img_tab/" + element + "_left_selected.png")
+      );
     }
-}
+  },
+};
 </script>
 
 <style scoped>
-*, *:before, *:after {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	position: relative;
-}
-
-::-webkit-scrollbar {width:0px}
-::-webkit-scrollbar-thumb {background: #222;}
-::-webkit-scrollbar-track {background: transparent}
-
-::selection {
-  background: #222;
-  color: white;
-  }
-::-moz-selection {
-  background: #222;
-  color: white;
-  }
-
-* {
-	transform-style: preserve-3d;
-}
-
-h1, p {
-	margin: 5% 0;
-}
-
-.book {
-	/* max-height: 1200px;
-	min-height: 300px; */
-	height: 812px;
-	width: 1420px;
-	background: url('../assets/layout1.png');
-	background-size: cover;
-	position: absolute;
-	top: 0; left: 0; bottom: 0; right: 0;
-	margin: auto;
-	perspective: 2500px;
-	/* border: 3px solid hsla(30,10%,20%,1); */
-	/* border-radius: 5px; */
-	/* box-shadow: 0 0 150px hsla(170,0%,0%,.4); */
-}
-
-.page {
-	height: 767px;
-	width: 636px;
-	line-height: 1.5;
-	border-right: 10px solid transparent;
-	/* background-color: red; */
-	position: absolute;
-	top: 29px;
-	right: 79px;
-	transform-origin: 0 50%;
-	transition: .8s;
-	/*animation: unflip .3s linear;*/
-}
-[class*='side'] {
-	height: 100%;
-	width: 100%;
-	position: absolute;
-	background-color: hsl(30,40%,70%);
-	backface-visibility: hidden;
-	overflow: auto;
-}
-
-.side-1 {
-    z-index: 2;
-    /* box-shadow: inset 50px 0 50px rgba(0,0,0,.5); */
-    transition: .5s;
-	background-image: url('../assets/rightpage.png');
-    background-size: cover;
-}
-.side-2 {
-    transform: rotateY(180deg);
-    /* box-shadow: inset -50px 0 50px rgba(0,0,0,.5); */
-    background-image: url('../assets/leftpage.png');
-    background-size: cover;
-}
-.flipped > .side-1 {
-    /* box-shadow: inset 300px 0 50px rgba(0,0,0,.8);    */
-    transition: .6s;
-}
-.flipped > [class*='side'] {
-    pointer-events: auto;
-}
-#page-1:after {
-	width: 50px;
-	height: 100px;
-	background: url('../assets/1.png');
-	background-size: cover;
-	position: absolute;
-	top: 0; bottom: 600px; right: -50px;
-	margin: auto;
-	color: white;
-	text-shadow: 0 -1px 0 #222;
-	line-height: 50px;
-	text-align: center;
-	font-family: monospace;
-	content: '';
-	/* animation: hide .8s linear; */
-}
-#page-2:after {
-	width: 50px;
-	height: 100px;
-	background: url('../assets/2.png');
-	background-size: cover;
-	position: absolute;
-	top: 0; bottom: 400px; right: -50px;
-	margin: auto;
-	color: white;
-	text-shadow: 0 -1px 0 #222;
-	line-height: 50px;
-	text-align: center;
-	font-family: monospace;
-	content: '';
-	/* animation: hide .8s linear; */
-}
-#page-3:after {
-	width: 50px;
-	height: 100px;
-	background: url('../assets/3.png');
-	background-size: cover;
-	position: absolute;
-	top: 0; bottom: 200px; right: -50px;
-	margin: auto;
-	color: white;
-	text-shadow: 0 -1px 0 #222;
-	line-height: 50px;
-	text-align: center;
-	font-family: monospace;
-	content: '';
-	/* animation: hide .8s linear; */
-}
-#page-4:after {
-	width: 50px;
-	height: 100px;
-	background: url('../assets/4.png');
-	background-size: cover;
-	position: absolute;
-	top: 0; bottom: 0px; right: -50px;
-	margin: auto;
-	color: white;
-	text-shadow: 0 -1px 0 #222;
-	line-height: 50px;
-	text-align: center;
-	font-family: monospace;
-	content: '';
-	/* animation: hide .8s linear; */
-}
-.page.flipped:after {
-    /* content: '탭2'; */
-    transform: rotateY(180deg);
-    pointer-events: auto;
-}
-  /* to hide on flip animation */
-@keyframes hide {
-    0% {opacity: 0;}
-    85% {opacity: 0;}
-    100% {opacity: 1;}
-}
-.flipped {
-	transform: rotateY(-180deg);
-	pointer-events: none;
-	/* animation: flip .3s linear;
-	animation-fill-mode: forwards; */
-}
-  
-.no-anim,
-.no-anim:after {
-	animation: none;/* disable animation when page loads */
-}
-@keyframes flip {
-	to {
-    	transform: rotateY(-180deg);    
-    }
-}
-@keyframes unflip {
-	from {
-		transform: rotateY(-180deg);    
-    }
-  	to {
-    	transform: rotateY(0deg);    
-	}
-}
+@import "../styles/docs.css";
 </style>
