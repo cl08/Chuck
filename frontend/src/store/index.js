@@ -99,7 +99,10 @@ export default new Vuex.Store({
                 diary_id: '',
                 date: '',
             },
-        ]
+        ],
+        personArray : [
+
+        ],
     },
     getters: {
         getRefreshToken(state) {
@@ -146,6 +149,17 @@ export default new Vuex.Store({
         },
         getVisiblePreview(state) {
             return state.visiblePreview
+        },
+        getComments(state) {
+            return state.comments
+        },
+        getPersonClassificationResult(state){
+            for(let i = 0; i < state.personArray.length; i++){
+                if(state.personArray[i]){
+                    return true
+                }
+            }
+            return false
         }
     },
     mutations: {
@@ -206,6 +220,9 @@ export default new Vuex.Store({
         },
         setVisiblePreview(state, payload) {
             state.visiblePreview = payload
+        },
+        setPersonArray(state, payload){
+            state.personArray = payload
         }
     },
     actions: {
