@@ -70,6 +70,9 @@ public class LogAspect {
 	private void changeLog(JoinPoint point) {
 		logger.debug("그룹장 변화 로그");
 		Object[] parameterValues = point.getArgs();
-
+		long userId = (long)parameterValues[1];
+		GroupDto dto = (GroupDto)parameterValues[0];
+		String comment = userId + "님이 새로운 그룹장으로 변경되었습니다.";
+		service.create(new LogDto(dto.getId(), comment));
 	}
 }

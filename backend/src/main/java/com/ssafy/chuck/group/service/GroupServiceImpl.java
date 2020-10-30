@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.ssafy.chuck.common.annotation.ChangeLog;
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
@@ -90,5 +91,17 @@ public class GroupServiceImpl implements GroupService {
 	@Override
 	public List<GroupDto> readAllGroup(long id) {
 		return dao.readAllGroup(id);
+	}
+
+	@ChangeLog
+	@Override
+	public void change(GroupDto dto, long userId) {
+		try {
+			dao.changeMemberFalse(dto.getUserId());
+			dao.changeMemberTrue(userId);
+			dao.change(dto.getId(), userId);
+		} catch (DataAccessException e) {
+			throw e;
+		}
 	}
 }

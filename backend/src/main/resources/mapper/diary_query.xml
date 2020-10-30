@@ -2,12 +2,14 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.diary.dao.DiaryDao">
     <insert id="create" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
-        insert into DIARIES (IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
-                            (#{image}, #{content}, #{writer}, #{groupId}, now())
+        insert into DIARIES (TITLE, IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
+                            (#{title}, #{image}, #{content}, #{writer}, #{groupId}, now())
     </insert>
 
     <select id="read" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
-        select * from DIARIES WHERE ID = #{id}
+        select  D.*, P.PATH
+        from DIARIES D inner join PICTURES P
+        where D.ID = #{id}
     </select>
 
     <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
@@ -21,10 +23,14 @@
     </delete>
 
     <select id="readAll" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
-        select * from DIARIES WHERE GROUP_ID = #{groupId}
+        select D.*, P.PATH
+        from DIARIES D inner join PICTURES P
+        where D.GROUP_ID = #{id}
     </select>
 
     <select id="search" parameterType="map" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
-        select * from DIARIES WHERE GROUP_ID = #{groupId} AND CONTENT LIKE CONCAT('%', #{word}, '%')
+        select  D.*, P.PATH
+        from DIARIES D inner join PICTURES P
+        WHERE D.GROUP_ID = #{groupId} AND D.CONTENT LIKE CONCAT('%', #{word}, '%')
     </select>
 </mapper>
