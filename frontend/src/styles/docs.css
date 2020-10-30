@@ -1,11 +1,3 @@
-/* Docs sample */
-
-body{
-	margin:0;
-	padding:0;
-	overflow:hidden;
-}
-
 #canvas{
 	width: 1420px;
 	height: 812px;
@@ -48,28 +40,11 @@ body{
 	box-shadow:0 0 20px rgba(0,0,0,0.2);
 }
 
-
-.sample-docs .p28{
-	background:-webkit-gradient(linear, left top, right top, color-stop(0.95, #fff), color-stop(1, #dadada));
-	background-image:-webkit-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-moz-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-ms-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:-o-linear-gradient(left, #fff 95%, #dadada 100%);
-	background-image:linear-gradient(left, #fff 95%, #dadada 100%);
-}
-
-.sample-docs .p29{
-	background-position:-942px 0;
-}
-
-.sample-docs .p30{
-	background-position:-1413px 0;
-}
-
 .sample-docs .even{
 	background-image:url(../assets/leftpage.png);
 	background-position:-160px 0;
 }
+
 .sample-docs .odd{
 	background-image:url(../assets/rightpage.png);
 }
@@ -95,35 +70,6 @@ body{
 	background-repeat: repeat-y;
 }
 
-.sample-docs .page-wrapper{
-	-webkit-perspective:2000px;
-	-moz-perspective: 2000px;
-	-ms-perspective: 2000px;
-	perspective: 2000px;
-}
-
-
-.sample-docs .loader{
-	/* background-image:url(../assets/loader.gif); */
-	width:22px;
-	height:22px;
-	position:absolute;
-	top:280px;
-	left:219px;
-}
-
-.sample-docs .shadow{
-	/* -webkit-transition: -webkit-box-shadow 0.5s;
-	-moz-transition: -moz-box-shadow 0.5s;
-	-o-transition: -webkit-box-shadow 0.5s;
-	-ms-transition: -ms-box-shadow 0.5s; */
-
-	-webkit-box-shadow:0 0 20px #ccc;
-	-moz-box-shadow:0 0 20px #ccc;
-	-o-box-shadow:0 0 20px #ccc;
-	-ms-box-shadow:0 0 20px #ccc;
-	box-shadow:0 0 20px #ccc;
-}
 
 .sample-docs .tabs{
 	width:1500px;

@@ -4,8 +4,8 @@
             <font size=4>사진 고르기</font>
         </div>
         <div class="dash" style="height:620px;">
-            <span class="Photo pointer" @click="selectAll">ALL</span>
-            <span class="Photo pointer" v-for="(Photo, index) in Photos" :key="index" @click="select(index)" :style="'background-image:url('+Photo+')'">
+            <span class="photo pointer" @click="selectAll">ALL</span>
+            <span class="photo pointer" v-for="(photo, index) in photos" :key="index" @click="select(index)" :style="'background-image:url('+photo+')'">
                 <img :id="'videoPhoto'+index" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
             </span>
         </div>
@@ -21,7 +21,7 @@ import { mapMutations } from 'vuex'
 export default {
     data () {
         return {
-            Photos:
+            photos:
             [
                 'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
                 'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
@@ -61,7 +61,7 @@ export default {
             this.setVisiblePreview(true)
         },
         selectAll() {
-            for(let i=0; i<this.Photos.length; i++){
+            for(let i=0; i<this.photos.length; i++){
                 let el = document.getElementById('videoPhoto'+i)
                 el.setAttribute('class', '')
             }
@@ -75,12 +75,11 @@ export default {
 </script>
 
 <style scoped>
-.Photo {
+.photo {
     height: 118px;
     width: 118px;
     line-height: 118px;
     margin: 7px;
-    /* border-radius: 50%; */
     display: inline-block;
     box-sizing: border-box;
     text-align: center;
@@ -90,7 +89,7 @@ export default {
     font-size: 26px;
     overflow: hidden;
 }
-.Photo img {
+.photo img {
     height: 100%;
 }
 .videoPhotoNoneDisplay {
