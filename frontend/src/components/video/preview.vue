@@ -1,6 +1,9 @@
 <template>
     <div style="margin:30px 0px 0px 30px;">
-        <div class="dash" style="height:665px;">
+        <div class="dash">
+            <font size=4>동영상 미리보기</font>
+        </div>
+		<div class="dash" style="height:620px;">
         </div>
         <div class="dash pointer">
             <font size=4>동영상 변환하기</font>
