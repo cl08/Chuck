@@ -9,6 +9,9 @@ public class DiaryDto {
 	@ApiModelProperty(value = "다이어리 아이디", example = "1")
 	private int id;
 
+	@ApiModelProperty(value = "제목", example = "하하하하")
+	private String title;
+
 	@ApiModelProperty(value = "이미지", example = "1234-trewq-ewqeq.jpeg")
 	private String image;
 
@@ -30,6 +33,14 @@ public class DiaryDto {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getImage() {
@@ -76,6 +87,7 @@ public class DiaryDto {
 	public String toString() {
 		return "DiaryDto{" +
 			"id=" + id +
+			", title='" + title + '\'' +
 			", image='" + image + '\'' +
 			", content='" + content + '\'' +
 			", writer=" + writer +

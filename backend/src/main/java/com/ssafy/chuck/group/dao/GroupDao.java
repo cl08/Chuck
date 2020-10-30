@@ -37,4 +37,11 @@ public interface GroupDao {
 
 	// 9. 그룹장 조회
 	long readOwner(int id);
+
+	// 10. 그룹장 변경
+	int change(@Param(value = "id")int id, @Param(value = "userId")long userId);
+
+	int changeMemberTrue(@Param(value = "userId")long userId);
+
+	int changeMemberFalse(@Param(value = "userId")long userId);
 }

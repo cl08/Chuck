@@ -46,4 +46,21 @@
         select USER_ID
         from `GROUPS` where ID = #{id}
     </select>
+
+    <update id="change" parameterType="map">
+        update `GROUPS`
+        SET USER_ID = #{userId}
+        where ID = #{id}
+    </update>
+
+    <update id="changeMemberFalse" parameterType="map">
+        update GROUP_MEMBERS
+        SET IS_OWNER = FALSE
+        where USER_ID = #{userID}
+    </update>
+    <update id="changeMemberTrue" parameterType="map">
+        update GROUP_MEMBERS
+        SET IS_OWNER = TRUE
+        where USER_ID = #{userID}
+    </update>
 </mapper>

@@ -33,4 +33,7 @@ public interface GroupService {
 
 	// 유저의 모든 그룹 리스트 조회
 	List<GroupDto> readAllGroup(long id);
+
+	// 그룹장 변경
+	void change(GroupDto dto, long userId);
 }
