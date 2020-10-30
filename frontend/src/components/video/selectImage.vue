@@ -4,7 +4,11 @@
             <font size=4>사진 고르기</font>
         </div>
         <div class="dash" style="height:620px;">
+<<<<<<< HEAD
             <el-avatar v-for="(image, index) in images" :key="index" shape="square" :size=118 :src="image" style="margin:7px"></el-avatar>
+=======
+            <el-avatar v-for="(image, index) in images" :key="index" shape="square" :size=90 :src="image" style="margin:7px"></el-avatar>
+>>>>>>> 16615dd72fa58d37282ed5479eca46e0f6b3fdb8
         </div>
         <div class="dash pointer" @click="nextStep">
             <font size=4>다음으로</font>
