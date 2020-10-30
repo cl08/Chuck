@@ -61,7 +61,7 @@ export default {
             this.setVisiblePreview(true)
         },
         selectAll() {
-            for(let i=0; i<this.Photos.length; i++) {
+            for(let i=0; i<this.photos.length; i++) {
                 let el = document.getElementById('videoPhoto'+i)
                 el.setAttribute('class', '')
             }
