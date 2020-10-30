@@ -1,8 +1,9 @@
 <template>
-    <router-link to="/login">
-        <div id="landing_page">
-        </div>
-    </router-link>
+    <div id="landing_page">
+        <router-link to="/login">
+            <img id="landing_book" src="../assets/intro_book.png">
+        </router-link>
+    </div>
 </template>
 
 <script>
@@ -18,8 +19,8 @@ export default {
         handleResize(e){
             var w = window.innerWidth
             var h = window.innerHeight
-            $('#landing_page').height(h);
             $('#landing_page').width(w);
+            $('#landing_book').css('top', '50%')
         },
     }
 }
@@ -28,6 +29,10 @@ export default {
 <style scoped>
 #landing_page {
     background: url('../assets/intro_bg.png');
-    background-position: bottom -500px center;
+    background-position: bottom center;
+}
+#landing_book {
+    position: relative;
+    top:50%;
 }
 </style>
