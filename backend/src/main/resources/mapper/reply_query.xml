@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssafy.chuck.reply.dao.ReplyDao">
+
+	<!-- 댓글 입력 -->
+	<insert id="insertComment">
+		insert REPLIES(WRITER, COMMENT, DIARY_ID, DATE) values(#{writer}, #{comment}, #{diary_id}, #{date})
+	</insert>
+	
+	<!-- 특정 아이디의 댓글 리스트 반환 -->
+	<select id="selectCommentByDiaryId" resultType="com.ssafy.chuck.reply.dto.ReplyDto">
+		select ID, WRITER, COMMENT, DIARY_ID, DATE from REPLIES where DIARY_ID = #{diary_id}
+	</select>
+	
+	<!-- 특정 작성자의 댓글 리스트 반환 -->
+	<select id="selectCommentByWriter" resultType="com.ssafy.chuck.reply.dto.ReplyDto">
+		select ID, WRITER, COMMENT, DIARY_ID, DATE from REPLIES where WRITER = #{writer}
+	</select>
+
+
+</mapper>

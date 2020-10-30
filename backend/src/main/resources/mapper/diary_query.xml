@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.ssafy.chuck.diary.dao.DiaryDao">
+    <insert id="create" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
+        insert into DIARIES (IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
+                            (#{image}, #{content}, #{writer}, #{groupId}, now())
+    </insert>
+
+    <select id="read" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE ID = #{id}
+    </select>
+
+    <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
+        update DIARIES
+        SET CONTENT = #{content}
+        where ID = #{id}
+    </update>
+
+    <delete id="delete" parameterType="int">
+        delete from DIARIES where ID = #{id}
+    </delete>
+
+    <select id="readAll" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE GROUP_ID = #{groupId}
+    </select>
+
+    <select id="search" parameterType="map" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
+        select * from DIARIES WHERE GROUP_ID = #{groupId} AND CONTENT LIKE CONCAT('%', #{word}, '%')
+    </select>
+</mapper>
