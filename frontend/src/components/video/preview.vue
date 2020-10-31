@@ -41,7 +41,7 @@ export default {
 			var progressBar = document.getElementById('play-bar');
 			var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime)
 			progressBar.style.width = percentage + '%'
-			if(percentage === 100) {
+			if(mediaPlayer.ended) {
 				let btn = document.getElementById('play-pause-button')
 				let ovr = document.getElementById('play-disp')
 				btn.title = 'play'
@@ -69,7 +69,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css);
 .main {
 	position: absolute;

@@ -138,6 +138,11 @@
 import $ from "jquery";
 import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
+
+// timeline
+import Intro from "@/components/intro.vue";
+import Timeline from "@/components/timeline.vue";
+
 // calender
 import Calendar from "@/components/calendar.vue";
 import List from "@/components/list.vue";
@@ -145,13 +150,13 @@ import Detail from "@/components/detail.vue";
 import Comment from "@/components/comment.vue";
 import Write1 from "@/components/write1.vue";
 import Write2 from "@/components/write2.vue";
-// album
-import PersonClassification from "@/components/album/personClassification.vue";
-import NoResult from "@/components/album/noResult.vue";
-import ResultGallery from "@/components/album/resultAlbum.vue";
 
-import Timeline from "@/components/timeline.vue";
-import Intro from "@/components/intro.vue";
+// gallery
+import PersonClassification from "@/components/gallery/personClassification.vue";
+import NoResult from "@/components/gallery/noResult.vue";
+import ResultGallery from "@/components/gallery/resultAlbum.vue";
+
+// studio
 import Album1 from "@/components/album/pick.vue";
 import Album2 from "@/components/album/selectPerson.vue";
 import Album3 from "@/components/album/preview.vue";
@@ -160,6 +165,7 @@ import Video2 from "@/components/video/selectPerson.vue";
 import Video3 from "@/components/video/selectImage.vue";
 import Video4 from "@/components/video/selectMusic.vue";
 import Video5 from "@/components/video/preview.vue";
+
 export default {
   components: {
     Calendar,

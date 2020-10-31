@@ -4,11 +4,17 @@
             <font size=4>미리보기</font>
         </div>
         <div class="dash" style="height:620px;">
-            <!-- <el-carousel indicator-position="none">
+            <el-carousel indicator-position="none" arrow="always" height="605px">
                 <el-carousel-item v-for="(chuck, index) in getChuckList" :key="index">
-                    <img :src="chuck.img[0]">
+                     <el-card shadow="none" style="border:0px;">
+                        <img :src="chuck.img[0]" style="object-fit:none; width:400px; height:400px">
+                            <div style="padding:20px;">
+                                <font size=5>{{ chuck.title }}</font>
+                            </div>
+                            <div v-html="chuck.content"></div>
+                    </el-card>
                 </el-carousel-item>
-            </el-carousel> -->
+            </el-carousel>
         </div>
         <div class="dash pointer">
             <font size=4>PDF로 내려받기</font>
@@ -27,5 +33,6 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
 </style>
