@@ -1,0 +1,28 @@
+.el-input__inner {
+    text-align: center;
+}
+.el-upload-dragger {
+    padding-top: 20px;
+    width: 520px !important;
+    height: 200px !important;
+    border: 0px !important; 
+}
+.el-upload-list--picture-card .el-upload-list__item {
+    overflow: hidden;
+    background-color: #fff;
+    border: 1px solid #c0ccda;
+    border-radius: 6px;
+    box-sizing: border-box;
+    width: 120px;
+    height: 120px;
+    margin: 3px !important;
+    display: inline-block;
+}
+.el-textarea {
+    position: relative;
+    display: inline-block;
+    width: 91%;
+    vertical-align: bottom;
+    font-size: 18px;
+    margin: 6px;
+}

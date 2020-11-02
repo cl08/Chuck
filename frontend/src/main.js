@@ -2,11 +2,13 @@ import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
+
 import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/ko'
-import 'vuetify/dist/vuetify.min.css'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -28,6 +30,7 @@ Vue.config.productionTip = false
 Vue.use(FlippingWidgets);
 
 import "./styles/default.css"
+import "./styles/custom.css"
 
 new Vue({
   render: h => h(App),
