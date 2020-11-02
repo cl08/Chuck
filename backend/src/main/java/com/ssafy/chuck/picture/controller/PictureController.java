@@ -93,7 +93,8 @@ public class PictureController {
 			JsonArray list = element.getAsJsonArray("paths");
 			
 			List<String> pathList = new ArrayList<>();
-			for(int j=0;j<list.size();j++)  pathList.add(list.get(j).getAsString());
+			for(int j=0;j<list.size();j++) pathList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
+			
 			
 			clusterResponseList.add(new ClusterResponse(rep, pathList));
     	}

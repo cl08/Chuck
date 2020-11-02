@@ -68,7 +68,7 @@ public class KakaoController {
 		}
 	}
 	
-	@GetMapping
+	@GetMapping("/list")
 	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
 	public ResponseEntity<List<String>> getList(String id){
 		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
