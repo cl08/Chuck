@@ -137,6 +137,6 @@ public class PictureController {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
-	
+	 
 	
 }
