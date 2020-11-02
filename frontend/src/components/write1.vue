@@ -1,15 +1,80 @@
 <template>
-    <div style="margin:0px 30px 0px 0px;">
-        <h1>이곳은 글작성페이지1</h1>
+    <div style="margin:30px 30px 0px 0px;">
+        <font size=6>Chuck 남기기</font><br>
+        <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
+        <div class="dash" style="height:230px;">
+            <el-upload 
+            drag
+            multiple
+            action="https://jsonplaceholder.typicode.com/posts/"
+            :data="{groupId:12333}"
+            :limit=10
+            :show-file-list="false"
+            :auto-upload="false"
+            :before-upload="beforeImageUpload"
+            :on-success="handleSuccess"
+            :on-exceed="handleExceed"
+            >
+                <i class="el-icon-upload"></i>
+                <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
+            </el-upload>
+        </div>
+        <div class="dash" style="height:400px; padding:10px;">
+            <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
+                <li v-for="index in 11" :key="index" class="el-upload-list__item is-ready">
+                    <img src="https://image.auction.co.kr/itemimage/19/8e/a2/198ea2c571.jpg" class="el-upload-list__item-thumbnail">
+                    <span class="el-upload-list__item-actions">
+                        <span class="el-upload-list__item-preview">
+                            <i class="el-icon-zoom-in"></i>
+                        </span>
+                        <span class="el-upload-list__item-delete">
+                            <i class="el-icon-delete"></i>
+                        </span>
+                    </span>
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
 
 <script>
 export default {
+    data() {
+        return {
+            thumbnailList: '',
+            disabled: false
+        };
+    },
+    methods: {
+        beforeImageUpload(file) {
+            const isJPG = file.type === 'image/jpeg';
+            const isPNG = file.type === 'image/png';
+            const isLt10M = file.size / 1024 / 1024 < 10;
 
+            if (!(isPNG || isJPG)) {
+                alert('JPG, PNG 포맷만 지원합니다.');
+            }
+            if (!isLt10M) {
+                alert('파일 크기 제한은 10MB입니다.');
+            }
+            return (isJPG || isPNG) && isLt10M;
+        },
+        handleExceed(file, fileList){
+            alert("사진은 최대 12개까지 업로드 할 수 있습니다.")
+        },
+        handleSuccess(res, file) {
+            // alert("업로드 성공")
+            console.log(res)
+            console.log(file)
+        },
+        handleRemove(file, fileList) {
+            // alert("삭제 성공")
+            console.log(file)
+            console.log(fileList)
+        }
+    }
 }
 </script>
-
-<style>
+<style scoped>
 
 </style>
