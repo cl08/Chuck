@@ -84,7 +84,6 @@ export default {
             'setVisibleWrite',
         ]),
         viewDay ({ date }) {
-            console.log(date)
             this.setSelectedDay(date)
             this.focus = date
         },

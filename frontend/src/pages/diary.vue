@@ -101,7 +101,7 @@
           <Comment v-show="this.getVisibleDetail" />
           <Write2 v-show="this.getVisibleWrite" />
         </div>
-        <!-- galary -->
+        <!-- gallery -->
         <div>
           <PersonClassification></PersonClassification>
         </div>
