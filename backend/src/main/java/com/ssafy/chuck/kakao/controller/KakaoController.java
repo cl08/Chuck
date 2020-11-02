@@ -71,8 +71,8 @@ public class KakaoController {
 	@GetMapping
 	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
 	public ResponseEntity<List<String>> getList(String id){
-//		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
-		String path = "C:\\Users\\multicampus\\s03p31a206\\backend\\python";
+		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
+//		String path = "C:\\Users\\multicampus\\s03p31a206\\backend\\python";
 		File folder = new File(path);
 		File[] fileList = folder.listFiles();
 		List<String> list = new ArrayList<>();
