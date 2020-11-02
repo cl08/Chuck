@@ -89,12 +89,11 @@ public class PictureController {
 		System.out.println(jsonArray);
 		for(int i=0;i<jsonArray.size();i++) {
 			JsonObject element = (JsonObject) jsonArray.get(i);
-			String rep = element.get("rep").getAsString();
+			String rep = "http://k3a206.p.ssafy.io/images/" + element.get("rep").getAsString().split("python/")[1];
 			JsonArray list = element.getAsJsonArray("paths");
 			
 			List<String> pathList = new ArrayList<>();
 			for(int j=0;j<list.size();j++) pathList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
-			
 			
 			clusterResponseList.add(new ClusterResponse(rep, pathList));
     	}
