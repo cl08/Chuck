@@ -36,7 +36,7 @@ public class KakaoController {
 	
 	@PostMapping("/upload")
 	@ApiOperation(value = "카카오 챗봇 파일 업로드")
-	public ResponseEntity<String> fileUploadForKakao(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, String id){
+	public ResponseEntity<String> fileUploadForKakao(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int id){
 
 		//1. 개인별 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
@@ -70,7 +70,7 @@ public class KakaoController {
 	
 	@GetMapping("/list")
 	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
-	public ResponseEntity<List<String>> getList(String id){
+	public ResponseEntity<List<String>> getList(int id){
 		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
 //		String path = "C:\\Users\\multicampus\\s03p31a206\\backend\\python";
 		File folder = new File(path);
@@ -82,7 +82,7 @@ public class KakaoController {
 	
 	@DeleteMapping("/delete")
 	@ApiOperation(value = "계정별 사진 삭제")
-	public ResponseEntity<String> delete(String id, String path){
+	public ResponseEntity<String> delete(String path){
 		String realPath = "/home/ubuntu/s03p31a206/backend/python/kakao/" + path.split("kakao/")[1];
 		File file = new File(realPath);
 		file.delete();
