@@ -111,7 +111,7 @@
             v-show="this.getPersonClassificationResult"
           ></ResultGallery>
         </div>
-        <!-- chuck -->
+        <!-- studio -->
         <div>
           <Album1 v-show="this.getVisibleChoice" />
           <Album2 v-show="this.getVisibleAlbum" />
@@ -124,9 +124,13 @@
           <Video3 v-show="this.getVisibleVideo" />
           <Video5 v-show="this.getVisiblePreview" />
         </div>
-        <!-- info -->
-        <div>그룹정보</div>
-        <div>그룹정보 본문</div>
+        <!-- groupset -->
+        <div>
+          <Groupset></Groupset>
+        </div>
+        <div>
+          <Outro></Outro>
+        </div>
         <div class="hard p29"></div>
         <div class="hard p30"></div>
       </div>
@@ -140,16 +144,16 @@ import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
 
 // timeline
-import Intro from "@/components/intro.vue";
-import Timeline from "@/components/timeline.vue";
+import Intro from "@/components/timeline/intro.vue";
+import Timeline from "@/components/timeline/timeline.vue";
 
 // calender
-import Calendar from "@/components/calendar.vue";
-import List from "@/components/list.vue";
-import Detail from "@/components/detail.vue";
-import Comment from "@/components/comment.vue";
-import Write1 from "@/components/write1.vue";
-import Write2 from "@/components/write2.vue";
+import Calendar from "@/components/calendar/calendar.vue";
+import List from "@/components/calendar/list.vue";
+import Detail from "@/components/calendar/detail.vue";
+import Comment from "@/components/calendar/comment.vue";
+import Write1 from "@/components/calendar/write1.vue";
+import Write2 from "@/components/calendar/write2.vue";
 
 // gallery
 import PersonClassification from "@/components/gallery/personClassification.vue";
@@ -166,6 +170,9 @@ import Video3 from "@/components/video/selectImage.vue";
 import Video4 from "@/components/video/selectMusic.vue";
 import Video5 from "@/components/video/preview.vue";
 
+// groupset
+import Groupset from "@/components/groupset/groupset.vue";
+import Outro from "@/components/groupset/outro.vue";
 export default {
   components: {
     Calendar,
@@ -187,6 +194,8 @@ export default {
     Video3,
     Video4,
     Video5,
+    Groupset,
+    Outro,
   },
   data() {
     return {
