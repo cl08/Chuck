@@ -80,4 +80,12 @@ public class KakaoController {
 		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/list")
+	@ApiOperation(value = "계정별 사진 삭제")
+	public ResponseEntity<String> delete(String id, String path){
+		File folder = new File(path);
+		folder.delete();
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
 }
