@@ -4,8 +4,7 @@
         
     </div>
     <div class="right">
-        <!-- 이미지로 변경 -->
-        <h1>Chuck</h1>
+        <img src="../../assets/logo_200150.svg">
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
             <v-btn @click="DeleteGroup" color="orange" text x-large><h2>그룹삭제</h2></v-btn>
@@ -51,10 +50,10 @@ export default {
     background-color: #FEF4E5;
     position: relative;
 }
-.right h1{
+.right img{
     float: right;
-    color: orange;
-    margin: 10px;
+    width: 300px;
+    height: 150px;
 }
 .right .BtnGroup{
     width: 140px;
