@@ -80,11 +80,12 @@ public class KakaoController {
 		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/list")
+	@DeleteMapping("/delete")
 	@ApiOperation(value = "계정별 사진 삭제")
 	public ResponseEntity<String> delete(String id, String path){
-		File folder = new File(path);
-		folder.delete();
+		String realPath = "/home/ubuntu/s03p31a206/backend/python/kakao/" + path.split("kakao/")[1];
+		File file = new File(realPath);
+		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
