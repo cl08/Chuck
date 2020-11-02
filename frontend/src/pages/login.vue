@@ -88,7 +88,7 @@ export default {
 #login_test {
     position: absolute;
     left: 50%;
-    margin-left: -80px;
+    margin-left: -78px;
     bottom: 190px;
     cursor: pointer;
     color: white;

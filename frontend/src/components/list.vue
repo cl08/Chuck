@@ -1,47 +1,44 @@
 <!--
-    1. content 길 경우 문제. grid 지정
-    2. 검색버튼
-    3. 글쓰기버튼
-    4. 카드형식으로 바꾸기(와이어프레임 참고)
+    1. content 길 경우 문제. 자르고 ... 표시
+    2. 검색 기능
 -->
 <template>
     <div style="margin:30px 0px 0px 30px;">
-        <font size=6>{{ this.getSelectedDay }}</font>
-        <v-container>
+        <v-row>
+            <span class="col-3">
+            </span>
+            <span class="col-6">
+                <font size=6>{{ this.getSelectedDay }}</font>
+            </span>
+            <span class="col-3 float-right">
+                <el-button icon="el-icon-search" circle></el-button>
+                <el-button icon="el-icon-edit" circle @click="write"></el-button>
+            </span>
+        </v-row>
+        <v-container style="padding:0px 20px 0px 20px;">
             <v-row dense>
-                <!-- <v-col cols="12">
-                    <v-card color="#385F73" dark>
-                        <v-card-title class="headline">
-                            Unlimited music now
-                        </v-card-title>
-                        <v-card-subtitle>Listen to your favorite artists and albums whenever and wherever, online and offline.</v-card-subtitle> 
-                        <v-card-actions>
-                            <v-btn text>Listen Now</v-btn>
-                        </v-card-actions>
-                    </v-card>
-                </v-col> -->
                 <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
-                    <v-card :color="item.color">
-                        <div class="d-flex flex-no-wrap justify-space-between">
-                            <div>
-                                <v-card-title class="headline" v-text="item.title"></v-card-title>
-                                <!-- <v-card-subtitle v-html="item.content" style="text-align:left;"></v-card-subtitle>
-                                <v-card-actions>
-                                    <v-btn class="ml-2 mt-5" rounded small>view</v-btn>
-                                </v-card-actions> -->
-                            </div>
-                            <!-- <v-avatar class="ma-3" size="125" tile>
+                    <v-card>
+                        <div class="d-flex flex-no-wrap">
+                            <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
+                            <v-avatar size="125" tile>
                                 <v-img :src="item.img[0]"></v-img>
-                            </v-avatar> -->
+                            </v-avatar>
+                            <div style="width:400px;">
+                                <v-card-title>{{ item.title }} </v-card-title>
+                                <v-card-subtitle v-text="item.content.slice(0, 30)" style="text-align:left; paadingBottom:0px;"></v-card-subtitle>
+                                <v-card-text>
+                                    <v-row>
+                                        <span class="col-6" style="text-align:left; padding: 0px 12px;">
+                                        작성자 : {{ item.writer }}
+                                        </span>
+                                        <span class="col-6" style="text-align:right; padding: 0px 12px;">
+                                        작성일 : {{ item.date }}
+                                        </span>
+                                    </v-row>
+                                </v-card-text>
+                            </div>
                         </div>
-                    </v-card>
-                </v-col>
-                <v-col cols="12">
-                    <v-card class="mx-auto" outlined @click="write" style="border:dashed 2px #DCDFE6;">
-                        <v-avatar size="62" tile style="cursor:pointer">
-                        <!-- <v-avatar class="ma-3" size="125" tile style="cursor:pointer"> -->
-                            <img src='../assets/add.png'>
-                        </v-avatar>
                     </v-card>
                 </v-col>
             </v-row>
