@@ -68,6 +68,16 @@ public class KakaoController {
 		}
 	}
 	
-
+	@GetMapping
+	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
+	public ResponseEntity<List<String>> getList(String id){
+//		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
+		String path = "C:\\Users\\multicampus\\s03p31a206\\backend\\python";
+		File folder = new File(path);
+		File[] fileList = folder.listFiles();
+		List<String> list = new ArrayList<>();
+		for(int i = 0; i < fileList.length;i++) list.add("http://k3a206.p.ssafy.io/images/kakao/" + id + "/" + fileList[i].getName());
+		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+	}
 	
 }
