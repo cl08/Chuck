@@ -3,7 +3,7 @@
     2. 크기고정 + 스크롤
 -->
 <template>
-    <div style="margin:0px 0px 0px 30px; height:717px;">
+    <div style="margin:30px 0px 0px 30px; height:680px; overflow:scroll;">
         <div v-for="(item, index) in getComments" :key="index" class="post-it">
             <p class="note">
                 <strong>{{ item.writer }}</strong><br>
@@ -11,12 +11,12 @@
             </p>
         </div>
         <div class="comment">      
-            <!-- <v-text-field label="댓글" color="#EEAFAF">
-                <v-icon slot="append" color="#EEAFAF" style="cursor:pointer" @click="comment">mdi-comment</v-icon>
-            </v-text-field> -->
-            <el-input placeholder="Please input" v-model="input">
-                <template slot="append" icon="el-icon-search"><i class="el-icon-edit"></i></template>
-            </el-input>
+            <div class="el-input el-input-group el-input-group--append">
+                <input type="text" autocomplete="off" placeholder="댓글 입력" class="el-input__inner" v-model="input" style="text-align:left">
+                <div class="el-input-group__append">
+                    <i class="el-icon-edit"></i>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -53,7 +53,7 @@ export default {
     background-color: #F4F39E;
     border-color: #DEE184;
     text-align: center;
-    margin: 1.5em auto;
+    /* margin: 1.5em auto; */
     padding: 1.5em 1em;
     -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
     -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
@@ -64,6 +64,8 @@ export default {
     -ms-transform: rotate(2deg);
     transform: rotate(2deg);
     width: 180px;
+    height: 160px;
+    overflow: scroll;
 }
 .note:after {
     display: block;
@@ -74,7 +76,7 @@ export default {
     top: -21px;
     left: 30%;    
     border: 1px solid #fff;
-    background: rgba(254, 254, 254, .6);
+    background: rgba(254, 254, 254, .7);
     -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
     box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
@@ -82,7 +84,7 @@ export default {
 .comment { 
     position: absolute; 
     bottom: 30px;
-    left: 50px;
-    width:450px;
+    left: 80px;
+    width:500px;
 }
 </style>

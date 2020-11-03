@@ -99,6 +99,54 @@ export default new Vuex.Store({
                 diary_id: '',
                 date: '',
             },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
+            {
+                writer: '피콜로',
+                comment: 'ㅋㅋ',
+                diary_id: '',
+                date: '',
+            },
         ],
         personArray : [
 
