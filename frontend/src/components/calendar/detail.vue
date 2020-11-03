@@ -1,8 +1,15 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-        <font size=6>{{ this.getSelectedDay }}</font>
+        <div style="padding-bottom:70px;">
+            <spna class="float-left ml-10">
+                <img src="../../assets/logo.svg" class="tabtitle">
+            </spna>
+            <spna class="float-right mr-10 mt-4">
+            <font size=5>{{ this.getSelectedDay }}</font>
+            </spna>
+        </div>
         <div v-if="getChuckList[getSelectedDiary]" style="margin: 10px 30px 10px 30px;">
-            <v-carousel height="290" hide-delimiter-background show-arrows-on-hover>
+            <v-carousel height="400" hide-delimiter-background show-arrows-on-hover>
                 <v-carousel-item v-for="(item, i) in getChuckList[getSelectedDiary].img" :key="i" :src="item"></v-carousel-item>
             </v-carousel>
         </div>
