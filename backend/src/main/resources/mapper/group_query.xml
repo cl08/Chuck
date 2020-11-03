@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.group.dao.GroupDao">
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ssafy.chuck.group.dto.GroupDto">
-        insert into `GROUPS`(USER_ID, NAME, INTRO) values (#{userId}, #{name}, #{intro})
+        insert into `GROUPS`(USER_ID, NAME, INTRO, PUBLISHED_DATE) values (#{userId}, #{name}, #{intro}, now())
     </insert>
 
     <update id="updateToken" parameterType="map">
@@ -30,7 +30,7 @@
     </insert>
 
     <select id="readAllMember" parameterType="int" resultType="com.ssafy.chuck.group.dto.MemberDto">
-        select * from GROUP_MEMBERS WHERE GROUP_ID = #{id}
+        select * from GROUP_MEMBERS inner join USERS U on GROUP_MEMBERS.USER_ID = U.ID WHERE GROUP_ID = #{id}
     </select>
 
     <select id="readAllGroup" parameterType="long" resultType="com.ssafy.chuck.group.dto.GroupDto">
