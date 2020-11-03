@@ -1,8 +1,8 @@
 <template>
     <div style="margin:30px 0px 0px 30px;">
-        <div style="margin-top:150px; cursor:pointer" @click="nextStep">
-            <h1 style="margin-bottom:100px">영상 제작</h1>
-            <img src='../../assets/video_make.svg'>
+        <div style="margin-top:240px; cursor:pointer" @click="nextStep">
+            <img src='../../assets/video_make.svg'><br>
+            <img src='../../assets/title/chuckFilm_tabtitle.svg' class="tabtitle mt-10">
         </div>
     </div>
 </template>

@@ -1,29 +1,30 @@
 <template>
-  <div class="groupset">
-      <div class="information">
-          <h1> 
-              그룹정보
-              <v-btn @click="InviteGroup" color="orange" text>그룹원 초대하기</v-btn>
-          </h1>
-      </div>
-      <h1>그룹원 목록</h1>
-      <div class="list">
-          <div v-for="(member, index) in memberList" :key="index">
-              {{member.name}}
-              <v-btn @click="DeportGroup(member.id)" color="orange" text>추방</v-btn>
-          </div>
-      </div>
-      <div class="createDate">
-          <h1>그룹 생성일</h1>
-          <p>{{this.GroupCreateDate}}</p>
-      </div>
-      <h1>그룹 로그</h1>
-      <div class="log">
-          <div v-for="(log, index) in logList" :key="index">
-              {{log.content}}
-          </div>
-      </div>
-  </div>
+    <div class="groupset">
+        <div>
+            <img src='../../assets/title/groupManagement_tabtitle.svg' class="tabtitle">
+        </div>
+        <h1>그룹정보</h1>
+        <div class="information">
+            {{ groupInfo }}
+        </div>
+        <h1>그룹원 목록<v-btn @click="InviteGroup" color="orange" text>그룹원 초대하기</v-btn></h1>
+        <div class="list">
+            <div v-for="(member, index) in memberList" :key="index">
+                {{member.name}}
+                <v-btn @click="DeportGroup(member.id)" color="orange" text>추방</v-btn>
+            </div>
+        </div>
+        <h1>그룹 생성일</h1>
+        <div class="createDate">
+            <p>{{this.GroupCreateDate}}</p>
+        </div>
+        <h1>그룹 로그</h1>
+        <div class="log" style="margin-bottom:0px;">
+            <div v-for="(log, index) in logList" :key="index">
+                {{log.content}}
+            </div>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -31,6 +32,7 @@ import api from '@/utils/api';
 export default {
     data(){
         return{
+            groupInfo: 'Team 쓰는척 입니다.',
             memberList:[
                 // 임시데이터
                 {
@@ -94,23 +96,24 @@ export default {
 
 <style scope>
 .groupset{
-    margin: 20px;
+    margin: 30px 30px 0px 30px;
     text-align: left;
 }
 .groupset > div{
     margin-bottom: 30px;
 }
+.groupset > h1{
+    margin-bottom: 10px;
+}
 .information button{
     left: 300px;
 }
 .list{
-    margin-top: 30px;
     height: 150px;
     overflow: scroll;
 }
 .log{
-    margin-top: 30px;
-    height: 150px;
+    height: 110px;
     overflow: scroll;
 }
 .createDate h1{

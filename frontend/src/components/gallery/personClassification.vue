@@ -1,8 +1,7 @@
 <template>
-  <div style="margin: 0px 30px 0px 0px">
-    <div style="margin-top: 5px">
-      <h1>인물 분류</h1>
-      <h5 style="text-align: left">인물 분류</h5>
+  <div style="margin: 30px 30px 0px 0px">
+    <div class="text-left ml-8">
+      <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
     </div>
     <div class="selectPerson">
       <!-- 이미지는 서버에서 몇명인지 받아와서 for문으로 뿌려줌. -->

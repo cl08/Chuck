@@ -1,7 +1,7 @@
 <template>
     <div style="margin:30px 0px 0px 30px;">
         <div class="text-left ml-5">
-            <font size=9>TimeLine</font>
+            <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
         </div>
         <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i">
             <v-card-subtitle class="pt-0">

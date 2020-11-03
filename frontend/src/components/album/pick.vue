@@ -1,8 +1,11 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-        <div style="margin-top:150px; cursor:pointer" @click="nextStep">
-            <h1 style="margin-bottom:100px">앨범 제작</h1>
-            <img src='../../assets/photo_album.svg'>
+        <div class="text-left ml-8">
+            <img src="../../assets/title/studio_tabtitle.svg" class="tabtitle">
+        </div>
+        <div style="margin-top:140px; cursor:pointer" @click="nextStep">
+            <img src='../../assets/photo_album.svg'><br>
+            <img src='../../assets/title/chuckBook_tabtitle.svg' class="tabtitle mt-10">
         </div>
     </div>
 </template>

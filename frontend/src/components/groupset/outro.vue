@@ -5,7 +5,9 @@
     </div>
     <div class="right">
         <!-- 이미지로 변경 -->
-        <h1>Chuck</h1>
+        <div class="text-right" style="padding:30px 30px 0px 0px;">
+            <img src="../../assets/logo.svg" class="tabtitle">
+        </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
             <v-btn @click="DeleteGroup" color="orange" text x-large><h2>그룹삭제</h2></v-btn>
