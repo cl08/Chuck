@@ -25,7 +25,7 @@
 .dash {
     margin: 5px 25px 5px 25px;
     padding: 5px;
-    border: 2px dashed #DCDFE6;
+    border: 3px dashed #DCDFE6;
     border-radius: 3px;
     overflow: auto;
 }

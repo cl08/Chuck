@@ -3,9 +3,9 @@
         <div>
             <img src='../../assets/title/groupManagement_tabtitle.svg' class="tabtitle">
         </div>
-        <h1>그룹정보</h1>
+        <h1>그룹명</h1>
         <div class="information">
-            {{ groupInfo }}
+            {{ name }}
         </div>
         <h1>그룹원 목록<v-btn @click="InviteGroup" color="orange" text>그룹원 초대하기</v-btn></h1>
         <div class="list">
@@ -32,7 +32,7 @@ import api from '@/utils/api';
 export default {
     data(){
         return{
-            groupInfo: 'Team 쓰는척 입니다.',
+            name: 'Team 쓰는척',
             memberList:[
                 // 임시데이터
                 {

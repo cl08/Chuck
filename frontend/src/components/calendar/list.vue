@@ -29,7 +29,7 @@
             </span>
         </v-row>
 
-        <v-container style="padding:0px 20px 0px 20px;">
+        <v-container v-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
                 <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
@@ -57,7 +57,11 @@
                     </v-card>
                 </v-col>
             </v-row>
-      </v-container>
+        </v-container>
+
+        <v-container v-else style="padding:0px 20px 0px 20px;">
+            <font size=6>오늘의 새로운 Chuck을 작성해 보세요</font>
+        </v-container>
     </div>
 </template>
 

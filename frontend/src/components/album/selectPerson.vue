@@ -1,6 +1,6 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-        <font size=9>사진첩 만들기</font>
+            <img src="../../assets/title/chuckBook_tabtitle.svg" class="tabtitle">
         <div class="dash">
             <font size=4>기간 선택</font>
         </div>
@@ -33,7 +33,7 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:320px;">
+        <div class="dash" style="height:322px;">
             <span class="face pointer" @click="selectAll">ALL</span>
             <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
                 <img :id="'albumFace'+index" class="albumFaceNoneDisplay" src="../../assets/check_circle.svg">
