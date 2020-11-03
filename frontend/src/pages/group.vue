@@ -172,9 +172,8 @@ export default {
             script.src = '/js/kakao.min.js';
             document.head.appendChild(script);
         }
-       
         axios
-            .get("http://localhost:8888/chcuk/groups/of/groups", {
+            .get("http://k3a206.p.ssafy.io:8888/chcuk/groups/of/groups", {
                 headers: {
                     token: sessionStorage.getItem('token')
                 }
@@ -198,7 +197,7 @@ export default {
         },
         uploadGroup() {
             axios
-                .post(`http://localhost:8888/chcuk/groups`, {
+                .post(`http://k3a206.p.ssafy.io:8888/chcuk/groups`, {
                     name: this.selectedBook.name,
                     intro: this.selectedBook.intro
                 }, {
