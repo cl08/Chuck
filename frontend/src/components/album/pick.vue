@@ -3,7 +3,7 @@
         <div class="text-left ml-8">
             <img src="../../assets/title/studio_tabtitle.svg" class="tabtitle">
         </div>
-        <div style="margin-top:140px; cursor:pointer" @click="nextStep">
+        <div style="margin-top:120px; cursor:pointer" @click="nextStep">
             <img src='../../assets/photo_album.svg'><br>
             <img src='../../assets/title/chuckBook_tabtitle.svg' class="tabtitle mt-10">
         </div>

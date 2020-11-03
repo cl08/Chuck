@@ -1,6 +1,6 @@
 <template>
     <div style="margin:30px 0px 0px 30px;">
-        <div style="margin-top:240px; cursor:pointer" @click="nextStep">
+        <div style="margin-top:220px; cursor:pointer" @click="nextStep">
             <img src='../../assets/video_make.svg'><br>
             <img src='../../assets/title/chuckFilm_tabtitle.svg' class="tabtitle mt-10">
         </div>
