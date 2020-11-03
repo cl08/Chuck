@@ -1,21 +1,36 @@
 <!--
     1. content 길 경우 문제. 자르고 ... 표시
-    2. 검색 기능
 -->
 <template>
     <div style="margin:30px 0px 0px 30px;">
-        <v-row>
+        <v-row v-if="searchFlag">
             <span class="col-3">
             </span>
             <span class="col-6">
                 <font size=6>{{ this.getSelectedDay }}</font>
             </span>
             <span class="col-3 float-right">
-                <el-button icon="el-icon-search" circle></el-button>
+                <el-button icon="el-icon-search" circle @click="openSearchBar"></el-button>
                 <el-button icon="el-icon-edit" circle @click="write"></el-button>
             </span>
         </v-row>
+
+        <v-row v-else>
+            <span class="col-12 float-right">
+                <div class="el-input el-input--suffix" style="width: 84%; margin-right: 12px;">
+                    <input type="text" autocomplete="off" class="el-input__inner" id="searchBar" v-model="keyword" @keydown.enter="search">
+                    <span class="el-input__suffix">
+                        <span class="el-input__suffix-inner">
+                            <i class="el-input__icon el-icon-close pointer" @click="closeSearchBar"></i>
+                        </span>
+                    </span>
+                </div>
+                <el-button icon="el-icon-edit" circle @click="write"></el-button>
+            </span>
+        </v-row>
+
         <v-container style="padding:0px 20px 0px 20px;">
+            <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
                 <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
                     <v-card>
@@ -52,6 +67,9 @@ import { mapMutations } from 'vuex'
 export default {
     data: () => ({
         selectedChuckList: [],
+        searchFlag: true,
+        searchResult: '',
+        keyword: '',
     }),
     mounted() {
         for(var i=0; i<this.getChuckList.length; i++) {
@@ -94,6 +112,22 @@ export default {
             this.setVisibleWrite(true)
             this.setVisibleDetail(false)
             this.setVisibleCalendar(false)
+        },
+        openSearchBar() {
+            this.keyword = ''
+            this.searchFlag = false
+            setTimeout(function(){
+                document.getElementById('searchBar').focus()
+            }, 1);
+        },
+        closeSearchBar() {
+            this.searchFlag = true
+            this.searchResult = ''
+        },
+        search() {
+            this.searchResult = this.keyword
+            this.keyword = ''
+            // 검색 구현
         }
     }
 }
