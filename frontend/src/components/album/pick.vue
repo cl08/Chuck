@@ -3,7 +3,13 @@
         <div class="text-left ml-8">
             <img src="../../assets/title/studio_tabtitle.svg" class="tabtitle">
         </div>
-        <div style="margin-top:120px; cursor:pointer" @click="nextStep">
+        <div style="margin-top:150px; cursor:pointer" @click="nextStep">
+            <div class="studioInfo">
+                <h3>
+                <p>Chuck을 하나의 문서로</p>
+                <p>만들어 간직하세요</p>
+                </h3>
+            </div>
             <img src='../../assets/photo_album.svg'><br>
             <img src='../../assets/title/chuckBook_tabtitle.svg' class="tabtitle mt-10">
         </div>
@@ -38,6 +44,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.studioInfo {
+    position: absolute;
+    left: 350px;
+    top: 150px;
+    text-align: left;
+    color: #8D6262;
+}
 </style>

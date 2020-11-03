@@ -1,6 +1,5 @@
 <!--
     1. 댓글 좌우 번갈아 가면서 나오기
-    2. 크기고정 + 스크롤
 -->
 <template>
     <div style="margin:30px 0px 0px 30px; height:680px; overflow:scroll;">
