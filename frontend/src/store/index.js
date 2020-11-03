@@ -239,7 +239,7 @@ export default new Vuex.Store({
             commit('setName', item)
         },
         logout({commit}) {
-            api.post(`/users/logout`, {
+            api.post(`users/logout`, {
                 refreshToken: sessionStorage.getItem('refreshToken')
             }, {
                 headers: {
