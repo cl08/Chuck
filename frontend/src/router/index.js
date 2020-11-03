@@ -30,6 +30,7 @@ export default new Router({
             path: '/diary',
             name: 'diary',
             component: diary,
+            props: true,
         },
     ]
 })
