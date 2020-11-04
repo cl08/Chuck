@@ -2,7 +2,8 @@
     <div style="padding:30px 30px 0px 0px;">
         <div>
         <img src="../../assets/title/chuck_write.svg" class="subtitle">
-        </div><div>
+        </div>
+        <div style="margin:20px 0px 20px 0px;">
             <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
@@ -22,7 +23,7 @@
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div class="dash" style="height:370px; padding:10px;">
+        <div style="padding:10px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
                 <li v-for="index in 8" :key="index" class="el-upload-list__item is-ready">
                     <img src="https://image.auction.co.kr/itemimage/19/8e/a2/198ea2c571.jpg" class="el-upload-list__item-thumbnail">

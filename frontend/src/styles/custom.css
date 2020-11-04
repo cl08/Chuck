@@ -26,3 +26,6 @@
     font-size: 18px;
     margin: 6px;
 }
+.el-textarea__inner {
+    border: none;
+}
