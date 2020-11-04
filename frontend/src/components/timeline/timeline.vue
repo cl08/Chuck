@@ -3,7 +3,7 @@
         <div class="text-left ml-5">
             <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
         </div>
-        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i" flat="true">
+        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i" :flat=true>
             <v-card-subtitle class="pt-0">
                 <div class="float-left pt-2">
                     {{ item.writer }}
