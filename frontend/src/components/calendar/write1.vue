@@ -5,12 +5,11 @@
         </div><div>
             <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
         </div>
-            <!-- action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload" -->
         <div class="dash" style="height:230px;">
             <el-upload 
             drag
             multiple
-            action="http://localhost:8888/chuck/pictures/upload"
+            action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
             :data="{groupId:this.$store.state.selectedGroup.id}"
             :limit=12
             :show-file-list="false"
