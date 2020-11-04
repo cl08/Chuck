@@ -1,10 +1,10 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-        <font size=9>미리보기</font>
+        <img src='../../assets/title/chuckFilm_tabtitle.svg' class="subtitle">
         <div class="dash">
             <font size=4>노래 선택하기</font>
         </div>
-        <div class="dash" style="height:545px;">
+        <div class="dash" style="height:540px;">
             <span class="music pointer" :style="'background-image:url('+music.img+')'"
             v-for="(music, index) in musics" :key="index"
             @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">

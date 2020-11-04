@@ -3,7 +3,7 @@
 2. 사진 클릭했을 때 사진 상세페이지 보여주기
  */
 <template>
-  <div>
+  <div class="result">
     <div class="selectPerson">
       <!-- 선택한 인원들을 상단에서 보여줌 -->
       <!-- <div v-for="(item, index) in items" :key="item.src" class="selectedImgDiv">
@@ -99,7 +99,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .List {
   margin-top: 50px;
   margin-left: 50px;
@@ -113,7 +113,7 @@ export default {
   width: 110px;
   height: 110px;
 }
-.selectPerson {
+.result .selectPerson {
   margin-top: 50px;
   margin-left: 30px;
 }

@@ -22,13 +22,28 @@
     font-weight: normal;
     font-style: normal;
 }
-.dash{
+.dash {
     margin: 5px 25px 5px 25px;
     padding: 5px;
-    border: 2px dashed #DCDFE6;
+    border: 3px dashed #DCDFE6;
     border-radius: 3px;
     overflow: auto;
 }
-.pointer{
+.pointer {
     cursor: pointer;
+}
+.tabtitle {
+    height: 80px;
+}
+.subtitle {
+    height: 70px;
+}
+.logo {
+    height: 60px;
+}
+.underline {
+    margin-top: -15px;
+    width: 130px;
+    height: 5px;
+    background: #8D6262;
 }

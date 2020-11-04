@@ -135,6 +135,8 @@
         <div class="hard p30"></div>
       </div>
     </div>
+    <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
+    <Mypage></Mypage>
   </div>
 </template>
 
@@ -142,7 +144,7 @@
 import $ from "jquery";
 import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
-
+import { mapMutations } from 'vuex'
 // timeline
 import Intro from "@/components/timeline/intro.vue";
 import Timeline from "@/components/timeline/timeline.vue";
@@ -173,6 +175,9 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
+
+import Mypage from "@/components/mypage/mypage.vue";
+
 export default {
   components: {
     Calendar,
@@ -196,6 +201,7 @@ export default {
     Video5,
     Groupset,
     Outro,
+    Mypage,
   },
   data() {
     return {
@@ -220,7 +226,17 @@ export default {
     ]),
   },
   methods: {
+    ...mapMutations([
+      "setVisibleCalendar",
+      "setVisibleDetail",
+      "setVisibleWrite",
+      "setVisibleChoice",
+      "setVisibleAlbum",
+      "setVisibleVideo",
+      "setVisiblePreview",
+    ]),
     movePage(num) {
+      this.init()
       $(".sample-docs").turn("disable", false);
       $(".sample-docs").turn("page", 2 + 2 * num);
       for (let i = 0; i < 5; i++) {
@@ -248,7 +264,28 @@ export default {
         }
       }
       $(".sample-docs").turn("disable", true);
+      
     },
+    // 글작성 페이지 이동
+    write() {
+      // 캘린더 페이지 이동
+      this.movePage(1);
+      this.setVisibleWrite(true);
+      this.setVisibleDetail(false);
+      this.setVisibleCalendar(false);
+    },
+    // init v-show
+    init(){
+      // calender
+      this.setVisibleWrite(false);
+      this.setVisibleDetail(false);
+      this.setVisibleCalendar(true);
+      // studio
+      this.setVisibleChoice(true);
+      this.setVisibleAlbum(false);
+      this.setVisibleVideo(false);
+      this.setVisiblePreview(false);
+    }
   },
   mounted() {
     $(".sample-docs").turn({
@@ -277,4 +314,16 @@ export default {
 
 <style scoped>
 @import "../styles/docs.css";
+#pen {
+  cursor: pointer;
+  width: 34px;
+  height: 661px;
+  position: fixed;
+  top: 130px;
+  right: 280px;
+}
+#pen:hover{
+  transition: all ease-in-out 0.2s;
+  top: 110px;
+}
 </style>

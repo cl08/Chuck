@@ -1,9 +1,10 @@
 <template>
-    <div style="margin:30px 0px 0px 30px;">
+    <div style="padding:30px 0px 0px 30px;">
         <div class="text-left ml-5">
-            <font size=9>TimeLine</font>
+            <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
+            <div class="underline"></div>
         </div>
-        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i">
+        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i" :flat=true>
             <v-card-subtitle class="pt-0">
                 <div class="float-left pt-2">
                     {{ item.writer }}
@@ -29,15 +30,17 @@
                     </v-menu>
                 </div>
             </v-card-subtitle>
-            <v-img class="white--text align-end" height="200px" :src="item.img[0]" style="clear:both;">
-                <v-card-title>{{ item.title }}</v-card-title>
+            <v-img height="300px" :src="item.img[0]" style="clear:both;">
             </v-img>
+                <v-card-title>{{ item.title }}</v-card-title>
             <v-card-text class="text--primary">
-                <div v-html="item.content"></div>
+                <div v-if="item.content.length < 40">{{ item.content }}</div>
+                <div v-else>
+                    {{ item.content.slice(0, 40) }}
+                    <v-btn color="#8D6262" text>...더보기</v-btn>
+                </div>
             </v-card-text>
-            <v-card-actions>
-                <v-btn color="orange" text>더보기</v-btn>
-            </v-card-actions>
+            <hr size="0.5" color="#E0E0E0">
         </v-card>
     </div>
 </template>

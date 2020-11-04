@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "그룹 관리", tags = "Group")
 @RestController
-@RequestMapping("/chcuk/groups")
+@RequestMapping("/chuck/groups")
 public class GroupController {
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 
@@ -44,7 +44,7 @@ public class GroupController {
 	@RequestMapping(method = RequestMethod.POST)
 	@ApiOperation(value = "그룹 생성", notes = "새로운 그룹을 생성한다.")
 	@ApiResponses({
-		@ApiResponse(code = 201, message = "그룹 생성 성공"),
+		@ApiResponse(code = 200, message = "그룹 생성 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
@@ -66,7 +66,7 @@ public class GroupController {
 		logger.debug("그룹 생성 호출");
 		group.setUserId(permissionCheck.check(token).getId());
 		service.create(group);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(group, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}")

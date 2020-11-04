@@ -10,6 +10,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/ko'
 
+import VueMoment from 'vue-moment';
+
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
 
@@ -22,6 +24,8 @@ library.add(far)
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 Vue.use(Vuetify);
 Vue.use(ElementUI, {locale});
+
+Vue.use(VueMoment);
 
 // vue-turnjs install
 import { FlippingWidgets } from "vue-turnjs";

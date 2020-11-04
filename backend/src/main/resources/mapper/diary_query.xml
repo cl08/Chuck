@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.ssafy.chuck.diary.dao.DiaryDao">
-    <insert id="create" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
+    <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
         insert into DIARIES (TITLE, IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
                             (#{title}, #{image}, #{content}, #{writer}, #{groupId}, now())
     </insert>

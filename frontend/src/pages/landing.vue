@@ -8,6 +8,7 @@
 
 <script>
 export default {
+
     mounted() {
         var w = window.innerWidth
         var h = window.innerHeight
