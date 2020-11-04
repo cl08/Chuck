@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "다이어리 관리", tags = "Diary")
 @RestController
-@RequestMapping("/chcuk/diaries")
+@RequestMapping("/chuck/diaries")
 public class DiaryController {
 	static final Logger logger = LoggerFactory.getLogger(DiaryController.class);
 
@@ -67,7 +67,7 @@ public class DiaryController {
 	// 	@ApiImplicitParam(name = "review", value = "일기 내용", dataTypeClass = DiaryDto.class)
 	// })
 	@ApiResponses({
-		@ApiResponse(code = 201, message = "다이어리 생성 성공"),
+		@ApiResponse(code = 200, message = "다이어리 생성 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
@@ -77,7 +77,7 @@ public class DiaryController {
 		logger.debug("다이어리 생성 호출");
 		// long userId = permissionCheck.check(token).getId();
 		service.create(0, 1, diary);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		return new ResponseEntity<>(diary, HttpStatus.OK);
 	}
 
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}", produces = "application/json")

@@ -22,6 +22,9 @@ import jwt from 'jwt-decode';
 import store from '@/store';
 
 export default {
+
+    props: ['redirect'],
+    
     components: {
         KakaoLogin,
     },
@@ -60,6 +63,15 @@ export default {
                 var decode = jwt(data);
                 store.dispatch('updateId', decode.ID);
                 store.dispatch('updateName', decode.NAME);
+                if(this.redirect !== undefined) {
+                    api.post(`groups/members`, {
+                        groupId: 0,
+                        userId: store.getters.getId,
+                        groupToken: this.redirect,
+                    }).then((res) => {
+                        // console.log(res.data);
+                    })
+                }
                 this.$router.push({name: 'group'});
             });
         },

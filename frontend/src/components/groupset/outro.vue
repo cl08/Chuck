@@ -9,14 +9,17 @@
         </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
-            <v-btn @click="DeleteGroup" color="orange" text x-large><h2>그룹삭제</h2></v-btn>
-            <v-btn @click="SecedeGroup" color="orange" text x-large><h2>그룹탈퇴</h2></v-btn>
+            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><h2>그룹삭제</h2></v-btn>
+            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><h2>그룹탈퇴</h2></v-btn>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import api from '@/utils/api';
+import store from '@/store';
+
 export default {
     data() {
     return {
@@ -24,17 +27,19 @@ export default {
     };
   },
   computed: {
-    
+      groupInfo: () => store.getters.getSelectedGroup,
   },
   methods: {
-    DeleteGroup(){
-        console.log("그룹삭제")
-        // axios or 물어보는 페이지
-    },
-    SecedeGroup(){
-        console.log("그룹탈퇴")
-        // axios or 물어보는 페이지
-    }
+      DeleteGroup(){
+        
+      },
+      SecedeGroup(){
+          api.delete(`groups/${this.groupInfo.id}`, {
+              headers: {
+                  token: store.getters.getToken
+              }
+          })
+      }
   },
 }
 </script>

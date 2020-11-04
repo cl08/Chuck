@@ -10,6 +10,7 @@ export default new Vuex.Store({
         ID: sessionStorage.getItem('ID'),
         NAME: sessionStorage.getItem('NAME'),
         refreshToken: sessionStorage.getItem('refreshToken'),
+        selectedGroup: JSON.parse(sessionStorage.getItem('selectedGroup')),
         selectedDay: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
         selectedDiary: '',
         visibleCalendar: true,
@@ -153,6 +154,9 @@ export default new Vuex.Store({
         ],
     },
     getters: {
+        getSelectedGroup(state) {
+            return state.selectedGroup
+        },
         getRefreshToken(state) {
             return state.refreshToken
         },
@@ -211,8 +215,12 @@ export default new Vuex.Store({
         }
     },
     mutations: {
+        setSelectedGroup(state, payload) {
+            state.selectedGroup = payload
+            sessionStorage.setItem('selectedGroup', JSON.stringify(payload))
+        },
         setRefreshToken(state, payload) {
-            state.refreshToken = payload;
+            state.refreshToken = payload
             sessionStorage.setItem('refreshToken', payload)
         },
         setToken(state, payload) {
@@ -274,6 +282,9 @@ export default new Vuex.Store({
         }
     },
     actions: {
+        updateSelectedGroup({commit}, items) {
+            commit('setSelectedGroup', items)
+        },
         updateRefreshToken({commit}, item) {
             commit('setRefreshToken', item)
         },
@@ -287,7 +298,7 @@ export default new Vuex.Store({
             commit('setName', item)
         },
         logout({commit}) {
-            api.post(`/users/logout`, {
+            api.post(`users/logout`, {
                 refreshToken: sessionStorage.getItem('refreshToken')
             }, {
                 headers: {
@@ -295,6 +306,7 @@ export default new Vuex.Store({
                 },
             }).then(() => {
                 commit('deleteUser');
+                sessionStorage.clear();
             })
         }
     }
