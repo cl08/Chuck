@@ -1,10 +1,11 @@
 <template>
-    <div style="margin:30px 30px 0px 0px;">
-        <img src="../../assets/logo.svg" class="tabtitle">
+    <div style="padding:30px 30px 0px 0px;">
         <div>
+        <img src="../../assets/title/chuck_write.svg" class="subtitle">
+        </div><div>
             <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
         </div>
-        <div class="dash" style="height:230px;">
+        <div class="dash" style="height:220px;">
             <el-upload 
             drag
             multiple
@@ -17,7 +18,7 @@
             :on-success="handleSuccess"
             :on-exceed="handleExceed"
             >
-                <i class="el-icon-upload"></i>
+                <img src="../../assets/uploadIcon.svg" style="margin-top:40px; fill:#FFB6B6;">
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
@@ -78,5 +79,4 @@ export default {
 }
 </script>
 <style scoped>
-
 </style>

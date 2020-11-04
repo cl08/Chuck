@@ -2,6 +2,8 @@
   <div style="margin: 30px 30px 0px 0px">
     <div class="text-left ml-8">
       <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
+      <div class="underline" style="margin-top: -5px;"></div>
+
     </div>
     <div class="selectPerson">
       <!-- 이미지는 서버에서 몇명인지 받아와서 for문으로 뿌려줌. -->

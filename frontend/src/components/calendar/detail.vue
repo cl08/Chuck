@@ -1,8 +1,8 @@
 <template>
-    <div style="margin:30px 30px 0px 0px;">
+    <div style="padding:30px 30px 0px 0px;">
         <div style="padding-bottom:70px;">
             <span class="float-left ml-10">
-                <img src="../../assets/logo.svg" class="tabtitle">
+                <img src="../../assets/logo.svg" class="logo">
             </span>
             <span class="float-right mr-10 mt-4">
                 <font size=5>{{ this.getSelectedDay }}</font>
@@ -18,12 +18,11 @@
                 {{ getChuckList[getSelectedDiary].writer }}
             </span>
             <span class="float-right mr-10">
-                <v-icon >
-                    mdi-chat-outline
-                </v-icon>
-                <v-icon >
-                    mdi-download
-                </v-icon>
+                <a href="../../assets/logo.svg" download style="text-decoration:none;">
+                    <v-icon class="pointer">
+                        mdi-download
+                    </v-icon>
+                </a>
                 <v-menu offset-y>
                     <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">
@@ -31,20 +30,20 @@
                         </v-icon>
                     </template>
                     <v-list>
-                        <v-list-item>
+                        <v-list-item class="pointer" @click="edit">
                             <v-list-item-title>수정하기</v-list-item-title>
                         </v-list-item>
-                        <v-list-item>
+                        <v-list-item class="pointer" @click="remove">
                             <v-list-item-title>삭제하기</v-list-item-title>
                         </v-list-item>
                     </v-list>
                 </v-menu>
             </span>
         </div>
-        <div v-if="getChuckList[getSelectedDiary]" class="mb-5" style="font-size:30px;">
+        <div v-if="getChuckList[getSelectedDiary]" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px;">
             {{ getChuckList[getSelectedDiary].title }}
         </div>
-        <div v-if="getChuckList[getSelectedDiary]" style="font-size:20px;" v-html="getChuckList[getSelectedDiary].content">
+        <div v-if="getChuckList[getSelectedDiary]" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckList[getSelectedDiary].content">
         </div>
     </div>
 </template>
@@ -77,6 +76,14 @@ export default {
             'getSelectedDiary',
         ])
     },
+    methods: {
+        edit() {
+            alert("글수정")
+        },
+        remove() {
+            alert("글삭제")
+        }
+    }
 }
 </script>
 
