@@ -29,15 +29,16 @@
                     </v-menu>
                 </div>
             </v-card-subtitle>
-            <v-img class="white--text align-end" height="200px" :src="item.img[0]" style="clear:both;">
-                <v-card-title>{{ item.title }}</v-card-title>
+            <v-img height="300px" :src="item.img[0]" style="clear:both;">
             </v-img>
+                <v-card-title>{{ item.title }}</v-card-title>
             <v-card-text class="text--primary">
-                <div v-html="item.content"></div>
+                <div v-if="item.content.length < 40">{{ item.content }}</div>
+                <div v-else>
+                    {{ item.content.slice(0, 40) }}
+                    <v-btn color="#8D6262" text>...더보기</v-btn>
+                </div>
             </v-card-text>
-            <v-card-actions>
-                <v-btn color="orange" text>더보기</v-btn>
-            </v-card-actions>
             <hr size="0.5" color="#E0E0E0">
         </v-card>
     </div>

@@ -4,7 +4,6 @@
         
     </div>
     <div class="right">
-        <!-- 이미지로 변경 -->
         <div class="text-right" style="padding:30px 30px 0px 0px;">
             <img src="../../assets/logo.svg" class="tabtitle">
         </div>
@@ -52,6 +51,7 @@ export default {
     float: left;
     background-color: #FEF4E5;
     position: relative;
+    box-shadow: 2px 0px 10px 5px #E2E2E2;
 }
 .right h1{
     float: right;
