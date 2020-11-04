@@ -30,10 +30,10 @@ def getInfo():
 
 @app.route('/video')
 def mkVideo():
-    String paths = request.args.get('paths', 'paths')
-    print(paths)
+    paths = request.args.get('paths', 'paths')
+    userid = request.args.get('userid', 'userid')
     makeVideo(paths)
-    return "/home/ubuntu/s03p31a206/backend/python/userid/final.mp4"
+    return "success"
 
 if __name__ == '__main__':
     app.run()
