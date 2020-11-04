@@ -32,6 +32,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.ssafy.chuck.picture.dto.ClusterListResponse;
 import com.ssafy.chuck.picture.dto.ClusterResponse;
+import com.ssafy.chuck.picture.dto.PathListResponse;
 import com.ssafy.chuck.picture.dto.PictureResponse;
 import com.ssafy.chuck.picture.service.PictureService;
 
@@ -136,6 +137,16 @@ public class PictureController {
 			System.out.println("파일 업로드 실패");
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
+	}
+	
+	@PostMapping("/mkVideo")
+	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
+	public ResponseEntity<String> mkVideo(@RequestBody PathListResponse pathResponse) {
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<pathResponse.getPath_list().size();i++) sb.append(pathResponse.getPath_list().get(i) + ":");
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/video?paths=" + sb.toString(), String.class);
+		System.out.println(sb);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	 
 	
