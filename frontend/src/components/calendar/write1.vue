@@ -5,26 +5,26 @@
         </div><div>
             <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
         </div>
-        <div class="dash" style="height:220px;">
+        <div class="dash" style="height:230px;">
             <el-upload 
             drag
             multiple
-            action="https://jsonplaceholder.typicode.com/posts/"
-            :data="{groupId:12333}"
-            :limit=10
+            action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
+            :data="{groupId:this.$store.state.selectedGroup.id}"
+            :limit=12
             :show-file-list="false"
-            :auto-upload="false"
+            :auto-upload="true"
             :before-upload="beforeImageUpload"
             :on-success="handleSuccess"
             :on-exceed="handleExceed"
             >
-                <img src="../../assets/uploadIcon.svg" style="margin-top:40px; fill:#FFB6B6;">
+                <img src="../../assets/uploadIcon.svg" style="margin-top:40px;">
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div class="dash" style="height:380px; padding:10px;">
+        <div class="dash" style="height:370px; padding:10px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
-                <li v-for="index in 11" :key="index" class="el-upload-list__item is-ready">
+                <li v-for="index in 8" :key="index" class="el-upload-list__item is-ready">
                     <img src="https://image.auction.co.kr/itemimage/19/8e/a2/198ea2c571.jpg" class="el-upload-list__item-thumbnail">
                     <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-preview">
@@ -45,11 +45,12 @@ export default {
     data() {
         return {
             thumbnailList: '',
-            disabled: false
+            disabled: false,
         };
     },
     methods: {
         beforeImageUpload(file) {
+            console.log("오잉")
             const isJPG = file.type === 'image/jpeg';
             const isPNG = file.type === 'image/png';
             const isLt10M = file.size / 1024 / 1024 < 10;
@@ -69,11 +70,13 @@ export default {
             // alert("업로드 성공")
             console.log(res)
             console.log(file)
+            // 이미지 배열에 추가
         },
         handleRemove(file, fileList) {
             // alert("삭제 성공")
             console.log(file)
             console.log(fileList)
+            // 이미지 배열에서 제거
         }
     }
 }
