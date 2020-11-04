@@ -32,7 +32,7 @@ def getInfo():
 def mkVideo():
     paths = request.args.get('paths', 'paths')
     userid = request.args.get('userid', 'userid')
-    makeVideo(paths)
+    makeVideo(paths, userid)
     return "success"
 
 if __name__ == '__main__':
