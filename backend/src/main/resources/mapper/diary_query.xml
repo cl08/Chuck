@@ -3,7 +3,7 @@
 <mapper namespace="com.ssafy.chuck.diary.dao.DiaryDao">
     <insert id="create" useGeneratedKeys="true" keyProperty="id" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
         insert into DIARIES (TITLE, IMAGE, CONTENT, WRITER, GROUP_ID, DATE) VALUES
-                            (#{title}, #{image}, #{content}, #{writer}, #{groupId}, now())
+                            (#{title}, "", #{content}, #{writer}, #{groupId}, #{date})
     </insert>
 
     <select id="read" parameterType="int" resultType="com.ssafy.chuck.diary.dto.DiaryDto">
