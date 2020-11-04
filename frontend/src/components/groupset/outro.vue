@@ -4,20 +4,22 @@
         
     </div>
     <div class="right">
-        <!-- 이미지로 변경 -->
         <div class="text-right" style="padding:30px 30px 0px 0px;">
-            <img src="../../assets/logo.svg" class="tabtitle">
+            <img src="../../assets/logo.svg" class="logo">
         </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
-            <v-btn @click="DeleteGroup" color="orange" text x-large><h2>그룹삭제</h2></v-btn>
-            <v-btn @click="SecedeGroup" color="orange" text x-large><h2>그룹탈퇴</h2></v-btn>
+            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><h2>그룹삭제</h2></v-btn>
+            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><h2>그룹탈퇴</h2></v-btn>
         </div>
     </div>
 </div>
 </template>
 
 <script>
+import api from '@/utils/api';
+import store from '@/store';
+
 export default {
     data() {
     return {
@@ -25,17 +27,19 @@ export default {
     };
   },
   computed: {
-    
+      groupInfo: () => store.getters.getSelectedGroup,
   },
   methods: {
-    DeleteGroup(){
-        console.log("그룹삭제")
-        // axios or 물어보는 페이지
-    },
-    SecedeGroup(){
-        console.log("그룹탈퇴")
-        // axios or 물어보는 페이지
-    }
+      DeleteGroup(){
+        
+      },
+      SecedeGroup(){
+          api.delete(`groups/${this.groupInfo.id}`, {
+              headers: {
+                  token: store.getters.getToken
+              }
+          })
+      }
   },
 }
 </script>
@@ -52,6 +56,7 @@ export default {
     float: left;
     background-color: #FEF4E5;
     position: relative;
+    box-shadow: 2px 0px 10px 5px #E2E2E2;
 }
 .right h1{
     float: right;

@@ -2,7 +2,7 @@
     1. content 길 경우 문제. 자르고 ... 표시
 -->
 <template>
-    <div style="margin:30px 0px 0px 30px;">
+    <div style="padding:30px 0px 0px 30px;">
         <v-row v-if="searchFlag">
             <span class="col-3">
             </span>

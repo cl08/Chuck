@@ -1,7 +1,9 @@
 <template>
   <div style="margin: 30px 30px 0px 0px">
     <div class="text-left ml-8">
-      <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle" />
+      <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
+      <div class="underline" style="margin-top: -5px;"></div>
+
     </div>
     <p>{{faces.length}}명의 인물이 검색되었습니다.</p>
     <div class="selectPerson">

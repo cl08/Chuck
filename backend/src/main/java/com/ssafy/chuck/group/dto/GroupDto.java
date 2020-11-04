@@ -1,5 +1,7 @@
 package com.ssafy.chuck.group.dto;
 
+import java.util.Date;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class GroupDto {
@@ -18,6 +20,9 @@ public class GroupDto {
 
 	@ApiModelProperty(value = "그룹 토큰", example = "비밀")
 	private String token;
+
+	@ApiModelProperty(value = "그룹 생성 일자", example = "2020-11-03")
+	private Date publishedDate;
 
 	public GroupDto() {}
 
@@ -65,6 +70,14 @@ public class GroupDto {
 		this.token = token;
 	}
 
+	public Date getPublishedDate() {
+		return publishedDate;
+	}
+
+	public void setPublishedDate(Date publishedDate) {
+		this.publishedDate = publishedDate;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupDto{" +
@@ -73,6 +86,7 @@ public class GroupDto {
 			", name='" + name + '\'' +
 			", intro='" + intro + '\'' +
 			", token='" + token + '\'' +
+			", publishedDate=" + publishedDate +
 			'}';
 	}
 }

@@ -1,5 +1,5 @@
 <template>
-    <div style="margin:30px 0px 0px 30px;">
+    <div style="padding:30px 0px 0px 30px;">
         <font size=6>2020.01.01</font><br>
             <el-input type="textarea" :rows="1" placeholder="오늘의 Chuck을 적어주세요." resize="none" v-model="title">
             </el-input>

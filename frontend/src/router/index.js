@@ -7,30 +7,43 @@ import diary from '@/pages/diary.vue'
 
 Vue.use(Router)
 
+const checkAuth = () => (to, from, next) => {
+    if('ID' in sessionStorage) {
+        return next(); 
+    } else {
+        return next('/login');
+    }
+}
+
 export default new Router({
     mode: 'history',
     routes: [
         {
             path: '/',
             name: 'landing',
-            component: landing
+            component: landing,
         },
         {
             path: '/login',
             name: 'login',
-            component: login
+            component: login,
+            props: (route) => ({redirect: route.query.redirect}),
         },
         
         {
             path: '/group',
             name: 'group',
-            component: group
+            component: group,
+            props: true,
+            beforeEnter: checkAuth(),
         },
         {
             path: '/diary',
             name: 'diary',
             component: diary,
             props: true,
+            beforeEnter: checkAuth(),
         },
+        
     ]
 })
