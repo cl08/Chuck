@@ -37,7 +37,7 @@
                 <div v-if="item.content.length < 40">{{ item.content }}</div>
                 <div v-else>
                     {{ item.content.slice(0, 40) }}
-                    <v-btn color="#8D6262" text>...더보기</v-btn>
+                    <v-btn color="#3D91FF" text>...더보기</v-btn>
                 </div>
             </v-card-text>
             <hr size="0.5" color="#E0E0E0">

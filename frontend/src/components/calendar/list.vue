@@ -17,8 +17,8 @@
 
         <v-row v-else>
             <span class="col-12 float-right">
-                <div class="el-input el-input--suffix" style="width: 84%; margin-right: 12px;">
-                    <input type="text" autocomplete="off" class="el-input__inner" id="searchBar" v-model="keyword" @keydown.enter="search">
+                <div class="el-input el-input--suffix" style="width: 80%; margin:0px 12px 0px 26px;">
+                    <input type="text" autocomplete="off" class="el-input__inner" id="searchBar" v-model="keyword" @keydown.enter="search" style="text-align:left">
                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner">
                             <i class="el-input__icon el-icon-close pointer" @click="closeSearchBar"></i>

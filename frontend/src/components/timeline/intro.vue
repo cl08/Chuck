@@ -42,7 +42,7 @@ export default {
     text-align: left;
     width: 300px;
     height: 767px;
-    background-color: #FEF4E5;
+    background-color: #FFF8F8;
     box-shadow: 2px 0px 10px 1px #E2E2E2;
 }
 .groupInfo {

@@ -54,7 +54,7 @@ export default {
     width:300px;
     height:767px;
     float: left;
-    background-color: #FEF4E5;
+    background-color: #FFF8F8;
     position: relative;
     box-shadow: 2px 0px 10px 5px #E2E2E2;
 }

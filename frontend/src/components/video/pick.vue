@@ -3,7 +3,7 @@
         <div style="margin-top:250px; cursor:pointer" @click="nextStep">
             <div class="studioInfo">
                 <h3>
-                <p>Chuck을 하나의 문서로<br>
+                <p>Chuck을 하나의 영상으로<br>
                 만들어 간직하세요</p>
                 </h3>
             </div>

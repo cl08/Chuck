@@ -5,6 +5,7 @@
             <font size=4>노래 선택하기</font>
         </div>
         <div class="dash" style="height:540px;">
+            <!-- <span class="unselected"><img src="../../assets/unselected.svg"></span> -->
             <span class="music pointer" :style="'background-image:url('+music.img+')'"
             v-for="(music, index) in musics" :key="index"
             @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
@@ -34,7 +35,7 @@ export default {
             [
                 {
                     title: '음악 없음',
-                    img: "https://previews.123rf.com/images/leventegyori/leventegyori1510/leventegyori151000012/47713326-%EA%B7%B8%EB%A0%A4%EC%A7%84-%EB%90%9C-x-%EB%A7%88%ED%81%AC-%ED%99%94%EC%9D%B4%ED%8A%B8-%EC%A0%88%EC%97%B0.jpg",
+                    img: 'https://topmeaning.com/english/images/img/EN/p/prohibit.jpg',
                     src: '',
                 },
                 {
@@ -112,7 +113,6 @@ export default {
     box-sizing: border-box;
     text-align: center;
     color: #fff;
-    background: #C0C4CC;
     background-size: cover;
     font-size: 26px;
     overflow: hidden;
@@ -122,5 +122,17 @@ export default {
 }
 .videoMusicNoneDisplay {
     display: none;
+}
+.unselected {
+    height: 150px;
+    width: 150px;
+    line-height: 118px;
+    margin: 7px;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    font-size: 26px;
+    overflow: hidden;
 }
 </style>
