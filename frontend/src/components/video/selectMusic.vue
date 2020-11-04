@@ -5,7 +5,6 @@
             <font size=4>노래 선택하기</font>
         </div>
         <div class="dash" style="height:540px;">
-            <!-- <span class="unselected"><img src="../../assets/unselected.svg"></span> -->
             <span class="music pointer" :style="'background-image:url('+music.img+')'"
             v-for="(music, index) in musics" :key="index"
             @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
@@ -35,7 +34,8 @@ export default {
             [
                 {
                     title: '음악 없음',
-                    img: 'https://topmeaning.com/english/images/img/EN/p/prohibit.jpg',
+                    // img: '../../assets/unselected.jpg',
+                    img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/stop-1743085-1485071.png',
                     src: '',
                 },
                 {

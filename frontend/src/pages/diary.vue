@@ -318,12 +318,12 @@ export default {
   cursor: pointer;
   width: 34px;
   height: 661px;
-  position: fixed;
-  top: 130px;
-  right: 280px;
+  position: relative;
+  top: -680px;
+  left: 665px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
-  top: 110px;
+  top: -720px;
 }
 </style>
