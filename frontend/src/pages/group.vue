@@ -5,25 +5,8 @@
         <!-- 충돌 방지하기 위해 기능 임시로 구현한 곳 -->
         <!-- <a @click="logout">logout</a>
         <br><br>
-        <h3>그룹원 초대하기
-            <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                    icon
-                    v-bind="attrs"
-                    v-on="on"
-                    @click="inviteGroupUser()"
-                >
-                    <v-icon>
-                    mdi-account-multiple-plus
-                    </v-icon>
-                </v-btn>
-                </template>
-            <span>회원 추가</span>
-            </v-tooltip>
-        </h3> -->
+        -->
         <br>
-        <!-- <router-link to="/diary">그룹 생성</router-link> -->
         <template>
             <div class="global-wrapper">
                 <div class="floor-wrapper">
@@ -155,6 +138,7 @@
 <script>
 import api from '@/utils/api';
 import axios from 'axios';
+import store from '@/store';
 
 export default {
     data() {
@@ -166,14 +150,7 @@ export default {
         };
     },
     mounted() {
-        if (!window.Kakao) {
-            const script = document.createElement('script');
-              script.onload = () => window.Kakao.init('d1baf2cad3354a9138989baea6e65995');
-            script.src = '/js/kakao.min.js';
-            document.head.appendChild(script);
-        }
-        axios
-            .get("http://k3a206.p.ssafy.io:8888/chcuk/groups/of/groups", {
+        api.get("groups/of/groups", {
                 headers: {
                     token: sessionStorage.getItem('token')
                 }
@@ -193,11 +170,11 @@ export default {
 
     methods: {
         selectGroup() {
-            this.$router.push({name: 'diary', parmas: {groupId: this.selectedBook.id}})
+            store.dispatch('updateSelectedGroup', this.selectedBook);
+            this.$router.push('/diary');
         },
         uploadGroup() {
-            axios
-                .post(`http://k3a206.p.ssafy.io:8888/chcuk/groups`, {
+            api.post(`groups`, {
                     name: this.selectedBook.name,
                     intro: this.selectedBook.intro
                 }, {
@@ -220,20 +197,6 @@ export default {
         logout() {
             this.$store.dispatch('logout');
             this.$router.push("/");
-        },
-        inviteGroupUser() {
-            if(sessionStorage.getItem("ID") === "1") {
-                alert("테스트 아이디는 카카오 초대가 불가능합니다.")
-            } else {
-                window.Kakao.Link.sendCustom({
-                    templateId: 39047,
-                    templateArgs: {
-                        key: sessionStorage.getItem('token'),
-                        group: "쓰는척", // this.groupName,
-                        user: sessionStorage.getItem('NAME'),
-                    },
-                });
-            }
         },
         selectBook(book) {
             this.bookgen = false;
