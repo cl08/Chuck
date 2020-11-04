@@ -3,7 +3,7 @@
         <div>
             <img src='../../assets/title/groupManagement_tabtitle.svg' class="tabtitle">
         </div>
-        <h1>그룹정보</h1>
+        <h1>그룹명</h1>
         <div class="information">
             {{ groupInfo.intro }}
         </div>
