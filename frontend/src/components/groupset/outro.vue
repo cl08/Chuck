@@ -18,6 +18,9 @@
 </template>
 
 <script>
+import api from '@/utils/api';
+import store from '@/store';
+
 export default {
     data() {
     return {
@@ -25,17 +28,19 @@ export default {
     };
   },
   computed: {
-    
+      groupInfo: () => store.getters.getSelectedGroup,
   },
   methods: {
-    DeleteGroup(){
-        console.log("그룹삭제")
-        // axios or 물어보는 페이지
-    },
-    SecedeGroup(){
-        console.log("그룹탈퇴")
-        // axios or 물어보는 페이지
-    }
+      DeleteGroup(){
+        
+      },
+      SecedeGroup(){
+          api.delete(`groups/${this.groupInfo.id}`, {
+              headers: {
+                  token: store.getters.getToken
+              }
+          })
+      }
   },
 }
 </script>

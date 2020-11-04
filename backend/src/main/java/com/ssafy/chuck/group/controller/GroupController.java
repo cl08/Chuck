@@ -31,7 +31,7 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "그룹 관리", tags = "Group")
 @RestController
-@RequestMapping("/chcuk/groups")
+@RequestMapping("/chuck/groups")
 public class GroupController {
 	private static final Logger logger = LoggerFactory.getLogger(GroupController.class);
 

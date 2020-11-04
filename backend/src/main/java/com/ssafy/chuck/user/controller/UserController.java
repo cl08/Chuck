@@ -28,7 +28,7 @@ import io.swagger.annotations.ApiResponses;
 
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @RestController
-@RequestMapping("/chcuk/users")
+@RequestMapping("/chuck/users")
 @Api(value = "User Controller", tags = "User")
 public class UserController {
 	private static final Logger logger = LoggerFactory.getLogger(UserController.class);

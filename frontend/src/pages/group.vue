@@ -7,7 +7,6 @@
         <br><br>
         -->
         <br>
-        <!-- <router-link to="/diary">그룹 생성</router-link> -->
         <template>
             <div class="global-wrapper">
                 <div class="floor-wrapper">
@@ -151,9 +150,7 @@ export default {
         };
     },
     mounted() {
-        axios 
-            .get("http://localhost:8888/chcuk/groups/of/groups", {
-            // .get("http://k3a206.p.ssafy.io:8888/chcuk/groups/of/groups", {
+        api.get("groups/of/groups", {
                 headers: {
                     token: sessionStorage.getItem('token')
                 }
@@ -177,8 +174,7 @@ export default {
             this.$router.push('/diary');
         },
         uploadGroup() {
-            axios
-                .post(`http://localhost:8888/chcuk/groups`, {
+            api.post(`groups`, {
                     name: this.selectedBook.name,
                     intro: this.selectedBook.intro
                 }, {

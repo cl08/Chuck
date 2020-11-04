@@ -258,6 +258,7 @@ export default new Vuex.Store({
                 },
             }).then(() => {
                 commit('deleteUser');
+                sessionStorage.clear();
             })
         }
     }

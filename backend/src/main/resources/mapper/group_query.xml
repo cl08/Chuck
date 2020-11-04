@@ -25,8 +25,14 @@
     </delete>
 
     <insert id="createMember" parameterType="com.ssafy.chuck.group.dto.MemberDto">
-        insert into GROUP_MEMBERS (USER_ID, GROUP_ID, FACE, IS_OWNER)
-                           values (#{userId}, #{groupId}, #{face}, #{isOwner})
+        <selectKey resultType="int" keyProperty="groupId" order="BEFORE">
+            <if test="groupId == 0">
+                select ID from `GROUPS` where TOKEN = #{groupToken}
+            </if>
+        </selectKey>
+        insert into GROUP_MEMBERS (USER_ID, GROUP_ID)
+        values (#{userId}, #{groupId})
+
     </insert>
 
     <select id="readAllMember" parameterType="int" resultType="com.ssafy.chuck.group.dto.MemberDto">

@@ -70,9 +70,9 @@ export default {
                 window.Kakao.Link.sendCustom({
                     templateId: 39047,
                     templateArgs: {
-                        key: sessionStorage.getItem('token'),
-                        group: "쓰는척", // this.groupName,
-                        user: sessionStorage.getItem('NAME'),
+                        key: this.groupInfo.token,
+                        group: this.groupInfo.name, // this.groupName,
+                        user: store.getters.getName,
                     },
                 });
             }

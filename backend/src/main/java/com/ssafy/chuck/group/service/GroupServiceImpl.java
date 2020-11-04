@@ -78,6 +78,7 @@ public class GroupServiceImpl implements GroupService {
 	public void createMember(MemberDto member) {
 		try {
 			dao.createMember(member);
+			System.out.println(member.toString());
 		} catch (DataAccessException e) {
 			throw e;
 		}

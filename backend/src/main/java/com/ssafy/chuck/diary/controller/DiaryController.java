@@ -33,7 +33,7 @@ import io.swagger.v3.oas.annotations.parameters.RequestBody;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "다이어리 관리", tags = "Diary")
 @RestController
-@RequestMapping("/chcuk/diaries")
+@RequestMapping("/chuck/diaries")
 public class DiaryController {
 	static final Logger logger = LoggerFactory.getLogger(DiaryController.class);
 
