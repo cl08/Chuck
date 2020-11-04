@@ -1,7 +1,8 @@
 <template>
-    <div style="margin:30px 0px 0px 30px;">
+    <div style="padding:30px 0px 0px 30px;">
         <div class="text-left ml-5">
             <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
+            <div class="underline"></div>
         </div>
         <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i" :flat=true>
             <v-card-subtitle class="pt-0">

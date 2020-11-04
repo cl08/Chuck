@@ -2,7 +2,7 @@
 <div>
     <div class="left">
         <div class="text-left" style="padding:30px 0px 0px 30px;">
-            <img src="../../assets/logo.svg" class="tabtitle">
+            <img src="../../assets/logo.svg" class="logo">
             <div class="groupInfo">
                 <h2>그룹명</h2>
                 <div class="information">
@@ -50,9 +50,6 @@ export default {
     bottom: 0px;
 }
 .groupInfo > div{
-    margin-bottom: 30px;
-}
-.groupInfo > h2 {
-    margin-bottom: 10px;
+    margin-bottom: 24px;
 }
 </style>

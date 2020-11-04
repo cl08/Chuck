@@ -2,7 +2,7 @@
     1. 댓글 좌우 번갈아 가면서 나오기
 -->
 <template>
-    <div style="margin:30px 0px 0px 30px; height:680px; overflow:scroll;">
+    <div style="padding:30px 0px 0px 30px; height:680px; overflow:scroll;">
         <div v-for="(item, index) in getComments" :key="index" class="post-it">
             <p class="note">
                 <strong>{{ item.writer }}</strong><br>

@@ -1,10 +1,10 @@
 <template>
-    <div style="margin:30px 30px 0px 0px;">
-        <img src='../../assets/title/chuckFilm_tabtitle.svg' class="tabtitle">
+    <div style="padding:30px 30px 0px 0px;">
+        <img src='../../assets/title/chuckFilm_tabtitle.svg' class="subtitle">
         <div class="dash">
             <font size=4>기간 선택</font>
         </div>
-        <div class="dash" style="height:220px; text-align:left; overflow:auto;">
+        <div class="dash" style="height:210px; text-align:left; overflow:auto;">
             <div style="margin:10px">
                 <span style="display:inline-block; width:100px;">날짜 선택</span>
                 <el-date-picker type="dates" v-model="value1" placeholder="날짜 선택" value-format="yyyy-MM-dd" size="small" @change="pickType1">
@@ -33,7 +33,7 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:324px;">
+        <div class="dash" style="height:325px;">
             <span class="face pointer" @click="selectAll">ALL</span>
             <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
                 <img :id="'videoFace'+index" class="videoFaceNoneDisplay" src="../../assets/check_circle.svg">

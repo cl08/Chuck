@@ -1,8 +1,8 @@
 <template>
-    <div style="margin:30px 30px 0px 0px;">
+    <div style="padding:30px 30px 0px 0px;">
         <div style="padding-bottom:70px;">
             <span class="float-left ml-10">
-                <img src="../../assets/logo.svg" class="tabtitle">
+                <img src="../../assets/logo.svg" class="logo">
             </span>
             <span class="float-right mr-10 mt-4">
                 <font size=5>{{ this.getSelectedDay }}</font>
