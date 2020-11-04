@@ -2,6 +2,8 @@ package com.ssafy.chuck.diary.dto;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import io.swagger.annotations.ApiModelProperty;
 
 public class DiaryDto {
@@ -24,6 +26,7 @@ public class DiaryDto {
 	@ApiModelProperty(value = "그룹 아이디", example = "1")
 	private int groupId;
 
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
 	@ApiModelProperty(value = "작성일", example = "2020-10-05")
 	private Date date;
 
