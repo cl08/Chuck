@@ -1,11 +1,11 @@
 <template>
     <div id="landing_page">
-        <router-link to="/login">
             <div id="landing_wrap">
                 <img id="arrow" src="../assets/toon_arrow.gif"><br>
-                <img id="landing_book" src="../assets/intro_book.png">
+                <router-link to="/login">
+                    <img id="landing_book" src="../assets/intro_book.png">
+                </router-link>
             </div>
-        </router-link>
     </div>
 </template>
 
@@ -37,7 +37,7 @@ export default {
 }
 #landing_book {
     position: relative;
-    top: 50%;
+    bottom: 100px;
 }
 #landing_wrap {
     position: relative;
@@ -46,7 +46,7 @@ export default {
 #arrow {
     width: 200px;
     position: relative;
-    top: 20%;
-    left: 10%
+    bottom: 100px;
+    left: 170px;
 }
 </style>

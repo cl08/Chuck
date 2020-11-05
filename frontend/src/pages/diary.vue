@@ -136,6 +136,7 @@
       </div>
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
+    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back">
     <Mypage></Mypage>
   </div>
 </template>
@@ -285,6 +286,8 @@ export default {
       this.setVisibleAlbum(false);
       this.setVisibleVideo(false);
       this.setVisiblePreview(false);
+    },
+    back(){
     }
   },
   mounted() {
@@ -320,10 +323,16 @@ export default {
   height: 661px;
   position: relative;
   top: -680px;
-  left: 665px;
+  left: 744px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
   top: -720px;
+}
+#back {
+  width: 160px;
+  position: relative;
+  left: -800px;
+  top: -540px;
 }
 </style>
