@@ -69,10 +69,10 @@
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import eventBus from '@/utils/EventBus'
+import store from '@/store'
 
 export default {
     data: () => ({
-        selectedChuckList: [],
         searchFlag: true,
         searchResult: '',
         keyword: '',
@@ -81,30 +81,21 @@ export default {
     mounted() {
         this.color = this.$store.getters.getColor;
     },
-    beforeCreate() {
+    created() {
         eventBus.$on('updateList', () => {
-            this.selectedChuckList= []
-            for(var i=0; i<this.getChuckList.length; i++) {
-                if(this.getChuckList[i].date === this.getSelectedDay) {
-                    this.selectedChuckList.push(this.getChuckList[i])
-                }
-            }
+            store.dispatch('updateSelectedChuckList')
         });
     },
     computed: {
         ...mapGetters([
             'getChuckList',
             'getSelectedDay',
-        ])
+        ]),
+        selectedChuckList: () => store.getters.getSelectedChuckList,
     },
     watch: {
-        getSelectedDay: function() {
-            this.selectedChuckList= []
-            for(var i=0; i<this.getChuckList.length; i++) {
-                if(this.getChuckList[i].date === this.getSelectedDay) {
-                    this.selectedChuckList.push(this.getChuckList[i])
-                }
-            }
+        getSelectedDay() {
+           store.dispatch('updateSelectedChuckList')
         }
     },
     methods: {

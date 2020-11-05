@@ -30,7 +30,6 @@ export default {
     mounted() {
         api.get('pictures/person_clustering?groupId='+this.getSelectedGroup.id)
         .then(({ data }) => {
-            console.log(data)
             for(let i=0; i<data.cluster_list.length; i++) {
                 this.faces.push(data.cluster_list[i].rep_image)
                 this.checkArr[i] = false

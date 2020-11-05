@@ -23,6 +23,7 @@ export default new Vuex.Store({
         chuckList: [],
         comments: [],
         personArray : [],
+        selectedChuckList: [],
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"]
     },
     getters: {
@@ -91,6 +92,9 @@ export default new Vuex.Store({
         getColor(state) {
             return state.color
         },
+        getSelectedChuckList(state) {
+            return state.selectedChuckList
+        },
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -157,7 +161,10 @@ export default new Vuex.Store({
         },
         setPersonArray(state, payload){
             state.personArray = payload
-        }
+        },
+        setSelectedChuckList(state, payload) {
+            state.selectedChuckList = payload
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -201,6 +208,15 @@ export default new Vuex.Store({
                 commit('deleteUser');
                 sessionStorage.clear();
             })
+        },
+        updateSelectedChuckList({commit}) {
+            const day = [];
+            for(var i=0; i<this.state.chuckList.length; i++) {
+                if(this.state.chuckList[i].date === this.state.selectedDay) {
+                    day.push(this.state.chuckList[i])
+                }
+            }
+            commit('setSelectedChuckList', day);
         }
     }
 })
