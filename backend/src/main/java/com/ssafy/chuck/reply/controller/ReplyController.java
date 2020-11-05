@@ -27,22 +27,22 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/chuck/replies")
 public class ReplyController {
 	static final Logger logger = LoggerFactory.getLogger(ReplyController.class);
-	
+
 	@Autowired
 	private ReplyService replyService;
-	
+
 	@PostMapping("/insert")
 	@ApiOperation(value = "댓글 입력")
 	public ResponseEntity<Integer> insertComment(@RequestBody ReplyDto replyDto) {
-    	return new ResponseEntity<Integer>(replyService.insertComment(replyDto.getWriter(), replyDto.getComment(), replyDto.getDiary_id()), HttpStatus.OK);
+    	return new ResponseEntity<Integer>(replyService.insertComment(replyDto.getWriterId(), replyDto.getComment(), replyDto.getDiary_id()), HttpStatus.OK);
     }
-	
+
 	@GetMapping("/searchByWriter")
 	@ApiOperation(value = "작성자 ID로 댓글 조회")
 	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(long writer) {
 		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByWriter(writer), HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/searchByDiary")
 	@ApiOperation(value = "다이어리 ID로 댓글 조회")
 	public ResponseEntity<List<ReplyDto>> selectCommentByDiaryId(int diary_id) {

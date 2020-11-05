@@ -25,6 +25,7 @@ export default new Vuex.Store({
         personArray : [],
         selectedChuckList: [],
         backState: 1,
+        faceData: [],
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"]
     },
     getters: {
@@ -76,9 +77,6 @@ export default new Vuex.Store({
         getVisiblePreview(state) {
             return state.visiblePreview
         },
-        getComments(state) {
-            return state.comments
-        },
         getPersonArray(state) {
             return state.personArray
         },
@@ -98,6 +96,9 @@ export default new Vuex.Store({
         },
         getBackState(state) {
             return state.backState
+        },
+        getFaceData(state) {
+            return state.faceData
         },
     },
     mutations: {
@@ -142,9 +143,6 @@ export default new Vuex.Store({
         setVisibleWrite(state, payload) {
             state.visibleWrite = payload
         },
-        setComments(state, payload) {
-            state.comments = payload
-        },
         deleteUser(state) {
             state.NAME = ''
             state.token = ''
@@ -171,6 +169,9 @@ export default new Vuex.Store({
         },
         setBackState(state, payload) {
             state.backState = payload
+        },
+        setFaceData(state, payload) {
+            state.faceData = payload
         },
     },
     actions: {
@@ -227,6 +228,11 @@ export default new Vuex.Store({
         },
         updateBackState({commit}, item) {
             commit('setBackState', item);
-        }
+        },
+        updateComments({commit}, item) {
+            api.get(`replies/searchByDiary?diary_id=${item}`).then(({data}) => {
+                commit('setComments', data)
+            })
+        },
     }
 })
