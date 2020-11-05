@@ -215,6 +215,11 @@ export default {
   },
   created() {
     this.$store.dispatch('updateChuckList');
+    eventBus.$on('movePage', (data) => {
+      this.movePage(data.index);
+      this.setBackState(2);
+      eventBus.$emit('showDetail', data.item);
+    });
   },
   computed: {
     ...mapGetters([
@@ -228,6 +233,7 @@ export default {
       "getVisibleAlbum",
       "getVisibleVideo",
       "getVisiblePreview",
+      "getBackState",
     ]),
   },
   watch: {
@@ -249,6 +255,7 @@ export default {
       "setVisibleVideo",
       "setVisiblePreview",
       "setSelectedDay",
+      "setBackState",
     ]),
     movePage(num) {
       this.init()
@@ -307,11 +314,17 @@ export default {
       this.setVisiblePreview(false);
     },
     back(){
-      // calender
-      this.setVisibleWrite(false);
-      this.setVisibleDetail(false);
-      this.setVisibleCalendar(true);
-      eventBus.$emit('clearWrite');
+      if(this.getBackState === 1) {
+        // calender
+        this.setVisibleWrite(false);
+        this.setVisibleDetail(false);
+        this.setVisibleCalendar(true);
+        eventBus.$emit('clearWrite');
+      } else {
+        // TimeLine
+        this.movePage(0);
+        this.setBackState(1);
+      }
     }
   },
   mounted() {

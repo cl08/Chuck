@@ -53,6 +53,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
 import eventBus from '@/utils/EventBus'
+import store from '@/store'
 
 export default {
     data: () => ({
@@ -110,6 +111,7 @@ export default {
             this.$refs.calendar.next()
         },
         showEvent ({ nativeEvent, event, date }) {
+            store.dispatch('updateComments', event.id)     
             this.setSelectedDiary(event.index)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
