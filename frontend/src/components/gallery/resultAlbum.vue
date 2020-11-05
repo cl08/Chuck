@@ -1,13 +1,17 @@
 <template>
     <div class="result">
-        <div class="selectPerson" v-if="data">
+        <!-- <div class="selectPerson" v-if="data">
             <div v-for="(item, index) in data.cluster_list" :key="index" class="selectedImgDiv">
                 <img :src="item.rep_image" :class="{ clicked: checkArr[index], nonClicked: checkArr[index] }" @clicked="this.checkArr[index] = !this.checkArr[index]">
             </div>
-        </div>
+        </div> -->
         <div class="List" v-if="data">
-            <div v-for="(item, index) in data.cluster_list[0].path_list" :key="index" class="resultImgDiv">
-                <img class="pointer" :src="item" @click="clickedImg(index)">
+            <div v-for="(person, i) in this.getPersonArray" :key="i">
+                <div v-if="person === true">
+                    <div v-for="(item, index) in data.cluster_list[i].path_list" :key="index" class="resultImgDiv">
+                        <img class="pointer" :src="item" @click="clickedImg(index)">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -17,24 +21,20 @@
 import { mapGetters } from "vuex"
 import { mapMutations } from "vuex"
 import api from '@/utils/api.js'
+import store from '@/store'
+
 export default {
     data() {
         return {
-            data: '',
             checkArr: '',
         }
-    },
-    mounted() {
-        api.get('pictures/person_clustering?groupId='+this.getSelectedGroup.id)
-        .then(({ data }) => {
-            this.data = data
-        })
     },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
             'getPersonArray',
-        ])
+        ]),
+        data : () => store.getters.getFaceData,
     },
     methods: {
         clickedImg(index) {

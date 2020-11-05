@@ -34,23 +34,24 @@ export default {
                 this.faces.push(data.cluster_list[i].rep_image)
                 this.checkArr[i] = false
             }
-            this.setPersonArray(this.checkArr)
+            this.$store.commit('setFaceData', data);
         })
     },
     computed: {
         ...mapGetters([
-            'getSelectedGroup'
+            'getSelectedGroup',
         ])
     },
     methods: {
         ...mapMutations([
-            'setPersonArray'
+            'setPersonArray',
         ]),
         selectAll() {
             for (let i = 0; i < this.faces.length; i++) {
                 let el = document.getElementById("albumFace" + i);
                 el.setAttribute("class", "");
                 this.$set(this.checkArr, i, true);
+                this.setPersonArray(this.checkArr);
             }
         },
         select(index) {
