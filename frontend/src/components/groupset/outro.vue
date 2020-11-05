@@ -5,7 +5,7 @@
     </div>
     <div class="right">
         <div class="text-right" style="padding:30px 30px 0px 0px;">
-            <img src="../../assets/logo.svg" class="logo">
+            <img src="../../assets/logo.svg" class="subtitle">
         </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">

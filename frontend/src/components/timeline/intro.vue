@@ -2,7 +2,7 @@
 <div>
     <div class="left">
         <div class="text-left" style="padding:30px 0px 0px 30px;">
-            <img src="../../assets/logo.svg" class="logo">
+            <img src="../../assets/logo.svg" class="subtitle">
             <div class="groupInfo">
                 <h2>그룹명</h2>
                 <div class="information">

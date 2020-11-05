@@ -1,7 +1,7 @@
 <template>
     <div style="padding:30px 30px 0px 0px;">
         <div>
-        <img src="../../assets/title/chuck_write.svg" class="subtitle">
+        <img src="../../assets/title/chuck_write.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
             <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
