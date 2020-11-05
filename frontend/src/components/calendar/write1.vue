@@ -1,10 +1,10 @@
 <template>
     <div style="padding:30px 30px 0px 0px;">
         <div>
-        <img src="../../assets/title/chuck_write.svg" class="subtitle">
+        <img src="../../assets/title/chuck_write.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
-            <font size=4>최대 12장의 사진을 업로드할 수 있습니다.</font>
+            <font size=4>최대 10장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
             <el-upload 
@@ -12,7 +12,7 @@
             multiple
             action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
             :data="{groupId:this.$store.state.selectedGroup.id}"
-            :limit=12
+            :limit=10
             :show-file-list="false"
             :auto-upload="true"
             :before-upload="beforeImageUpload"
@@ -23,7 +23,7 @@
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div style="padding:10px;">
+        <div style="padding:28px; text-align:left;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
                 <li v-for="(image, index) in $data.imageList" :key="index" class="el-upload-list__item is-ready">
                     <img :src="image" class="el-upload-list__item-thumbnail">
@@ -37,6 +37,9 @@
                     </span>
                 </li>
             </ul>
+        </div>
+        <div style="padding:0px 28px; text-align:right" v-if="imageList.length > 0">
+            <font size=5 class="pointer" @click="removeAll">전체삭제</font>
         </div>
     </div>
 </template>
@@ -75,7 +78,7 @@ export default {
             return (isJPG || isPNG) && isLt10M;
         },
         handleExceed(file, fileList){
-            alert("사진은 최대 12개까지 업로드 할 수 있습니다.")
+            alert("사진은 최대 10장의 사진을 업로드 할 수 있습니다.")
         },
         handleSuccess(res, file) {
             this.imageList = this.imageList.concat(res);
@@ -84,6 +87,13 @@ export default {
             api.delete(`pictures/deleteByPath?path=${file}`).then(()=> {
                 this.imageList.splice(index, 1);
             })
+        },
+        removeAll() {
+            for(let i=0; i<this.imageList.length; i++) {
+                api.delete(`pictures/deleteByPath?path=${this.imageList[i]}`).then(()=> {
+                    this.imageList.splice(i--, 1)
+                })
+            }
         },
         uploadImages(diaryId) {
             const images = [];

@@ -5,12 +5,12 @@
     </div>
     <div class="right">
         <div class="text-right" style="padding:30px 30px 0px 0px;">
-            <img src="../../assets/logo.svg" class="logo">
+            <img src="../../assets/logo.svg" class="subtitle">
         </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
-            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><h2>그룹삭제</h2></v-btn>
-            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><h2>그룹탈퇴</h2></v-btn>
+            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><font size=5>그룹삭제</font></v-btn>
+            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><font size=5>그룹탈퇴</font></v-btn>
         </div>
     </div>
 </div>

@@ -5,11 +5,13 @@
             <font size=4>노래 선택하기</font>
         </div>
         <div class="dash" style="height:540px;">
-            <span class="music pointer" :style="'background-image:url('+music.img+')'"
-            v-for="(music, index) in musics" :key="index"
-            @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
-                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/check_square.svg">
-                <MusicBar :id="'musicbar'+index" style="display:none"></MusicBar>
+            <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
+                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
+                <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
+                    <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
+                    <!-- <MusicBar :id="'musicbar'+index"></MusicBar> -->
+                </div>
+                <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
             </span>
             <audio id="audio0" loop></audio>
             <audio id="audio1" src="../../assets/music/Beside Me - Patrick Patrikios.mp3" loop></audio>
@@ -34,8 +36,7 @@ export default {
             [
                 {
                     title: '음악 없음',
-                    // img: '../../assets/unselected.jpg',
-                    img: 'https://cdn.iconscout.com/icon/premium/png-256-thumb/stop-1743085-1485071.png',
+                    img: 'https://partyspace.com/images/blog_entries/no-music.png',
                     src: '',
                 },
                 {
@@ -92,47 +93,23 @@ export default {
 </script>
 
 <style>
-.warp {
-    height: 200px;
+.wrap {
+    height: 180px;
     width: 150px;
-    line-height: 118px;
     margin: 7px;
     display: inline-block;
     box-sizing: border-box;
-    text-align: center;
-    background-size: cover;
-    font-size: 26px;
     overflow: hidden;
 }
 .music {
     height: 150px;
     width: 150px;
-    line-height: 118px;
-    margin: 7px;
-    display: inline-block;
-    box-sizing: border-box;
-    text-align: center;
-    color: #fff;
     background-size: cover;
-    font-size: 26px;
-    overflow: hidden;
 }
 .music img {
     height: 100%;
 }
 .videoMusicNoneDisplay {
     display: none;
-}
-.unselected {
-    height: 150px;
-    width: 150px;
-    line-height: 118px;
-    margin: 7px;
-    display: inline-block;
-    box-sizing: border-box;
-    text-align: center;
-    color: #fff;
-    font-size: 26px;
-    overflow: hidden;
 }
 </style>

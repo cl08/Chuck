@@ -25,14 +25,15 @@
 .dash {
     margin: 5px 25px 5px 25px;
     padding: 5px;
-    border: 2px dashed #8D6262;
+    border: 2px dashed #DCDFE6;
+    /* border: 1px dashed #8D6262; */
     border-radius: 3px;
     overflow: auto;
 }
 .solid {
     margin: 5px 25px 5px 25px;
     padding: 5px;
-    border: 2px solid #8D6262;
+    border: 2px solid #DCDFE6;
     border-radius: 3px;
     overflow: auto;
 }

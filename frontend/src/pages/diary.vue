@@ -346,17 +346,17 @@ export default {
   width: 34px;
   height: 661px;
   position: relative;
-  top: -680px;
-  left: 664px;
+  top: -20px;
+  left: 40px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
-  top: -720px;
+  top: -60px;
 }
 #back {
   width: 160px;
   position: relative;
   left: -800px;
-  top: -540px;
+  top: 30px;
 }
 </style>
