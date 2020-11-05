@@ -74,7 +74,7 @@ public class PictureController {
 		pictureService.deletePictureById(id);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
-
+ 
 	@GetMapping("/person_clustering")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
 	public ResponseEntity<ClusterListResponse> personClustering(int groupId) throws Exception {
