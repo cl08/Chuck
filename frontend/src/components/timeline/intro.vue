@@ -6,20 +6,20 @@
             <div class="groupInfo">
                 <font size=5>그룹명</font>
                 <div class="information">
-                    <font size=5>
+                    <font size=5 style="color:#2d2d2d">
                     {{this.groupInfo.name}}
                     </font>
                 </div>
                 <font size=5>그룹 생성일</font>
-                <div class="createDate">
+                <div class="createDate" style="color:#2d2d2d">
                     {{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}
                 </div>
                 <font size=5>그룹장</font>
-                <div>
+                <div style="color:#2d2d2d">
                     {{this.groupInfo.ownerName}}
                 </div>
                 <font size=5>그룹소개</font>
-                    <div id="group_intro">
+                    <div id="group_intro" style="color:#2d2d2d">
                     </div>
             </div>
         </div>
