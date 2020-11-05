@@ -11,7 +11,7 @@ export default new Vuex.Store({
         NAME: sessionStorage.getItem('NAME'),
         refreshToken: sessionStorage.getItem('refreshToken'),
         selectedGroup: JSON.parse(sessionStorage.getItem('selectedGroup')),
-        selectedDay: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+new Date().getDate(),
+        selectedDay: new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()),
         selectedDiary: '',
         visibleCalendar: true,
         visibleDetail: false,
@@ -23,6 +23,7 @@ export default new Vuex.Store({
         chuckList: [],
         comments: [],
         personArray : [],
+        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"]
     },
     getters: {
         getSelectedGroup(state) {
@@ -86,7 +87,10 @@ export default new Vuex.Store({
                 }
             }
             return false
-        }
+        },
+        getColor(state) {
+            return state.color
+        },
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -177,10 +181,12 @@ export default new Vuex.Store({
                     token: sessionStorage.getItem('token')
                 },
             }).then(({ data }) => {
-                data.forEach(element => {
-                    const image = element.image.split(';');
-                    element.image = image;
-                });
+                for(var i=0; i<data.length; i++) {
+                    const image = data[i].image.split(';');
+                    data[i].image = image;
+                    data[i].color = this.state.color[i % 10];
+                    data[i].index = i;
+                }
                 commit('setChuckList', data);
             })
         },
