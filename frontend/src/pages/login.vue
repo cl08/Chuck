@@ -2,10 +2,10 @@
     <div id="login_page">
         <div id="login_kakao">
             <kakao-login
-              api-key='d1baf2cad3354a9138989baea6e65995'
-              :on-success=onSuccess
-              :on-failure=onFailure
-              image="kakao_account_login_btn_medium_narrow"
+            api-key='d1baf2cad3354a9138989baea6e65995'
+            :on-success=onSuccess
+            :on-failure=onFailure
+            image="kakao_account_login_btn_medium_narrow"
             />
         </div>
 

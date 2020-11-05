@@ -17,8 +17,8 @@
 
         <v-row v-else>
             <span class="col-12 float-right">
-                <div class="el-input el-input--suffix" style="width: 84%; margin-right: 12px;">
-                    <input type="text" autocomplete="off" class="el-input__inner" id="searchBar" v-model="keyword" @keydown.enter="search">
+                <div class="el-input el-input--suffix" style="width: 80%; margin:0px 12px 0px 26px;">
+                    <input type="text" autocomplete="off" class="el-input__inner" id="searchBar" v-model="keyword" @keydown.enter="search" style="text-align:left">
                     <span class="el-input__suffix">
                         <span class="el-input__suffix-inner">
                             <i class="el-input__icon el-icon-close pointer" @click="closeSearchBar"></i>
@@ -32,12 +32,12 @@
         <v-container v-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="cursor:pointer">
                     <v-card>
                         <div class="d-flex flex-no-wrap">
                             <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
                             <v-avatar size="125" tile>
-                                <v-img :src="item.img[0]"></v-img>
+                                <v-img :src="item.image[0]"></v-img>
                             </v-avatar>
                             <div style="width:400px;">
                                 <v-card-title>{{ item.title }} </v-card-title>
@@ -60,7 +60,7 @@
         </v-container>
 
         <v-container v-else style="padding:0px 20px 0px 20px;">
-            <font size=6>오늘의 새로운 Chuck을 작성해 보세요</font>
+            <font size=5>오늘의 새로운 Chuck을 작성해 보세요</font>
         </v-container>
     </div>
 </template>
@@ -68,34 +68,37 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
+import eventBus from '@/utils/EventBus'
+import store from '@/store'
+
 export default {
     data: () => ({
-        selectedChuckList: [],
         searchFlag: true,
         searchResult: '',
         keyword: '',
+        color: [],
     }),
     mounted() {
-        for(var i=0; i<this.getChuckList.length; i++) {
-            if(this.getChuckList.date === this.getSelectedDay) {
-                this.selectedChuckList.push(this.getChuckList[i])
-            }
-        }
+        this.color = this.$store.getters.getColor;
+    },
+    created() {
+        eventBus.$on('updateList', () => {
+            store.dispatch('updateSelectedChuckList')
+        });
+        eventBus.$on('showDetail', (data) => {
+            this.detail(data);
+        });
     },
     computed: {
         ...mapGetters([
             'getChuckList',
             'getSelectedDay',
-        ])
+        ]),
+        selectedChuckList: () => store.getters.getSelectedChuckList,
     },
     watch: {
-        getSelectedDay: function() {
-            this.selectedChuckList= []
-            for(var i=0; i<this.getChuckList.length; i++) {
-                if(this.getChuckList[i].date === this.getSelectedDay) {
-                    this.selectedChuckList.push(this.getChuckList[i])
-                }
-            }
+        getSelectedDay() {
+           store.dispatch('updateSelectedChuckList')
         }
     },
     methods: {
@@ -106,8 +109,9 @@ export default {
             'setVisibleDetail',
             'setVisibleWrite',
         ]),
-        detail(id) {
-            this.setSelectedDiary(id)
+        detail(item) {
+            store.dispatch('updateComments', item.id)            
+            this.setSelectedDiary(item.index)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)

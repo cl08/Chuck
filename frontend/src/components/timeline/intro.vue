@@ -2,26 +2,24 @@
 <div>
     <div class="left">
         <div class="text-left" style="padding:30px 0px 0px 30px;">
-            <img src="../../assets/logo.svg" class="logo">
+            <img src="../../assets/logo.svg" class="subtitle">
             <div class="groupInfo">
-                <h2>그룹명</h2>
+                <font size=5>그룹명</font>
                 <div class="information">
-                    조선왕조실록샐록
+                    <font size=5 style="color:#2d2d2d">
+                    {{this.groupInfo.name}}
+                    </font>
                 </div>
-                <h2>그룹 생성일</h2>
-                <div class="createDate">
-                    2020.01.01
+                <font size=5>그룹 생성일</font>
+                <div class="createDate" style="color:#2d2d2d">
+                    {{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}
                 </div>
-                <h2>그룹장</h2>
-                <div>
-                    김김진진우우
+                <font size=5>그룹장</font>
+                <div style="color:#2d2d2d">
+                    {{this.groupInfo.ownerName}}
                 </div>
-                <h2>그룹소개</h2>
-                    <div>
-                        안녕하세요 조선왕조실록샐록 그룹입니다<br>
-                        동해물과 백두산이 마르고 닳도록<br>
-                        하느님이 보우하사 우리나라만세<br>
-                        무궁화 삼천리 화려강산<br>
+                <font size=5>그룹소개</font>
+                    <div id="group_intro" style="color:#2d2d2d">
                     </div>
             </div>
         </div>
@@ -32,7 +30,26 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
+    data() {
+        return {
+            intro: '',
+        };
+    },
+    computed: {
+        groupInfo: () => store.getters.getSelectedGroup,
+    },
+    mounted() {
+        // 아직 그룹 입력시 br 태그를 못 받아서 임시로 함
+        const len = this.groupInfo.intro.length / 20;
+        for(var i=0; i<len; i++) {
+            this.intro += this.groupInfo.intro.substring(20*i, 20*(i+1));
+            this.intro += '<br/>';
+        }
+        $('#group_intro').html(this.intro);
+    }
 
 }
 </script>
@@ -42,7 +59,7 @@ export default {
     text-align: left;
     width: 300px;
     height: 767px;
-    background-color: #FEF4E5;
+    background-color: #FFF8F8;
     box-shadow: 2px 0px 10px 1px #E2E2E2;
 }
 .groupInfo {
@@ -51,5 +68,6 @@ export default {
 }
 .groupInfo > div{
     margin-bottom: 24px;
+    color: #2d2d2d;
 }
 </style>

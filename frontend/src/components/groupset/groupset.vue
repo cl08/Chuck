@@ -4,24 +4,24 @@
             <img src='../../assets/title/management_tabtitle.svg' class="tabtitle">
             <div class="underline"></div>
         </div>
-        <h2>그룹명</h2>
+        <font size=5>그룹명</font>
         <div class="information">
-            {{ groupInfo.intro }}
+            {{ groupInfo.name }}
         </div>
-        <h2>그룹원 목록
+        <font size=5>그룹원 목록
             <v-btn @click="InviteGroup" color="#3D91FF" text>그룹원 초대하기</v-btn>
-        </h2>
+        </font>
         <div class="list">
             <div v-for="(member, index) in memberList" :key="index">
                 {{member.name}}
                 <v-btn @click="DeportGroup(member.id)" color="#FFB6B6" text>추방</v-btn>
             </div>
         </div>
-        <h2>그룹 생성일</h2>
+        <font size=5>그룹 생성일</font>
         <div class="createDate">
-            <p>{{this.groupInfo.publishedDate | moment('YYYY-MM-DD')}}</p>
+            <p>{{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}</p>
         </div>
-        <h2>그룹 로그</h2>
+        <font size=5>그룹 로그</font>
         <div class="log" style="margin-bottom:0px;">
             <div v-for="(log, index) in logList" :key="index">
                 {{log.content}}
@@ -95,19 +95,20 @@ export default {
 }
 .groupset > div{
     margin-bottom: 24px;
+    color: #2d2d2d;
 }
 .information button{
     left: 300px;
 }
 .list{
-    height: 150px;
+    height: 160px;
     overflow: scroll;
 }
 .log{
-    height: 110px;
+    height: 200px;
     overflow: scroll;
 }
-.createDate h2{
+.createDate font{
     margin-bottom: 10px;
 }
 </style>

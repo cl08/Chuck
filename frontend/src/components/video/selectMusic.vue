@@ -5,11 +5,13 @@
             <font size=4>노래 선택하기</font>
         </div>
         <div class="dash" style="height:540px;">
-            <span class="music pointer" :style="'background-image:url('+music.img+')'"
-            v-for="(music, index) in musics" :key="index"
-            @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
-                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/check_square.svg">
-                <MusicBar :id="'musicbar'+index" style="display:none"></MusicBar>
+            <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
+                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
+                <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
+                    <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
+                    <!-- <MusicBar :id="'musicbar'+index"></MusicBar> -->
+                </div>
+                <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
             </span>
             <audio id="audio0" loop></audio>
             <audio id="audio1" src="../../assets/music/Beside Me - Patrick Patrikios.mp3" loop></audio>
@@ -34,7 +36,7 @@ export default {
             [
                 {
                     title: '음악 없음',
-                    img: "https://previews.123rf.com/images/leventegyori/leventegyori1510/leventegyori151000012/47713326-%EA%B7%B8%EB%A0%A4%EC%A7%84-%EB%90%9C-x-%EB%A7%88%ED%81%AC-%ED%99%94%EC%9D%B4%ED%8A%B8-%EC%A0%88%EC%97%B0.jpg",
+                    img: 'https://partyspace.com/images/blog_entries/no-music.png',
                     src: '',
                 },
                 {
@@ -91,31 +93,18 @@ export default {
 </script>
 
 <style>
-.warp {
-    height: 200px;
+.wrap {
+    height: 180px;
     width: 150px;
-    line-height: 118px;
     margin: 7px;
     display: inline-block;
     box-sizing: border-box;
-    text-align: center;
-    background-size: cover;
-    font-size: 26px;
     overflow: hidden;
 }
 .music {
     height: 150px;
     width: 150px;
-    line-height: 118px;
-    margin: 7px;
-    display: inline-block;
-    box-sizing: border-box;
-    text-align: center;
-    color: #fff;
-    background: #C0C4CC;
     background-size: cover;
-    font-size: 26px;
-    overflow: hidden;
 }
 .music img {
     height: 100%;

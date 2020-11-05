@@ -1,6 +1,6 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-            <img src="../../assets/title/chuckBook_tabtitle.svg" class="subtitle">
+        <img src="../../assets/title/chuckBook_tabtitle.svg" class="subtitle">
         <div class="dash">
             <font size=4>기간 선택</font>
         </div>
@@ -94,12 +94,6 @@ export default {
   }
 </script>
 <style scoped>
-.content {
-    height: 220px;
-    text-align: left;
-    overflow: auto;
-    font-size: 3;
-}
 .face {
     height: 90px;
     width: 90px;

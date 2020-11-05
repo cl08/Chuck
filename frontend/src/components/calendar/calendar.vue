@@ -52,6 +52,9 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import eventBus from '@/utils/EventBus'
+import store from '@/store'
+
 export default {
     data: () => ({
         faAngleLeft,
@@ -78,6 +81,11 @@ export default {
             }
         }
     },
+    created() {
+        eventBus.$on('updateCalendar', () => {
+            this.updateRange();
+        });
+    },
     methods: {
         ...mapMutations([
             'setSelectedDay',
@@ -103,17 +111,21 @@ export default {
             this.$refs.calendar.next()
         },
         showEvent ({ nativeEvent, event, date }) {
+            store.dispatch('updateComments', event.id)     
             this.setSelectedDiary(event.index)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)
         },
-        updateRange ({ start, end }) {
+        updateRange () {
             const events = []
+            const color = this.$store.getters.getColor
+
             for(var i=0; i<this.getChuckList.length; i++){
                 var date = this.getChuckList[i].date.split('-')
                 events.push({
-                    index: this.getChuckList[i].id,
+                    index: this.getChuckList[i].index,
+                    id: this.getChuckList[i].id,
                     name: this.getChuckList[i].title,
                     start: new Date(date[0], date[1]-1, date[2]),  
                     color: this.getChuckList[i].color,

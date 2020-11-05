@@ -136,6 +136,8 @@
       </div>
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
+    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
+    <!-- <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back"> -->
     <Mypage></Mypage>
   </div>
 </template>
@@ -175,7 +177,7 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
-
+import eventBus from '@/utils/EventBus';
 import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
@@ -211,6 +213,14 @@ export default {
       backgroundImageArray: [],
     };
   },
+  created() {
+    this.$store.dispatch('updateChuckList');
+    eventBus.$on('movePage', (data) => {
+      this.movePage(data.index);
+      this.setBackState(2);
+      eventBus.$emit('showDetail', data.item);
+    });
+  },
   computed: {
     ...mapGetters([
       "getChuckList",
@@ -223,7 +233,17 @@ export default {
       "getVisibleAlbum",
       "getVisibleVideo",
       "getVisiblePreview",
+      "getBackState",
     ]),
+  },
+  watch: {
+    getVisibleCalendar() {
+      if(this.getVisibleCalendar) {
+        $('#pen').css('left', '664px')
+      } else {
+         $('#pen').css('left', '744px')
+      }
+    }
   },
   methods: {
     ...mapMutations([
@@ -234,6 +254,8 @@ export default {
       "setVisibleAlbum",
       "setVisibleVideo",
       "setVisiblePreview",
+      "setSelectedDay",
+      "setBackState",
     ]),
     movePage(num) {
       this.init()
@@ -264,12 +286,17 @@ export default {
         }
       }
       $(".sample-docs").turn("disable", true);
-      
+      if(num == 1) {
+        this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
+        eventBus.$emit('updateCalendar');
+        eventBus.$emit('updateList');
+      }
     },
     // 글작성 페이지 이동
     write() {
       // 캘린더 페이지 이동
       this.movePage(1);
+      this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
       this.setVisibleWrite(true);
       this.setVisibleDetail(false);
       this.setVisibleCalendar(false);
@@ -285,6 +312,19 @@ export default {
       this.setVisibleAlbum(false);
       this.setVisibleVideo(false);
       this.setVisiblePreview(false);
+    },
+    back(){
+      if(this.getBackState === 1) {
+        // calender
+        this.setVisibleWrite(false);
+        this.setVisibleDetail(false);
+        this.setVisibleCalendar(true);
+        eventBus.$emit('clearWrite');
+      } else {
+        // TimeLine
+        this.movePage(0);
+        this.setBackState(1);
+      }
     }
   },
   mounted() {
@@ -318,12 +358,18 @@ export default {
   cursor: pointer;
   width: 34px;
   height: 661px;
-  position: fixed;
-  top: 130px;
-  right: 280px;
+  position: relative;
+  top: -20px;
+  left: 40px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
-  top: 110px;
+  top: -60px;
+}
+#back {
+  width: 160px;
+  position: relative;
+  left: -800px;
+  top: 30px;
 }
 </style>
