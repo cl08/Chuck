@@ -12,14 +12,21 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import http from '../../utils/api.js'
+import { mapGetters } from 'vuex';
+import evnetBus from '@/utils/EventBus';
+import http from '../../utils/api.js';
+
 export default {
     data() {
         return {
             title: '',
             content: '',
         }
+    },
+    created() {
+        evnetBus.$on('uploadeDone', () => {
+            this.done();
+        });
     },
     computed: {
         ...mapGetters([
@@ -44,9 +51,15 @@ export default {
                 }   
             })
             .then(({ data }) => {
-                console.log(data)
-                // 이미지 배열 전송
+                evnetBus.$emit('uploadImages', data.id);
             });
+        },
+        done() {
+            this.title = '';
+            this.content = '';
+            this.$store.commit('setVisibleWrite', false);
+            this.$store.commit('setVisibleCalendar', true);
+            this.$store.commit('setVisibleChoice', true);
         }
     }
 }
