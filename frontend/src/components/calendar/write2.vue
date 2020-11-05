@@ -13,7 +13,7 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import evnetBus from '@/utils/EventBus';
+import eventBus from '@/utils/EventBus';
 import http from '../../utils/api.js';
 
 export default {
@@ -24,8 +24,12 @@ export default {
         }
     },
     created() {
-        evnetBus.$on('uploadeDone', () => {
+        eventBus.$on('uploadeDone', () => {
             this.done();
+        });
+        eventBus.$on('clearWrite', () => {
+            this.title = '';
+            this.content = '';
         });
     },
     computed: {
