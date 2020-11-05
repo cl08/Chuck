@@ -212,6 +212,9 @@ export default {
       backgroundImageArray: [],
     };
   },
+  created() {
+    this.$store.dispatch('updateChuckList');
+  },
   computed: {
     ...mapGetters([
       "getChuckList",

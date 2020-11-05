@@ -6,22 +6,18 @@
             <div class="groupInfo">
                 <h2>그룹명</h2>
                 <div class="information">
-                    조선왕조실록샐록
+                    {{this.groupInfo.name}}
                 </div>
                 <h2>그룹 생성일</h2>
                 <div class="createDate">
-                    2020.01.01
+                    {{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}
                 </div>
                 <h2>그룹장</h2>
                 <div>
-                    김김진진우우
+                    {{this.groupInfo.ownerName}}
                 </div>
                 <h2>그룹소개</h2>
-                    <div>
-                        안녕하세요 조선왕조실록샐록 그룹입니다<br>
-                        동해물과 백두산이 마르고 닳도록<br>
-                        하느님이 보우하사 우리나라만세<br>
-                        무궁화 삼천리 화려강산<br>
+                    <div id="group_intro">
                     </div>
             </div>
         </div>
@@ -32,7 +28,26 @@
 </template>
 
 <script>
+import store from '@/store';
+
 export default {
+    data() {
+        return {
+            intro: '',
+        };
+    },
+    computed: {
+        groupInfo: () => store.getters.getSelectedGroup,
+    },
+    mounted() {
+        // 아직 그룹 입력시 br 태그를 못 받아서 임시로 함
+        const len = this.groupInfo.intro.length / 20;
+        for(var i=0; i<len; i++) {
+            this.intro += this.groupInfo.intro.substring(20*i, 20*(i+1));
+            this.intro += '<br/>';
+        }
+        $('#group_intro').html(this.intro);
+    }
 
 }
 </script>

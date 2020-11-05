@@ -24,6 +24,9 @@ public class GroupDto {
 	@ApiModelProperty(value = "그룹 생성 일자", example = "2020-11-03")
 	private Date publishedDate;
 
+	@ApiModelProperty(value = "그룹장 이름", example = "김김진진우우")
+	private String ownerName;
+
 	public GroupDto() {}
 
 	public GroupDto(int id) {
@@ -78,6 +81,14 @@ public class GroupDto {
 		this.publishedDate = publishedDate;
 	}
 
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
 	@Override
 	public String toString() {
 		return "GroupDto{" +
@@ -87,6 +98,7 @@ public class GroupDto {
 			", intro='" + intro + '\'' +
 			", token='" + token + '\'' +
 			", publishedDate=" + publishedDate +
+			", ownerName='" + ownerName + '\'' +
 			'}';
 	}
 }

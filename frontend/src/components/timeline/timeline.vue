@@ -4,7 +4,7 @@
             <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
             <div class="underline"></div>
         </div>
-        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in getChuckList" :key="i" :flat=true>
+        <v-card class="mx-auto text-left mb-3" width="550" v-for="(item, i) in chuckList" :key="i" :flat=true>
             <v-card-subtitle class="pt-0">
                 <div class="float-left pt-2">
                     {{ item.writer }}
@@ -30,7 +30,7 @@
                     </v-menu>
                 </div>
             </v-card-subtitle>
-            <v-img height="300px" :src="item.img[0]" style="clear:both;">
+            <v-img height="300px" :src="item.image[0]" style="clear:both;">
             </v-img>
                 <v-card-title>{{ item.title }}</v-card-title>
             <v-card-text class="text--primary">
@@ -45,12 +45,12 @@
     </div>
 </template>
 <script>
-import { mapGetters } from 'vuex'
+import store from '@/store';
+
 export default {
     computed: {
-        ...mapGetters([
-            'getChuckList',
-        ])
+        groupInfo: () => store.getters.getSelectedGroup,
+        chuckList: () => store.getters.getChuckList,
     },
 }
 </script>

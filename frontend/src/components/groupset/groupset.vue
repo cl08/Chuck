@@ -19,7 +19,7 @@
         </div>
         <h2>그룹 생성일</h2>
         <div class="createDate">
-            <p>{{this.groupInfo.publishedDate | moment('YYYY-MM-DD')}}</p>
+            <p>{{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}</p>
         </div>
         <h2>그룹 로그</h2>
         <div class="log" style="margin-bottom:0px;">
