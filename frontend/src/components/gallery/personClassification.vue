@@ -9,7 +9,7 @@
             <div >
                 <span class="face pointer" @click="selectAll">ALL</span>
                 <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url(' + face + ')'">
-                    <img :id="'albumFace' + index" class="albumFaceNoneDisplay" src="@/assets/check_circle.svg">
+                    <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
                 </span>
             </div>
         </div>
@@ -49,14 +49,14 @@ export default {
         ]),
         selectAll() {
             for (let i = 0; i < this.faces.length; i++) {
-                let el = document.getElementById("albumFace" + i);
+                let el = document.getElementById("galleryFace" + i);
                 el.setAttribute("class", "");
                 this.$set(this.checkArr, i, true);
             }
         },
         select(index) {
-            let el = document.getElementById("albumFace" + index);
-            el.classList.toggle("albumFaceNoneDisplay");
+            let el = document.getElementById("galleryFace" + index);
+            el.classList.toggle("galleryFaceNoneDisplay");
             if (this.checkArr[index]) {
                 this.$set(this.checkArr, index, false);
             } else {
@@ -99,7 +99,7 @@ p {
 .face img {
     height: 100%;
 }
-.albumFaceNoneDisplay {
+.galleryFaceNoneDisplay {
     display: none;
 }
 </style>
