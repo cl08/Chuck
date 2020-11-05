@@ -25,13 +25,13 @@
         </div>
         <div style="padding:10px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
-                <li v-for="index in 8" :key="index" class="el-upload-list__item is-ready">
-                    <img src="https://image.auction.co.kr/itemimage/19/8e/a2/198ea2c571.jpg" class="el-upload-list__item-thumbnail">
+                <li v-for="(image, index) in $data.imageList" :key="index" class="el-upload-list__item is-ready">
+                    <img :src="image" class="el-upload-list__item-thumbnail">
                     <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-preview">
                             <i class="el-icon-zoom-in"></i>
                         </span>
-                        <span class="el-upload-list__item-delete">
+                        <span class="el-upload-list__item-delete" @click="handleRemove(image, index)">
                             <i class="el-icon-delete"></i>
                         </span>
                     </span>
@@ -42,16 +42,23 @@
 </template>
 
 <script>
+import api from '@/utils/api';
+import eventBus from '@/utils/EventBus';
+
 export default {
     data() {
         return {
-            thumbnailList: '',
             disabled: false,
+            imageList: [],
         };
+    },
+    created() {
+        eventBus.$on('uploadImages', (data) => {
+            this.uploadImages(data);
+        });
     },
     methods: {
         beforeImageUpload(file) {
-            console.log("오잉")
             const isJPG = file.type === 'image/jpeg';
             const isPNG = file.type === 'image/png';
             const isLt10M = file.size / 1024 / 1024 < 10;
@@ -68,17 +75,26 @@ export default {
             alert("사진은 최대 12개까지 업로드 할 수 있습니다.")
         },
         handleSuccess(res, file) {
-            // alert("업로드 성공")
-            console.log(res)
-            console.log(file)
-            // 이미지 배열에 추가
+            this.imageList = this.imageList.concat(res);
         },
-        handleRemove(file, fileList) {
-            // alert("삭제 성공")
-            console.log(file)
-            console.log(fileList)
-            // 이미지 배열에서 제거
-        }
+        handleRemove(file, index) {
+            api.delete(`pictures/deleteByPath?path=${file}`).then(()=> {
+                this.imageList.splice(index, 1);
+            })
+        },
+        uploadImages(diaryId) {
+            const images = [];
+            this.imageList.forEach(image => {
+                images.push(image);
+            });
+            api.post(`pictures/insert`, {
+                diary_id: diaryId,
+                path_list: images,
+            }).then((data) => {
+                eventBus.$emit('uploadeDone');
+                this.imageList = [];
+            })
+        },
     }
 }
 </script>
