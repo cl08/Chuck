@@ -2,10 +2,10 @@
     <div id="login_page">
         <div id="login_kakao">
             <kakao-login
-              api-key='d1baf2cad3354a9138989baea6e65995'
-              :on-success=onSuccess
-              :on-failure=onFailure
-              image="kakao_account_login_btn_medium_narrow"
+            api-key='d1baf2cad3354a9138989baea6e65995'
+            :on-success=onSuccess
+            :on-failure=onFailure
+            image="kakao_account_login_btn_medium_narrow"
             />
         </div>
 
@@ -22,6 +22,9 @@ import jwt from 'jwt-decode';
 import store from '@/store';
 
 export default {
+
+    props: ['redirect'],
+    
     components: {
         KakaoLogin,
     },
@@ -60,6 +63,15 @@ export default {
                 var decode = jwt(data);
                 store.dispatch('updateId', decode.ID);
                 store.dispatch('updateName', decode.NAME);
+                if(this.redirect !== undefined) {
+                    api.post(`groups/members`, {
+                        groupId: 0,
+                        userId: store.getters.getId,
+                        groupToken: this.redirect,
+                    }).then((res) => {
+                        // console.log(res.data);
+                    })
+                }
                 this.$router.push({name: 'group'});
             });
         },
@@ -88,7 +100,7 @@ export default {
 #login_test {
     position: absolute;
     left: 50%;
-    margin-left: -80px;
+    margin-left: -78px;
     bottom: 190px;
     cursor: pointer;
     color: white;

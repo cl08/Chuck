@@ -1,89 +1,105 @@
 <template>
-  <div style="margin: 0px 30px 0px 0px">
-    <div style="margin-top: 5px">
-      <h1>인물 분류</h1>
-      <h5 style="text-align: left">인물 분류</h5>
+    <div style="margin: 30px 30px 0px 0px">
+        <div class="text-left ml-8">
+            <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
+        <div class="underline" style="margin-top: -5px;"></div>
+        </div>
+        <p>{{faces.length}}명의 인물이 검색되었습니다.</p>
+        <div class="selectPerson">
+            <div >
+                <span class="face pointer" @click="selectAll">ALL</span>
+                <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url(' + face + ')'">
+                    <img :id="'albumFace' + index" class="albumFaceNoneDisplay" src="@/assets/check_circle.svg">
+                </span>
+            </div>
+        </div>
     </div>
-    <div class="selectPerson">
-      <!-- 이미지는 서버에서 몇명인지 받아와서 for문으로 뿌려줌. -->
-      <div v-for="(item, index) in items" :key="item.src" class="imgDiv" >
-        <!-- <img :src="item.src" :class="{ clicked: checkArr[index], nonClicked: checkArr[index] }"  -->
-        <a @click="clickedImg(index)"
-          ><img
-            src="@/assets/person/iu.jpg"
-            :class="{ clicked: checkArr[index] }"
-        /></a>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex'
+import { mapGetters } from "vuex"
+import { mapMutations } from "vuex"
+import api from '@/utils/api.js'
 export default {
-  data() {
-    return {
-      items: [
-        {
-          // src: "../../../assets/person/iu.jpg",
-        },
-        {
-          // src: "../../assets/person/suzy.jpg",
-        },
-        {
-          // src: "../../assets/person/iu.jpg",
-        },
-        {
-          // src: "../../assets/person/suzy.jpg",
-        },
-        {
-          // src: "../../assets/person/iu.jpg",
-        },
-        {
-          // src: "../../assets/person/suzy.jpg",
-        },
-      ],
-      checkArr: [],
-    };
-  },
-  mounted() {
-    for (let index = 0; index < this.items.length; index++) {
-      this.checkArr.push(false);
-    }
-    this.setPersonArray(this.checkArr);
-  },
-  computed: {},
-  methods: {
-    ...mapMutations([
-      'setPersonArray',
-    ]),
-    clickedImg(imgNum) {
-      if (this.checkArr[imgNum]) {
-        this.$set(this.checkArr, imgNum, false);
-      } else {
-        this.$set(this.checkArr, imgNum, true);
-      }
-      // store에 저장
-      this.setPersonArray(this.checkArr);
+    data() {
+        return {
+            faces: [],
+            checkArr: [],
+        };
     },
-  },
+    mounted() {
+        api.get('pictures/person_clustering?groupId='+this.getSelectedGroup.id)
+        .then(({ data }) => {
+            console.log(data)
+            for(let i=0; i<data.cluster_list.length; i++) {
+                this.faces.push(data.cluster_list[i].rep_image)
+                this.checkArr[i] = false
+            }
+            this.setPersonArray(this.checkArr)
+        })
+    },
+    computed: {
+        ...mapGetters([
+            'getSelectedGroup'
+        ])
+    },
+    methods: {
+        ...mapMutations([
+            'setPersonArray'
+        ]),
+        selectAll() {
+            for (let i = 0; i < this.faces.length; i++) {
+                let el = document.getElementById("albumFace" + i);
+                el.setAttribute("class", "");
+                this.$set(this.checkArr, i, true);
+            }
+        },
+        select(index) {
+            let el = document.getElementById("albumFace" + index);
+            el.classList.toggle("albumFaceNoneDisplay");
+            if (this.checkArr[index]) {
+                this.$set(this.checkArr, index, false);
+            } else {
+                this.$set(this.checkArr, index, true);
+            }
+            // store에 저장
+            this.setPersonArray(this.checkArr);
+        },
+    },
 };
 </script>
 
-<style>
+<style scoped>
 .imgDiv {
-  width: 160px;
-  display: inline-block;
+    width: 160px;
+    display: inline-block;
 }
-.selectPerson img {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+p {
+    margin: 30px;
+    text-align: left;
 }
-.clicked {
-  border: solid 0.2em;
-  border-color: blueviolet;
-  filter: opacity(0.5);
+.face {
+    height: 90px;
+    width: 90px;
+    line-height: 90px;
+    margin: 7px;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    background: #C0C4CC;
+    background-size: cover;
+    font-size: 26px;
+    overflow: hidden;
+}
+.selectPerson {
+    width: 400px;
+}
+.face img {
+    height: 100%;
+}
+.albumFaceNoneDisplay {
+    display: none;
 }
 </style>

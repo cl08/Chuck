@@ -16,6 +16,12 @@ public class MemberDto {
 	@ApiModelProperty(value = "그룹장 여부", example = "true")
 	private boolean isOwner;
 
+	@ApiModelProperty(value = "그룹 멤버 이름", example = "test")
+	private String name;
+
+	@ApiModelProperty(value = "그룹 토큰", example = "1nsdf2346asGd")
+	private String groupToken;
+
 	public MemberDto() {}
 
 	public MemberDto(int groupId, long userId, boolean isOwner) {
@@ -56,6 +62,22 @@ public class MemberDto {
 		isOwner = owner;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getGroupToken() {
+		return groupToken;
+	}
+
+	public void setGroupToken(String groupToken) {
+		this.groupToken = groupToken;
+	}
+
 	@Override
 	public String toString() {
 		return "MemberDto{" +
@@ -63,6 +85,8 @@ public class MemberDto {
 			", userId=" + userId +
 			", face='" + face + '\'' +
 			", isOwner=" + isOwner +
+			", name='" + name + '\'' +
+			", groupToken='" + groupToken + '\'' +
 			'}';
 	}
 }

@@ -2,6 +2,7 @@ package com.ssafy.chuck.common.aspect;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,7 +28,7 @@ public class LogAspect {
 	@Autowired
 	DiaryService diaryService;
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.JoinLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.JoinLog)")
 	private void joinLog(JoinPoint point) {
 		logger.debug("그룹 조인 로그");
 		Object[] parameterValues = point.getArgs();

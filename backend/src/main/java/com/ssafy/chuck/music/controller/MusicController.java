@@ -20,7 +20,7 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "음악 관리", tags = "Music")
 @RestController
-@RequestMapping("/chcuk/music")
+@RequestMapping("/chuck/music")
 public class MusicController {
 	static final Logger logger = LoggerFactory.getLogger(MusicController.class);
 

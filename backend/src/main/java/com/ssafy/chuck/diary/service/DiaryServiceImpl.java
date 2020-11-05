@@ -36,7 +36,7 @@ public class DiaryServiceImpl implements DiaryService{
 
 	@Override
 	public void update(long userId, DiaryDto diary) {
-		if(diary.getWriter() != userId) throw new AccessDeniedException("작성자가 아닙니다");
+		if(diary.getWriterId() != userId) throw new AccessDeniedException("작성자가 아닙니다");
 		try {
 			dao.update(diary);
 		} catch (DataAccessException e) {
@@ -46,7 +46,7 @@ public class DiaryServiceImpl implements DiaryService{
 
 	@Override
 	public void delete(long userId, int id) {
-		if(userId != this.read(id).getWriter()) throw new AccessDeniedException("작성자가 아닙니다");
+		if(userId != this.read(id).getWriterId()) throw new AccessDeniedException("작성자가 아닙니다");
 		try {
 			dao.delete(id);
 		} catch (DataAccessException e) {

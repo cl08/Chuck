@@ -14,6 +14,6 @@
         SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1) "USER_ID",
         if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', if(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 3), ' ', -1), '(', 1) like 'Chuck', 'Chuck', 'reply'), '') "STATE",
         if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1), -1) "WRITE_ID"
-        from LOGS where GROUP_ID = {id}
+        from LOGS where GROUP_ID = #{id}
     </select>
 </mapper>

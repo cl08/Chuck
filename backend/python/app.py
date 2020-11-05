@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request
 from my_clustering import encode, clustering
+from mkVideo import makeVideo
 # from urllib.parse import quote # url 한글 인코딩 Error 해결
 
 app = Flask(__name__)
@@ -26,6 +27,13 @@ def getInfo():
     print(groupId)
     result = clustering(groupId)
     return result
+
+@app.route('/video')
+def mkVideo():
+    paths = request.args.get('paths', 'paths')
+    userid = request.args.get('userid', 'userid')
+    makeVideo(paths, userid)
+    return "success"
 
 if __name__ == '__main__':
     app.run()

@@ -101,7 +101,7 @@
           <Comment v-show="this.getVisibleDetail" />
           <Write2 v-show="this.getVisibleWrite" />
         </div>
-        <!-- galary -->
+        <!-- gallery -->
         <div>
           <PersonClassification></PersonClassification>
         </div>
@@ -111,7 +111,7 @@
             v-show="this.getPersonClassificationResult"
           ></ResultGallery>
         </div>
-        <!-- chuck -->
+        <!-- studio -->
         <div>
           <Album1 v-show="this.getVisibleChoice" />
           <Album2 v-show="this.getVisibleAlbum" />
@@ -124,13 +124,20 @@
           <Video3 v-show="this.getVisibleVideo" />
           <Video5 v-show="this.getVisiblePreview" />
         </div>
-        <!-- info -->
-        <div>그룹정보</div>
-        <div>그룹정보 본문</div>
+        <!-- groupset -->
+        <div>
+          <Groupset></Groupset>
+        </div>
+        <div>
+          <Outro></Outro>
+        </div>
         <div class="hard p29"></div>
         <div class="hard p30"></div>
       </div>
     </div>
+    <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
+    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back">
+    <Mypage></Mypage>
   </div>
 </template>
 
@@ -138,18 +145,18 @@
 import $ from "jquery";
 import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
-
+import { mapMutations } from 'vuex'
 // timeline
-import Intro from "@/components/intro.vue";
-import Timeline from "@/components/timeline.vue";
+import Intro from "@/components/timeline/intro.vue";
+import Timeline from "@/components/timeline/timeline.vue";
 
 // calender
-import Calendar from "@/components/calendar.vue";
-import List from "@/components/list.vue";
-import Detail from "@/components/detail.vue";
-import Comment from "@/components/comment.vue";
-import Write1 from "@/components/write1.vue";
-import Write2 from "@/components/write2.vue";
+import Calendar from "@/components/calendar/calendar.vue";
+import List from "@/components/calendar/list.vue";
+import Detail from "@/components/calendar/detail.vue";
+import Comment from "@/components/calendar/comment.vue";
+import Write1 from "@/components/calendar/write1.vue";
+import Write2 from "@/components/calendar/write2.vue";
 
 // gallery
 import PersonClassification from "@/components/gallery/personClassification.vue";
@@ -165,6 +172,12 @@ import Video2 from "@/components/video/selectPerson.vue";
 import Video3 from "@/components/video/selectImage.vue";
 import Video4 from "@/components/video/selectMusic.vue";
 import Video5 from "@/components/video/preview.vue";
+
+// groupset
+import Groupset from "@/components/groupset/groupset.vue";
+import Outro from "@/components/groupset/outro.vue";
+import eventBus from '@/utils/EventBus';
+import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
   components: {
@@ -187,6 +200,9 @@ export default {
     Video3,
     Video4,
     Video5,
+    Groupset,
+    Outro,
+    Mypage,
   },
   data() {
     return {
@@ -195,6 +211,9 @@ export default {
       buttonName: ["timeline", "calendar", "gallery", "studio", "groupset"],
       backgroundImageArray: [],
     };
+  },
+  created() {
+    this.$store.dispatch('updateChuckList');
   },
   computed: {
     ...mapGetters([
@@ -211,7 +230,18 @@ export default {
     ]),
   },
   methods: {
+    ...mapMutations([
+      "setVisibleCalendar",
+      "setVisibleDetail",
+      "setVisibleWrite",
+      "setVisibleChoice",
+      "setVisibleAlbum",
+      "setVisibleVideo",
+      "setVisiblePreview",
+      "setSelectedDay",
+    ]),
     movePage(num) {
+      this.init()
       $(".sample-docs").turn("disable", false);
       $(".sample-docs").turn("page", 2 + 2 * num);
       for (let i = 0; i < 5; i++) {
@@ -239,7 +269,35 @@ export default {
         }
       }
       $(".sample-docs").turn("disable", true);
+      if(num == 1) {
+        this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
+        eventBus.$emit('updateCalendar');
+        eventBus.$emit('updateList');
+      }
     },
+    // 글작성 페이지 이동
+    write() {
+      // 캘린더 페이지 이동
+      this.movePage(1);
+      this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
+      this.setVisibleWrite(true);
+      this.setVisibleDetail(false);
+      this.setVisibleCalendar(false);
+    },
+    // init v-show
+    init(){
+      // calender
+      this.setVisibleWrite(false);
+      this.setVisibleDetail(false);
+      this.setVisibleCalendar(true);
+      // studio
+      this.setVisibleChoice(true);
+      this.setVisibleAlbum(false);
+      this.setVisibleVideo(false);
+      this.setVisiblePreview(false);
+    },
+    back(){
+    }
   },
   mounted() {
     $(".sample-docs").turn({
@@ -268,4 +326,22 @@ export default {
 
 <style scoped>
 @import "../styles/docs.css";
+#pen {
+  cursor: pointer;
+  width: 34px;
+  height: 661px;
+  position: relative;
+  top: -680px;
+  left: 744px;
+}
+#pen:hover{
+  transition: all ease-in-out 0.2s;
+  top: -720px;
+}
+#back {
+  width: 160px;
+  position: relative;
+  left: -800px;
+  top: -540px;
+}
 </style>

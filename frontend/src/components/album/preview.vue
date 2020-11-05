@@ -7,7 +7,7 @@
             <el-carousel indicator-position="none" arrow="always" height="605px">
                 <el-carousel-item v-for="(chuck, index) in getChuckList" :key="index">
                      <el-card shadow="none" style="border:0px;">
-                        <img :src="chuck.img[0]" style="object-fit:none; width:400px; height:400px">
+                        <img :src="chuck.image[0]" style="object-fit:none; width:400px; height:300px; margin-top:60px;">
                             <div style="padding:20px;">
                                 <font size=5>{{ chuck.title }}</font>
                             </div>

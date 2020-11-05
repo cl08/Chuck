@@ -24,7 +24,7 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "활동로그 관리", tags = "Log")
 @RestController
-@RequestMapping("/chcuk/logs")
+@RequestMapping("/chuck/logs")
 public class LogController {
 	static final Logger logger = LoggerFactory.getLogger(LogController.class);
 

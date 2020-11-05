@@ -14,7 +14,7 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
-    color: #2c3e50;
+    color: #8D6262;
 }
 @font-face {
     font-family: 'MaplestoryOTFLight';
@@ -22,16 +22,38 @@
     font-weight: normal;
     font-style: normal;
 }
-.dash{
+.dash {
     margin: 5px 25px 5px 25px;
     padding: 5px;
-    border: 2px dashed #DCDFE6;
+    border: 2px dashed #8D6262;
     border-radius: 3px;
     overflow: auto;
 }
-.pointer{
+.solid {
+    margin: 5px 25px 5px 25px;
+    padding: 5px;
+    border: 2px solid #8D6262;
+    border-radius: 3px;
+    overflow: auto;
+}
+.pointer {
     cursor: pointer;
 }
-/* .el-input__inner{
-    text-align: center;
-} */
+.tabtitle {
+    height: 80px;
+}
+.subtitle {
+    height: 70px;
+}
+.logo {
+    height: 60px;
+}
+.underline {
+    margin-top: -15px;
+    width: 130px;
+    height: 5px;
+    background: #8D6262;
+}
+hr {
+    margin: 0px auto;
+}
