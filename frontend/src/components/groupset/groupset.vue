@@ -101,11 +101,11 @@ export default {
     left: 300px;
 }
 .list{
-    height: 150px;
+    height: 160px;
     overflow: scroll;
 }
 .log{
-    height: 110px;
+    height: 200px;
     overflow: scroll;
 }
 .createDate font{

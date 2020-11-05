@@ -336,7 +336,7 @@ export default {
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
-  top: -80px;
+  top: -60px;
 }
 #back {
   width: 160px;
