@@ -37,16 +37,17 @@ export default {
 }
 #landing_book {
     position: relative;
-    bottom: 100px;
+    bottom: 120px;
+    height: 120px;
 }
 #landing_wrap {
     position: relative;
     top: 50%
 }
 #arrow {
-    width: 200px;
+    width: 150px;
     position: relative;
-    bottom: 100px;
-    left: 170px;
+    bottom: 120px;
+    left: 150px;
 }
 </style>

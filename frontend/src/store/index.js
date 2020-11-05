@@ -76,6 +76,9 @@ export default new Vuex.Store({
         getComments(state) {
             return state.comments
         },
+        getPersonArray(state) {
+            return state.personArray
+        },
         getPersonClassificationResult(state){
             for(let i = 0; i < state.personArray.length; i++){
                 if(state.personArray[i]){

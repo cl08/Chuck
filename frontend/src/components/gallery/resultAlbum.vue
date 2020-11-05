@@ -1,130 +1,76 @@
-/* 
-1. axios
-2. 사진 클릭했을 때 사진 상세페이지 보여주기
- */
 <template>
-  <div class="result">
-    <div class="selectPerson">
-      <!-- 선택한 인원들을 상단에서 보여줌 -->
-      <!-- <div v-for="(item, index) in items" :key="item.src" class="selectedImgDiv">
-        <img
-          :src="item.src"
-          :class="{ clicked: checkArr[index], nonClicked: checkArr[index] }"
-          @clicked="this.checkArr[index] = !this.checkArr[index]"
-        />
-      </div> -->
-
-      <!-- 임시 데이터 -->
-      <div class="selectedImgDiv">
-        <img src="@/assets/person/iu.jpg" />
-      </div>
+    <div class="result">
+        <div class="selectPerson" v-if="data">
+            <div v-for="(item, index) in data.cluster_list" :key="index" class="selectedImgDiv">
+                <img :src="item.rep_image" :class="{ clicked: checkArr[index], nonClicked: checkArr[index] }" @clicked="this.checkArr[index] = !this.checkArr[index]">
+            </div>
+        </div>
+        <div class="List" v-if="data">
+            <div v-for="(item, index) in data.cluster_list[0].path_list" :key="index" class="resultImgDiv">
+                <img class="pointer" :src="item" @click="clickedImg(index)">
+            </div>
+        </div>
     </div>
-    <div class="List">
-      <!-- 이미지는 서버에서 받아와서 for문으로 뿌려줌. -->
-      <div v-for="(item,index) in items" :key="item.src" class="resultImgDiv">
-        <!-- <img :src="item.src" /> -->
-        <a @click="clickedImg(index)"
-          ><img
-            src="@/assets/person/iu.jpg"
-        /></a>
-      </div>
-    </div>
-  </div>
 </template>
 
 <script>
+import { mapGetters } from "vuex"
+import { mapMutations } from "vuex"
+import api from '@/utils/api.js'
 export default {
-  data() {
-    return {
-      items: [
-        {
-        //   src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-        {
-           // src: "https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg",
-        },
-      ],
-    };
-  },
-  mounted() {},
-  computed: {},
-  methods: {
-    clickedImg(index) {
-      //  해당 이미지가 있는 글로 이동!!
-      console.log("해당 글로 이동!!!")
+    data() {
+        return {
+            data: '',
+            checkArr: '',
+        }
     },
-  },
+    mounted() {
+        api.get('pictures/person_clustering?groupId='+this.getSelectedGroup.id)
+        .then(({ data }) => {
+            this.data = data
+        })
+    },
+    computed: {
+        ...mapGetters([
+            'getSelectedGroup',
+            'getPersonArray',
+        ])
+    },
+    methods: {
+        clickedImg(index) {
+        //  해당 이미지가 있는 글로 이동!! 어떻게??
+        console.log("해당 글로 이동!!!")
+        },
+    },
 };
 </script>
 
 <style scoped>
 .List {
-  margin-top: 50px;
-  margin-left: 50px;
+    margin-top: 50px;
+    margin-left: 50px;
 }
 .resultImgDiv {
-  width: 130px;
-  display: inline-block;
-  overflow: hidden;
+    width: 130px;
+    display: inline-block;
+    overflow: hidden;
 }
 .List img {
-  width: 110px;
-  height: 110px;
+    width: 110px;
+    height: 110px;
 }
 .result .selectPerson {
-  margin-top: 50px;
-  margin-left: 30px;
+    margin-top: 50px;
+    margin-left: 30px;
 }
 .selectedImgDiv {
-  margin-left: 20px;
-  width: 100px;
+    margin-left: 20px;
+    width: 100px;
 }
 .selectedImgDiv img {
-  border: solid 0.1em;
-  width: 30px;
-  height: 30px;
-  filter: opacity(0.5);
+    border: solid 0.1em;
+    width: 30px;
+    height: 30px;
+    filter: opacity(0.5);
 }
 </style>
