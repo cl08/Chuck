@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
@@ -21,7 +20,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
@@ -138,7 +136,7 @@ public class PictureController {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
-	
+	 
 	@PostMapping("/mkVideo")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
 	public ResponseEntity<String> mkVideo(@RequestBody PathListResponse pathResponse) {
