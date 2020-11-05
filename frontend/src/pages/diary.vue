@@ -136,7 +136,8 @@
       </div>
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
-    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back">
+    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
+    <!-- <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back"> -->
     <Mypage></Mypage>
   </div>
 </template>
@@ -229,6 +230,15 @@ export default {
       "getVisiblePreview",
     ]),
   },
+  watch: {
+    getVisibleCalendar() {
+      if(this.getVisibleCalendar) {
+        $('#pen').css('left', '664px')
+      } else {
+         $('#pen').css('left', '744px')
+      }
+    }
+  },
   methods: {
     ...mapMutations([
       "setVisibleCalendar",
@@ -297,6 +307,11 @@ export default {
       this.setVisiblePreview(false);
     },
     back(){
+      // calender
+      this.setVisibleWrite(false);
+      this.setVisibleDetail(false);
+      this.setVisibleCalendar(true);
+      eventBus.$emit('clearWrite');
     }
   },
   mounted() {
@@ -332,7 +347,7 @@ export default {
   height: 661px;
   position: relative;
   top: -680px;
-  left: 744px;
+  left: 664px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;

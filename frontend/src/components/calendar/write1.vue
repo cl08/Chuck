@@ -56,6 +56,9 @@ export default {
         eventBus.$on('uploadImages', (data) => {
             this.uploadImages(data);
         });
+        eventBus.$on('clearWrite', () => {
+            this.imageList = [];
+        });
     },
     methods: {
         beforeImageUpload(file) {
