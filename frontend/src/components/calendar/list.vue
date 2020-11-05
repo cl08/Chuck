@@ -60,7 +60,7 @@
         </v-container>
 
         <v-container v-else style="padding:0px 20px 0px 20px;">
-            <font size=6>오늘의 새로운 Chuck을 작성해 보세요</font>
+            <font size=5>오늘의 새로운 Chuck을 작성해 보세요</font>
         </v-container>
     </div>
 </template>

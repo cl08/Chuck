@@ -4,19 +4,21 @@
         <div class="text-left" style="padding:30px 0px 0px 30px;">
             <img src="../../assets/logo.svg" class="subtitle">
             <div class="groupInfo">
-                <h2>그룹명</h2>
+                <font size=5>그룹명</font>
                 <div class="information">
+                    <font size=5>
                     {{this.groupInfo.name}}
+                    </font>
                 </div>
-                <h2>그룹 생성일</h2>
+                <font size=5>그룹 생성일</font>
                 <div class="createDate">
                     {{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}
                 </div>
-                <h2>그룹장</h2>
+                <font size=5>그룹장</font>
                 <div>
                     {{this.groupInfo.ownerName}}
                 </div>
-                <h2>그룹소개</h2>
+                <font size=5>그룹소개</font>
                     <div id="group_intro">
                     </div>
             </div>
@@ -66,5 +68,6 @@ export default {
 }
 .groupInfo > div{
     margin-bottom: 24px;
+    color: #2d2d2d;
 }
 </style>

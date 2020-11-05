@@ -69,7 +69,7 @@ export default {
     text-align:left;
     width: 91%;
     border: none;
-    font-size:25px;
+    font-size:20px;
     margin-top: 20px;
 }
 </style>

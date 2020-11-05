@@ -9,8 +9,8 @@
         </div>
         <!-- 오른쪽 버튼 그룹 -->
         <div class="BtnGroup">
-            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><h2>그룹삭제</h2></v-btn>
-            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><h2>그룹탈퇴</h2></v-btn>
+            <v-btn @click="DeleteGroup" color="#8D6262" text x-large><font size=5>그룹삭제</font></v-btn>
+            <v-btn @click="SecedeGroup" color="#8D6262" text x-large><font size=5>그룹탈퇴</font></v-btn>
         </div>
     </div>
 </div>
