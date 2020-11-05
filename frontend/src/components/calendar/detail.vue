@@ -10,7 +10,7 @@
         </div>
         <div v-if="getChuckList[getSelectedDiary]" style="margin: 10px 30px 10px 30px;">
             <v-carousel height="400" hide-delimiter-background show-arrows-on-hover>
-                <v-carousel-item v-for="(item, i) in getChuckList[getSelectedDiary].img" :key="i" :src="item"></v-carousel-item>
+                <v-carousel-item v-for="(item, i) in getChuckList[getSelectedDiary].image" :key="i" :src="item"></v-carousel-item>
             </v-carousel>
         </div>
         <div class="mb-15">
@@ -53,20 +53,7 @@ import { mapGetters } from 'vuex'
 export default {
     data () {
         return {
-            items: [
-                {
-                    src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-                },
-                {
-                    src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-                },
-                {
-                    src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-                },
-                {
-                    src: 'https://cdn.vuetifyjs.com/images/carousel/planet.jpg',
-                },
-            ],
+            items: [],
         }
     },
     computed: {

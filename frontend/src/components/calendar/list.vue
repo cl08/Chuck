@@ -32,12 +32,12 @@
         <v-container v-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(selectedChuckList[i].id)" style="cursor:pointer">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item.index)" style="cursor:pointer">
                     <v-card>
                         <div class="d-flex flex-no-wrap">
                             <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
                             <v-avatar size="125" tile>
-                                <v-img :src="item.img[0]"></v-img>
+                                <v-img :src="item.image[0]"></v-img>
                             </v-avatar>
                             <div style="width:400px;">
                                 <v-card-title>{{ item.title }} </v-card-title>
@@ -68,19 +68,28 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
+import eventBus from '@/utils/EventBus'
+
 export default {
     data: () => ({
         selectedChuckList: [],
         searchFlag: true,
         searchResult: '',
         keyword: '',
+        color: [],
     }),
     mounted() {
-        for(var i=0; i<this.getChuckList.length; i++) {
-            if(this.getChuckList.date === this.getSelectedDay) {
-                this.selectedChuckList.push(this.getChuckList[i])
+        this.color = this.$store.getters.getColor;
+    },
+    beforeCreate() {
+        eventBus.$on('updateList', () => {
+            this.selectedChuckList= []
+            for(var i=0; i<this.getChuckList.length; i++) {
+                if(this.getChuckList[i].date === this.getSelectedDay) {
+                    this.selectedChuckList.push(this.getChuckList[i])
+                }
             }
-        }
+        });
     },
     computed: {
         ...mapGetters([

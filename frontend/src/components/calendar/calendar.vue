@@ -52,6 +52,8 @@ import { faAngleRight } from '@fortawesome/free-solid-svg-icons'
 import { faUser } from '@fortawesome/free-regular-svg-icons'
 import { faHeart } from '@fortawesome/free-regular-svg-icons'
 import { faShoppingBag } from '@fortawesome/free-solid-svg-icons'
+import eventBus from '@/utils/EventBus'
+
 export default {
     data: () => ({
         faAngleLeft,
@@ -77,6 +79,11 @@ export default {
                 return this.$refs.calendar.title.substring(4,8)+"년 "+this.$refs.calendar.title.substring(0,3)
             }
         }
+    },
+    created() {
+        eventBus.$on('updateCalendar', () => {
+            this.updateRange();
+        });
     },
     methods: {
         ...mapMutations([
@@ -108,12 +115,15 @@ export default {
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)
         },
-        updateRange ({ start, end }) {
+        updateRange () {
             const events = []
+            const color = this.$store.getters.getColor
+
             for(var i=0; i<this.getChuckList.length; i++){
                 var date = this.getChuckList[i].date.split('-')
                 events.push({
-                    index: this.getChuckList[i].id,
+                    index: this.getChuckList[i].index,
+                    id: this.getChuckList[i].id,
                     name: this.getChuckList[i].title,
                     start: new Date(date[0], date[1]-1, date[2]),  
                     color: this.getChuckList[i].color,

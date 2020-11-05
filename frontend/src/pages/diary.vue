@@ -176,7 +176,7 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
-
+import eventBus from '@/utils/EventBus';
 import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
@@ -238,6 +238,7 @@ export default {
       "setVisibleAlbum",
       "setVisibleVideo",
       "setVisiblePreview",
+      "setSelectedDay",
     ]),
     movePage(num) {
       this.init()
@@ -268,12 +269,17 @@ export default {
         }
       }
       $(".sample-docs").turn("disable", true);
-      
+      if(num == 1) {
+        this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
+        eventBus.$emit('updateCalendar');
+        eventBus.$emit('updateList');
+      }
     },
     // 글작성 페이지 이동
     write() {
       // 캘린더 페이지 이동
       this.movePage(1);
+      this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
       this.setVisibleWrite(true);
       this.setVisibleDetail(false);
       this.setVisibleCalendar(false);
