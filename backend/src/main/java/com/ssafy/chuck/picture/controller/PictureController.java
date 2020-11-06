@@ -136,7 +136,7 @@ public class PictureController {
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
 			// 3. flask와 연결하여 클러스터링
-			String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
+//			String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
 			return new ResponseEntity<String>(access_path, HttpStatus.OK);	// 접근경로 return
 		} catch (IOException e) {
 			System.out.println("파일 업로드 실패");
