@@ -32,5 +32,10 @@ public class PictureServiceImpl implements PictureService{
 	public List<PictureDto> selectPictureByDiaryId(int diary_id) {
 		return pictureDao.selectPictureByDiaryId(diary_id);
 	}
+
+	@Override
+	public int deletePictureByDiaryId(int diary_id) {
+		return pictureDao.deletePictureByDiaryId(diary_id);
+	}
 	
 }

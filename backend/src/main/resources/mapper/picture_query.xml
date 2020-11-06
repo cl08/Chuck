@@ -18,14 +18,12 @@
 	</delete>
 	
 	<!-- 특정 diary_id의 사진 리스트 -->
-	<select id="selectPictureByDiaryId">
+	<select id="selectPictureByDiaryId" resultType="com.ssafy.chuck.picture.dto.PictureDto">
 		select id, diary_id, path from PICTURES where diary_id = #{diary_id}
 	</select>
 	
-	<!-- 사진 삭제(다이어리의 아이디로) -->
-	<!-- 
-	<delete id="deletePictureByDiary">
-		delete from pictures where diary_id = #{diary_id}
+	<!-- 사진 삭제(다이어리의 아이디로) --> 
+	<delete id="deletePictureByDiaryId">
+		delete from PICTURES where diary_id = #{diary_id}
 	</delete>
-	 -->
 </mapper>
