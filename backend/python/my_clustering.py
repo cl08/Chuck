@@ -94,6 +94,11 @@ def delete(groupId, imagePaths):
         if d['imagePath'] in imagePaths:
             data.remove(d)
 
+    f = open(groupId + ".pickle", "wb")
+    f.write(pickle.dumps(data))
+    f.close()
+    
+
 def update(groupId, imagePaths):
     imagePaths = imagePaths[:-1]
     imagePaths = imagePaths.split(":")
