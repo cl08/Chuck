@@ -85,10 +85,8 @@ public class PictureController {
 		}
 		// pickle 수정. 기존 사진의 pickle 모두 삭제 및 새 사진 pickle 추가
 		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + past.toString(), String.class);
-		String ins = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);		
+		String ins = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);
 		
-		// clustering.
-//		
 		return new ResponseEntity<List<PictureDto>>(list, HttpStatus.OK);
 	}
 	
@@ -101,8 +99,6 @@ public class PictureController {
 		//1. 파일 삭제
 		File file = new File(real_path);
 		file.delete(); 
-		//2. DB에서 삭제. 필요없음
-//		pictureService.deletePictureByPath(path);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
@@ -113,7 +109,7 @@ public class PictureController {
 //		return new ResponseEntity<String>("success", HttpStatus.OK);
 //	}
  
-	@GetMapping("/person_clustering")
+	@GetMapping("/gallery")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
 	public ResponseEntity<ClusterListResponse> personClustering(int groupId) throws Exception {
 
@@ -175,10 +171,9 @@ public class PictureController {
 	
 	
 	
-	@PostMapping("/mkVideo")
+	@GetMapping("/mkVideo")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
 	public ResponseEntity<String> mkVideo(@RequestBody PathListResponse pathResponse) {
-
 		//개인 ID의 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/videos/" + pathResponse.getUserId();
 		File folder = new File(path);
@@ -198,8 +193,7 @@ public class PictureController {
 			sb.append(real_path + ":");
 		}
 		String obj = restTemplate.getForObject("http://127.0.0.1:5000/video?userid=" + pathResponse.getUserId() + "&paths=" + sb.toString(), String.class);
-
-		return new ResponseEntity<String>(path + "/final.mp4", HttpStatus.OK);
+		return new ResponseEntity<String>("http://k3a206.p.ssafy.io/images/videos/" + pathResponse.getUserId() + "/final.mp4", HttpStatus.OK);
 	}
 
 
