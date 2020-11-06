@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from my_clustering import encode, clustering, insert
+from my_clustering import encode, clustering, insert, delete
 from mkVideo import makeVideo
 # from urllib.parse import quote # url 한글 인코딩 Error 해결
 
@@ -28,6 +28,17 @@ def insertPicture():
     print(imagePath)
     insert(groupId, imagePath)
     return "good"
+
+@app.route('/delete')
+def deletePicture():
+    groupId = request.args.get('groupId', 'groupId')
+    imagePath = request.args.get('imagePath', 'imagePath')
+    print(groupId)
+    print(imagePath)
+    delete(groupId, imagePath)
+    return "good"
+
+
 
 
 @app.route('/getInfo')
