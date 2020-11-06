@@ -51,26 +51,31 @@ public class PictureController {
     RestTemplate restTemplate;
 
 	@PostMapping("/insert")
-	@ApiOperation(value = "다이어리에서 글 작성을 완료할 때, 사진들의 path list를 DB에 저장. ////"
-			+ "사진을 업로드할 때 얻은 accessPath를 넣으면, realPath로 변경해서 DB에 저장하는 로직")
+	@ApiOperation(value = "다이어리 글 작성을 완료시, 사진들을 업로드해서 얻은 accessPath 리스트를 realPath로 변경해서 DB에 저장 및 클러스터링")
 	public ResponseEntity<String> insertPicture(@RequestBody PictureResponse pictureResponse) {
+		StringBuilder sb = new StringBuilder();
 		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
 			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
 			pictureService.insertPicture(pictureResponse.getDiary_id(), real_path);
+			sb.append(real_path + ":");
 		}
+		
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);
+		System.out.println(obj);
+		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
 	@DeleteMapping("/deleteByPath")
-	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(DB, File)")
+	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(File)")
 	public ResponseEntity<String> deletePictureByPath(String path) {
 		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + path.split("images/")[1];
 		System.out.println(real_path);
 		//1. 파일 삭제
 		File file = new File(real_path);
 		file.delete(); 
-		//2. DB에서 삭제
-		pictureService.deletePictureByPath(path);
+		//2. DB에서 삭제. 필요없음
+//		pictureService.deletePictureByPath(path);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
@@ -108,8 +113,7 @@ public class PictureController {
 	}
 
 	@PostMapping("/upload")
-	@ApiOperation(value = "사진 업로드(사진이 업로드 될 때마다) - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장 후 flask와 연결해 인물 "
-		+ "재분류", produces = "multipart/form-data")
+	@ApiOperation(value = "사진 업로드(사진이 업로드 될 때마다) - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장", produces = "multipart/form-data")
 	public ResponseEntity<String> fileUpload(
 		@RequestPart("file") MultipartFile mFile, HttpServletRequest request, int groupId){
 		//1. 그룹 ID의 폴더 생성
