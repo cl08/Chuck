@@ -72,7 +72,7 @@ public class PictureController {
 		List<PictureDto> list = pictureService.selectPictureByDiaryId(pictureResponse.getDiary_id());
 		System.out.println(list);
 		// diary id에 포함된 사진들을 모두 삭제.
-		
+		pictureService.deletePictureByDiaryId(pictureResponse.getDiary_id());
 		// 해당 path list의 사진들로 모두 db에 insert
 		
 		// pickle 수정. 기존 사진의 pickle 모두 삭제 및 새 사진 pickle 추가
