@@ -1,9 +1,12 @@
 package com.ssafy.chuck.picture.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.chuck.picture.dao.PictureDao;
+import com.ssafy.chuck.picture.dto.PictureDto;
 
 @Service
 public class PictureServiceImpl implements PictureService{
@@ -23,6 +26,11 @@ public class PictureServiceImpl implements PictureService{
 	@Override
 	public int deletePictureById(int id) {
 		return pictureDao.deletePictureById(id);
+	}
+
+	@Override
+	public List<PictureDto> selectPictureByDiaryId(int diary_id) {
+		return pictureDao.selectPictureByDiaryId(diary_id);
 	}
 	
 }

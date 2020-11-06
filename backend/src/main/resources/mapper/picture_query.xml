@@ -17,6 +17,11 @@
 		delete from PICTURES where ID = #{id}
 	</delete>
 	
+	<!-- 특정 diary_id의 사진 리스트 -->
+	<select id="selectPictureByDiaryId">
+		select id, diary_id, path from PICTURES where diary_id = #{diary_id}
+	</select>
+	
 	<!-- 사진 삭제(다이어리의 아이디로) -->
 	<!-- 
 	<delete id="deletePictureByDiary">

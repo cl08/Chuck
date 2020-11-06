@@ -31,6 +31,7 @@ import com.google.gson.JsonParser;
 import com.ssafy.chuck.picture.dto.ClusterListResponse;
 import com.ssafy.chuck.picture.dto.ClusterResponse;
 import com.ssafy.chuck.picture.dto.PathListResponse;
+import com.ssafy.chuck.picture.dto.PictureDto;
 import com.ssafy.chuck.picture.dto.PictureResponse;
 import com.ssafy.chuck.picture.service.PictureService;
 
@@ -59,12 +60,30 @@ public class PictureController {
 			pictureService.insertPicture(pictureResponse.getDiary_id(), real_path);
 			sb.append(real_path + ":");
 		}
-		
 		String obj = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);
 		System.out.println(obj);
-		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
+	
+	@PutMapping("/modify")
+	@ApiOperation(value = "수정된 다이어리의 accessPath 리스트로 DB, Pickle 수정 및 Clutering")
+	public ResponseEntity<String> modify(@RequestBody PictureResponse pictureResponse){
+		// diary id에 포함된 사진 리스트.
+		List<PictureDto> list = pictureService.selectPictureByDiaryId(pictureResponse.getDiary_id());
+		System.out.println(list);
+		// diary id에 포함된 사진들을 모두 삭제.
+		// 해당 path list의 사진들로 모두 db에 insert
+		
+		// pickle 수정. 기존 사진의 pickle 모두 삭제 및 새 사진 pickle 추가
+		
+		// clustering.
+		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
+			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
+
+		}
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
 
 	@DeleteMapping("/deleteByPath")
 	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(File)")
@@ -139,14 +158,14 @@ public class PictureController {
 
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
-			// 3. flask와 연결하여 클러스터링
-//			String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
 			return new ResponseEntity<String>(access_path, HttpStatus.OK);	// 접근경로 return
 		} catch (IOException e) {
 			System.out.println("파일 업로드 실패");
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
+	
+	
 	
 	@PostMapping("/mkVideo")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
