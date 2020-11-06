@@ -57,12 +57,8 @@ public class PictureController {
 		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
 			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
 			pictureService.insertPicture(pictureResponse.getDiary_id(), real_path);
-//			sb.append(b)
+			sb.append(real_path + ":");
 		}
-//		for(int i=0;i<pathResponse.getPath_list().size();i++) {
-//			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pathResponse.getPath_list().get(i).split("images/")[1];
-//			sb.append(real_path + ":");
-//		}
 		
 		
 //		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
