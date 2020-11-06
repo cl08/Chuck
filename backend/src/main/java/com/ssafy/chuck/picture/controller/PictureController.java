@@ -68,7 +68,7 @@ public class PictureController {
 		System.out.println(real_path);
 		//1. 파일 삭제
 		File file = new File(real_path);
-		file.delete();
+		file.delete(); 
 		//2. DB에서 삭제
 		pictureService.deletePictureByPath(path);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
