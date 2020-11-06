@@ -60,8 +60,8 @@ public class PictureController {
 			sb.append(real_path + ":");
 		}
 		
-		
-//		String obj = restTemplate.getForObject("http://127.0.0.1:5000/cluster?groupId=" + groupId + "&imagePath=" + real_path, String.class);
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);
+		System.out.println(obj);
 		
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
