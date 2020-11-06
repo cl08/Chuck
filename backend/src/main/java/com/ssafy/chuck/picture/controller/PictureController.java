@@ -62,18 +62,24 @@ public class PictureController {
 	}
 
 	@DeleteMapping("/deleteByPath")
-	@ApiOperation(value = "사진의 경로로 사진 삭제")
+	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(DB, File)")
 	public ResponseEntity<String> deletePictureByPath(String path) {
+		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + path.split("images/")[1];
+		System.out.println(real_path);
+		//1. 파일 삭제
+		File file = new File(real_path);
+		file.delete(); 
+		//2. DB에서 삭제
 		pictureService.deletePictureByPath(path);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	@DeleteMapping("/deleteById")
-	@ApiOperation(value = "사진의 ID로 사진 삭제")
-	public ResponseEntity<String> deletePictureById(int id) {
-		pictureService.deletePictureById(id);
-		return new ResponseEntity<String>("success", HttpStatus.OK);
-	}
+//	@DeleteMapping("/deleteById")
+//	@ApiOperation(value = "사진의 ID로 사진 삭제")
+//	public ResponseEntity<String> deletePictureById(int id) {
+//		pictureService.deletePictureById(id);
+//		return new ResponseEntity<String>("success", HttpStatus.OK);
+//	}
  
 	@GetMapping("/person_clustering")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
