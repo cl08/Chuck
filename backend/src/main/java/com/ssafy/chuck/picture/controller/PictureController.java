@@ -71,17 +71,24 @@ public class PictureController {
 		// diary id에 포함된 사진 리스트.
 		List<PictureDto> list = pictureService.selectPictureByDiaryId(pictureResponse.getDiary_id());
 		System.out.println(list);
+		StringBuilder past = new StringBuilder();
+		for(PictureDto picture : list) past.append(picture.getPath() + ":");
+		
 		// diary id에 포함된 사진들을 모두 삭제.
 		pictureService.deletePictureByDiaryId(pictureResponse.getDiary_id());
 		// 해당 path list의 사진들로 모두 db에 insert
-		
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
+			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
+			pictureService.insertPicture(pictureResponse.getDiary_id(), real_path);
+			sb.append(real_path + ":");
+		}
 		// pickle 수정. 기존 사진의 pickle 모두 삭제 및 새 사진 pickle 추가
+		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + past.toString(), String.class);
+		String ins = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);		
 		
 		// clustering.
-//		for(int i=0;i<pictureResponse.getPath_list().size();i++) {
-//			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pictureResponse.getPath_list().get(i).split("images/")[1];
-//
-//		}
+//		
 		return new ResponseEntity<List<PictureDto>>(list, HttpStatus.OK);
 	}
 	
