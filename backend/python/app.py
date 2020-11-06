@@ -1,6 +1,6 @@
 from flask import Flask
 from flask import request
-from my_clustering import encode, clustering
+from my_clustering import encode, clustering, insert
 from mkVideo import makeVideo
 # from urllib.parse import quote # url 한글 인코딩 Error 해결
 
@@ -19,6 +19,15 @@ def cluster():
     print(result)
 
     return result
+
+@app.route('/insert')
+def insertPicture():
+    groupId = request.args.get('groupId', 'groupId')
+    imagePath = request.args.get('imagePath', 'imagePath')
+    print(groupId)
+    print(imagePath)
+    insert(groupId, imagePath)
+    return "good"
 
 
 @app.route('/getInfo')
