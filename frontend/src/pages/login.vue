@@ -68,6 +68,7 @@ export default {
                         groupId: 0,
                         userId: store.getters.getId,
                         groupToken: this.redirect,
+                        isOwner: false,
                     }).then((res) => {
                         // console.log(res.data);
                     })
@@ -77,9 +78,6 @@ export default {
         },
         onFailure(result) {
             console.error(result);
-        },
-        logout() {
-            store.dispatch('logout');
         },
     }
 }

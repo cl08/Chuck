@@ -35,8 +35,8 @@
                 </otherwise>
             </choose>
         </selectKey>
-        insert into GROUP_MEMBERS (USER_ID, GROUP_ID)
-        values (#{userId}, #{groupId})
+        insert into GROUP_MEMBERS (USER_ID, GROUP_ID, IS_OWNER)
+        values (#{userId}, #{groupId}, #{isOwner})
 
     </insert>
 
