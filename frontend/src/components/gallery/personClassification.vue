@@ -4,11 +4,11 @@
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
-        <p>{{faces.length}}명의 인물이 검색되었습니다.</p>
+        <p>{{getFaceData.cluster_list.length}}명의 인물이 검색되었습니다.</p>
         <div class="selectPerson">
             <div >
                 <span class="face pointer" @click="selectAll">ALL</span>
-                <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url(' + face + ')'">
+                <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
                 </span>
             </div>
@@ -23,15 +23,8 @@ import api from '@/utils/api.js'
 export default {
     data() {
         return {
-            faces: [],
             checkArr: [],
         };
-    },
-    mounted() {
-        for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
-            this.faces.push(this.getFaceData.cluster_list[i].rep_image)
-            this.checkArr[i] = false
-        }
     },
     computed: {
         ...mapGetters([
@@ -41,14 +34,14 @@ export default {
     },
     methods: {
         ...mapMutations([
-            'setPersonArray',
+            'setPersonArrayGallery',
         ]),
         selectAll() {
-            for (let i = 0; i < this.faces.length; i++) {
+            for (let i = 0; i < this.getFaceData.cluster_list.length; i++) {
                 let el = document.getElementById("galleryFace" + i);
                 el.setAttribute("class", "");
                 this.$set(this.checkArr, i, true);
-                this.setPersonArray(this.checkArr);
+                this.setPersonArrayGallery(this.checkArr);
             }
         },
         select(index) {
@@ -60,7 +53,7 @@ export default {
                 this.$set(this.checkArr, index, true);
             }
             // store에 저장
-            this.setPersonArray(this.checkArr);
+            this.setPersonArrayGallery(this.checkArr);
         },
     },
 };

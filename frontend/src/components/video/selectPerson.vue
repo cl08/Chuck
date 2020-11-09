@@ -28,16 +28,14 @@
                 <span v-else>
                     <font color="DCDFE6">기간을 선택해 주세요</font>
                 </span>
-                {{ value1 }}
-                {{ value2 }}
             </div>
         </div>
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:325px;">
+        <div class="dash" style="height:325px; text-align:left">
             <span class="face pointer" @click="selectAll">ALL</span>
-            <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
+            <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url('+face.rep_image+')'">
                 <img :id="'videoFace'+index" class="videoFaceNoneDisplay" src="../../assets/check_circle.svg">
             </span>
         </div>
@@ -45,38 +43,27 @@
 </template>
 
 <script>
-import store from '@/store';
+import { mapGetters } from "vuex";
+import { mapMutations } from 'vuex';
 export default {
     data () {
         return {
             value1: '',
             value2: '',
             dates: [],
-            faces:
-            [
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-            ]
+            personArray: [],
+            selectCount: 0,
         }
     },
-    mounted() {
-        console.log(store.getters.getChuckList)
+    computed: {
+        ...mapGetters([
+            'getFaceData',
+        ]),
     },
     methods: {
+        ...mapMutations([
+            'setPersonArrayFilm',
+        ]),
         removeTag(tag) {
             this.value1.splice(this.value1.indexOf(tag), 1);
         },
@@ -87,14 +74,37 @@ export default {
             this.value1 = ''
         },
         selectAll() {
-            for(let i=0; i<this.faces.length; i++){
-                let el = document.getElementById('videoFace'+i)
-                el.setAttribute('class', '')
+            if(this.selectCount === this.getFaceData.cluster_list.length) {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+                    let el = document.getElementById('videoFace'+i)
+                    el.setAttribute('class', 'videoFaceNoneDisplay')
+                    this.$set(this.personArray, i, false)
+                }
+                this.selectCount = 0
+                this.setPersonArrayFilm(this.personArray)
+            }
+            else {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+                    let el = document.getElementById('videoFace'+i)
+                    el.setAttribute('class', '')
+                    this.$set(this.personArray, i, true)
+                }
+                this.selectCount = this.getFaceData.cluster_list.length
+                this.setPersonArrayFilm(this.personArray)
             }
         },
         select(index) {
             let el = document.getElementById('videoFace'+index)
             el.classList.toggle("videoFaceNoneDisplay")
+            if(this.personArray[index]) {
+                this.$set(this.personArray, index, false)
+                this.selectCount--
+            }
+            else {
+                this.$set(this.personArray, index, true)
+                this.selectCount++
+            }
+            this.setPersonArrayFilm(this.personArray)
         }
     }
   }

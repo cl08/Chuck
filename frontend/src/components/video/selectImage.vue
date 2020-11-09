@@ -5,8 +5,12 @@
         </div>
         <div class="dash" style="height:620px;">
             <span class="photo pointer" @click="selectAll">ALL</span>
-            <span class="photo pointer" v-for="(photo, index) in photos" :key="index" @click="select(index)" :style="'background-image:url('+photo+')'">
-                <img :id="'videoPhoto'+index" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
+            <span v-for="(person, i) in getPersonArrayFilm" :key="i">
+                <span v-show="person === true">
+                    <span class="photo pointer" v-for="(photo, j) in getFaceData.cluster_list[i].path_list" :key="j" @click="select(j)" :style="'background-image:url('+photo+')'">
+                        <img :id="'videoPhoto'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
+                    </span>
+                </span>
             </span>
         </div>
         <div class="dash pointer" @click="nextStep">
@@ -21,30 +25,14 @@ import { mapMutations } from 'vuex'
 export default {
     data () {
         return {
-            photos:
-            [
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-            ]
+            
         }
     },
     computed: {
         ...mapGetters([
             'getChuckList',
+            'getFaceData',
+            'getPersonArrayFilm',
         ])
     },
     methods: {
@@ -61,6 +49,7 @@ export default {
             this.setVisiblePreview(true)
         },
         selectAll() {
+            console.log(this.getPersonArrayFilm)
             for(let i=0; i<this.photos.length; i++) {
                 let el = document.getElementById('videoPhoto'+i)
                 el.setAttribute('class', '')

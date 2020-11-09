@@ -1,9 +1,9 @@
 <template>
     <div class="result">
-        <div class="List" v-if="data">
-            <div v-for="(person, i) in this.getPersonArray" :key="i">
+        <div class="List" v-if="getFaceData">
+            <div v-for="(person, i) in getPersonArrayGallery" :key="i">
                 <div v-if="person === true">
-                    <div v-for="(item, index) in data.cluster_list[i].path_list" :key="index" class="resultImgDiv">
+                    <div v-for="(item, index) in getFaceData.cluster_list[i].path_list" :key="index" class="resultImgDiv">
                         <img class="pointer" :src="item" @click="clickedImg(index)">
                     </div>
                 </div>
@@ -16,7 +16,6 @@
 import { mapGetters } from "vuex"
 import { mapMutations } from "vuex"
 import api from '@/utils/api.js'
-import store from '@/store'
 
 export default {
     data() {
@@ -27,14 +26,13 @@ export default {
     computed: {
         ...mapGetters([
             'getSelectedGroup',
-            'getPersonArray',
+            'getPersonArrayGallery',
+            'getFaceData'
         ]),
-        data : () => store.getters.getFaceData,
     },
     methods: {
         clickedImg(index) {
         //  해당 이미지가 있는 글로 이동!! 어떻게??
-        console.log("해당 글로 이동!!!")
         },
     },
 };

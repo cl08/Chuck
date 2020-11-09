@@ -214,7 +214,6 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('updateChuckList');
     eventBus.$on('movePage', (data) => {
       this.movePage(data.index);
       this.setBackState(2);
