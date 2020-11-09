@@ -28,6 +28,8 @@
                 <span v-else>
                     <font color="DCDFE6">기간을 선택해 주세요</font>
                 </span>
+                {{ value1 }}
+                {{ value2 }}
             </div>
         </div>
         <div class="dash">
@@ -43,6 +45,7 @@
 </template>
 
 <script>
+import store from '@/store';
 export default {
     data () {
         return {
@@ -69,6 +72,9 @@ export default {
                 'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
             ]
         }
+    },
+    mounted() {
+        console.log(store.getters.getChuckList)
     },
     methods: {
         removeTag(tag) {

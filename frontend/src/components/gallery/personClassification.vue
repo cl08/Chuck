@@ -28,18 +28,15 @@ export default {
         };
     },
     mounted() {
-        api.get('pictures/person_clustering?groupId='+this.getSelectedGroup.id)
-        .then(({ data }) => {
-            for(let i=0; i<data.cluster_list.length; i++) {
-                this.faces.push(data.cluster_list[i].rep_image)
-                this.checkArr[i] = false
-            }
-            this.$store.commit('setFaceData', data);
-        })
+        for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+            this.faces.push(this.getFaceData.cluster_list[i].rep_image)
+            this.checkArr[i] = false
+        }
     },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
+            'getFaceData',
         ])
     },
     methods: {

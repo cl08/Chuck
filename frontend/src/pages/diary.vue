@@ -137,7 +137,6 @@
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
     <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
-    <!-- <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back"> -->
     <Mypage></Mypage>
   </div>
 </template>
@@ -146,7 +145,9 @@
 import $ from "jquery";
 import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
-import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
+import eventBus from '@/utils/EventBus';
+
 // timeline
 import Intro from "@/components/timeline/intro.vue";
 import Timeline from "@/components/timeline/timeline.vue";
@@ -177,7 +178,6 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
-import eventBus from '@/utils/EventBus';
 import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
@@ -225,6 +225,7 @@ export default {
     ...mapGetters([
       "getChuckList",
       "getSelectedDiary",
+      "getSelectedGroup",
       "getVisibleCalendar",
       "getVisibleDetail",
       "getVisibleWrite",
@@ -235,15 +236,6 @@ export default {
       "getVisiblePreview",
       "getBackState",
     ]),
-  },
-  watch: {
-    getVisibleCalendar() {
-      if(this.getVisibleCalendar) {
-        $('#pen').css('left', '664px')
-      } else {
-         $('#pen').css('left', '744px')
-      }
-    }
   },
   methods: {
     ...mapMutations([

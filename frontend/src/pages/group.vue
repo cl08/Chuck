@@ -167,7 +167,7 @@ export default {
     methods: {
         selectGroup() {
             store.dispatch('updateSelectedGroup', this.selectedBook);
-            this.$router.push('/diary');
+            this.$router.push('/fetch');
         },
         uploadGroup() {
             api.post(`groups`, {

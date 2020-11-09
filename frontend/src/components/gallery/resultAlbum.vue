@@ -1,10 +1,5 @@
 <template>
     <div class="result">
-        <!-- <div class="selectPerson" v-if="data">
-            <div v-for="(item, index) in data.cluster_list" :key="index" class="selectedImgDiv">
-                <img :src="item.rep_image" :class="{ clicked: checkArr[index], nonClicked: checkArr[index] }" @clicked="this.checkArr[index] = !this.checkArr[index]">
-            </div>
-        </div> -->
         <div class="List" v-if="data">
             <div v-for="(person, i) in this.getPersonArray" :key="i">
                 <div v-if="person === true">
