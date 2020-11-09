@@ -28,8 +28,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.ssafy.chuck.picture.dto.ClusterListResponse;
-import com.ssafy.chuck.picture.dto.ClusterResponse;
+import com.ssafy.chuck.picture.dto.Gallery;
+import com.ssafy.chuck.picture.dto.GalleryListResponse;
+import com.ssafy.chuck.picture.dto.GalleryResponse;
 import com.ssafy.chuck.picture.dto.PathListResponse;
 import com.ssafy.chuck.picture.dto.PictureDto;
 import com.ssafy.chuck.picture.dto.PictureResponse;
@@ -111,10 +112,10 @@ public class PictureController {
  
 	@GetMapping("/gallery")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
-	public ResponseEntity<ClusterListResponse> personClustering(int groupId) throws Exception {
+	public ResponseEntity<GalleryListResponse> gallery(int groupId) throws Exception {
 
 		//3. flask와 연결하여 클러스터링한 결과 반환
-		List<ClusterResponse> clusterResponseList = new ArrayList<>();
+		List<GalleryResponse> galleryResponseList = new ArrayList<>();
 
 		String obj = restTemplate.getForObject("http://127.0.0.1:5000/getInfo?groupId=" + groupId, String.class);
 		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
@@ -125,14 +126,18 @@ public class PictureController {
 			String rep = "http://k3a206.p.ssafy.io/images/" + element.get("rep").getAsString().split("python/")[1];
 			JsonArray list = element.getAsJsonArray("paths");
 
-			List<String> pathList = new ArrayList<>();
-			for(int j=0;j<list.size();j++) pathList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
+			List<Gallery> galleryList = new ArrayList<>();
+			
+			for(int j=0;j<list.size();j++)
+				galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1],
+						pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
+//			for(int j=0;j<list.size();j++) galleryList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
 
-			clusterResponseList.add(new ClusterResponse(rep, pathList));
+			galleryResponseList.add(new GalleryResponse(rep, galleryList));
     	}
 
-		ClusterListResponse clusterListResponse = new ClusterListResponse(clusterResponseList);
-		return new ResponseEntity<ClusterListResponse>(clusterListResponse, HttpStatus.OK);
+		GalleryListResponse galleryListResponse = new GalleryListResponse(galleryResponseList);
+		return new ResponseEntity<GalleryListResponse>(galleryListResponse, HttpStatus.OK);
 	}
 
 	@PostMapping("/upload")
