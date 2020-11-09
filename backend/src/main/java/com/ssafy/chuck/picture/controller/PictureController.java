@@ -241,9 +241,9 @@ public class PictureController {
 		return new ResponseEntity<String>("http://k3a206.p.ssafy.io/images/videos/" + pathResponse.getUserId() + "/final.mp4", HttpStatus.OK);
 	}
 	
-	@GetMapping("/video")
+	@GetMapping("/aaaaa")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
-	public ResponseEntity<String> makevideo(@RequestBody PathListResponse pathResponse) {
+	public ResponseEntity<String> aaaaa(@RequestBody PathListResponse pathResponse) {
 		System.out.println("출력 테스트");
 		System.out.println(pathResponse);
 		//개인 ID의 폴더 생성
