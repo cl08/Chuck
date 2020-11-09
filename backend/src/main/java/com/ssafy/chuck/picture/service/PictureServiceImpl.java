@@ -37,5 +37,10 @@ public class PictureServiceImpl implements PictureService{
 	public int deletePictureByDiaryId(int diary_id) {
 		return pictureDao.deletePictureByDiaryId(diary_id);
 	}
+
+	@Override
+	public int selectDiaryIdByPath(String path) {
+		return pictureDao.selectDiaryIdByPath(path);
+	}
 	
 }
