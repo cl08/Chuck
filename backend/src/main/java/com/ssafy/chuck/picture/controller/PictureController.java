@@ -128,11 +128,13 @@ public class PictureController {
 
 			List<Gallery> galleryList = new ArrayList<>();
 			
-			for(int j=0;j<list.size();j++)
+			for(int j=0;j<list.size();j++) {
+				System.out.println("그냥 path : " + list.get(j).getAsString());
+				System.out.println("path로 찾은 ");
 				galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1],
 						pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
 //			for(int j=0;j<list.size();j++) galleryList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
-
+			}
 			galleryResponseList.add(new GalleryResponse(rep, galleryList));
     	}
 
