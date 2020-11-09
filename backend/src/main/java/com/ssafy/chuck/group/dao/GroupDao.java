@@ -49,4 +49,7 @@ public interface GroupDao {
 
 	// 13. 그룹내 멤버인지 체크
 	boolean isMember(@Param(value = "userId")long userId, @Param(value = "id")int id);
+
+	// 14. 그룹내 멤버 추방
+	int deleteMember(@Param(value = "id")int id, @Param(value = "userId")long userId);
 }
