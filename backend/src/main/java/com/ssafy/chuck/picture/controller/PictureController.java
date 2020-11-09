@@ -240,6 +240,33 @@ public class PictureController {
 		String obj = restTemplate.getForObject("http://127.0.0.1:5000/video?userid=" + pathResponse.getUserId() + "&paths=" + sb.toString(), String.class);
 		return new ResponseEntity<String>("http://k3a206.p.ssafy.io/images/videos/" + pathResponse.getUserId() + "/final.mp4", HttpStatus.OK);
 	}
+	
+	@GetMapping("/video")
+	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
+	public ResponseEntity<String> makevideo(@RequestBody PathListResponse pathResponse) {
+		System.out.println("출력 테스트");
+		System.out.println(pathResponse);
+		//개인 ID의 폴더 생성
+		String path = "/home/ubuntu/s03p31a206/backend/python/videos/" + pathResponse.getUserId();
+		File folder = new File(path);
+		if(!folder.exists()) {
+			try {
+				folder.mkdir();
+				System.out.println("폴더 생성");
+			} catch(Exception e) {
+				e.getStackTrace();
+			}
+		}
+		else System.out.println("이미 폴더가 있습니다.");
+		System.out.println(pathResponse);
+		StringBuilder sb = new StringBuilder();
+		for(int i=0;i<pathResponse.getPath_list().size();i++) {
+			String real_path = "/home/ubuntu/s03p31a206/backend/python/" + pathResponse.getPath_list().get(i).split("images/")[1];
+			sb.append(real_path + ":");
+		}
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/video?userid=" + pathResponse.getUserId() + "&paths=" + sb.toString(), String.class);
+		return new ResponseEntity<String>("http://k3a206.p.ssafy.io/images/videos/" + pathResponse.getUserId() + "/final.mp4", HttpStatus.OK);
+	}
 
 
 }
