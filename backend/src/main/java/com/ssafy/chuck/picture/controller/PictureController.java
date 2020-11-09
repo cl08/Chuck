@@ -165,6 +165,9 @@ public class PictureController {
 			List<DiaryDto> studioList = new ArrayList<>();
 			
 			for(int j=0;j<list.size();j++) {
+				System.out.println("기존 path : " + list.get(j).getAsString());
+				System.out.println("path로 구한 diary_id : " + pictureService.selectDiaryIdByPath(list.get(j).getAsString()));
+				System.out.println("diary_id로 구한 diary info : " + diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
 				studioList.add(diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
 				studioList.get(j).setImage("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
 			}
