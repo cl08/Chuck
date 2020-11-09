@@ -36,7 +36,7 @@ export default {
             "setChuckList",
         ]),
         fetchData() {
-            // setTimeout(() => {
+            setTimeout(() => {
                 // 게시글 불러오기
                 api.get(`diaries/group/${this.getSelectedGroup.id}`, {
                     headers: {
@@ -60,8 +60,12 @@ export default {
                         // 페이지 이동
                         this.$router.push('/diary')
                     })
+                    .catch(( { error }) => {
+                        console.log(error)
+                        this.$router.push('/diary')
+                    })
                 })
-            // }, 2000)
+            }, 2000)
         },
     }
 }
