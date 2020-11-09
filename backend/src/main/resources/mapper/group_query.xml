@@ -26,9 +26,14 @@
 
     <insert id="createMember" parameterType="com.ssafy.chuck.group.dto.MemberDto">
         <selectKey resultType="int" keyProperty="groupId" order="BEFORE">
-            <if test="groupId == 0">
-                select ID from `GROUPS` where TOKEN = #{groupToken}
-            </if>
+            <choose>
+                <when test="groupId == 0">
+                    select ID from `GROUPS` where TOKEN = #{groupToken}
+                </when>
+                <otherwise>
+                    select ID from `GROUPS` where ID = #{groupId}
+                </otherwise>
+            </choose>
         </selectKey>
         insert into GROUP_MEMBERS (USER_ID, GROUP_ID)
         values (#{userId}, #{groupId})

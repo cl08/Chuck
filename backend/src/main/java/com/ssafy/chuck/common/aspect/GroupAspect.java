@@ -31,7 +31,7 @@ public class GroupAspect {
 	@Autowired
 	DiaryService dirayService;
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.GroupTokenGen)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.GroupTokenGen)")
 	private void genToken(JoinPoint point) {
 		logger.debug("카카오톡 초대를 위한 그룹 토큰 생성 및 그룹멤버 추가");
 		Object[] parameterValues = point.getArgs();
