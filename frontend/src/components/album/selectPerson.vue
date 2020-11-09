@@ -48,26 +48,8 @@ export default {
         return {
             value1: '',
             value2: '',
-            dates: [],
-            faces:
-            [
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-            ]
+            dates: '',
+            faces: ''
         }
     },
     methods: {

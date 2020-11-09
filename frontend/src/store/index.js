@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '@/utils/api'
-
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -22,11 +21,15 @@ export default new Vuex.Store({
         visiblePreview: false,
         chuckList: [],
         comments: [],
-        personArray : [],
         selectedChuckList: [],
         backState: 1,
+        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
+        
         faceData: [],
-        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"]
+        personArrayGallery : [],
+        personArrayFilm: [],
+        personArrayBook: [],
+
     },
     getters: {
         getSelectedGroup(state) {
@@ -77,16 +80,22 @@ export default new Vuex.Store({
         getVisiblePreview(state) {
             return state.visiblePreview
         },
-        getPersonArray(state) {
-            return state.personArray
-        },
         getPersonClassificationResult(state){
-            for(let i = 0; i < state.personArray.length; i++){
-                if(state.personArray[i]){
+            for(let i = 0; i < state.personArrayGallery.length; i++){
+                if(state.personArrayGallery[i]){
                     return true
                 }
             }
             return false
+        },
+        getPersonArrayGallery(state) {
+            return state.personArrayGallery
+        },
+        getPersonArrayFilm(state) {
+            return state.personArrayFilm
+        },
+        getPersonArrayBook(state) {
+            return state.personArrayBook
         },
         getColor(state) {
             return state.color
@@ -161,8 +170,14 @@ export default new Vuex.Store({
         setVisiblePreview(state, payload) {
             state.visiblePreview = payload
         },
-        setPersonArray(state, payload){
-            state.personArray = payload
+        setPersonArrayGallery(state, payload){
+            state.personArrayGallery = payload
+        },
+        setPersonArrayFilm(state, payload){
+            state.personArrayFilm = payload
+        },
+        setPersonArrayBook(state, payload){
+            state.personArrayBook = payload
         },
         setSelectedChuckList(state, payload) {
             state.selectedChuckList = payload
