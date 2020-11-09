@@ -12,6 +12,7 @@
         GROUP_CONCAT(CONCAT('http://k3a206.p.ssafy.io/images/', SUBSTRING_INDEX(P.PATH, 'python/', -1 )) SEPARATOR ';') as "IMAGE"
         from DIARIES D, PICTURES P, USERS U
         where P.DIARY_ID = #{id}
+        AND P.DIARY_ID = D.ID
         AND U.ID = D.WRITER
     </select>
 
