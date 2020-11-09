@@ -13,8 +13,10 @@
                 </span>
             </span>
         </div>
-        <div class="dash pointer" @click="nextStep">
-            {{ selectCount }} / {{ maxCount }}
+        <div v-if="selectCount < 5" class="dash pointer">
+            <font size=4 color="red">다섯장 이상의 사진을 선택해야 합니다. {{selectCount}} / {{maxCount}}</font>
+        </div>
+        <div v-else class="dash pointer" @click="nextStep">
             <font size=4>다음으로</font>
         </div>
     </div>
@@ -23,6 +25,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
+import api from '@/utils/api'
 export default {
     data () {
         return {
@@ -31,8 +34,15 @@ export default {
             imageArray: [],
         }
     },
+    mounted() {
+        let num = this.getFaceData.cluster_list.length
+        for(let i=0; i<num; i++) {
+            this.imageArray[i] = new Array()
+        }
+    },
     computed: {
         ...mapGetters([
+            'getId',
             'getChuckList',
             'getFaceData',
             'getPersonArrayFilm',
@@ -56,13 +66,28 @@ export default {
             'setVisiblePreview',
         ]),
         nextStep() {
+            let path_list = new Array()
+            for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                    if(this.imageArray[i][j]) {
+                        path_list.push(this.getFaceData.cluster_list[i].path_list[j])
+                    }
+                }
+            }
+            console.log(path_list)
+            api.get('picktures/mkVideo', {
+                'userId': this.getId,
+                'path_list': path_list,
+            })
+            .then(({ data }) => {
+                console.log(data)
+            })
             this.setVisibleChoice(false)
             this.setVisibleAlbum(false)
             this.setVisibleVideo(false)
             this.setVisiblePreview(true)
         },
         selectAll() {
-            let count = 0
             if(this.selectCount == this.maxCount) {
                 for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
                     if(this.getPersonArrayFilm[i]) {
@@ -85,10 +110,10 @@ export default {
                         }
                     }
                 }
+                this.selectCount = this.maxCount
             }
         },
         select(i, j) {
-            console.log(i+", "+j)
             let el = document.getElementById('videoPhoto'+i+'arr'+j)
             el.classList.toggle("videoPhotoNoneDisplay")
             if(this.imageArray[i][j]) {    
