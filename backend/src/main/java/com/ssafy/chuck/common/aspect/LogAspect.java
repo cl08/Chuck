@@ -37,7 +37,7 @@ public class LogAspect {
 		service.create(new LogDto(dto.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.DiaryLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.DiaryLog)")
 	private void diaryLog(JoinPoint point) {
 		logger.debug("그룹내 일기 작성 로그");
 		Object[] parameterValues = point.getArgs();
@@ -47,7 +47,7 @@ public class LogAspect {
 		service.create(new LogDto(dto.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.ReplyLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.ReplyLog)")
 	private void replyLog(JoinPoint point) {
 		logger.debug("그룹내 댓글 작성 로그");
 		Object[] parameterValues = point.getArgs();
@@ -58,7 +58,7 @@ public class LogAspect {
 		service.create(new LogDto(dto.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.SignOutLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.SignOutLog)")
 	private void signOutLog(JoinPoint point) {
 		logger.debug("그룹 탈퇴 로그");
 		Object[] parameterValues = point.getArgs();
@@ -67,7 +67,7 @@ public class LogAspect {
 		service.create(new LogDto(dto.getId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.ChangeLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.ChangeLog)")
 	private void changeLog(JoinPoint point) {
 		logger.debug("그룹장 변화 로그");
 		Object[] parameterValues = point.getArgs();

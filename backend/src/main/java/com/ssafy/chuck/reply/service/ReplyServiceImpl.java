@@ -11,14 +11,14 @@ import com.ssafy.chuck.reply.dao.ReplyDao;
 import com.ssafy.chuck.reply.dto.ReplyDto;
 
 @Service
-public class ReplyServiceImpl implements ReplyService{
+public class ReplyServiceImpl implements ReplyService {
 
 	@Autowired
 	private ReplyDao replyDao;
 
 	@ReplyLog
 	@Override
-	public int insertComment(Long writer, String comment, int diary_id) {
+	public int insertComment(Long writer, int num, String comment, int diary_id) {
 		Date date = new Date(System.currentTimeMillis());
 		return replyDao.insertComment(writer, comment, diary_id, date);
 	}

@@ -41,7 +41,12 @@ public interface GroupDao {
 	// 10. 그룹장 변경
 	int change(@Param(value = "id")int id, @Param(value = "userId")long userId);
 
+	// 11. 그룹장인지 트루
 	int changeMemberTrue(@Param(value = "userId")long userId);
 
+	// 12. 그룹장인지 거짓
 	int changeMemberFalse(@Param(value = "userId")long userId);
+
+	// 13. 그룹내 멤버인지 체크
+	boolean isMember(@Param(value = "userId")long userId, @Param(value = "id")int id);
 }

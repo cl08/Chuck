@@ -68,8 +68,8 @@ public class GroupController {
 	})
 	private ResponseEntity<?> read(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
 		logger.debug("그룹 상세 조회 호출");
-		// long userId = permissionCheck.check(token).getId();
-		GroupDto group = service.read(0, 0, id);
+		long userId = permissionCheck.check(token).getId();
+		GroupDto group = service.read(userId, 0, id);
 		return new ResponseEntity<>(group, HttpStatus.OK);
 	}
 
@@ -138,7 +138,7 @@ public class GroupController {
 	@RequestMapping(method = RequestMethod.GET, value = "/{id}/members")
 	@ApiOperation(value = "그룹 멤버 리스트 조회", notes = "그룹멤버 리스트를 조회한다.")
 	@ApiResponses({
-		@ApiResponse(code = 201, message = "그룹 멤버 리스트 조회 성공"),
+		@ApiResponse(code = 200, message = "그룹 멤버 리스트 조회 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
 		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
@@ -149,5 +149,22 @@ public class GroupController {
 		// long userId = permissionCheck.check(token).getId();
 		List<MemberDto> list = service.readAllMember(0, 0, id);
 		return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/changes/{id}")
+	@ApiOperation(value = "그룹장 변경을 요청", notes = "그룹장 변경을 요청한다.")
+	@ApiResponses({
+		@ApiResponse(code = 201, message = "그룹장 변경을 요청 성공"),
+		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
+		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
+		@ApiResponse(code = 403, message = "권한이 없습니다"),
+		@ApiResponse(code = 404, message = "그룹장 변경을 요청 실패")
+	})
+	private ResponseEntity<?> changeOwner(@PathVariable(value = "id") int id, @RequestHeader(value = "token")
+		String token, @RequestBody GroupDto group) {
+		logger.debug("그룹장 변경을 요청 호출");
+		long userId = permissionCheck.check(token).getId();
+		service.change(group, userId, id);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 }

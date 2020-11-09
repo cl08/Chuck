@@ -12,6 +12,7 @@ import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
 import com.ssafy.chuck.common.annotation.GroupTokenGen;
 import com.ssafy.chuck.common.annotation.JoinLog;
 import com.ssafy.chuck.common.annotation.SignOutLog;
+import com.ssafy.chuck.error.exception.AccessDeniedException;
 import com.ssafy.chuck.group.dao.GroupDao;
 import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
@@ -56,10 +57,15 @@ public class GroupServiceImpl implements GroupService {
 		return dao.readOwner(id);
 	}
 
-	// @GroupMemberCheck
+	@GroupMemberCheck
 	@Override
 	public GroupDto read(long userId, int num, int id) {
 		return dao.read(id);
+	}
+
+	@Override
+	public boolean isMember(long userId, int id) {
+		return dao.isMember(userId, id);
 	}
 
 	@SignOutLog
@@ -95,8 +101,10 @@ public class GroupServiceImpl implements GroupService {
 	}
 
 	@ChangeLog
+	@GroupMemberCheck
 	@Override
-	public void change(GroupDto dto, long userId) {
+	public void change(GroupDto dto, long ownerId, long userId) {
+		if(ownerId != dto.getUserId()) throw new AccessDeniedException("그룹장 체크");
 		try {
 			dao.changeMemberFalse(dto.getUserId());
 			dao.changeMemberTrue(userId);
