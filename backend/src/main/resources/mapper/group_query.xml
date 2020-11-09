@@ -52,6 +52,7 @@
                    from GROUP_MEMBERS GM
                    where GM.GROUP_ID = G.ID
                    AND USER_ID = #{id})
+        ORDER BY rand()
     </select>
 
     <select id="readOwner" parameterType="int" resultType="long">
