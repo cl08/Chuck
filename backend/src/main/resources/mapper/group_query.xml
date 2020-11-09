@@ -65,9 +65,14 @@
         SET IS_OWNER = FALSE
         where USER_ID = #{userID}
     </update>
+
     <update id="changeMemberTrue" parameterType="map">
         update GROUP_MEMBERS
         SET IS_OWNER = TRUE
         where USER_ID = #{userID}
     </update>
+
+    <select id="isMember" parameterType="map" resultType="boolean">
+        select exists(select * from GROUP_MEMBERS where GROUP_ID = #{id} and USER_ID = #{userId})
+    </select>
 </mapper>

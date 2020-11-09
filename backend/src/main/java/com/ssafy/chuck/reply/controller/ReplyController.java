@@ -20,6 +20,7 @@ import com.ssafy.chuck.reply.service.ReplyService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+
 // http://localhost:8888/swagger-ui/
 @CrossOrigin(origins = {"*"}, maxAge = 6000)
 @Api(value = "댓글 관리", tags = "Reply")
@@ -34,8 +35,10 @@ public class ReplyController {
 	@PostMapping("/insert")
 	@ApiOperation(value = "댓글 입력")
 	public ResponseEntity<Integer> insertComment(@RequestBody ReplyDto replyDto) {
-    	return new ResponseEntity<Integer>(replyService.insertComment(replyDto.getWriterId(), replyDto.getComment(), replyDto.getDiary_id()), HttpStatus.OK);
-    }
+		return new ResponseEntity<Integer>(
+			replyService.insertComment(replyDto.getWriterId(), 2, replyDto.getComment(), replyDto.getDiary_id()),
+			HttpStatus.OK);
+	}
 
 	@GetMapping("/searchByWriter")
 	@ApiOperation(value = "작성자 ID로 댓글 조회")

@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
+import com.ssafy.chuck.diary.dto.DiaryDto;
+import com.ssafy.chuck.diary.service.DiaryService;
 import com.ssafy.chuck.error.exception.AccessDeniedException;
 import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
@@ -25,6 +27,9 @@ public class GroupAspect {
 
 	@Autowired
 	GroupService service;
+
+	@Autowired
+	DiaryService dirayService;
 
 	@After("@annotation(com.ssafy.chuck.common.annotation.GroupTokenGen)")
 	private void genToken(JoinPoint point) {
@@ -46,7 +51,11 @@ public class GroupAspect {
 		GroupDto dto = (GroupDto)parameterValues[0];
 		long userId = (long)parameterValues[1];
 		long originUserId = service.readOwner(dto.getId());
-		if(userId == originUserId) throw new AccessDeniedException("그룹장 확인 필요");
+		if(userId == originUserId) {
+			if(service.readAllMember(userId, 0, dto.getId()).size() != 1) {
+				throw new AccessDeniedException("그룹장 확인 필요");
+			}
+		}
 	}
 
 	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupMemberCheck)")
@@ -55,10 +64,25 @@ public class GroupAspect {
 		Object[] parameterValues = point.getArgs();
 		if((int)parameterValues[1] == 0) {
 			// 그룹 조회
+			long userId = (long)parameterValues[0];
+			int id = (int)parameterValues[2];
+			if(!service.isMember(userId, id)) {
+				throw new AccessDeniedException("그룹 멤버가 아닙니다.");
+			}
 		} else if((int)parameterValues[1] == 1){
 			// 다이어리 관련
+			long userId = (long)parameterValues[0];
+			DiaryDto dto = (DiaryDto)parameterValues[2];
+			if(!service.isMember(userId, dto.getGroupId())) {
+				throw new AccessDeniedException("그룹 멤버가 아닙니다.");
+			}
 		} else {
 			// 댓글 관련
+			long userId = (long)parameterValues[0];
+			DiaryDto dto = dirayService.read((int)parameterValues[3]);
+			if(!service.isMember(userId, dto.getGroupId())) {
+				throw new AccessDeniedException("그룹 멤버가 아닙니다.");
+			}
 		}
 	}
 }
