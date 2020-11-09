@@ -6,7 +6,7 @@
         </div>
         <p>{{getFaceData.cluster_list.length}}명의 인물이 검색되었습니다.</p>
         <div class="selectPerson">
-            <div >
+            <div>
                 <span class="face pointer" @click="selectAll">ALL</span>
                 <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">

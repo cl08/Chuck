@@ -3,17 +3,18 @@
         <div class="dash">
             <font size=4>사진 고르기</font>
         </div>
-        <div class="dash" style="height:620px;">
+        <div class="dash" style="height:620px; text-align:left">
             <span class="photo pointer" @click="selectAll">ALL</span>
             <span v-for="(person, i) in getPersonArrayFilm" :key="i">
                 <span v-show="person === true">
-                    <span class="photo pointer" v-for="(photo, j) in getFaceData.cluster_list[i].path_list" :key="j" @click="select(j)" :style="'background-image:url('+photo+')'">
-                        <img :id="'videoPhoto'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
+                    <span class="photo pointer" v-for="(photo, j) in getFaceData.cluster_list[i].path_list" :key="j" @click="select(i, j)" :style="'background-image:url('+photo+')'">
+                        <img :id="'videoPhoto'+i+'arr'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
                     </span>
                 </span>
             </span>
         </div>
         <div class="dash pointer" @click="nextStep">
+            {{ selectCount }} / {{ maxCount }}
             <font size=4>다음으로</font>
         </div>
     </div>
@@ -25,7 +26,9 @@ import { mapMutations } from 'vuex'
 export default {
     data () {
         return {
-            
+            selectCount: 0,
+            maxCount : '',
+            imageArray: [],
         }
     },
     computed: {
@@ -33,7 +36,17 @@ export default {
             'getChuckList',
             'getFaceData',
             'getPersonArrayFilm',
-        ])
+        ]),
+    },
+    watch: {
+        getPersonArrayFilm: function() {
+            let count = 0
+            for(let i=0; i<this.getPersonArrayFilm.length; i++){
+                if(this.getPersonArrayFilm[i])
+                    count = count + this.getFaceData.cluster_list[i].path_list.length
+            }
+            this.maxCount = count
+        }
     },
     methods: {
         ...mapMutations([
@@ -49,15 +62,43 @@ export default {
             this.setVisiblePreview(true)
         },
         selectAll() {
-            console.log(this.getPersonArrayFilm)
-            for(let i=0; i<this.photos.length; i++) {
-                let el = document.getElementById('videoPhoto'+i)
-                el.setAttribute('class', '')
+            let count = 0
+            if(this.selectCount == this.maxCount) {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                    if(this.getPersonArrayFilm[i]) {
+                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                            let el = document.getElementById('videoPhoto'+i+'arr'+j)
+                            el.setAttribute('class', 'videoPhotoNoneDisplay')
+                            this.imageArray[i][j] = false
+                        }
+                    }
+                }
+                this.selectCount = 0
+            }
+            else {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                    if(this.getPersonArrayFilm[i]) {
+                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                            let el = document.getElementById('videoPhoto'+i+'arr'+j)
+                            el.setAttribute('class', '')
+                            this.imageArray[i][j] = true
+                        }
+                    }
+                }
             }
         },
-        select(index) {
-            let el = document.getElementById('videoPhoto'+index)
+        select(i, j) {
+            console.log(i+", "+j)
+            let el = document.getElementById('videoPhoto'+i+'arr'+j)
             el.classList.toggle("videoPhotoNoneDisplay")
+            if(this.imageArray[i][j]) {    
+                this.imageArray[i][j] = false
+                this.selectCount--
+            }
+            else {
+                this.imageArray[i][j] = true
+                this.selectCount++
+            }
         }
     }
 }

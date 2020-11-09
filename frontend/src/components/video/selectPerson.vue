@@ -111,9 +111,9 @@ export default {
 </script>
 <style scoped>
 .face {
-    height: 90px;
-    width: 90px;
-    line-height: 90px;
+    height: 92px;
+    width: 92px;
+    line-height: 92px;
     margin: 7px;
     border-radius: 50%;
     display: inline-block;
