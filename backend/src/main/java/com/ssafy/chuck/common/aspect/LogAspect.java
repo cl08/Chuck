@@ -62,17 +62,24 @@ public class LogAspect {
 	private void signOutLog(JoinPoint point) {
 		logger.debug("그룹 탈퇴 로그");
 		Object[] parameterValues = point.getArgs();
-		GroupDto dto = (GroupDto)parameterValues[0];
-		String comment = (long)parameterValues[1] + "님이 그룹에서 탈퇴하였습니다.";
-		service.create(new LogDto(dto.getId(), comment));
+		int id = (int)parameterValues[0];
+		long userId = (long)parameterValues[1];
+		long requestId = (long)parameterValues[2];
+		String comment = "";
+		if(userId == requestId) {
+			comment = userId + "님이 그룹을 탈퇴하였습니다.";
+		} else {
+			comment = userId + "님이 그룹에서 추방되었습니다.";
+		}
+		service.create(new LogDto(id, comment));
 	}
 
 	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.ChangeLog)")
 	private void changeLog(JoinPoint point) {
 		logger.debug("그룹장 변화 로그");
 		Object[] parameterValues = point.getArgs();
-		long userId = (long)parameterValues[1];
-		GroupDto dto = (GroupDto)parameterValues[0];
+		long userId = (long)parameterValues[3];
+		GroupDto dto = (GroupDto)parameterValues[4];
 		String comment = userId + "님이 새로운 그룹장으로 변경되었습니다.";
 		service.create(new LogDto(dto.getId(), comment));
 	}

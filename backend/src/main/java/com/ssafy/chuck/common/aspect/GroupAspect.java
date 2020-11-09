@@ -10,13 +10,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.algorithms.Algorithm;
 import com.ssafy.chuck.diary.dto.DiaryDto;
 import com.ssafy.chuck.diary.service.DiaryService;
 import com.ssafy.chuck.error.exception.AccessDeniedException;
 import com.ssafy.chuck.group.dto.GroupDto;
-import com.ssafy.chuck.group.dto.MemberDto;
 import com.ssafy.chuck.group.service.GroupService;
 
 @Component
@@ -31,19 +28,6 @@ public class GroupAspect {
 	@Autowired
 	DiaryService dirayService;
 
-	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.GroupTokenGen)")
-	private void genToken(JoinPoint point) {
-		logger.debug("카카오톡 초대를 위한 그룹 토큰 생성 및 그룹멤버 추가");
-		Object[] parameterValues = point.getArgs();
-		GroupDto dto = (GroupDto)parameterValues[0];
-		String token = JWT.create().withIssuer("Chucks")
-			.withSubject("Invite group")
-			.withClaim("id", dto.getId())
-			.sign(Algorithm.HMAC256("chuck_project"));
-		service.updateToken(dto.getId(), token);
-		service.createMember(new MemberDto(dto.getId(), dto.getUserId(), true));
-	}
-
 	@Before("@annotation(com.ssafy.chuck.common.annotation.GroupOwnerCheck)")
 	private void checkOwner(JoinPoint point) {
 		logger.debug("그룹장 체크");
@@ -53,8 +37,10 @@ public class GroupAspect {
 		long originUserId = service.readOwner(dto.getId());
 		if(userId == originUserId) {
 			if(service.readAllMember(userId, 0, dto.getId()).size() != 1) {
-				throw new AccessDeniedException("그룹장 확인 필요");
+				throw new AccessDeniedException("그룹내 멤버가 아직 있습니다");
 			}
+		} else {
+			throw new AccessDeniedException("그룹장 확인 필요");
 		}
 	}
 

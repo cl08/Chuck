@@ -6,10 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+
 import com.ssafy.chuck.common.annotation.ChangeLog;
 import com.ssafy.chuck.common.annotation.GroupMemberCheck;
 import com.ssafy.chuck.common.annotation.GroupOwnerCheck;
-import com.ssafy.chuck.common.annotation.GroupTokenGen;
 import com.ssafy.chuck.common.annotation.JoinLog;
 import com.ssafy.chuck.common.annotation.SignOutLog;
 import com.ssafy.chuck.error.exception.AccessDeniedException;
@@ -23,14 +25,20 @@ public class GroupServiceImpl implements GroupService {
 	@Autowired
 	GroupDao dao;
 
-	@GroupTokenGen
 	@Override
-	public void create(GroupDto group) {
+	public GroupDto create(GroupDto group) {
 		try {
 			dao.create(group);
+			String token = JWT.create().withIssuer("Chucks")
+				.withSubject("Invite group")
+				.withClaim("id", group.getId())
+				.sign(Algorithm.HMAC256("chuck_project"));
+			this.updateToken(group.getId(), token);
+			this.createMember(new MemberDto(group.getId(), group.getUserId(), true));
 		} catch (DataAccessException e) {
 			throw e;
 		}
+		return read(group.getUserId(), 0, group.getId());
 	}
 
 	@Override
@@ -68,14 +76,23 @@ public class GroupServiceImpl implements GroupService {
 		return dao.isMember(userId, id);
 	}
 
-	@SignOutLog
 	@GroupOwnerCheck
 	@Override
 	public void delete(GroupDto group, long userId) {
 		try {
+			dao.deleteMember(group.getId(), userId);
 			dao.delete(group.getId());
 		} catch (DataAccessException e) {
 			throw e;
+		}
+	}
+	@SignOutLog
+	@Override
+	public void deleteMember(int id, long userId, long requestId) {
+		if(userId == requestId || requestId == readOwner(id)) {
+			dao.deleteMember(id, userId);
+		} else {
+			throw new AccessDeniedException("권한이 없습니다.");
 		}
 	}
 
@@ -84,7 +101,6 @@ public class GroupServiceImpl implements GroupService {
 	public void createMember(MemberDto member) {
 		try {
 			dao.createMember(member);
-			System.out.println(member.toString());
 		} catch (DataAccessException e) {
 			throw e;
 		}
@@ -103,10 +119,10 @@ public class GroupServiceImpl implements GroupService {
 	@ChangeLog
 	@GroupMemberCheck
 	@Override
-	public void change(GroupDto dto, long ownerId, long userId) {
-		if(ownerId != dto.getUserId()) throw new AccessDeniedException("그룹장 체크");
+	public void change(long ownerId, int num, int id, long userId, GroupDto dto) {
+		if(ownerId != readOwner(dto.getId())) throw new AccessDeniedException("그룹장 체크");
 		try {
-			dao.changeMemberFalse(dto.getUserId());
+			dao.changeMemberFalse(ownerId);
 			dao.changeMemberTrue(userId);
 			dao.change(dto.getId(), userId);
 		} catch (DataAccessException e) {
