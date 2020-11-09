@@ -10,10 +10,20 @@
         ID,
         GROUP_ID,
         REGEXP_REPLACE(
-        REPLACE(CONTENT, SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1), (select NAME from USERS where id = SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1))), '[0-9()]', '') 'CONTENT',
+        CONCAT(REPLACE(SUBSTRING_INDEX(CONTENT, ' ', 1),
+            SUBSTRING_INDEX(
+                SUBSTRING_INDEX(CONTENT, ' ', 1),
+                '님', 1),
+            (select NAME
+            from USERS
+            where id = SUBSTRING_INDEX(
+                SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1)
+                )
+            ), ' ', SUBSTRING_INDEX(CONTENT, ' ', -3)), '[0-9()]', '') 'CONTENT',
         SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 1), '님', 1) "USER_ID",
         if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', if(SUBSTRING_INDEX(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ' ', 3), ' ', -1), '(', 1) like 'Chuck', 'Chuck', 'reply'), '') "STATE",
         if(SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1) REGEXP '^[0-9]+$', SUBSTRING_INDEX(SUBSTRING_INDEX(CONTENT, ')', 1), '(', -1), -1) "WRITE_ID"
         from LOGS where GROUP_ID = #{id}
+        ORDER BY ID DESC
     </select>
 </mapper>

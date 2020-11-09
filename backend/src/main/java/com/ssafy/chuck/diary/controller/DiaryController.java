@@ -71,8 +71,8 @@ public class DiaryController {
 	})
 	private ResponseEntity<?> create(@RequestBody DiaryDto diary, @RequestHeader(value = "token") String token) {
 		logger.debug("다이어리 생성 호출");
-		// long userId = permissionCheck.check(token).getId();
-		service.create(0, 1, diary);
+		long userId = permissionCheck.check(token).getId();
+		service.create(userId, 1, diary);
 		return new ResponseEntity<>(diary, HttpStatus.OK);
 	}
 
