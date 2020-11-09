@@ -9,5 +9,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class GalleryResponse {
 	private String rep_image;
-	private List<Gallery> gallery_list;
+	private List<Gallery> content_list;
 }
