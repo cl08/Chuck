@@ -28,12 +28,16 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ssafy.chuck.diary.dto.DiaryDto;
+import com.ssafy.chuck.diary.service.DiaryService;
 import com.ssafy.chuck.picture.dto.Gallery;
 import com.ssafy.chuck.picture.dto.GalleryListResponse;
 import com.ssafy.chuck.picture.dto.GalleryResponse;
 import com.ssafy.chuck.picture.dto.PathListResponse;
 import com.ssafy.chuck.picture.dto.PictureDto;
 import com.ssafy.chuck.picture.dto.PictureResponse;
+import com.ssafy.chuck.picture.dto.StudioListResponse;
+import com.ssafy.chuck.picture.dto.StudioResponse;
 import com.ssafy.chuck.picture.service.PictureService;
 
 import io.swagger.annotations.Api;
@@ -48,6 +52,9 @@ public class PictureController {
 
 	@Autowired
 	private PictureService pictureService;
+	
+	@Autowired
+	DiaryService diaryService;
 
 	@Autowired
     RestTemplate restTemplate;
@@ -140,6 +147,34 @@ public class PictureController {
 		GalleryListResponse galleryListResponse = new GalleryListResponse(galleryResponseList);
 		return new ResponseEntity<GalleryListResponse>(galleryListResponse, HttpStatus.OK);
 	}
+	
+	@GetMapping("/studio")
+	@ApiOperation(value = "스튜디오 페이지")
+	public ResponseEntity<StudioListResponse> studio(int groupId) throws Exception {
+		List<StudioResponse> studioResponseList = new ArrayList<>();
+
+		String obj = restTemplate.getForObject("http://127.0.0.1:5000/getInfo?groupId=" + groupId, String.class);
+		JsonObject jsonObject = (JsonObject) JsonParser.parseString(obj);
+		JsonArray jsonArray = jsonObject.get("info").getAsJsonArray();
+		System.out.println(jsonArray);
+		for(int i=0;i<jsonArray.size();i++) {
+			JsonObject element = (JsonObject) jsonArray.get(i);
+			String rep = "http://k3a206.p.ssafy.io/images/" + element.get("rep").getAsString().split("python/")[1];
+			JsonArray list = element.getAsJsonArray("paths");
+
+			List<DiaryDto> studioList = new ArrayList<>();
+			
+			for(int j=0;j<list.size();j++) {
+				studioList.add(diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
+				studioList.get(j).setImage("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
+			}
+			studioResponseList.add(new StudioResponse(rep, studioList));
+    	}
+
+		StudioListResponse studioListResponse = new StudioListResponse(studioResponseList);
+		return new ResponseEntity<StudioListResponse>(studioListResponse, HttpStatus.OK);
+	}
+	
 
 	@PostMapping("/upload")
 	@ApiOperation(value = "사진 업로드(사진이 업로드 될 때마다) - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장", produces = "multipart/form-data")
@@ -174,7 +209,6 @@ public class PictureController {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
-	
 	
 	
 	@GetMapping("/mkVideo")
