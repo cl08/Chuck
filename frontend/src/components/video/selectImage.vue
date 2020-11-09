@@ -30,7 +30,7 @@ export default {
     data () {
         return {
             selectCount: 0,
-            maxCount : '',
+            maxCount : 0,
             imageArray: [],
         }
     },

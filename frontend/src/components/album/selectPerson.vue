@@ -33,9 +33,9 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:325px;">
+        <div class="dash" style="height:325px; text-align:left">
             <span class="face pointer" @click="selectAll">ALL</span>
-            <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
+            <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url('+face.rep_image+')'">
                 <img :id="'albumFace'+index" class="albumFaceNoneDisplay" src="../../assets/check_circle.svg">
             </span>
         </div>
@@ -43,16 +43,27 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapMutations } from 'vuex';
 export default {
     data () {
         return {
             value1: '',
             value2: '',
             dates: '',
-            faces: ''
+            personArray: [],
+            selectCount: 0,
         }
     },
+    computed: {
+        ...mapGetters([
+            'getFaceData',
+        ]),
+    },
     methods: {
+        ...mapMutations([
+            'setPersonArrayBook',
+        ]),
         removeTag(tag) {
             this.value1.splice(this.value1.indexOf(tag), 1);
         },
@@ -63,14 +74,37 @@ export default {
             this.value1 = ''
         },
         selectAll() {
-            for(let i=0; i<this.faces.length; i++){
-                let el = document.getElementById('albumFace'+i)
-                el.setAttribute('class', '')
+            if(this.selectCount === this.getFaceData.cluster_list.length) {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+                    let el = document.getElementById('albumFace'+i)
+                    el.setAttribute('class', 'albumFaceNoneDisplay')
+                    this.$set(this.personArray, i, false)
+                }
+                this.selectCount = 0
+                this.setPersonArrayBook(this.personArray)
+            }
+            else {
+                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+                    let el = document.getElementById('albumFace'+i)
+                    el.setAttribute('class', '')
+                    this.$set(this.personArray, i, true)
+                }
+                this.selectCount = this.getFaceData.cluster_list.length
+                this.setPersonArrayBook(this.personArray)
             }
         },
         select(index) {
             let el = document.getElementById('albumFace'+index)
             el.classList.toggle("albumFaceNoneDisplay")
+            if(this.personArray[index]) {
+                this.$set(this.personArray, index, false)
+                this.selectCount--
+            }
+            else {
+                this.$set(this.personArray, index, true)
+                this.selectCount++
+            }
+            this.setPersonArrayBook(this.personArray)
         }
     }
   }
