@@ -133,7 +133,6 @@ public class PictureController {
 				System.out.println("path로 찾은 ");
 				galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1],
 						pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
-//			for(int j=0;j<list.size();j++) galleryList.add("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
 			}
 			galleryResponseList.add(new GalleryResponse(rep, galleryList));
     	}
@@ -181,6 +180,8 @@ public class PictureController {
 	@GetMapping("/mkVideo")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
 	public ResponseEntity<String> mkVideo(@RequestBody PathListResponse pathResponse) {
+		System.out.println("출력 테스트");
+		System.out.println(pathResponse);
 		//개인 ID의 폴더 생성
 		String path = "/home/ubuntu/s03p31a206/backend/python/videos/" + pathResponse.getUserId();
 		File folder = new File(path);
