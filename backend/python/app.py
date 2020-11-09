@@ -38,9 +38,6 @@ def deletePicture():
     delete(groupId, imagePath)
     return "good"
 
-
-
-
 @app.route('/getInfo')
 def getInfo():
     groupId = request.args.get('groupId', 'groupId')
@@ -52,7 +49,8 @@ def getInfo():
 def mkVideo():
     paths = request.args.get('paths', 'paths')
     userid = request.args.get('userid', 'userid')
-    makeVideo(paths, userid)
+    music = request.args.get('music', 'music')
+    makeVideo(paths, userid, music)
     return "success"
 
 if __name__ == '__main__':
