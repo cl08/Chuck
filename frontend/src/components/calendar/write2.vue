@@ -55,7 +55,7 @@ export default {
                 }   
             })
             .then(({ data }) => {
-                evnetBus.$emit('uploadImages', data.id);
+                eventBus.$emit('uploadImages', data.id);
             });
         },
         done() {

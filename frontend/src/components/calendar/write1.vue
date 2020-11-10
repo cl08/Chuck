@@ -11,7 +11,7 @@
             drag
             multiple
             action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
-            :data="{groupId:this.$store.state.selectedGroup.id}"
+            :data="{groupId:this.getSelectedGroup.id}"
             :limit=10
             :show-file-list="false"
             :auto-upload="true"
@@ -29,10 +29,24 @@
                     <img :src="image" class="el-upload-list__item-thumbnail">
                     <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-preview">
-                            <i class="el-icon-zoom-in"></i>
+                            <!-- <i class="el-icon-zoom-in"></i> -->
+                            <change
+                                :index="index"
+                                @changeImage="changeImage"
+                            ></change>
                         </span>
                         <span class="el-upload-list__item-delete" @click="handleRemove(image, index)">
-                            <i class="el-icon-delete"></i>
+                            <v-tooltip bottom>
+                                <template v-slot:activator="{ on, attrs }">
+                                    <i 
+                                        icon
+                                        class="el-icon-delete"
+                                        v-bind="attrs"
+                                        v-on="on"
+                                    ></i>
+                                </template>
+                                <span>삭제</span>
+                            </v-tooltip>
                         </span>
                     </span>
                 </li>
@@ -47,13 +61,23 @@
 <script>
 import api from '@/utils/api';
 import eventBus from '@/utils/EventBus';
+import { mapGetters } from 'vuex'
 
 export default {
     data() {
         return {
             disabled: false,
             imageList: [],
+            imageChange: false,
         };
+    },
+    computed: {
+        ...mapGetters([
+            'getSelectedGroup',
+        ]),
+    },
+    components: {
+        Change: () => import('@/components/calendar/change.vue'),
     },
     created() {
         eventBus.$on('uploadImages', (data) => {
@@ -96,18 +120,25 @@ export default {
             }
         },
         uploadImages(diaryId) {
-            const images = [];
+            let images = [];
             this.imageList.forEach(image => {
                 images.push(image);
             });
+            console.log(images)
+            console.log(diaryId)
             api.post(`pictures/insert`, {
                 diary_id: diaryId,
+                group_id: this.getSelectedGroup.id,
                 path_list: images,
             }).then((data) => {
                 eventBus.$emit('uploadeDone');
                 this.imageList = [];
             })
         },
+        changeImage(data) {
+            this.handleRemove(this.imageList[data.index], data.index+1);
+            this.imageList.splice(data.index, 0, data.res)
+        }
     }
 }
 </script>

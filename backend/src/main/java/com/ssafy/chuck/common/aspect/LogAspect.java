@@ -56,7 +56,7 @@ public class LogAspect {
 		long userId = dto.getWriterId();
 		int diaryId = dto.getDiaryId();
 		DiaryDto diary = diaryService.read(diaryId);
-		String comment = userId + "새로운 댓글(" + diaryId + ")을 게시하였습니다.";
+		String comment = userId + "님이 새로운 댓글(" + diaryId + ")을 게시하였습니다.";
 		service.create(new LogDto(diary.getGroupId(), comment));
 	}
 
