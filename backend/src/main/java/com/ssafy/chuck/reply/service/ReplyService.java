@@ -5,7 +5,8 @@ import java.util.List;
 import com.ssafy.chuck.reply.dto.ReplyDto;
 
 public interface ReplyService {
-	int insertComment(Long writer, int num, String comment, int diary_id);
-	List<ReplyDto> selectCommentByDiaryId(int diary_id);
-	List<ReplyDto> selectCommentByWriter(Long writer);
+	void insertComment(ReplyDto reply, int num);
+	List<ReplyDto> selectCommentByDiaryId(int diaryId);
+	List<ReplyDto> selectCommentByWriter(Long writerId);
+	void delete(int id);
 }

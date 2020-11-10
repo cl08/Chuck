@@ -188,6 +188,12 @@ export default new Vuex.Store({
         setFaceData(state, payload) {
             state.faceData = payload
         },
+        insertComments(state, payload) {
+            state.comments.push(payload)
+        },
+        removeComments(state, payload) {
+            state.comments.splice(payload, 1)
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -212,12 +218,12 @@ export default new Vuex.Store({
                 },
             }).then(({ data }) => {
                 for(var i=0; i<data.length; i++) {
-                    const image = data[i].image.split(';');
-                    data[i].image = image;
-                    data[i].color = this.state.color[i % 10];
-                    data[i].index = i;
+                    const image = data[i].image.split(';')
+                    data[i].image = image
+                    data[i].color = this.state.color[i % 10]
+                    data[i].index = i
                 }
-                commit('setChuckList', data);
+                commit('setChuckList', data)
             })
         },
         logout({commit}) {
@@ -228,8 +234,8 @@ export default new Vuex.Store({
                     token: sessionStorage.getItem('token')
                 },
             }).then(() => {
-                commit('deleteUser');
-                sessionStorage.clear();
+                commit('deleteUser')
+                sessionStorage.clear()
             })
         },
         updateSelectedChuckList({commit}) {
@@ -239,15 +245,21 @@ export default new Vuex.Store({
                     day.push(this.state.chuckList[i])
                 }
             }
-            commit('setSelectedChuckList', day);
+            commit('setSelectedChuckList', day)
         },
         updateBackState({commit}, item) {
-            commit('setBackState', item);
+            commit('setBackState', item)
         },
         updateComments({commit}, item) {
-            api.get(`replies/searchByDiary?diary_id=${item}`).then(({data}) => {
+            api.get(`replies/searchByDiary?diaryId=${item}`).then(({data}) => {
                 commit('setComments', data)
             })
+        },
+        addComments({commit}, item) {
+            commit('insertComments', item)
+        },
+        delComments({commit}, item) {
+            commit('removeComments', item)
         },
     }
 })

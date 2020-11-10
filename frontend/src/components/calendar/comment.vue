@@ -11,8 +11,16 @@
         </div>
         <div class="comment">      
             <div class="el-input el-input-group el-input-group--append">
-                <input type="text" autocomplete="off" placeholder="댓글 입력" class="el-input__inner" v-model="input" style="text-align:left">
-                <div class="el-input-group__append">
+                <input 
+                    type="text" 
+                    autocomplete="off" 
+                    placeholder="댓글 입력" 
+                    class="el-input__inner" 
+                    v-model="input" 
+                    style="text-align:left"
+                    @keypress.enter="comment()"
+                >
+                <div class="el-input-group__append" @click="comment()">
                     <i class="el-icon-edit"></i>
                 </div>
             </div>
@@ -22,6 +30,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
+import store from '@/store'
+import api from '@/utils/api'
+
 export default {
     data() {
         return{
@@ -30,13 +41,27 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getComments'
+            'getComments',
+            'getChuckList',
+            'getSelectedDiary',
+            'getId',
         ]),
     },
     methods: {
         comment() {
-            alert("ㅋㅋ")
-        }
+            api.post(`/replies/insert`, {
+                comment: this.input,
+                diaryId: this.getChuckList[this.getSelectedDiary].id,
+                writerId: this.getId,
+            }).then(({data}) => {
+                store.dispatch('addComments', data)
+                this.input = ''
+            })
+        },
+        delete(index) {
+            api.delete(`/replies/${this.getComments[index].id}`).then(store.dispatch('delComments', index))
+        },
+        
     }
 }
 </script>
@@ -85,5 +110,8 @@ export default {
     bottom: 30px;
     left: 80px;
     width:500px;
+}
+.el-input-group__append {
+    cursor: pointer;
 }
 </style>

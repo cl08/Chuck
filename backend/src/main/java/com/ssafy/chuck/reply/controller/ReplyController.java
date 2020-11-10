@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,21 +35,27 @@ public class ReplyController {
 
 	@PostMapping("/insert")
 	@ApiOperation(value = "댓글 입력")
-	public ResponseEntity<Integer> insertComment(@RequestBody ReplyDto replyDto) {
-		return new ResponseEntity<Integer>(
-			replyService.insertComment(replyDto.getWriterId(), 2, replyDto.getComment(), replyDto.getDiary_id()),
-			HttpStatus.OK);
+	public ResponseEntity<?> insertComment(@RequestBody ReplyDto reply) {
+		replyService.insertComment(reply, 2);
+		return new ResponseEntity<>(reply , HttpStatus.OK);
 	}
 
 	@GetMapping("/searchByWriter")
 	@ApiOperation(value = "작성자 ID로 댓글 조회")
-	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(long writer) {
-		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByWriter(writer), HttpStatus.OK);
+	public ResponseEntity<?> selectCommentByWriter(long writer) {
+		return new ResponseEntity<>(replyService.selectCommentByWriter(writer), HttpStatus.OK);
 	}
 
 	@GetMapping("/searchByDiary")
 	@ApiOperation(value = "다이어리 ID로 댓글 조회")
-	public ResponseEntity<List<ReplyDto>> selectCommentByDiaryId(int diary_id) {
-		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByDiaryId(diary_id), HttpStatus.OK);
+	public ResponseEntity<?> selectCommentByDiaryId(int diaryId) {
+		return new ResponseEntity<>(replyService.selectCommentByDiaryId(diaryId), HttpStatus.OK);
+	}
+
+	@DeleteMapping("/{id}")
+	@ApiOperation(value = "댓글 ID로 댓글 삭제")
+	public ResponseEntity<?> delete(@PathVariable(value = "id") int id) {
+		replyService.delete(id);
+		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 }
