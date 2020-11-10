@@ -55,7 +55,7 @@ public class UserController {
 		// 테스트 계정
 		UserDto user = new UserDto();
 		if(response.getAccessToken().equals("1")) {
-			user = new UserDto(1,"test");
+			user = service.read(1);
 		} else {
 			// DB 조회 후 없으면 추가 있으면 최근 접속 일자 업데이트
 			user = service.login(response);
