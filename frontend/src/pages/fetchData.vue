@@ -36,7 +36,6 @@ export default {
             "setChuckList",
         ]),
         fetchData() {
-            console.log("zz")
             setTimeout(() => {
                 // 게시글 불러오기
                 api.get(`diaries/group/${this.getSelectedGroup.id}`, {
