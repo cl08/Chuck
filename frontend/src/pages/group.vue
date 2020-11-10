@@ -172,7 +172,8 @@ export default {
         uploadGroup() {
             api.post(`groups`, {
                     name: this.selectedBook.name,
-                    intro: this.selectedBook.intro
+                    intro: this.selectedBook.intro,
+                    userId: sessionStorage.getItem('id')
                 }, {
                     headers: {
                         token: sessionStorage.getItem('token')

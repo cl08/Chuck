@@ -139,12 +139,13 @@
     <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
     <!-- <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back"> -->
     <Mypage></Mypage>
+    <assginGroupModal v-if="getVisibleModalAssignGroup"></assginGroupModal>
+    <secedeGroupModal v-if="getVisibleModalSecedeGroup"></secedeGroupModal>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
-import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
 import { mapMutations } from 'vuex'
 // timeline
@@ -177,9 +178,12 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
-import eventBus from '@/utils/EventBus';
+import assginGroupModal from "@/components/groupset/assginGroupModal.vue";
+import secedeGroupModal from "@/components/groupset/secedeGroupModal.vue";
+
 import Mypage from "@/components/mypage/mypage.vue";
 
+import eventBus from '@/utils/EventBus';
 export default {
   components: {
     Calendar,
@@ -204,6 +208,8 @@ export default {
     Groupset,
     Outro,
     Mypage,
+    assginGroupModal,
+    secedeGroupModal,
   },
   data() {
     return {
@@ -234,6 +240,8 @@ export default {
       "getVisibleVideo",
       "getVisiblePreview",
       "getBackState",
+      "getVisibleModalAssignGroup",
+      "getVisibleModalSecedeGroup",
     ]),
   },
   watch: {

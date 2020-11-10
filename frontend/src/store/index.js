@@ -20,6 +20,8 @@ export default new Vuex.Store({
         visibleAlbum: false,
         visibleVideo: false,
         visiblePreview: false,
+        visibleModalAssignGroup: false,
+        visibleModalSecedeGroup: false,
         chuckList: [],
         comments: [],
         personArray : [],
@@ -77,9 +79,6 @@ export default new Vuex.Store({
         getVisiblePreview(state) {
             return state.visiblePreview
         },
-        getPersonArray(state) {
-            return state.personArray
-        },
         getPersonClassificationResult(state){
             for(let i = 0; i < state.personArray.length; i++){
                 if(state.personArray[i]){
@@ -99,6 +98,12 @@ export default new Vuex.Store({
         },
         getFaceData(state) {
             return state.faceData
+        },
+        getVisibleModalAssignGroup(state){
+            return state.visibleModalAssignGroup
+        },
+        getVisibleModalSecedeGroup(state){
+            return state.visibleModalSecedeGroup
         },
     },
     mutations: {
@@ -172,6 +177,12 @@ export default new Vuex.Store({
         },
         setFaceData(state, payload) {
             state.faceData = payload
+        },
+        setVisibleModalAssignGroup(state, payload){
+            state.visibleModalAssignGroup = payload
+        },
+        setVisibleModalSecedeGroup(state, payload){
+            state.visibleModalSecedeGroup = payload
         },
     },
     actions: {

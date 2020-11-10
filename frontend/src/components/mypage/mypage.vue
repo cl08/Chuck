@@ -1,3 +1,6 @@
+<!--
+ 애니메이션 잔상 처리
+ -->
 <template>
   <div>
     <div
@@ -5,20 +8,21 @@
       :class="{ 'menu-off': !clicked, 'menu-on': clicked }"
     >
       <div class="floating-button-menu-links">
+        <div class="hole"></div>
         <h2>마이페이지</h2>
-        <img src="" alt="" />
-        <div style="text-align: left; margin: 200px 20px 20px 20px">
+        <img  src="@/assets/Temp_Img_g.png" alt="" />
+        <div style="text-align: left; margin: 20px 20px 20px 20px">
           닉네임
           <v-btn
             @click="focusNickname"
-            color="orange"
+            color="#2680EB"
             text
             v-show="!changeNicknameClicked"
             >바꾸기</v-btn
           >
           <v-btn
             @click="changeNickname"
-            color="orange"
+            color="#2680EB"
             text
             v-show="changeNicknameClicked"
             >수정완료</v-btn
@@ -44,15 +48,20 @@
 </template>
 
 <script>
+import api from '@/utils/api';
+import store from '@/store';
 export default {
   data() {
     return {
-      username: "UserName",
+      username: sessionStorage.getItem('NAME'),
       clicked: false,
       changeNicknameClicked: false,
     };
   },
   mounted() {},
+  computed:{
+        groupInfo: () => store.getters.getSelectedGroup,
+    },
   methods: {
     focusNickname() {
       this.changeNicknameClicked = true;
@@ -61,8 +70,20 @@ export default {
       });
     },
     changeNickname() {
-      // axios
-      this.changeNicknameClicked = false;
+      api.put(`/users/${store.getters.getId}`,
+            {
+              id : store.getters.getId,
+              name : this.username
+            },
+            {
+              headers: {'token': store.getters.getToken}
+            },
+      ).then((res)=>{
+        store.dispatch('updateName', this.username)
+        this.changeNicknameClicked = false
+      }).catch((err)=>{
+        console.log(err)
+      })
     },
     close() {
       this.clicked = false;
@@ -72,7 +93,6 @@ export default {
     },
     logout() {
       this.$store.dispatch("logout");
-      console.log("logout");
       this.$router.push("/");
     },
   },
@@ -139,11 +159,26 @@ export default {
       height: 50px;
       outline: none;
       text-align: left;
+      color: #2d2d2d;
     }
     h2{
-      margin: 50px;
+      margin: 60px;
       position: absolute;
       left: 30px;
+    }
+    img{
+      margin-top: 100px;
+      width: 280px;
+      height: 180px;
+    }
+    .hole{
+      background-color:#858585;
+      border-radius: 50px;
+      width: 30px;
+      height: 30px;
+      position: absolute;
+      left: 125px;
+      top: 10px;
     }
   }
 
@@ -162,7 +197,7 @@ export default {
   &.menu-on {
     background: #fff;
     max-width: 280px;
-    max-height: 500px;
+    max-height: 700px;
     border-radius: 10px;
     .floating-button-menu-links {
       width: 100%;
