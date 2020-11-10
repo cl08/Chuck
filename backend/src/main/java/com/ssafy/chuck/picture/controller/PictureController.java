@@ -98,6 +98,25 @@ public class PictureController {
 		return new ResponseEntity<List<PictureDto>>(list, HttpStatus.OK);
 	}
 	
+	@DeleteMapping("/deleteByDiary")
+	@ApiOperation(value = "다이어리 삭제 시, 다이어리에 포함되어 있던 사진 삭제(File, DB, pickle)")
+	public ResponseEntity<String> deleteByDiary(int diary_id, int group_id) {
+		// picture List 추출
+		List<PictureDto> pictureList = pictureService.selectPictureByDiaryId(diary_id);
+		StringBuilder sb = new StringBuilder();
+		// 1. File 삭제
+		for(PictureDto picture : pictureList) {
+			File file = new File(picture.getPath());
+			file.delete();
+			sb.append(picture.getPath() + ":");
+		}
+		// 2. DB 삭제
+		pictureService.deletePictureByDiaryId(diary_id);
+		// 3. pickle 삭제
+		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + group_id + "&imagePath=" + sb.toString(), String.class);
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
 
 	@DeleteMapping("/deleteByPath")
 	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(File)")
@@ -110,12 +129,7 @@ public class PictureController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-//	@DeleteMapping("/deleteById")
-//	@ApiOperation(value = "사진의 ID로 사진 삭제")
-//	public ResponseEntity<String> deletePictureById(int id) {
-//		pictureService.deletePictureById(id);
-//		return new ResponseEntity<String>("success", HttpStatus.OK);
-//	}
+	
  
 	@GetMapping("/gallery")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
