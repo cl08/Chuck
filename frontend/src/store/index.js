@@ -24,12 +24,11 @@ export default new Vuex.Store({
         selectedChuckList: [],
         backState: 1,
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
-        
         faceData: [],
         personArrayGallery : [],
         personArrayFilm: [],
         personArrayBook: [],
-
+        init: false,
     },
     getters: {
         getSelectedGroup(state) {
@@ -108,6 +107,9 @@ export default new Vuex.Store({
         },
         getFaceData(state) {
             return state.faceData
+        },
+        getInit(state) {
+            return state.init
         },
     },
     mutations: {
@@ -194,6 +196,9 @@ export default new Vuex.Store({
         removeComments(state, payload) {
             state.comments.splice(payload, 1)
         },
+        setInit(state, payload) {
+            state.init = payload
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -261,5 +266,8 @@ export default new Vuex.Store({
         delComments({commit}, item) {
             commit('removeComments', item)
         },
+        updateInit({commit}) {
+            commit('setInit', true)
+        }
     }
 })
