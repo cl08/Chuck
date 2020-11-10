@@ -2,6 +2,7 @@
     1. https://github.com/vuetifyjs/vuetify/blob/master/packages/docs/src/examples/v-calendar/event-click.vue
     2. 날짜 연산 : https://dororongju.tistory.com/116
     3. 일 단위 클릭
+    4. 날짜 클릭했을 때 우측 화면에 데이터 나오게
 -->
 <template>
     <div class="fill-height" style="padding:20px 30px 0px 0px;">
@@ -111,11 +112,13 @@ export default {
             this.$refs.calendar.next()
         },
         showEvent ({ nativeEvent, event, date }) {
-            store.dispatch('updateComments', event.id)     
-            this.setSelectedDiary(event.index)
-            this.setVisibleDetail(true)
-            this.setVisibleCalendar(false)
-            this.setVisibleWrite(false)
+            this.setSelectedDay(this.$moment(event.start).format('YYYY-MM-DD'))
+            this.focus = date
+            // store.dispatch('updateComments', event.id)     
+            // this.setSelectedDiary(event.index)
+            // this.setVisibleDetail(true)
+            // this.setVisibleCalendar(false)
+            // this.setVisibleWrite(false)
         },
         updateRange () {
             const events = []

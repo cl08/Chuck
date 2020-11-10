@@ -19,6 +19,8 @@ export default new Vuex.Store({
         visibleAlbum: false,
         visibleVideo: false,
         visiblePreview: false,
+        visibleModalAssignGroup: false,
+        visibleModalSecedeGroup: false,
         chuckList: [],
         comments: [],
         selectedChuckList: [],
@@ -108,6 +110,12 @@ export default new Vuex.Store({
         getFaceData(state) {
             return state.faceData
         },
+        getVisibleModalAssignGroup(state){
+            return state.visibleModalAssignGroup
+        },
+        getVisibleModalSecedeGroup(state){
+            return state.visibleModalSecedeGroup
+        },
         getInit(state) {
             return state.init
         },
@@ -189,6 +197,12 @@ export default new Vuex.Store({
         },
         setFaceData(state, payload) {
             state.faceData = payload
+        },
+        setVisibleModalAssignGroup(state, payload){
+            state.visibleModalAssignGroup = payload
+        },
+        setVisibleModalSecedeGroup(state, payload){
+            state.visibleModalSecedeGroup = payload
         },
         insertComments(state, payload) {
             state.comments.push(payload)
