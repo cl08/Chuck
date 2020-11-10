@@ -7,9 +7,9 @@ import lombok.Data;
 @Data
 public class ReplyDto {
 	private int id;
-	private Long writerId; 
+	private Long writerId;
 	private String writer;
 	private String comment;
-	private int diary_id;
+	private int diaryId;
 	private Date date;
 }

@@ -56,12 +56,13 @@ export default {
                 // 얼굴 분류 정보 불러오기
                 api.get(`pictures/gallery?groupId=${this.getSelectedGroup.id}`)
                 .then(({ data }) => {
+
                     this.$store.commit('setFaceDataGallery', data)
 
                     api.get(`pictures/studio?groupId=${this.getSelectedGroup.id}`)
                     .then(({ data }) => {
                         this.$store.commit('setFaceDataStudio', data)
-                        
+                        this.$store.dispatch('updateInit')
                         // 페이지 이동
                         this.$router.push('/diary')
                     })

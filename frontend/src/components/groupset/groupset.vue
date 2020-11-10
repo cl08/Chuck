@@ -1,114 +1,177 @@
+<!-- 
+    그룹장 양도
+    - 우하단에 버튼
+        - 그룹장일때만 show
+        - 모달창을 통해 그룹원 한명 선택
+        - 확인 버튼 이후 그룹관리 reload
+    - 그룹장이 그룹탈퇴시
+        - 그룹장 양도 모달창 띄워줌
+        - 확인 이후 그룹탈퇴
+    
+    그룹원 목록
+    - 그룹장은 추방버튼 없음
+
+    그룹장 : store.getters.getSelectedGroup.user_id
+-->
 <template>
-    <div class="groupset">
-        <div>
-            <img src='../../assets/title/management_tabtitle.svg' class="tabtitle">
-            <div class="underline"></div>
-        </div>
-        <font size=5>그룹명</font>
-        <div class="information">
-            {{ groupInfo.name }}
-        </div>
-        <font size=5>그룹원 목록
-            <v-btn @click="InviteGroup" color="#3D91FF" text>그룹원 초대하기</v-btn>
-        </font>
-        <div class="list">
-            <div v-for="(member, index) in memberList" :key="index">
-                {{member.name}}
-                <v-btn @click="DeportGroup(member.id)" color="#FFB6B6" text>추방</v-btn>
-            </div>
-        </div>
-        <font size=5>그룹 생성일</font>
-        <div class="createDate">
-            <p>{{this.groupInfo.publishedDate | moment('YYYY.MM.DD')}}</p>
-        </div>
-        <font size=5>그룹 로그</font>
-        <div class="log" style="margin-bottom:0px;">
-            <div v-for="(log, index) in logList" :key="index">
-                {{log.content}}
-            </div>
-        </div>
+  <div class="groupset">
+    <div>
+      <img src="../../assets/title/management_tabtitle.svg" class="tabtitle" />
+      <div class="underline"></div>
     </div>
+    <font size="5">그룹명</font>
+    <div class="information">
+      {{ groupInfo.name }}
+    </div>
+    <font size="5"
+      >그룹원 목록
+      <v-btn @click="InviteGroup" color="#3D91FF" text>그룹원 초대하기</v-btn>
+    </font>
+    <div class="list">
+      <div v-for="(member, index) in memberList" :key="index">
+        {{ member.name }}
+        <v-btn
+          @click="DeportGroup(member.userId)"
+          color="#FFB6B6"
+          text
+          v-show="flag(member.owner)"
+          >추방</v-btn
+        >
+      </div>
+    </div>
+    <font size="5">그룹 생성일</font>
+    <div class="createDate">
+      <p>{{ this.groupInfo.publishedDate | moment("YYYY.MM.DD") }}</p>
+    </div>
+    <font size="5">그룹 로그</font>
+    <div class="log" style="margin-bottom: 0px">
+      <div v-for="(log, index) in logList" :key="index">
+        {{ log.content }}
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
-import axios from 'axios';
-import api from '@/utils/api';
-import store from '@/store';
+import api from "@/utils/api";
+import store from "@/store";
 
 export default {
-    data(){
-        return{
-            memberList:[],
-            logList:[]
-        }
-    },
-    created() {
-        api.get(`groups/${this.groupInfo.id}/members`, {
-            headers: {
-                token: sessionStorage.getItem('token'),
-            }
-        }).then((res) => {
-            this.memberList = res.data;
-        });
-        
-        api.get(`logs/${this.groupInfo.id}`).then((res) => {
-            this.logList = res.data;
-        })
-    },
-    mounted() {
-         if (!window.Kakao && sessionStorage.getItem('ID') !== '1') {
-            const script = document.createElement('script');
-              script.onload = () => window.Kakao.init('d1baf2cad3354a9138989baea6e65995');
-            script.src = '/js/kakao.min.js';
-            document.head.appendChild(script);
-        }
-    },
-    methods:{
-        InviteGroup() {
-            if(sessionStorage.getItem('ID') === '1') {
-                alert('테스트 아이디는 카카오 초대가 불가능합니다.')
-            } else {
-                window.Kakao.Link.sendCustom({
-                    templateId: 39047,
-                    templateArgs: {
-                        key: this.groupInfo.token,
-                        group: this.groupInfo.name, // this.groupName,
-                        user: store.getters.getName,
-                    },
-                });
-            }
+  data() {
+    return {
+      memberList: [],
+      logList: [],
+    };
+  },
+  created() {
+    api
+      .get(`groups/${this.groupInfo.id}/members`, {
+        headers: {
+          token: sessionStorage.getItem("token"),
         },
-        DeportGroup(id){
-            // axios 멤버 추방하기
-        },
-    },
-    computed:{
-        groupInfo: () => store.getters.getSelectedGroup,
+      })
+      .then((res) => {
+        this.memberList = res.data;
+      });
+
+    api.get(`logs/${this.groupInfo.id}`).then((res) => {
+      this.logList = res.data;
+    });
+  },
+  mounted() {
+    if (!window.Kakao && sessionStorage.getItem("ID") !== "1") {
+      const script = document.createElement("script");
+      script.onload = () =>
+        window.Kakao.init("d1baf2cad3354a9138989baea6e65995");
+      script.src = "/js/kakao.min.js";
+      document.head.appendChild(script);
     }
-}
+  },
+  methods: {
+    InviteGroup() {
+      if (sessionStorage.getItem("ID") === "1") {
+        alert("테스트 아이디는 카카오 초대가 불가능합니다.");
+      } else {
+        window.Kakao.Link.sendCustom({
+          templateId: 39047,
+          templateArgs: {
+            key: this.groupInfo.token,
+            group: this.groupInfo.name, // this.groupName,
+            user: store.getters.getName,
+          },
+        });
+      }
+    },
+    DeportGroup(id) {
+      // axios 멤버 추방하기
+      api
+        .delete(`groups/${this.groupInfo.id}/` + id, {
+          headers: {
+            token: sessionStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          this.update();
+        });
+    },
+    update() {
+        // 멤버리스트 , 회원 갱신
+      api
+        .get(`groups/${this.groupInfo.id}/members`, {
+          headers: {
+            token: sessionStorage.getItem("token"),
+          },
+        })
+        .then((res) => {
+          this.memberList = res.data;
+        });
+
+      api.get(`logs/${this.groupInfo.id}`).then((res) => {
+        this.logList = res.data;
+      });
+    },
+    flag(ownerflag) {
+      //   console.log("로그인 id : " +sessionStorage.getItem('ID'))
+      //   console.log("그룹장 id : " +this.groupInfo.userId)
+      //   console.log("멤버 오너임? : " + ownerflag)
+      //   console.log(sessionStorage.getItem('ID')==this.groupInfo.userId)
+      return (
+        sessionStorage.getItem("ID") == this.groupInfo.userId && !ownerflag
+      );
+    },
+  },
+  computed: {
+    groupInfo: () => store.getters.getSelectedGroup,
+  },
+};
 </script>
 
 <style scope>
-.groupset{
-    margin: 30px 30px 0px 30px;
-    text-align: left;
+.groupset {
+  margin: 30px 30px 0px 30px;
+  text-align: left;
 }
-.groupset > div{
-    margin-bottom: 24px;
-    color: #2d2d2d;
+.groupset > div {
+  margin-bottom: 24px;
+  color: #2d2d2d;
 }
-.information button{
-    left: 300px;
+.information button {
+  left: 300px;
 }
-.list{
-    height: 160px;
-    overflow: scroll;
+.list {
+  padding-top: 10px;
+  height: 160px;
+  overflow: scroll;
 }
-.log{
-    height: 200px;
-    overflow: scroll;
+.list div {
+  line-height: 36px;
+  vertical-align: middle;
 }
-.createDate font{
-    margin-bottom: 10px;
+.log {
+  height: 200px;
+  overflow: scroll;
+}
+.createDate font {
+  margin-bottom: 10px;
 }
 </style>

@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GalleryResponse {
-	private String rep_image;
-	private List<Gallery> content_list;
+public class StudioListResponse {
+	private List<StudioResponse> studio_list;
 }

@@ -2,12 +2,14 @@ package com.ssafy.chuck.picture.dto;
 
 import java.util.List;
 
+import com.ssafy.chuck.diary.dto.DiaryDto;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class GalleryResponse {
+public class StudioResponse {
 	private String rep_image;
-	private List<Gallery> content_list;
+	private List<DiaryDto> content_list;
 }

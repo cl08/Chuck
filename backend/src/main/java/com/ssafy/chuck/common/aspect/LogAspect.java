@@ -15,6 +15,7 @@ import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
 import com.ssafy.chuck.log.dto.LogDto;
 import com.ssafy.chuck.log.service.LogService;
+import com.ssafy.chuck.reply.dto.ReplyDto;
 
 @Aspect
 @Component
@@ -51,11 +52,12 @@ public class LogAspect {
 	private void replyLog(JoinPoint point) {
 		logger.debug("그룹내 댓글 작성 로그");
 		Object[] parameterValues = point.getArgs();
-		long userId = (long)parameterValues[0];
-		int diaryId = (int)parameterValues[2];
-		DiaryDto dto = diaryService.read(diaryId);
-		String comment = userId + "새로운 댓글(" + diaryId + ")을 게시하였습니다.";
-		service.create(new LogDto(dto.getGroupId(), comment));
+		ReplyDto dto = (ReplyDto)parameterValues[0];
+		long userId = dto.getWriterId();
+		int diaryId = dto.getDiaryId();
+		DiaryDto diary = diaryService.read(diaryId);
+		String comment = userId + "님이 새로운 댓글(" + diaryId + ")을 게시하였습니다.";
+		service.create(new LogDto(diary.getGroupId(), comment));
 	}
 
 	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.SignOutLog)")

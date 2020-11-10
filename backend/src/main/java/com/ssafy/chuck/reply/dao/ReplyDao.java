@@ -9,7 +9,9 @@ import com.ssafy.chuck.reply.dto.ReplyDto;
 
 @Mapper
 public interface ReplyDao {
-	int insertComment(Long writer, String comment, int diary_id, Date date);
-	List<ReplyDto> selectCommentByDiaryId(int diary_id);
-	List<ReplyDto> selectCommentByWriter(Long writer);
+	int insertComment(ReplyDto reply);
+	ReplyDto read(int id);
+	List<ReplyDto> selectCommentByDiaryId(int diaryId);
+	List<ReplyDto> selectCommentByWriter(Long writerId);
+	int delete(int id);
 }
