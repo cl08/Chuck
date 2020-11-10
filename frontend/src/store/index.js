@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '@/utils/api'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -207,7 +208,7 @@ export default new Vuex.Store({
             state.faceDataBook = payload
         },
         setFaceDataFilm(state, payload) {
-            state.faceDateFilm = payload
+            state.faceDataFilm = payload
         },
     },
     actions: {

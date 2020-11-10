@@ -4,8 +4,7 @@
             <font size=4>미리보기</font>
         </div>
         <div class="dash" style="height:620px;">
-            <el-carousel indicator-position="none" arrow="always" height="605px">
-                {{ getFaceDataBook.length }}
+            <el-carousel indicator-position="none" arrow="always" height="580px">
                 <div v-for="(data, i) in getFaceDataBook" :key="i">
                     <div v-if="getPersonArrayBook[i]">
                         <el-carousel-item v-for="(chuck, j) in data.content_list" :key="j">
@@ -20,6 +19,7 @@
                     </div>
                 </div>
             </el-carousel>
+            {{ getFaceDataBook.length }}
         </div>
         <div class="dash pointer">
             <font size=4>PDF로 내려받기</font>

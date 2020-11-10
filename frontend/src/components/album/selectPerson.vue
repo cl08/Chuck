@@ -50,7 +50,7 @@ export default {
         return {
             value1: '',
             value2: '',
-            dates: '',
+            dates: [],
             personArray: [],
             selectCount: 0,
         }
@@ -128,7 +128,6 @@ export default {
                 this.selectCount = this.getFaceDataBook.length
                 this.setPersonArrayBook(this.personArray)
             }
-            console.log(this.getFaceDataBook)
         },
         select(index) {
             let el = document.getElementById('albumFace'+index)
