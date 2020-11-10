@@ -100,18 +100,20 @@ public class PictureController {
 	
 	@DeleteMapping("/deleteByDiary")
 	@ApiOperation(value = "다이어리 삭제 시, 다이어리에 포함되어 있던 사진 삭제(File, DB, pickle)")
-	public ResponseEntity<String> deleteByDiary(int diary_id) {
+	public ResponseEntity<String> deleteByDiary(int diary_id, int group_id) {
 		// picture List 추출
 		List<PictureDto> pictureList = pictureService.selectPictureByDiaryId(diary_id);
+		StringBuilder sb = new StringBuilder();
 		// 1. File 삭제
-		for(int i=0;i<pictureList.size();i++) {
-			File file = new File(pictureList.get(i).getPath());
+		for(PictureDto picture : pictureList) {
+			File file = new File(picture.getPath());
 			file.delete();
+			sb.append(picture.getPath() + ":");
 		}
 		// 2. DB 삭제
-		
+		pictureService.deletePictureByDiaryId(diary_id);
 		// 3. pickle 삭제
-		
+		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + group_id + "&imagePath=" + sb.toString(), String.class);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
