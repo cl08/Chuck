@@ -153,9 +153,8 @@ public class PictureController {
 				System.out.println("그냥 path : " + list.get(j).getAsString());
 				System.out.println("path로 찾은 ");
 				Object diary_id = pictureService.selectDiaryIdByPath(list.get(j).getAsString());
-				
-				galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1], 
-						diary_id == null ? 0 : (int)diary_id));
+				if(diary_id != null) galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1], 
+						(int)diary_id));
 			}
 			galleryResponseList.add(new GalleryResponse(rep, galleryList));
     	}
