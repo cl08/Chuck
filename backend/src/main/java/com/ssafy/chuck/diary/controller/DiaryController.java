@@ -130,7 +130,6 @@ public class DiaryController {
 		logger.debug("다이어리 삭제 호출");
 		long userId = permissionCheck.check(token).getId();
 		service.delete(userId, id);
-		fileService.delete(service.read(id).getImage()); //이미지 파일 삭제
 		return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 	}
 

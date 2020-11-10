@@ -222,6 +222,9 @@ export default {
       this.setBackState(2);
       eventBus.$emit('showDetail', data.item);
     });
+    eventBus.$on('back', () => {
+      this.back();
+    })
   },
   computed: {
     ...mapGetters([

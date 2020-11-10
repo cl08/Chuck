@@ -120,12 +120,15 @@ export default {
             }
         },
         uploadImages(diaryId) {
-            const images = [];
+            let images = [];
             this.imageList.forEach(image => {
                 images.push(image);
             });
+            console.log(images)
+            console.log(diaryId)
             api.post(`pictures/insert`, {
                 diary_id: diaryId,
+                group_id: this.getSelectedGroup.id,
                 path_list: images,
             }).then((data) => {
                 eventBus.$emit('uploadeDone');
