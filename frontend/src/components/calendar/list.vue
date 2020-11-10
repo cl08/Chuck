@@ -26,11 +26,11 @@
             </span>
         </v-row>
 
-        <v-container v-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
+        <v-container v-if="selectedChuckList.length != 0" style="padding:10px 30px 0px 30px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
                 <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="margin-bottom:10px;">
-                    <v-card class="pointer" style="box-shadow: 5px 5px 5px 2px #CED4DA;">
+                    <v-card class="pointer" style="box-shadow: 2px 2px 5px 1px #CED4DA;">
                         <div class="d-flex flex-no-wrap">
                             <div class="belt" :style="{backgroundColor:item.color}"></div>
                             <v-avatar size="130" tile style="margin:5px 0px;">
