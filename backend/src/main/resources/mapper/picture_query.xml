@@ -28,7 +28,7 @@
 	</delete>
 	
 	<!-- 특정 사진이 등록된 diary_id 찾기 -->
-	<select id="selectDiaryIdByPath" resultType="Integer">
+	<select id="selectDiaryIdByPath" resultType="Object">
 		SELECT DIARY_ID FROM PICTURES WHERE PATH = #{path}
 	</select>
 </mapper>
