@@ -25,7 +25,8 @@ export default new Vuex.Store({
         backState: 1,
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
         
-        faceData: [],
+        faceDataGallery: [],
+        faceDataStudio: [],
         personArrayGallery : [],
         personArrayFilm: [],
         personArrayBook: [],
@@ -106,8 +107,11 @@ export default new Vuex.Store({
         getBackState(state) {
             return state.backState
         },
-        getFaceData(state) {
-            return state.faceData
+        getFaceDataGallery(state) {
+            return state.faceDataGallery
+        },
+        getFaceDataStudio(state) {
+            return state.faceDataStudio
         },
     },
     mutations: {
@@ -185,8 +189,11 @@ export default new Vuex.Store({
         setBackState(state, payload) {
             state.backState = payload
         },
-        setFaceData(state, payload) {
-            state.faceData = payload
+        setFaceDataGallery(state, payload) {
+            state.faceDataGallery = payload
+        },
+        setFaceDataStudio(state, payload) {
+            state.faceDataStudio = payload
         },
     },
     actions: {

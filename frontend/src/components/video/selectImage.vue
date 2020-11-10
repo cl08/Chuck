@@ -7,7 +7,7 @@
             <span class="photo pointer" @click="selectAll">ALL</span>
             <span v-for="(person, i) in getPersonArrayFilm" :key="i">
                 <span v-show="person === true">
-                    <span class="photo pointer" v-for="(photo, j) in getFaceData.cluster_list[i].path_list" :key="j" @click="select(i, j)" :style="'background-image:url('+photo+')'">
+                    <span class="photo pointer" v-for="(photo, j) in getFaceDataStudio.studio_list[i].content_list" :key="j" @click="select(i, j)" :style="'background-image:url('+photo+')'">
                         <img :id="'videoPhoto'+i+'arr'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
                     </span>
                 </span>
@@ -35,7 +35,7 @@ export default {
         }
     },
     mounted() {
-        let num = this.getFaceData.cluster_list.length
+        let num = this.getFaceDataStudio.studio_list.length
         for(let i=0; i<num; i++) {
             this.imageArray[i] = new Array()
         }
@@ -44,7 +44,7 @@ export default {
         ...mapGetters([
             'getId',
             'getChuckList',
-            'getFaceData',
+            'getFaceDataStudio',
             'getPersonArrayFilm',
         ]),
     },
@@ -53,7 +53,7 @@ export default {
             let count = 0
             for(let i=0; i<this.getPersonArrayFilm.length; i++){
                 if(this.getPersonArrayFilm[i])
-                    count = count + this.getFaceData.cluster_list[i].path_list.length
+                    count = count + this.getFaceDataStudio.studio_list[i].content_list.length
             }
             this.maxCount = count
         }
@@ -66,18 +66,18 @@ export default {
             'setVisiblePreview',
         ]),
         nextStep() {
-            let path_list = new Array()
-            for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
-                for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+            let content_list = new Array()
+            for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
+                for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
                     if(this.imageArray[i][j]) {
-                        path_list.push(this.getFaceData.cluster_list[i].path_list[j])
+                        content_list.push(this.getFaceDataStudio.studio_list[i].content_list[j])
                     }
                 }
             }
-            console.log(path_list)
+            console.log(content_list)
             api.get('picktures/mkVideo', {
                 'userId': this.getId,
-                'path_list': path_list,
+                'content_list': content_list,
             })
             .then(({ data }) => {
                 console.log(data)
@@ -89,9 +89,9 @@ export default {
         },
         selectAll() {
             if(this.selectCount == this.maxCount) {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
                     if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                        for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
                             let el = document.getElementById('videoPhoto'+i+'arr'+j)
                             el.setAttribute('class', 'videoPhotoNoneDisplay')
                             this.imageArray[i][j] = false
@@ -101,9 +101,9 @@ export default {
                 this.selectCount = 0
             }
             else {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
                     if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                        for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
                             let el = document.getElementById('videoPhoto'+i+'arr'+j)
                             el.setAttribute('class', '')
                             this.imageArray[i][j] = true

@@ -5,7 +5,7 @@
             <div class="underline"></div>
         </div>
         <v-container v-if="chuckList.length != 0" style="padding:30px 0px 0px 10px; text-align:left;">
-            <v-col v-for="(item, index) in chuckList" :key="index" cols="12" @click="detail(item)" style="margin-bottom:-7px;">
+            <v-col v-for="(item, index) in chuckList" :key="index" cols="12" @click="detail(item)" style="padding:0px; margin-bottom:-7px;">
                 <img v-if="index===0" src="../../assets/timeline01.png" class="line" style="height:80px">
                 <img v-else-if="chuckList[index-1].date === chuckList[index].date" src="../../assets/timeline02.png" class="line" style="height:80px;">
                 <img v-else src="../../assets/timeline03.png" class="line" style="height:120px; width:80px;">

@@ -35,7 +35,7 @@
         </div>
         <div class="dash" style="height:325px; text-align:left">
             <span class="face pointer" @click="selectAll">ALL</span>
-            <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url('+face.rep_image+')'">
+            <span class="face pointer" v-for="(face, index) in getFaceDataStudio.studio_list" :key="index" @click="select(index)" :style="'background-image:url('+face.rep_image+')'">
                 <img :id="'videoFace'+index" class="videoFaceNoneDisplay" src="../../assets/check_circle.svg">
             </span>
         </div>
@@ -57,7 +57,7 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getFaceData',
+            'getFaceDataStudio',
         ]),
     },
     methods: {
@@ -74,8 +74,8 @@ export default {
             this.value1 = ''
         },
         selectAll() {
-            if(this.selectCount === this.getFaceData.cluster_list.length) {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+            if(this.selectCount === this.getFaceDataStudio.studio_list.length) {
+                for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++){
                     let el = document.getElementById('videoFace'+i)
                     el.setAttribute('class', 'videoFaceNoneDisplay')
                     this.$set(this.personArray, i, false)
@@ -84,12 +84,12 @@ export default {
                 this.setPersonArrayFilm(this.personArray)
             }
             else {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++){
+                for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++){
                     let el = document.getElementById('videoFace'+i)
                     el.setAttribute('class', '')
                     this.$set(this.personArray, i, true)
                 }
-                this.selectCount = this.getFaceData.cluster_list.length
+                this.selectCount = this.getFaceDataStudio.studio_list.length
                 this.setPersonArrayFilm(this.personArray)
             }
         },
