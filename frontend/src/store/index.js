@@ -27,11 +27,13 @@ export default new Vuex.Store({
         
         faceDataGallery: [],
         faceDataStudio: [],
+        faceDataBook: [],
+        faceDataFilm: [],
         personArrayGallery : [],
-        personArrayFilm: [],
         personArrayBook: [],
-
+        personArrayFilm: [],
     },
+
     getters: {
         getSelectedGroup(state) {
             return state.selectedGroup
@@ -112,6 +114,12 @@ export default new Vuex.Store({
         },
         getFaceDataStudio(state) {
             return state.faceDataStudio
+        },
+        getFaceDataBook(state) {
+            return state.faceDataBook
+        },
+        getFaceDataFilm(state) {
+            return state.faceDataFilm
         },
     },
     mutations: {
@@ -194,6 +202,12 @@ export default new Vuex.Store({
         },
         setFaceDataStudio(state, payload) {
             state.faceDataStudio = payload
+        },
+        setFaceDataBook(state, payload) {
+            state.faceDataBook = payload
+        },
+        setFaceDataFilm(state, payload) {
+            state.faceDateFilm = payload
         },
     },
     actions: {

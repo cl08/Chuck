@@ -24,6 +24,7 @@ export default {
     data() {
         return {
             checkArr: [],
+            selectCount: 0,
         };
     },
     computed: {
@@ -37,20 +38,35 @@ export default {
             'setPersonArrayGallery',
         ]),
         selectAll() {
-            for (let i = 0; i < this.getFaceDataGalleryGallery.gallery_list.length; i++) {
-                let el = document.getElementById("galleryFace" + i);
-                el.setAttribute("class", "");
-                this.$set(this.checkArr, i, true);
-                this.setPersonArrayGallery(this.checkArr);
+            if(this.selectCount === this.getFaceDataGallery.gallery_list.length) {
+                for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
+                    let el = document.getElementById('galleryFace'+i)
+                    el.setAttribute('class', 'galleryFaceNoneDisplay')
+                    this.$set(this.checkArr, i, false)
+                }
+                this.selectCount = 0
+                this.setPersonArrayGallery(this.checkArr)
+            }
+            else {
+                for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
+                    let el = document.getElementById('galleryFace'+i)
+                    el.setAttribute('class', '')
+                    this.$set(this.checkArr, i, true)
+                }
+                this.selectCount = this.getFaceDataGallery.gallery_list.length
+                this.setPersonArrayGallery(this.checkArr)
             }
         },
         select(index) {
+            console.log(this.getFaceDataGallery.gallery_list.length)
             let el = document.getElementById("galleryFace" + index);
             el.classList.toggle("galleryFaceNoneDisplay");
             if (this.checkArr[index]) {
                 this.$set(this.checkArr, index, false);
+                this.selectCount--
             } else {
                 this.$set(this.checkArr, index, true);
+                this.selectCount++
             }
             // store에 저장
             this.setPersonArrayGallery(this.checkArr);

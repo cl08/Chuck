@@ -9,7 +9,7 @@
             </span>
         </div>
         <div v-if="getChuckList[getSelectedDiary]" style="margin: 10px 30px 10px 30px;">
-            <v-carousel height="400" hide-delimiter-background show-arrows-on-hover>
+            <v-carousel height="400" hide-delimiter-background :hide-delimiters=true>
                 <v-carousel-item v-for="(item, i) in getChuckList[getSelectedDiary].image" :key="i" :src="item"></v-carousel-item>
             </v-carousel>
         </div>
