@@ -36,32 +36,50 @@ export default {
             "setChuckList",
         ]),
         fetchData() {
-            // setTimeout(() => {
-                // 게시글 불러오기
-                api.get(`diaries/group/${this.getSelectedGroup.id}`, {
-                    headers: {
-                        token: sessionStorage.getItem('token')
-                    },
-                })
+            setTimeout(() => {
+            }, 2000)
+            // 게시글 불러오기
+            api.get(`diaries/group/${this.getSelectedGroup.id}`, {
+                headers: {
+                    token: sessionStorage.getItem('token')
+                },
+            })
+            .then(({ data }) => {
+                for(var i=0; i<data.length; i++) {
+                    const image = data[i].image.split(';')
+                    data[i].image = image
+                    data[i].color = this.getColor[i % 10]
+                    data[i].index = i
+                }
+                this.setChuckList(data)
+                
+                // 얼굴 분류 정보 불러오기
+                api.get(`pictures/gallery?groupId=${this.getSelectedGroup.id}`)
                 .then(({ data }) => {
-                    for(var i=0; i<data.length; i++) {
-                        const image = data[i].image.split(';')
-                        data[i].image = image
-                        data[i].color = this.getColor[i % 10]
-                        data[i].index = i
-                    }
-                    this.setChuckList(data)
-                    
-                    // 얼굴 분류 정보 불러오기
-                    api.get('pictures/gallery?groupId='+this.getSelectedGroup.id)
+
+                    this.$store.commit('setFaceDataGallery', data)
+
+                    api.get(`pictures/studio?groupId=${this.getSelectedGroup.id}`)
                     .then(({ data }) => {
-                        this.$store.commit('setFaceData', data)
+                        this.$store.commit('setFaceDataStudio', data)
                         this.$store.dispatch('updateInit')
                         // 페이지 이동
                         this.$router.push('/diary')
                     })
+                    .catch(( { error }) => {
+                        console.log(error)
+                        alert("error")
+                    })
                 })
-            // }, 2000)
+                .catch(( { error }) => {
+                    console.log(error)
+                    alert("error")
+                })
+            })
+            .catch(( { error }) => {
+                console.log(error)
+                alert("error")
+            })
         },
     }
 }

@@ -5,9 +5,9 @@
         </div>
         <div class="dash" style="height:620px; text-align:left">
             <span class="photo pointer" @click="selectAll">ALL</span>
-            <span v-for="(person, i) in getPersonArrayFilm" :key="i">
-                <span v-show="person === true">
-                    <span class="photo pointer" v-for="(photo, j) in getFaceData.cluster_list[i].path_list" :key="j" @click="select(i, j)" :style="'background-image:url('+photo+')'">
+            <span v-for="(data, i) in getFaceDataFilm" :key="i">
+                <span v-show="getPersonArrayFilm[i]">
+                    <span class="photo pointer" v-for="(chuck, j) in data.content_list" :key="j" @click="select(i, j)" :style="'background-image:url('+chuck.image+')'">
                         <img :id="'videoPhoto'+i+'arr'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
                     </span>
                 </span>
@@ -30,32 +30,31 @@ export default {
     data () {
         return {
             selectCount: 0,
-            maxCount : '',
+            maxCount : 0,
             imageArray: [],
-        }
-    },
-    mounted() {
-        let num = this.getFaceData.cluster_list.length
-        for(let i=0; i<num; i++) {
-            this.imageArray[i] = new Array()
         }
     },
     computed: {
         ...mapGetters([
             'getId',
             'getChuckList',
-            'getFaceData',
+            'getFaceDataFilm',
             'getPersonArrayFilm',
         ]),
     },
     watch: {
         getPersonArrayFilm: function() {
             let count = 0
-            for(let i=0; i<this.getPersonArrayFilm.length; i++){
+            for(let i=0; i<this.getPersonArrayFilm.length; i++) {
                 if(this.getPersonArrayFilm[i])
-                    count = count + this.getFaceData.cluster_list[i].path_list.length
+                    count = count + this.getFaceDataFilm[i].content_list.length
             }
             this.maxCount = count
+        },
+        getFaceDataFilm: function() {
+            for(let i=0; i<this.getFaceDataFilm.length; i++) {
+                this.imageArray[i] = new Array()
+            }
         }
     },
     methods: {
@@ -66,18 +65,18 @@ export default {
             'setVisiblePreview',
         ]),
         nextStep() {
-            let path_list = new Array()
-            for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
-                for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+            let src = new Array()
+            for(let i=0; i<this.getFaceDataFilm.length; i++) {
+                for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
                     if(this.imageArray[i][j]) {
-                        path_list.push(this.getFaceData.cluster_list[i].path_list[j])
+                        src.push(this.getFaceDataFilm[i].content_list[j].image)
                     }
                 }
             }
-            console.log(path_list)
-            api.get('picktures/mkVideo', {
+            api.post('picktures/mkVideo', {
+                'music': "test",
                 'userId': this.getId,
-                'path_list': path_list,
+                'path_list': src,
             })
             .then(({ data }) => {
                 console.log(data)
@@ -89,9 +88,9 @@ export default {
         },
         selectAll() {
             if(this.selectCount == this.maxCount) {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                for(let i=0; i<this.getFaceDataFilm.length; i++) {
                     if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                        for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
                             let el = document.getElementById('videoPhoto'+i+'arr'+j)
                             el.setAttribute('class', 'videoPhotoNoneDisplay')
                             this.imageArray[i][j] = false
@@ -101,9 +100,9 @@ export default {
                 this.selectCount = 0
             }
             else {
-                for(let i=0; i<this.getFaceData.cluster_list.length; i++) {
+                for(let i=0; i<this.getFaceDataFilm.length; i++) {
                     if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceData.cluster_list[i].path_list.length; j++) {
+                        for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
                             let el = document.getElementById('videoPhoto'+i+'arr'+j)
                             el.setAttribute('class', '')
                             this.imageArray[i][j] = true
@@ -116,7 +115,7 @@ export default {
         select(i, j) {
             let el = document.getElementById('videoPhoto'+i+'arr'+j)
             el.classList.toggle("videoPhotoNoneDisplay")
-            if(this.imageArray[i][j]) {    
+            if(this.imageArray[i][j]) {
                 this.imageArray[i][j] = false
                 this.selectCount--
             }

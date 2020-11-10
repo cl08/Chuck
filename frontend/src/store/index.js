@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import api from '@/utils/api'
+
 Vue.use(Vuex)
 
 export default new Vuex.Store({
@@ -26,12 +27,16 @@ export default new Vuex.Store({
         selectedChuckList: [],
         backState: 1,
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
-        faceData: [],
+        faceDataGallery: [],
+        faceDataStudio: [],
+        faceDataBook: [],
+        faceDataFilm: [],
         personArrayGallery : [],
-        personArrayFilm: [],
         personArrayBook: [],
+        personArrayFilm: [],
         init: false,
     },
+
     getters: {
         getSelectedGroup(state) {
             return state.selectedGroup
@@ -107,8 +112,17 @@ export default new Vuex.Store({
         getBackState(state) {
             return state.backState
         },
-        getFaceData(state) {
-            return state.faceData
+        getFaceDataGallery(state) {
+            return state.faceDataGallery
+        },
+        getFaceDataStudio(state) {
+            return state.faceDataStudio
+        },
+        getFaceDataBook(state) {
+            return state.faceDataBook
+        },
+        getFaceDataFilm(state) {
+            return state.faceDataFilm
         },
         getVisibleModalAssignGroup(state){
             return state.visibleModalAssignGroup
@@ -195,8 +209,17 @@ export default new Vuex.Store({
         setBackState(state, payload) {
             state.backState = payload
         },
-        setFaceData(state, payload) {
-            state.faceData = payload
+        setFaceDataGallery(state, payload) {
+            state.faceDataGallery = payload
+        },
+        setFaceDataStudio(state, payload) {
+            state.faceDataStudio = payload
+        },
+        setFaceDataBook(state, payload) {
+            state.faceDataBook = payload
+        },
+        setFaceDataFilm(state, payload) {
+            state.faceDataFilm = payload
         },
         setVisibleModalAssignGroup(state, payload){
             state.visibleModalAssignGroup = payload
