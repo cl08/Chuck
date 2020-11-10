@@ -53,13 +53,13 @@ export default {
                     this.setChuckList(data)
                     
                     // 얼굴 분류 정보 불러오기
-                    api.get('pictures/gallery?groupId='+this.getSelectedGroup.id)
-                    .then(({ data }) => {
-                        this.$store.commit('setFaceData', data)
+                    // api.get('pictures/gallery?groupId='+this.getSelectedGroup.id)
+                    // .then(({ data }) => {
+                    //     this.$store.commit('setFaceData', data)
 
                         // 페이지 이동
                         this.$router.push('/diary')
-                    })
+                    // })
                 })
             // }, 2000)
         },
