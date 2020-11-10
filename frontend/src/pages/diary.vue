@@ -214,6 +214,9 @@ export default {
     };
   },
   created() {
+    if(!this.getInit) {
+      this.$router.push('/fetch')
+    }
     eventBus.$on('movePage', (data) => {
       this.movePage(data.index);
       this.setBackState(2);
@@ -234,6 +237,7 @@ export default {
       "getVisibleVideo",
       "getVisiblePreview",
       "getBackState",
+      "getInit",
     ]),
   },
   methods: {
