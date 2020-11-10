@@ -17,10 +17,18 @@
 		delete from PICTURES where ID = #{id}
 	</delete>
 	
-	<!-- 사진 삭제(다이어리의 아이디로) -->
-	<!-- 
-	<delete id="deletePictureByDiary">
-		delete from pictures where diary_id = #{diary_id}
+	<!-- 특정 diary_id의 사진 리스트 -->
+	<select id="selectPictureByDiaryId" resultType="com.ssafy.chuck.picture.dto.PictureDto">
+		select id, DIARY_ID, path from PICTURES where diary_id = #{diary_id}
+	</select>
+	
+	<!-- 사진 삭제(다이어리의 아이디로) --> 
+	<delete id="deletePictureByDiaryId">
+		delete from PICTURES where diary_id = #{diary_id}
 	</delete>
-	 -->
+	
+	<!-- 특정 사진이 등록된 diary_id 찾기 -->
+	<select id="selectDiaryIdByPath" resultType="Object">
+		SELECT DIARY_ID FROM PICTURES WHERE PATH = #{path}
+	</select>
 </mapper>

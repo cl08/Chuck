@@ -7,6 +7,6 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ClusterListResponse {
-	private List<ClusterResponse> cluster_list;
+public class GalleryListResponse {
+	private List<GalleryResponse> gallery_list;
 }

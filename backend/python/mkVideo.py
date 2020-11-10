@@ -8,7 +8,7 @@ from moviepy.editor import *
 
 # pip install moviepy
 
-def makeVideo(paths, userid):
+def makeVideo(paths, userid, music):
     paths = paths[:-1]
     pathList = paths.split(":")
 
@@ -38,14 +38,14 @@ def makeVideo(paths, userid):
 
     # 오디오 입히기
     videoclip = VideoFileClip("videos/" + userid + "/middle.mp4")
-    audioclip = AudioFileClip("Fingertips.mp3")
+    audioclip = AudioFileClip(music)
     audioclip.duration = videoclip.duration
     videoclip.audio = audioclip
     videoclip.write_videofile("videos/" + userid + "/final.mp4")
 
 
 def main():
-    makeVideo("dataset\\1.jpg:dataset\\102701997.2.jpg:dataset\\1809170726057320_w.jpg:dataset\\2.jpg:dataset\\20191108181733_5dc532adcc402_1.jpg:")
+    makeVideo("dataset\\1.jpg:dataset\\102701997.2.jpg:dataset\\1809170726057320_w.jpg:dataset\\2.jpg:dataset\\20191108181733_5dc532adcc402_1.jpg:", "5")
 
 
 

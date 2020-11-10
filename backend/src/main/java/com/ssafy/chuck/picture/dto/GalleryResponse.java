@@ -7,7 +7,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class ClusterResponse {
+public class GalleryResponse {
 	private String rep_image;
-	private List<String> path_list;
+	private List<Gallery> content_list;
 }

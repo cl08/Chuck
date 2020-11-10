@@ -137,7 +137,6 @@
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
     <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
-    <!-- <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back"> -->
     <Mypage></Mypage>
     <assginGroupModal v-if="getVisibleModalAssignGroup"></assginGroupModal>
     <secedeGroupModal v-if="getVisibleModalSecedeGroup"></secedeGroupModal>
@@ -147,7 +146,9 @@
 <script>
 import $ from "jquery";
 import { mapGetters } from "vuex";
-import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
+import eventBus from '@/utils/EventBus';
+
 // timeline
 import Intro from "@/components/timeline/intro.vue";
 import Timeline from "@/components/timeline/timeline.vue";
@@ -183,7 +184,6 @@ import secedeGroupModal from "@/components/groupset/secedeGroupModal.vue";
 
 import Mypage from "@/components/mypage/mypage.vue";
 
-import eventBus from '@/utils/EventBus';
 export default {
   components: {
     Calendar,
@@ -220,7 +220,9 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('updateChuckList');
+    if(!this.getInit) {
+      this.$router.push('/fetch')
+    }
     eventBus.$on('movePage', (data) => {
       this.movePage(data.index);
       this.setBackState(2);
@@ -231,6 +233,7 @@ export default {
     ...mapGetters([
       "getChuckList",
       "getSelectedDiary",
+      "getSelectedGroup",
       "getVisibleCalendar",
       "getVisibleDetail",
       "getVisibleWrite",
@@ -242,16 +245,8 @@ export default {
       "getBackState",
       "getVisibleModalAssignGroup",
       "getVisibleModalSecedeGroup",
+      "getInit",
     ]),
-  },
-  watch: {
-    getVisibleCalendar() {
-      if(this.getVisibleCalendar) {
-        $('#pen').css('left', '664px')
-      } else {
-         $('#pen').css('left', '744px')
-      }
-    }
   },
   methods: {
     ...mapMutations([

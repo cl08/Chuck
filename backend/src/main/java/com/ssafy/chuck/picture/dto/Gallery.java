@@ -2,11 +2,12 @@ package com.ssafy.chuck.picture.dto;
 
 import java.util.List;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 
 @Data
-public class PictureResponse {
-	private int group_id;
+@AllArgsConstructor
+public class Gallery {
+	private String path;
 	private int diary_id;
-	private List<String> path_list;
 }

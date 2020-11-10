@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,16 +14,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.chuck.common.PermissionCheck;
-import com.ssafy.chuck.diary.dao.DiaryDao;
 import com.ssafy.chuck.diary.dto.DiaryDto;
 import com.ssafy.chuck.diary.service.DiaryService;
 import com.ssafy.chuck.diary.service.FileService;
+
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -62,10 +62,6 @@ public class DiaryController {
 
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ApiOperation(value = "다이어리 생성", notes = "그룹의 추억 쌓기", response = DiaryDto.class)
-	// @ApiImplicitParams({
-	// 	@ApiImplicitParam(name = "token", value = "회원 토큰",),
-	// 	@ApiImplicitParam(name = "review", value = "일기 내용", dataTypeClass = DiaryDto.class)
-	// })
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "다이어리 생성 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
@@ -75,8 +71,8 @@ public class DiaryController {
 	})
 	private ResponseEntity<?> create(@RequestBody DiaryDto diary, @RequestHeader(value = "token") String token) {
 		logger.debug("다이어리 생성 호출");
-		// long userId = permissionCheck.check(token).getId();
-		service.create(0, 1, diary);
+		long userId = permissionCheck.check(token).getId();
+		service.create(userId, 1, diary);
 		return new ResponseEntity<>(diary, HttpStatus.OK);
 	}
 
@@ -103,7 +99,6 @@ public class DiaryController {
 	@ApiOperation(value = "다이어리 수정", notes = "그룹의 추억 수정", response = DiaryDto.class)
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-		// @ApiImplicitParam(name = "다이어리", value = "다이어리", dataTypeClass = DiaryDto.class),
 	})
 	@ApiResponses({
 		@ApiResponse(code = 201, message = "다이어리 수정 성공"),
@@ -123,7 +118,6 @@ public class DiaryController {
 	@ApiOperation(value = "다이어리 삭제", notes = "다이어리 삭제")
 	@ApiImplicitParams({
 		@ApiImplicitParam(name = "token", value = "회원 토큰"),
-		// @ApiImplicitParam(name = "id", value = "다이어리 아이디", example = "1")
 	})
 	@ApiResponses({
 		@ApiResponse(code = 204, message = "다이어리 삭제 성공"),
@@ -142,9 +136,6 @@ public class DiaryController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/group/{id}", produces = "application/json")
 	@ApiOperation(value = "다이어리 리스트 조회", notes = "그룹의 추억들 읽기", response = DiaryDto.class)
-	// @ApiImplicitParams({
-	// 	@ApiImplicitParam(name = "token", value = "회원 토큰"),
-	// })
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "다이어리 리스트 조회 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
@@ -152,7 +143,8 @@ public class DiaryController {
 		@ApiResponse(code = 403, message = "권한이 없습니다"),
 		@ApiResponse(code = 404, message = "다이어리 리스트 조회 실패")
 	})
-	private ResponseEntity<?> readAll(@PathVariable(value = "id") int id, @RequestHeader(value = "token") String token) {
+	private ResponseEntity<?> readAll(@PathVariable(value = "id") int id,
+		@RequestHeader(value = "token") String token) {
 		logger.debug("다이어리 리스트 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
 		List<DiaryDto> list = service.readAll(id);
@@ -161,9 +153,6 @@ public class DiaryController {
 
 	@RequestMapping(method = RequestMethod.GET, value = "/search/{word}/{id}", produces = "application/json")
 	@ApiOperation(value = "다이어리 검색", notes = "그룹의 추억 검색", response = DiaryDto.class)
-	// @ApiImplicitParams({
-	// 	@ApiImplicitParam(name = "token", value = "회원 토큰"),
-	// })
 	@ApiResponses({
 		@ApiResponse(code = 200, message = "다이어리 검색 성공"),
 		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
