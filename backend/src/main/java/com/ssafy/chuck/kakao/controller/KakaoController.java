@@ -116,9 +116,10 @@ public class KakaoController {
 //    	 {secureimage={"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXb  
 // 		{"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXbb/K6aSYANHie
     	String secureimage = (String) prams.get("secureimage");
-    	String url = secureimage.split("List(")[1];
-    	System.out.println(url);
+    	System.out.println("secureimage 출력!!!");
     	
+    	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
+    	System.out.println(jsonObject.get("secureUrls"));
     	
     	
         HashMap<String, Object> resultJson = new HashMap<>();
