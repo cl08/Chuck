@@ -21,7 +21,7 @@
 		<v-dialog v-model="loading" hide-overlay persistent width="300">
             <v-card color="#8D6262" dark>
                 <v-card-text>
-                    Making Chuck Film...
+                    Encoding Chuck Film...
                     <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
                 </v-card-text>
             </v-card>
@@ -48,10 +48,6 @@ export default {
 			var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime)
 			progressBar.style.width = percentage + '%'
 			if(mediaPlayer.ended) {
-				let btn = document.getElementById('play-pause-button')
-				let ovr = document.getElementById('play-disp')
-				btn.title = 'play'
-				ovr.innerHTML = '<span class="fa fa-play"></span>'
 				progressBar.style.width = '0%'
 			}
 		}
