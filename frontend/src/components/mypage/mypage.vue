@@ -34,6 +34,8 @@
           v-model="username"
           ref="username"
           style="font-size: 24px; width: 240px"
+          maxlength="10"
+          class="nickname"
           :disabled="!changeNicknameClicked"
         />
       </div>
@@ -186,6 +188,11 @@ export default {
       position: absolute;
       left: 125px;
       top: 10px;
+    }
+    .nickname:focus{
+      outline: none;
+      border:solid 1px #e0e0e0;
+      border-radius: 5px;
     }
   }
 

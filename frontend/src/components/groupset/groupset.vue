@@ -19,10 +19,32 @@
       <img src="../../assets/title/management_tabtitle.svg" class="tabtitle" />
       <div class="underline"></div>
     </div>
+    <!-- 그룹명 -->
     <font size="5">그룹명</font>
+    <v-btn
+      @click="focusGroupname"
+      color="#2680EB"
+      text
+      v-show="!changeGroupnameClicked"
+      >그룹명바꾸기</v-btn
+    >
+    <v-btn
+      @click="changeGroupname"
+      color="#2680EB"
+      text
+      v-show="changeGroupnameClicked"
+      >수정완료</v-btn
+    >
     <div class="information">
-      {{ groupInfo.name }}
+      <input
+        ref="groupName"
+        v-model="groupInfo.name"
+        class="groupName"
+        maxlength="10"
+        :disabled="!changeGroupnameClicked"
+      />
     </div>
+    <!-- 그룹원 -->
     <font size="5"
       >그룹원 목록
       <v-btn @click="InviteGroup" color="#3D91FF" text>그룹원 초대하기</v-btn>
@@ -39,10 +61,12 @@
         >
       </div>
     </div>
+    <!-- 그룹생성일 -->
     <font size="5">그룹 생성일</font>
     <div class="createDate">
       <p>{{ this.groupInfo.publishedDate | moment("YYYY.MM.DD") }}</p>
     </div>
+    <!-- 그룹 로그 -->
     <font size="5">그룹 로그</font>
     <div class="log" style="margin-bottom: 0px">
       <div v-for="(log, index) in logList" :key="index">
@@ -61,6 +85,7 @@ export default {
     return {
       memberList: [],
       logList: [],
+      changeGroupnameClicked: false,
     };
   },
   created() {
@@ -115,7 +140,7 @@ export default {
         });
     },
     update() {
-        // 멤버리스트 , 회원 갱신
+      // 멤버리스트 , 회원 갱신
       api
         .get(`groups/${this.groupInfo.id}/members`, {
           headers: {
@@ -138,6 +163,39 @@ export default {
       return (
         sessionStorage.getItem("ID") == this.groupInfo.userId && !ownerflag
       );
+    },
+    focusGroupname(){
+      this.changeGroupnameClicked = true;
+      this.$nextTick(() => {
+        this.$refs.groupName.focus();
+      });
+    },
+    changeGroupname(){
+      // 그룹명 변경
+      // 403권한 변경되면 가능할것임!!
+      api
+        .put(
+          `/groups/${this.groupInfo.id}`,
+          {
+            id: this.groupInfo.id,
+            name: this.groupInfo.name,
+            intro: this.groupInfo.intro,
+          },
+          {
+            headers: { token: store.getters.getToken },
+          }
+        )
+        .then((res) => {
+          // db에는 변경이 되었을 것이고
+          // session의 그룹정보에 변경을 해주어야함.
+          store.dispatch('updateSelectedGroup', this.groupInfo);
+          this.changeGroupnameClicked = false;
+        })
+        .catch((err) => {
+          console.log(err);
+          // store.dispatch('updateSelectedGroup', this.groupInfo);
+          // this.changeGroupnameClicked = false;
+        });
     },
   },
   computed: {
@@ -173,5 +231,19 @@ export default {
 }
 .createDate font {
   margin-bottom: 10px;
+}
+.groupName{
+  position: relative;
+  font-size: 16px; 
+  width: 200px; 
+  color: #2d2d2d;
+  padding-left: 5px;
+  left: -5px;
+  height: 30px;
+}
+.groupName:focus {
+  outline: none;
+  border:solid 1px #e0e0e0;
+  border-radius: 5px;
 }
 </style>
