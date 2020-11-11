@@ -74,6 +74,8 @@ export default {
     computed: {
         ...mapGetters([
             'getSelectedGroup',
+            'getColor',
+            'getChuckList',
         ]),
     },
     components: {
@@ -124,15 +126,23 @@ export default {
             this.imageList.forEach(image => {
                 images.push(image);
             });
-            console.log(images)
-            console.log(diaryId)
             api.post(`pictures/insert`, {
                 diary_id: diaryId,
                 group_id: this.getSelectedGroup.id,
                 path_list: images,
             }).then((data) => {
-                eventBus.$emit('uploadeDone');
-                this.imageList = [];
+                api.get(`diaries/${diaryId}`, {
+                    headers: {
+                        token: this.$store.getters.getToken,
+                    }
+                }).then(({data}) => {
+                    const image = data.image.split(';')
+                    data.image = image
+                    data.color = this.getColor[this.getChuckList.length % 10]
+                    this.$store.dispatch('addChuckList', data)
+                    eventBus.$emit('uploadeDone');
+                    this.imageList = [];
+                })
             })
         },
         changeImage(data) {

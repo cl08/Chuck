@@ -240,6 +240,14 @@ export default new Vuex.Store({
         setInit(state, payload) {
             state.init = payload
         },
+        insertChucks(state, payload) {
+            state.chuckList.splice(0, 0, payload)
+            state.chuckMap.set(payload.id, payload)
+        },
+        removeChucks(state, payload) {
+            console.log(payload)
+            state.chuckMap.delete(payload.id)
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -309,6 +317,12 @@ export default new Vuex.Store({
         },
         updateInit({commit}) {
             commit('setInit', true)
-        }
+        },
+        addChuckList({commit}, item) {
+            commit('insertChucks', item)
+        },
+        delChuckList({commit}, item) {
+            commit('removeChucks', item)
+        },
     }
 })

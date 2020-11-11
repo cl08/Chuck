@@ -29,7 +29,7 @@
         <v-container v-if="selectedChuckList.length != 0" style="padding:10px 30px 0px 30px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="margin-bottom:10px;">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item.id)" style="margin-bottom:10px;">
                     <v-card class="pointer" style="box-shadow: 2px 2px 5px 1px #CED4DA;">
                         <div class="d-flex flex-no-wrap">
                             <div class="belt" :style="{backgroundColor:item.color}"></div>
@@ -84,7 +84,7 @@ export default {
             store.dispatch('updateSelectedChuckList')
         });
         eventBus.$on('showDetail', (data) => {
-            this.detail(data);
+            this.detail(data.id);
         });
     },
     computed: {
@@ -108,8 +108,8 @@ export default {
             'setVisibleWrite',
         ]),
         detail(item) {
-            store.dispatch('updateComments', item.id)            
-            this.setSelectedDiary(item.index)
+            store.dispatch('updateComments', item)
+            this.setSelectedDiary(item)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)
