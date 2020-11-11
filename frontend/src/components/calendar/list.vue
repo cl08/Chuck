@@ -31,7 +31,7 @@
         <v-container v-if="!searchFlag" style="padding:0px 20px 0px 20px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in searchChuckList" :key="i" cols="12" @click="detail(item)" style="cursor:pointer">
+                <v-col v-for="(item, i) in searchChuckList" :key="i" cols="12" @click="detail(item.id)" style="cursor:pointer">
                     <v-card>
                         <div class="d-flex flex-no-wrap">
                             <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
@@ -60,7 +60,7 @@
         <!-- 날짜 클릭시 나오는 화면 -->
         <v-container v-else-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="cursor:pointer">
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item.id)" style="cursor:pointer">
                     <v-card>
                         <div class="d-flex flex-no-wrap">
                             <div class="belt" :style="{backgroundColor:item.color}"></div>
@@ -115,7 +115,7 @@ export default {
             store.dispatch('updateSelectedChuckList')
         });
         eventBus.$on('showDetail', (data) => {
-            this.detail(data);
+            this.detail(data.id);
         });
     },
     computed: {
@@ -142,8 +142,8 @@ export default {
             'setSearchChuckList',
         ]),
         detail(item) {
-            store.dispatch('updateComments', item.id)            
-            this.setSelectedDiary(item.index)
+            store.dispatch('updateComments', item)
+            this.setSelectedDiary(item)
             this.setVisibleDetail(true)
             this.setVisibleCalendar(false)
             this.setVisibleWrite(false)

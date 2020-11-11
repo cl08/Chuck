@@ -45,7 +45,8 @@ export default {
                 },
             })
             .then(({ data }) => {
-                for(var i=0; i<data.length; i++) {
+                const num = data.length-1
+                for(var i=num; i>=0; i--) {
                     const image = data[i].image.split(';')
                     data[i].image = image
                     data[i].color = this.getColor[i % 10]
