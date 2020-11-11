@@ -114,9 +114,10 @@ public class KakaoController {
     	System.out.println("params 출력!!!");
     	System.out.println(prams);
 //    	 {secureimage={"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXb  
+// 		{"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXbb/K6aSYANHie
     	String secureimage = (String) prams.get("secureimage");
-    	System.out.println("secureimage 출력!!");
-    	System.out.println(secureimage);
+    	String url = secureimage.split("List(")[1];
+    	System.out.println(url);
     	
     	
     	
