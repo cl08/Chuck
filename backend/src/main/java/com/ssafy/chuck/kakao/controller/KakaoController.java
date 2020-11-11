@@ -6,8 +6,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,11 +22,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -88,5 +94,33 @@ public class KakaoController {
 		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
+
+	@PostMapping("test")
+	@ApiOperation(value = "챗봇 post test")
+	public ResponseEntity<String> test(){
+		return new ResponseEntity<String>("success", HttpStatus.OK);
+	}
+	
+	
+	@PostMapping("test2")
+	@ApiOperation(value = "챗봇 post test")
+	public ResponseEntity<String> test2(int id){
+		return new ResponseEntity<String>("success" + id, HttpStatus.OK);
+	}
+	
+	 //카카오톡 오픈빌더로 리턴할 스킬 API
+    @RequestMapping(value = "/test3" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+    public String callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(params);
+            System.out.println(jsonInString);
+            int x = 0;
+        }catch (Exception e){
+
+        }
+        return "index";
+    }
 	
 }
