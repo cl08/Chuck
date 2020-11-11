@@ -50,6 +50,7 @@ export default {
                     data[i].image = image
                     data[i].color = this.getColor[i % 10]
                     data[i].index = i
+                    this.$store.state.chuckMap.set(data[i].id, data[i])
                 }
                 this.setChuckList(data)
                 
