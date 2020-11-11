@@ -7,31 +7,37 @@
 			<div class='main'>
 				<div id='media-player' width="100%">
 					<video id='media-video' controls width="100%">
-					<source src='https://blog.kakaocdn.net/dn/LTyNQ/btqGtnA9vZi/UAk9kxQpS8xz8TkPk2BdW0/tfile.mp4'>
 					</video>
 				</div>
 				<div id='media-controls' class='ctrl-box'>
-					<button id='play-pause-button' class='play' title='play' @click='togglePlayPause'>
-					<div class="playfront" id="play-disp">
-						<span class="fa fa-play"></span>
-					</div>
-					<div class="playback" id="user-avi"></div>
-					</button>
-					<a class="data-name">
 					<div id="play-bar" class="play-bar"></div>
 					<div class="play-bar-border"></div>
-					</a>
 				</div>
 			</div>
         </div>
-        <div class="dash pointer">
-            <font size=4>동영상 변환하기</font>
+        <div class="dash pointer" @click="download">
+            <font size=4>동영상 다운로드</font>
         </div>
+		<v-dialog v-model="loading" hide-overlay persistent width="300">
+            <v-card color="#8D6262" dark>
+                <v-card-text>
+                    Making Chuck Film...
+                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
+import api from '@/utils/api'
 export default {
+	data () {
+		return {
+			loading: false
+		}
+	},
 	mounted() {
 		let mediaPlayer = document.getElementById('media-video')
 		mediaPlayer.controls = false
@@ -50,19 +56,39 @@ export default {
 			}
 		}
 	},
+	computed: {
+        ...mapGetters([
+			'getId',
+            'getVideoSrc',
+			'getVideoMusic',
+			'getVideoUrl',
+        ]),
+    },
 	methods: {
-		togglePlayPause() {
-			let mediaPlayer = document.getElementById('media-video')
-			let btn = document.getElementById('play-pause-button')
-			let ovr = document.getElementById('play-disp')
-			if (mediaPlayer.paused || mediaPlayer.ended) {
-				btn.title = 'pause'
-				ovr.innerHTML = '<span class="fa fa-pause"></span>'
-				mediaPlayer.play()
-			} else {
-				btn.title = 'play'
-				ovr.innerHTML = '<span class="fa fa-play"></span>'
-				mediaPlayer.pause()
+		download() {
+			if(this.getVideoMusic === 'middle') {
+				let link = document.createElement('a')
+				link.target = "_blank"
+				link.href = this.getVideoUrl
+				link.download = 'ChuckFilm.mp4'
+				link.click()
+				this.loading = false
+			}
+			else {
+				this.loading = true
+				api.post('pictures/mkVideo', {
+					'music': this.getVideoMusic,
+					'userId': this.getId,
+					'path_list': this.getVideoSrc,
+				})
+				.then(({ data }) => {
+					let link = document.createElement('a')
+					link.target = "_blank"
+					link.href = data
+					link.download = 'ChuckFilm.mp4'
+					link.click()
+					this.loading = false
+				})
 			}
 		}
 	}
@@ -103,78 +129,6 @@ export default {
 	margin-top: -5px;
 }
 
-.play {
-	display: block;
-	position: absolute;
-	width: 50px;
-	height: 50px;
-	top: 7px;
-	left: 7px;
-	border: none;
-	outline: none;
-	color: white;
-	background: #8D6262;
-	border-radius: 50%;
-	overflow: hidden;
-}
-
-.playback {
-	display: block;
-	position: absolute;
-	height: 50px;
-	width: 50px;
-	top: 0;
-	left: 0;
-	border-radius: 50%;
-	background-size: 100%;
-	background-repeat: no-repeat;
-	background-position: center;
-	transition: transform 200ms;
-	transform: scale(0);
-}
-
-.playfront {
-	display: block;
-	position: absolute;
-	height: 50px;
-	width: 50px;
-	line-height: 50px;
-	top: 0;
-	left: 0;
-	border-radius: 50%;
-	background-color: #8D6262;
-	z-index: 5;
-}
-
-.data-name {
-	color: black;
-	display: block;
-	position: absolute;
-	left: 64px;
-	right: 7px;
-	top: 4px;
-	height: 50px;
-	line-height: 32px;
-	font-size: 1em;
-	text-decoration: none;
-	overflow: hidden;
-}
-
-.data-video {
-	font-family: lato, sans;
-	color: black;
-	display: block;
-	position: absolute;
-	left: 64px;
-	right: 0;
-	bottom: 0;
-	height: 32px;
-	line-height: 32px;
-	font-size: 0.8em;
-	text-decoration: none;
-	overflow: hidden;
-}
-
 .play-bar {
 	width: 0%;
 	display: block;
@@ -182,8 +136,9 @@ export default {
 	bottom: 7px;
 	left: 0;
 	right: 0;
-	height: 30px;
+	height: 8px;
 	background-color: #8D6262;
+	border-radius: 5px;
 }
 .play-bar-border {
 	display: block;
@@ -191,8 +146,9 @@ export default {
 	bottom: 7px;
 	left: 0;
 	right: 0;
-	height: 30px;
+	height: 8px;
 	border: solid 1px #8D6262;
+	border-radius: 5px;
 }
 
 </style>

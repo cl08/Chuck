@@ -35,6 +35,9 @@ export default new Vuex.Store({
         personArrayBook: [],
         personArrayFilm: [],
         init: false,
+        videoSrc: [],
+        videoUrl: '',
+        videoMusic: '',
     },
 
     getters: {
@@ -133,6 +136,15 @@ export default new Vuex.Store({
         getInit(state) {
             return state.init
         },
+        getVideoSrc(state) {
+            return state.videoSrc
+        },
+        getVideoUrl(state) {
+            return state.videoUrl
+        },
+        getVideoMusic(state) {
+            return state.videoMusic
+        }
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -236,6 +248,15 @@ export default new Vuex.Store({
         setInit(state, payload) {
             state.init = payload
         },
+        setVideoSrc(state, payload) {
+            state.videoSrc = payload
+        },
+        setVideoUrl(state, payload) {
+            state.videoUrl = payload
+        },
+        setVideoMusic(state, payload) {
+            state.videoMusic = payload
+        }
     },
     actions: {
         updateSelectedGroup({commit}, items) {

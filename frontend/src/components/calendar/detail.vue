@@ -71,7 +71,7 @@
             v-model="content"
             ref="content"
             style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px"
-          />
+        />
         <v-dialog v-model="dialog" max-width="290" v-if="changeContent">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn

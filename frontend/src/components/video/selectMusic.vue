@@ -9,7 +9,6 @@
                 <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
                 <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
                     <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
-                    <!-- <MusicBar :id="'musicbar'+index"></MusicBar> -->
                 </div>
                 <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
             </span>
@@ -38,16 +37,19 @@ export default {
                     title: '음악 없음',
                     img: 'https://partyspace.com/images/blog_entries/no-music.png',
                     src: '',
+                    value: 'middle'
                 },
                 {
                     title: 'Beside Me - Patrick Patrikios',
                     img: "https://cdnimg.melon.co.kr/cm2/album/images/104/44/179/10444179_20200612165324_500.jpg?c11ac4207c13df80c4b52223fe0bd3ae/melon/resize/282/quality/80/optimize",
                     src: '../../assets/music/Beside Me - Patrick Patrikios.mp3',
+                    value: 'Fingertips.mp3'
                 },
                 {
                     title: 'Nocturne - Asher Fulero',
                     img: 'https://cdnimg.melon.co.kr/cm2/album/images/104/86/979/10486979_20200907171548_500.jpg?35f390d020fc7c5e75d699329fcb166f/melon/resize/282/quality/80/optimize',
                     src: '../../assets/music/Nocturne - Asher Fulero.mp3',
+                    value: 'Fingertips.mp3'
                 },
             ]
         }
@@ -58,6 +60,7 @@ export default {
             'setVisibleAlbum',
             'setVisibleVideo',
             'setVisiblePreview',
+            'setVideoMusic',
         ]),
         previousStep() {
             this.setVisibleChoice(false)
@@ -87,6 +90,12 @@ export default {
             }
             el = document.getElementById('audio'+index)
             el.play()
+            
+            this.setVideoMusic(this.musics[index].value)
+
+			let mediaPlayer = document.getElementById('media-video')
+			mediaPlayer.load()
+			mediaPlayer.play()
         }
     }
 }
