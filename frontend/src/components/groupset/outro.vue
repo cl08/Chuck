@@ -147,11 +147,6 @@ export default {
   position: relative;
   box-shadow: 2px 0px 10px 5px #e2e2e2;
 }
-.right img {
-  float: right;
-  width: 300px;
-  height: 150px;
-}
 .right .BtnGroup {
   width: 140px;
   position: absolute;

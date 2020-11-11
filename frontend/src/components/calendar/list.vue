@@ -1,5 +1,6 @@
 <template>
     <div style="padding:30px 0px 0px 30px;">
+        <!-- 상단 (날짜, 검색기능, 글쓰기 버튼) -->
         <v-row v-if="searchFlag">
             <span class="col-3">
             </span>
@@ -25,12 +26,42 @@
                 <el-button icon="el-icon-edit" circle @click="write"></el-button>
             </span>
         </v-row>
-
-        <v-container v-if="selectedChuckList.length != 0" style="padding:10px 30px 0px 30px;">
+        <!-- detail ( 검색결과, 날짜 클릭 결과, 오늘의 척 등록하세요 문구 ) -->
+        <!-- 검색 클릭시 나오는 화면 -->
+        <v-container v-if="!searchFlag" style="padding:0px 20px 0px 20px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item.id)" style="margin-bottom:10px;">
-                    <v-card class="pointer" style="box-shadow: 2px 2px 5px 1px #CED4DA;">
+                <v-col v-for="(item, i) in searchChuckList" :key="i" cols="12" @click="detail(item.id)" style="cursor:pointer">
+                    <v-card>
+                        <div class="d-flex flex-no-wrap">
+                            <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
+                            <v-avatar size="125" tile>
+                                <v-img :src="item.image[0]"></v-img>
+                            </v-avatar>
+                            <div style="width:400px;">
+                                <v-card-title>{{ item.title }} </v-card-title>
+                                <v-card-subtitle v-text="item.content.slice(0, 30)" style="text-align:left; paadingBottom:0px;"></v-card-subtitle>
+                                <v-card-text>
+                                    <v-row>
+                                        <span class="col-6" style="text-align:left; padding: 0px 12px;">
+                                        작성자 : {{ item.writer }}
+                                        </span>
+                                        <span class="col-6" style="text-align:right; padding: 0px 12px;">
+                                        작성일 : {{ item.date }}
+                                        </span>
+                                    </v-row>
+                                </v-card-text>
+                            </div>
+                        </div>
+                    </v-card>
+                </v-col>
+            </v-row>
+        </v-container>
+        <!-- 날짜 클릭시 나오는 화면 -->
+        <v-container v-else-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
+            <v-row dense>
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item.id)" style="cursor:pointer">
+                    <v-card>
                         <div class="d-flex flex-no-wrap">
                             <div class="belt" :style="{backgroundColor:item.color}"></div>
                             <v-avatar size="130" tile style="margin:5px 0px;">
@@ -93,10 +124,12 @@ export default {
             'getSelectedDay',
         ]),
         selectedChuckList: () => store.getters.getSelectedChuckList,
+        searchChuckList: () => store.getters.getSearchChuckList,
     },
     watch: {
         getSelectedDay() {
            store.dispatch('updateSelectedChuckList')
+           this.closeSearchBar()
         }
     },
     methods: {
@@ -106,6 +139,7 @@ export default {
             'setVisibleCalendar',
             'setVisibleDetail',
             'setVisibleWrite',
+            'setSearchChuckList',
         ]),
         detail(item) {
             store.dispatch('updateComments', item)
@@ -122,6 +156,8 @@ export default {
         openSearchBar() {
             this.keyword = ''
             this.searchFlag = false
+            // 이전 검색 초기화
+            this.setSearchChuckList([])
             setTimeout(function(){
                 document.getElementById('searchBar').focus()
             }, 1);
@@ -134,6 +170,7 @@ export default {
             this.searchResult = this.keyword
             this.keyword = ''
             // 검색 구현
+            store.dispatch('updateSearchChuckList',this.searchResult)
         }
     }
 }

@@ -28,7 +28,7 @@ export default {
 }
 .bar{
     display:block;
-    background-color:#00b4ff;
+    background-color:#8D6262;
     height:25px;
     width:3px;
     text-indent:-9999px;

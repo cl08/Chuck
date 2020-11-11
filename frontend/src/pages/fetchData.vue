@@ -108,7 +108,7 @@ h1:after {
 }
 
 .loader {
-    margin: 5% auto 30px;
+    margin: 15% auto 30px;
 }
 
 .book {

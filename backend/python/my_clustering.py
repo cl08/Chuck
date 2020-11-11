@@ -46,6 +46,10 @@ def insert(groupId, imagePaths):
     encode(groupId, imagePaths)
 
 def clustering(groupId):
+    files = os.listdir('/home/ubuntu/s03p31a206/backend/python/')
+    if(groupId + ".pickle" not in files):
+        return {"info" : []}
+
     data = pickle.loads(open(groupId + ".pickle", "rb").read())
     print(data)
     data = np.array(data)
@@ -117,7 +121,8 @@ def main():
     # print(result)
     # print(res)
     # delete('1', "/home/ubuntu/s03p31a206/backend/python/1/20201029135433_c0b84e3d1024480e98a7bee860cc990d.jpg")
-    update('1', '/home/ubuntu/s03p31a206/backend/python/1/20201029135525_unnamed.jpg:/home/ubuntu/s03p31a206/backend/python/1/20201029135522_unnamed (1).jpg:')
+    # update('1', '/home/ubuntu/s03p31a206/backend/python/1/20201029135525_unnamed.jpg:/home/ubuntu/s03p31a206/backend/python/1/20201029135522_unnamed (1).jpg:')
+    clustering('2')
 
 if __name__ == "__main__":
     main()
