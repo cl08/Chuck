@@ -22,7 +22,7 @@ def makeVideo(paths, userid, music):
     #1. 이미지 resize
     #2. 이미지 영역 확대(1080, 720) 및 가운데 정렬
     #3. 배경에 이미지 병합
-    fps, width, height = 3, 800, 532
+    fps, width, height = 10, 800, 532
     frame_array = []
     # plt.imshow(background)
     # plt.show()
@@ -51,7 +51,8 @@ def makeVideo(paths, userid, music):
 
         frame_array.append(img2)
         frame_array.append(img2)
-
+        frame_array.append(img2)
+        
         # fade in / fade out
         while(weight <= 1.0):
             postWeight = 1.0 - weight
