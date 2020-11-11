@@ -26,7 +26,8 @@
                 <v-menu
                     offset-y
                     v-model="menu"
-                    v-if="this.getSelectedDiary !== '' && this.getId == this.getChuckMap.get(this.getSelectedDiary).writerId"
+                    v-if="this.getSelectedDiary !== '' && this.getChuckMap.get(this.getSelectedDiary)
+                    &&this.getId == this.getChuckMap.get(this.getSelectedDiary).writerId"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">
@@ -142,6 +143,7 @@ export default {
                 }
             }).then(() => {
                 this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
+                eventBus.$emit('updateList')
                 eventBus.$emit('back')
             })
         },

@@ -260,12 +260,11 @@ export default new Vuex.Store({
             state.init = payload
         },
         insertChucks(state, payload) {
-            state.chuckList.splice(0, 0, payload)
-            state.chuckMap.set(payload.id, payload)
+            state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
         },
         removeChucks(state, payload) {
-            console.log(payload)
             state.chuckMap.delete(payload.id)
+            state.chuckMap = new Map(state.chuckMap)
         },
         setVideoSrc(state, payload) {
             state.videoSrc = payload
@@ -322,17 +321,19 @@ export default new Vuex.Store({
         },
         updateSelectedChuckList({commit}) {
             const day = [];
-            for(var i=0; i<this.state.chuckList.length; i++) {
-                if(this.state.chuckList[i].date === this.state.selectedDay) {
-                    day.push(this.state.chuckList[i])
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for(var i=0; i<chuckList.length; i++) {
+                if(chuckList[i].date === this.state.selectedDay) {
+                    day.push(chuckList[i])
                 }
             }
             commit('setSelectedChuckList', day)
         },
         updateSearchChuckList({commit}, item){
             const result = []
-            for (let index = 0; index < this.state.chuckList.length; index++) {
-                const element = this.state.chuckList[index];
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for (let index = 0; index < chuckList.length; index++) {
+                const element = chuckList[index];
                 // console.log(element.title.indexOf(item)!==-1)
                 if(element.title.indexOf(item)!==-1){
                     result.push(element)
