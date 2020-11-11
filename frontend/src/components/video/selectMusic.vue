@@ -6,7 +6,7 @@
         </div>
         <div class="dash" style="height:540px;">
             <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
-                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
+                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
                 <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
                     <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
                 </div>
