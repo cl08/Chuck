@@ -107,8 +107,9 @@ public class KakaoController {
     	//{id=5fab6941f282650c3236f23f, name=imageSender, params={secureimage={"privacyAgreement":"Y","imageQuantity":"1" 
     	System.out.println("action 출력!!!");
     	System.out.println(params.get("action"));
-    	System.out.println("params 출력!!!");
-    	JsonObject action = (JsonObject) JsonParser.parseString(params.get("action").toString());
+    	System.out.println("action2 출력!!!");
+    	JsonObject action = (JsonObject) params.get("action");
+    	System.out.println(action);
 		JsonObject param = action.get("params").getAsJsonObject();
 		System.out.println(param);
     	
