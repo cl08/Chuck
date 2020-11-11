@@ -182,8 +182,9 @@ public class KakaoController {
         OutputStream out = null;
         
         SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        int rand = (int)(Math.random()*100);
 		Date nowdate = new Date();
-		String dateString = formatter.format(nowdate);	//현재시간 문자열
+		String dateString = formatter.format(nowdate) + rand;	//현재시간 문자열
         
         try {
             url = new URL(strUrl);
