@@ -100,8 +100,10 @@ public class KakaoController {
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
+    	System.out.println(params);
+    	
         HashMap<String, Object> resultJson = new HashMap<>();
-
+        
         try{
             ObjectMapper mapper = new ObjectMapper();
             String jsonInString = mapper.writeValueAsString(params);
