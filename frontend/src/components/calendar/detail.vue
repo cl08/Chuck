@@ -106,6 +106,7 @@
 import { mapGetters } from 'vuex'
 import api from '@/utils/api'
 import eventBus from '@/utils/EventBus'
+import axios from 'axios'
 
 export default {
     data () {
@@ -147,7 +148,7 @@ export default {
                 eventBus.$emit('back')
             })
         },
-        download() {
+        getImageUrl() {
             let num = $('.kpa').length
             let picture = ''
             for(let i=0; i<num; i++) {
@@ -157,6 +158,27 @@ export default {
             }
             picture = picture.slice(5, -2)
             this.picture = picture
+        },
+        download() {
+            this.getImageUrl();
+            axios({
+                method: 'get',
+                url: this.picture,
+                responseType: 'blob'
+            }).then((res) => {
+                this.forceFileDownload(res)
+            })
+        },
+        forceFileDownload(response) {
+            const headers = response.headers;
+            // const extension = this.picture.substring(this.picture.lastIndexOf('.')+1)
+            const bolb = new Blob([response.data], {type: headers['content-type']});
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = this.picture;
+            document.body.appendChild(link);
+            link.click();
+            link.remove()
         },
         cancle() {
             this.dialog = false
