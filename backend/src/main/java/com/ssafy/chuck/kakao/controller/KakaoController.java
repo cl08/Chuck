@@ -1,7 +1,11 @@
 package com.ssafy.chuck.kakao.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -130,6 +134,10 @@ public class KakaoController {
     	System.out.println(origin);
     	//  List(http://secure.kakaocdn.net/dna/bAxQJB/K6aSYngzcU/XXX/img_org.jpg?credential=Kq0eSbCrZgKIq51jh41Uf1jLsUh7VW 
     	String[] urls = origin.split(",");
+    	if(urls.length >= 1) {
+	    	urls[0] = urls[0].substring(5, urls[0].length());
+	    	urls[urls.length-1] = urls[urls.length-1].substring(0, urls[urls.length-1].length() - 1);
+    	}
     	for(String url : urls) {
     		System.out.println(url);
     		pictureService.insertPicture(57, url);
@@ -178,5 +186,30 @@ public class KakaoController {
         return resultJson;
     }
 
+    
+    private static void saveImage(String strUrl) throws IOException {
+        URL url = null;
+        InputStream in = null;
+        OutputStream out = null;
+        try {
+            url = new URL(strUrl);
+            in = url.openStream();
+            out = new FileOutputStream("C:/tmp/test.jpg"); //저장경로
+            while(true){
+                //이미지를 읽어온다.
+                int data = in.read();
+                if(data == -1) break;
+                //이미지를 쓴다.
+                out.write(data);
+            }
+            in.close();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            if(in != null){in.close();}
+            if(out != null){out.close();}
+        }
+    }
 	
 }
