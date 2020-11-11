@@ -61,16 +61,16 @@
                 </v-menu>
             </span>
         </div>
-        <div v-if="getChuckList[getSelectedDiary]" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px;">
+        <div v-if="getChuckList[getSelectedDiary]" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px; text-align:left;color:black">
             {{ getChuckList[getSelectedDiary].title }}
         </div>
-        <div v-if="getChuckList[getSelectedDiary] && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckList[getSelectedDiary].content">
+        <div v-if="getChuckList[getSelectedDiary] && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px; text-align:left; overflow:scroll" v-html="getChuckList[getSelectedDiary].content">
         </div>
         <textarea
             v-if="changeContent"
             v-model="content"
             ref="content"
-            style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px"
+            style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px;"
           />
         <v-dialog v-model="dialog" max-width="290" v-if="changeContent">
             <template v-slot:activator="{ on, attrs }">

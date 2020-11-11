@@ -3,11 +3,12 @@
 -->
 <template>
     <div style="padding:30px 0px 0px 30px; height:680px; overflow:scroll;">
-        <div v-for="(item, index) in getComments" :key="index" class="post-it">
-            <p class="note">
-                <strong>{{ item.writer }}</strong><br>
-                {{ item.comment }}<br>
-            </p>
+        <div v-for="(item, index) in getComments" :key="index" class="post-it" >
+            <div class="note" :class="{postodd:flagOddEven(index), posteven:!flagOddEven(index)}">
+                <strong>{{ item.writer }}</strong>
+                <img @click="deleteComment(index)" src="@/assets/eraser.svg" alt="" v-show="getId===item.writerId">
+                <p class="detail">{{ item.comment }}</p>
+            </div>
         </div>
         <div class="comment">      
             <div class="el-input el-input-group el-input-group--append">
@@ -58,10 +59,19 @@ export default {
                 this.input = ''
             })
         },
-        delete(index) {
-            api.delete(`/replies/${this.getComments[index].id}`).then(store.dispatch('delComments', index))
+        deleteComment(index) {
+            api.delete(`/replies/${this.getComments[index].id}`)
+            .then((res)=>{
+                // console.log(res)
+                store.dispatch('delComments', index)
+                }
+            )
         },
-        
+        flagOddEven(index){
+            // 두번씩 true, false가 반복
+            return (index/2%2)<1?true:false
+            // test
+        }
     }
 }
 </script>
@@ -77,7 +87,6 @@ export default {
     background-color: #F4F39E;
     border-color: #DEE184;
     text-align: center;
-    /* margin: 1.5em auto; */
     padding: 1.5em 1em;
     -webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
     -moz-box-shadow: 0px 1px 3px rgba(0,0,0,0.25);
@@ -89,7 +98,6 @@ export default {
     transform: rotate(2deg);
     width: 180px;
     height: 160px;
-    overflow: scroll;
 }
 .note:after {
     display: block;
@@ -98,12 +106,33 @@ export default {
     width: 110px;
     height: 30px;
     top: -21px;
-    left: 30%;    
-    border: 1px solid #fff;
-    background: rgba(254, 254, 254, .7);
+    left: 20%;    
+    background: rgba(230, 230, 230, 0.7);
     -webkit-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
     -moz-box-shadow: 0px 0 3px rgba(0,0,0,0.1);
     box-shadow: 0px 0 3px rgba(0,0,0,0.1);  
+}
+.note img{
+    position: absolute;
+    cursor: pointer;
+    left: 150px;
+    top: 10px;
+    width: 20px;
+    height: 20px;
+    filter: grayscale();
+}
+.note .detail{
+    overflow: scroll;
+    height: 100px;
+}
+.note strong{
+    color: black;
+}
+.postodd{
+    left: -30px;
+}
+.posteven{
+    left: 30px;
 }
 .comment { 
     position: absolute; 
