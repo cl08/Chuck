@@ -140,23 +140,12 @@ public class KakaoController {
     	}
     	for(String url : urls) {
     		System.out.println(url);
-    		pictureService.insertPicture(57, url);
+    		try {
+				saveImage(url);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
     	}
-    	
-    	
-    	
-//    	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
-//    	String secureUrls = jsonObject.get("secureUrls").toString();
-//    	
-//    	System.out.println("urls 출력!!");
-//    	System.out.println(secureUrls);
-//    	// "List(A, B, C)"
-//    	String[] urls = secureUrls.split(",");
-//    	urls[0] = urls[0].split("(")[1];
-//    	urls[urls.length - 1] = urls[urls.length - 1].split(")")[0];
-//    	for(String url : urls) {
-//    		System.out.println(url);
-//    	}
 
         HashMap<String, Object> resultJson = new HashMap<>();
         
@@ -191,10 +180,15 @@ public class KakaoController {
         URL url = null;
         InputStream in = null;
         OutputStream out = null;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+		Date nowdate = new Date();
+		String dateString = formatter.format(nowdate);	//현재시간 문자열
+        
         try {
             url = new URL(strUrl);
             in = url.openStream();
-            out = new FileOutputStream("C:/tmp/test.jpg"); //저장경로
+            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + dateString + ".jpg"); //저장경로
             while(true){
                 //이미지를 읽어온다.
                 int data = in.read();
