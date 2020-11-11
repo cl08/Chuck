@@ -1,8 +1,7 @@
 <template>
     <div style="padding:30px 0px 0px 30px;">
-        <div style="background-image:url('/assets/gallery_background.jpg'); widh:400px; height:400px;">
-            dd
-            <!-- <img src="../../assets/gallery_background.jpg"> -->
+        <div class="bg" style="text-align:center">
+            <img class="currentImg" :src="currentImage">
         </div>
 
         <div style="text-align:left; padding:20px;">
@@ -25,6 +24,7 @@ export default {
             checkArr: [],
             imageList: new Map(),
             temp: [],
+            currentImage: '',
         }
     },
     computed: {
@@ -72,9 +72,9 @@ export default {
     },
     methods: {
         clickedImg(index) {
-        //  해당 이미지가 있는 글로 이동!! 어떻게??
-            const id = this.imageList.get(this.temp[index]).diaryId
-            eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
+            // const id = this.imageList.get(this.temp[index]).diaryId
+            // eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
+            this.currentImage = this.temp[index]
         },
     },
 };
@@ -85,5 +85,17 @@ export default {
     width: 120px;
     height: 120px;
     margin: 4px;
+}
+.bg {
+    background: url('../../assets/gallery_background.jpg');
+    background-size: cover;
+    width: 550px;
+    height: 350px;
+    margin: 20px 20px 0px 20px;
+}
+.currentImg {
+    width: 420px;
+    height: 250px;
+    margin-top: 50px;
 }
 </style>
