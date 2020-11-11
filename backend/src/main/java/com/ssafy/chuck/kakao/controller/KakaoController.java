@@ -8,6 +8,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -119,12 +120,14 @@ public class KakaoController {
     	System.out.println("secureimage 출력!!!");
     	
     	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
+    	String secureUrls = jsonObject.get("secureUrls").toString();
     	
-    	JsonArray jsonArray = jsonObject.get("secureUrls").getAsJsonArray();
-    	System.out.println(jsonObject.get("secureUrls"));
+    	System.out.println("urls 출력!!");
+    	System.out.println(secureUrls);
     	
-    	System.out.println("ㅋㅋ");
-    	System.out.println(jsonArray);
+    	String[] urls = secureUrls.split(",");
+    	for(String url : urls) System.out.println(url);
+    	
     	
     	
         HashMap<String, Object> resultJson = new HashMap<>();
