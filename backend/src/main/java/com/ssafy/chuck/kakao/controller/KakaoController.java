@@ -98,10 +98,9 @@ public class KakaoController {
 
 	//카카오톡 오픈빌더로 리턴할 스킬 API
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-//    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-    public Map<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
-    	System.out.println(params);
+    	System.out.println(params.get("action"));
     	
         HashMap<String, Object> resultJson = new HashMap<>();
         
@@ -128,8 +127,7 @@ public class KakaoController {
 
         }
 
-//        return resultJson;
-        return params;
+        return resultJson;
     }
 
 	
