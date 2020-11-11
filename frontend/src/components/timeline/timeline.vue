@@ -50,7 +50,7 @@ export default {
             'setVisibleWrite',
         ]),
         detail(item) {
-            eventBus.$emit('movePage', {index: 1, item: item})
+            eventBus.$emit('movePage', {index: 1, item: item, state: 2})
         },
     }
 }

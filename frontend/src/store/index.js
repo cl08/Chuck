@@ -23,6 +23,7 @@ export default new Vuex.Store({
         visibleModalAssignGroup: false,
         visibleModalSecedeGroup: false,
         chuckList: [],
+        chuckMap: new Map(),
         comments: [],
         selectedChuckList: [],
         backState: 1,
@@ -132,6 +133,9 @@ export default new Vuex.Store({
         },
         getInit(state) {
             return state.init
+        },
+        getChuckMap(state) {
+            return state.chuckMap
         },
     },
     mutations: {
@@ -263,7 +267,7 @@ export default new Vuex.Store({
                     const image = data[i].image.split(';')
                     data[i].image = image
                     data[i].color = this.state.color[i % 10]
-                    data[i].index = i
+                    data[i].index = i          
                 }
                 commit('setChuckList', data)
             })

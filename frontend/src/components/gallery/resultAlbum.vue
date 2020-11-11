@@ -12,6 +12,7 @@
 import { mapGetters } from "vuex"
 import { mapMutations } from "vuex"
 import api from '@/utils/api.js'
+import eventBus from '@/utils/EventBus'
 
 export default {
     data() {
@@ -26,6 +27,7 @@ export default {
             'getSelectedGroup',
             'getPersonArrayGallery',
             'getFaceDataGallery',
+            'getChuckMap',
         ]),
     },
     watch: {
@@ -45,16 +47,17 @@ export default {
                     const flag = this.checkArr[index]
                     const num = this.getFaceDataGallery.gallery_list[index].content_list.length
                     for(let i = 0; i<num; i++) {
+                        const diary_id = this.getFaceDataGallery.gallery_list[index].content_list[i].diary_id
                         const path = this.getFaceDataGallery.gallery_list[index].content_list[i].path
                         if(this.imageList.has(path)) {
-                            const cnt = this.imageList.get(path)
-                            if(flag) this.imageList.set(path, cnt + 1)
+                            const cnt = this.imageList.get(path).cnt
+                            if(flag) this.imageList.set(path, {cnt: cnt + 1, diaryId: diary_id})
                             else {
                                 if(cnt == 1) this.imageList.delete(path)
-                                else this.imageList.set(path, cnt - 1)
+                                else this.imageList.set(path, {cnt: cnt - 1, diaryId: diary_id})
                             }
                         } else {
-                            if(flag) this.imageList.set(path, 1)
+                            if(flag) this.imageList.set(path, {cnt: 1, diaryId: diary_id})
                         }
                     } 
                 });
@@ -65,6 +68,8 @@ export default {
     methods: {
         clickedImg(index) {
         //  해당 이미지가 있는 글로 이동!! 어떻게??
+            const id = this.imageList.get(this.temp[index]).diaryId
+            eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
         },
     },
 };
