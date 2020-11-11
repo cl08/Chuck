@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -95,32 +96,42 @@ public class KakaoController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	@PostMapping("test")
-	@ApiOperation(value = "챗봇 post test")
-	public String test(){
-		return "success";
-	}
-	
-	
-	@PostMapping("test2")
-	@ApiOperation(value = "챗봇 post test")
-	public ResponseEntity<String> test2(int id){
-		return new ResponseEntity<String>("success" + id, HttpStatus.OK);
-	}
-	
-	 //카카오톡 오픈빌더로 리턴할 스킬 API
-    @RequestMapping(value = "/test3" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public String callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+	@RestController
+	public class KKORestAPI {
 
-        try{
-            ObjectMapper mapper = new ObjectMapper();
-            String jsonInString = mapper.writeValueAsString(params);
-            System.out.println(jsonInString);
-            int x = 0;
-        }catch (Exception e){
+	    //카카오톡 오픈빌더로 리턴할 스킬 API
+	    @RequestMapping(value = "/kkoChat/v1" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+	    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
-        }
-        return "index";
-    }
+	        HashMap<String, Object> resultJson = new HashMap<>();
+
+	        try{
+
+	            ObjectMapper mapper = new ObjectMapper();
+	            String jsonInString = mapper.writeValueAsString(params);
+	            System.out.println(jsonInString);
+
+	            List<HashMap<String,Object>> outputs = new ArrayList<>();
+	            HashMap<String,Object> template = new HashMap<>();
+	            HashMap<String, Object> simpleText = new HashMap<>();
+	            HashMap<String, Object> text = new HashMap<>();
+
+	            text.put("text","코딩32 발화리턴입니다.");
+	            simpleText.put("simpleText",text);
+	            outputs.add(simpleText);
+
+	            template.put("outputs",outputs);
+
+	            resultJson.put("version","2.0");
+	            resultJson.put("template",template);
+
+	        }catch (Exception e){
+
+	        }
+
+	        return resultJson;
+	    }
+
+	}
 	
 }
