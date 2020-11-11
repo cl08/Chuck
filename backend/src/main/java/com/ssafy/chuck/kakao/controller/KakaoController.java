@@ -119,7 +119,12 @@ public class KakaoController {
     	System.out.println("secureimage 출력!!!");
     	
     	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
+    	
+    	JsonArray jsonArray = jsonObject.get("secureUrls").getAsJsonArray();
     	System.out.println(jsonObject.get("secureUrls"));
+    	
+    	System.out.println("ㅋㅋ");
+    	System.out.println(jsonArray);
     	
     	
         HashMap<String, Object> resultJson = new HashMap<>();
