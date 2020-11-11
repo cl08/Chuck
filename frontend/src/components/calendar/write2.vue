@@ -59,8 +59,8 @@ export default {
             });
         },
         done() {
-            this.title = '';
-            this.content = '';
+            this.title = ''
+            this.content = ''
             this.$store.commit('setVisibleWrite', false);
             this.$store.commit('setVisibleCalendar', true);
             this.$store.commit('setVisibleChoice', true);

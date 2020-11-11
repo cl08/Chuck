@@ -69,10 +69,10 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getChuckList',
             'getSelectedDiary',
             'getVisibleCalendar',
         ]),
+        chuckList: () => Array.from(store.getters.getChuckMap.values()).slice().reverse(),
         calendarTitle: function() {
             if(this.$refs.calendar.title.length == 7){
                 return this.$refs.calendar.title.substring(3,7)+"년 "+this.$refs.calendar.title.substring(0,2)
@@ -81,6 +81,11 @@ export default {
                 return this.$refs.calendar.title.substring(4,8)+"년 "+this.$refs.calendar.title.substring(0,3)
             }
         }
+    },
+    watch: {
+        chuckList: function() {
+            this.updateRange()
+        },
     },
     created() {
         eventBus.$on('updateCalendar', () => {
@@ -114,24 +119,24 @@ export default {
         showEvent ({ nativeEvent, event, date }) {
             this.setSelectedDay(this.$moment(event.start).format('YYYY-MM-DD'))
             this.focus = date
-            // store.dispatch('updateComments', event.id)     
-            // this.setSelectedDiary(event.index)
-            // this.setVisibleDetail(true)
-            // this.setVisibleCalendar(false)
-            // this.setVisibleWrite(false)
+            store.dispatch('updateComments', event.id)     
+            this.setSelectedDiary(event.id)
+            this.setVisibleDetail(true)
+            this.setVisibleCalendar(false)
+            this.setVisibleWrite(false)
         },
         updateRange () {
             const events = []
             const color = this.$store.getters.getColor
 
-            for(var i=0; i<this.getChuckList.length; i++){
-                var date = this.getChuckList[i].date.split('-')
+            for(var i=0; i<this.chuckList.length; i++){
+                var date = this.chuckList[i].date.split('-')
                 events.push({
-                    index: this.getChuckList[i].index,
-                    id: this.getChuckList[i].id,
-                    name: this.getChuckList[i].title,
+                    index: this.chuckList[i].index,
+                    id: this.chuckList[i].id,
+                    name: this.chuckList[i].title,
                     start: new Date(date[0], date[1]-1, date[2]),  
-                    color: this.getChuckList[i].color,
+                    color: this.chuckList[i].color,
                 })
             }
             this.events = events

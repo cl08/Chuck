@@ -123,6 +123,7 @@ export default {
             'getChuckList',
             'getSelectedDay',
         ]),
+        chuckMap: () => store.getters.getChuckMap,
         selectedChuckList: () => store.getters.getSelectedChuckList,
         searchChuckList: () => store.getters.getSearchChuckList,
     },
@@ -130,7 +131,11 @@ export default {
         getSelectedDay() {
            store.dispatch('updateSelectedChuckList')
            this.closeSearchBar()
-        }
+        },
+        chuckMap: function() {
+            store.dispatch('updateSelectedChuckList')
+            this.closeSearchBar()
+        },
     },
     methods: {
         ...mapMutations([
