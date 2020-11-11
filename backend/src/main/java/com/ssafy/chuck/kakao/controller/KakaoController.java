@@ -113,8 +113,8 @@ public class KakaoController {
     	HashMap<String,Object> prams = (HashMap<String, Object>) action.get("params");
     	System.out.println("params 출력!!!");
     	System.out.println(prams);
-    	
-    	HashMap<String,Object> secureimage = (HashMap<String, Object>) prams.get("secureimage");
+//    	 {secureimage={"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXb  
+    	String secureimage = (String) prams.get("secureimage");
     	System.out.println("secureimage 출력!!");
     	System.out.println(secureimage);
     	
