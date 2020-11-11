@@ -1,12 +1,13 @@
 <template>
     <div style="margin: 30px 30px 0px 0px">
-        <div class="text-left ml-8">
+        <div class="text-left" style="padding-left:30px;">
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
+            <span>아이콘이 들어갈 자리</span>
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
-        <p>{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</p>
-        <div class="selectPerson">
-            <div>
+        <div v-if="getFaceDataGallery.gallery_list" style="text-align:left; padding:20px 0px 10px 30px;">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</div>
+        <div class="dash" style="width:550px; height:560px; text-align:left;">
+            <div style="padding:8px;">
                 <span class="face pointer" @click="selectAll">ALL</span>
                 <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
@@ -27,6 +28,13 @@ export default {
             selectCount: 0,
         };
     },
+    created() {
+        let num = 0
+        if(this.getFaceDataGallery.gallery_list) num = this.getFaceDataGallery.gallery_list.length
+        for(let i = 0; i < num; i++) {
+            this.checkArr.push(false)
+        }
+    },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
@@ -38,7 +46,7 @@ export default {
             'setPersonArrayGallery',
         ]),
         selectAll() {
-            if(this.selectCount === this.getFaceDataGallery.gallery_list.length) {
+            if(this.getFaceDataGallery.gallery_list.length !== 0 && this.selectCount === this.getFaceDataGallery.gallery_list.length) {
                 for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
                     let el = document.getElementById('galleryFace'+i)
                     el.setAttribute('class', 'galleryFaceNoneDisplay')
@@ -58,7 +66,6 @@ export default {
             }
         },
         select(index) {
-            console.log(this.getFaceDataGallery.gallery_list.length)
             let el = document.getElementById("galleryFace" + index);
             el.classList.toggle("galleryFaceNoneDisplay");
             if (this.checkArr[index]) {
@@ -76,14 +83,6 @@ export default {
 </script>
 
 <style scoped>
-.imgDiv {
-    width: 160px;
-    display: inline-block;
-}
-p {
-    margin: 30px;
-    text-align: left;
-}
 .face {
     height: 90px;
     width: 90px;
@@ -98,9 +97,6 @@ p {
     background-size: cover;
     font-size: 26px;
     overflow: hidden;
-}
-.selectPerson {
-    width: 400px;
 }
 .face img {
     height: 100%;

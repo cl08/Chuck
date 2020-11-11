@@ -148,10 +148,11 @@ export default {
   box-shadow: 2px 0px 10px 5px #e2e2e2;
 }
 .right .BtnGroup {
-  width: 140px;
+  text-align: left;
   position: absolute;
-  bottom: 5px;
+  bottom: 15px;
   left: 5px;
+  margin-bottom: 10px;
 }
 .v-btn.v-size--x-large {
   font-size: 1.7rem;

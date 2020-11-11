@@ -1,36 +1,39 @@
 package com.ssafy.chuck.kakao.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.ssafy.chuck.picture.service.PictureService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -40,6 +43,11 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/chuck/kakao")
 public class KakaoController {
+	
+	@Autowired
+	private PictureService pictureService;
+	@Autowired
+    RestTemplate restTemplate;
 	
 	@PostMapping("/upload")
 	@ApiOperation(value = "카카오 챗봇 파일 업로드")
@@ -95,19 +103,64 @@ public class KakaoController {
 		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/token")
+	@ApiOperation(value = "카카오 토큰 얻기")
+	public ResponseEntity<Map<String, Object>> token(){
+		Map<String, Object> m = restTemplate.getForObject("http://kauth.kakao.com/oauth/authorize?client_id=39c29afd4d7851a73acd53290c07e56d&redirect_uri=http://k3a206.p.ssafy.io/kakao_oauth&response_type=code", Map.class);
+		
+		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
+	}
+	
 	//카카오톡 오픈빌더로 리턴할 스킬 API
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-
-    	System.out.println(params);
     	
+    	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
+    	System.out.println("userRequest 출력!!!");
+    	System.out.println(userRequest);
+    	
+    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
+    	System.out.println("user 출력!!!");
+    	System.out.println(user);    	
+    	
+    	
+    	HashMap<String,Object> action = (HashMap<String, Object>) params.get("action");
+    	System.out.println("action 출력!!!");
+    	System.out.println(action);
+    	
+    	HashMap<String,Object> detailParams = (HashMap<String, Object>) action.get("detailParams");
+    	System.out.println("params 출력!!!");
+    	System.out.println(detailParams);
+    	
+    	HashMap<String,Object> secureimage = (HashMap<String,Object>) detailParams.get("secureimage");
+    	System.out.println("secureimage 출력!!!");
+    	System.out.println(secureimage);
+    	
+    	String origin = secureimage.get("origin").toString();
+    	System.out.println("origin 출력!!");
+    	System.out.println(origin);
+    	
+    	String[] urls = origin.split(",");
+    	if(urls.length >= 1) {
+	    	urls[0] = urls[0].substring(5, urls[0].length());
+	    	urls[urls.length-1] = urls[urls.length-1].substring(0, urls[urls.length-1].length() - 1);
+    	}
+    	for(String url : urls) {
+    		System.out.println(url);
+    		try {
+				saveImage(url);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+    	}
+
         HashMap<String, Object> resultJson = new HashMap<>();
         
         try{
             ObjectMapper mapper = new ObjectMapper();
             String jsonInString = mapper.writeValueAsString(params);
-            System.out.println(jsonInString);
+//            System.out.println(jsonInString);
 
             List<HashMap<String,Object>> outputs = new ArrayList<>();
             HashMap<String,Object> template = new HashMap<>();
@@ -130,5 +183,36 @@ public class KakaoController {
         return resultJson;
     }
 
+    
+    private static void saveImage(String strUrl) throws IOException {
+        URL url = null;
+        InputStream in = null;
+        OutputStream out = null;
+        
+        SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
+        int rand = (int)(Math.random()*100);
+		Date nowdate = new Date();
+		String dateString = formatter.format(nowdate) + rand;	//현재시간 문자열
+        
+        try {
+            url = new URL(strUrl);
+            in = url.openStream();
+            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + dateString + ".jpg"); //저장경로
+            while(true){
+                //이미지를 읽어온다.
+                int data = in.read();
+                if(data == -1) break;
+                //이미지를 쓴다.
+                out.write(data);
+            }
+            in.close();
+            out.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }finally{
+            if(in != null){in.close();}
+            if(out != null){out.close();}
+        }
+    }
 	
 }

@@ -8,14 +8,14 @@
                 <font size=5>{{ this.getSelectedDay }}</font>
             </span>
         </div>
-        <div v-if="getChuckList[getSelectedDiary]" style="margin: 10px 30px 10px 30px;">
+        <div v-if="getChuckMap.get(getSelectedDiary)" style="margin: 10px 30px 10px 30px;">
             <v-carousel height="400" hide-delimiter-background :hide-delimiters=true>
-                <v-carousel-item class="kpa" v-for="(item, i) in getChuckList[getSelectedDiary].image" :key="i" :src="item" target></v-carousel-item>
+                <v-carousel-item class="kpa" v-for="(item, i) in getChuckMap.get(getSelectedDiary).image" :key="i" :src="item" target></v-carousel-item>
             </v-carousel>
         </div>
         <div class="mb-15">
-            <span v-if="getChuckList[getSelectedDiary]" class="float-left ml-10" style="font-size:large">
-                {{ getChuckList[getSelectedDiary].writer }}
+            <span v-if="getChuckMap.get(getSelectedDiary)" class="float-left ml-10" style="font-size:large">
+                {{ getChuckMap.get(getSelectedDiary).writer }}
             </span>
             <span class="float-right mr-10">
                 <a :href="picture" @click="download" target="_blank" download style="text-decoration:none;">
@@ -26,7 +26,8 @@
                 <v-menu
                     offset-y
                     v-model="menu"
-                    v-if="this.getSelectedDiary !== '' && this.getId == this.getChuckList[this.getSelectedDiary].writerId"
+                    v-if="this.getSelectedDiary !== '' && this.getChuckMap.get(this.getSelectedDiary)
+                    &&this.getId == this.getChuckMap.get(this.getSelectedDiary).writerId"
                 >
                     <template v-slot:activator="{ on, attrs }">
                         <v-icon v-bind="attrs" v-on="on">
@@ -61,17 +62,17 @@
                 </v-menu>
             </span>
         </div>
-        <div v-if="getChuckList[getSelectedDiary]" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px;">
-            {{ getChuckList[getSelectedDiary].title }}
+        <div v-if="getChuckMap.get(getSelectedDiary)" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px;">
+            {{ getChuckMap.get(getSelectedDiary).title }}
         </div>
-        <div v-if="getChuckList[getSelectedDiary] && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckList[getSelectedDiary].content">
+        <div v-if="getChuckMap.get(getSelectedDiary) && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckMap.get(getSelectedDiary).content">
         </div>
         <textarea
             v-if="changeContent"
             v-model="content"
             ref="content"
-            style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px"
-          />
+            style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px;"
+        />
         <v-dialog v-model="dialog" max-width="290" v-if="changeContent">
             <template v-slot:activator="{ on, attrs }">
                 <v-btn
@@ -105,6 +106,7 @@
 import { mapGetters } from 'vuex'
 import api from '@/utils/api'
 import eventBus from '@/utils/EventBus'
+import axios from 'axios'
 
 export default {
     data () {
@@ -122,11 +124,12 @@ export default {
             'getChuckList',
             'getSelectedDiary',
             'getId',
+            'getChuckMap',
         ])
     },
     methods: {
         edit() {
-            this.content = this.getChuckList[this.getSelectedDiary].content
+            this.content = this.getChuckMap.get(this.getSelectedDiary).content
             this.changeContent = true 
             this.$nextTick(() => {
                 this.$refs.content.focus();
@@ -135,16 +138,17 @@ export default {
         remove() {
             this.dialog = false
             this.menu = false
-            api.delete(`diaries/${this.getChuckList[this.getSelectedDiary].id}`, {
+            api.delete(`diaries/${this.getSelectedDiary}`, {
                 headers: {
                     token: this.$store.getters.getToken,
                 }
             }).then(() => {
-                this.$store.state.chuckList.splice(this.getSelectedDiary, 1)
+                this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
+                eventBus.$emit('updateList')
                 eventBus.$emit('back')
             })
         },
-        download() {
+        getImageUrl() {
             let num = $('.kpa').length
             let picture = ''
             for(let i=0; i<num; i++) {
@@ -154,6 +158,27 @@ export default {
             }
             picture = picture.slice(5, -2)
             this.picture = picture
+        },
+        download() {
+            this.getImageUrl();
+            axios({
+                method: 'get',
+                url: this.picture,
+                responseType: 'blob'
+            }).then((res) => {
+                this.forceFileDownload(res)
+            })
+        },
+        forceFileDownload(response) {
+            const headers = response.headers;
+            // const extension = this.picture.substring(this.picture.lastIndexOf('.')+1)
+            const blob = new Blob([response.data], {type: headers['content-type']});
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = this.picture;
+            document.body.appendChild(link);
+            link.click();
+            link.remove()
         },
         cancle() {
             this.dialog = false
@@ -165,7 +190,7 @@ export default {
             this.menu = false
         },
         updateContent() {
-            const prev_content = this.getChuckList[this.getSelectedDiary].content
+            const prev_content = this.getChuckMap.get(this.getSelectedDiary).content
              if(this.content === prev_content) {
                 alert('변경된 내용이 없습니다.')
                 this.dialog = false
@@ -173,16 +198,16 @@ export default {
                     this.$refs.content.focus();
                 });
             } else {
-                api.put(`diaries/${this.getChuckList[this.getSelectedDiary].id}`, {
+                api.put(`diaries/${this.getSelectedDiary}`, {
                     content: this.content,
-                    writerId: this.getChuckList[this.getSelectedDiary].writerId,
-                    id: this.getChuckList[this.getSelectedDiary].id,
+                    writerId: this.getChuckMap.get(this.getSelectedDiary).writerId,
+                    id: this.getChuckMap.get(this.getSelectedDiary).id,
                 }, {
                     headers: {
                         token: this.$store.getters.getToken,
                     }
                 }).then(() => {
-                    this.$store.state.chuckList[this.getSelectedDiary].content = this.content
+                    this.$store.state.chuckMap.get(this.getSelectedDiary).content = this.content
                     this.dialog = false
                     this.changeContent = false
                     this.content = ''

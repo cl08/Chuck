@@ -225,7 +225,7 @@ export default {
     }
     eventBus.$on('movePage', (data) => {
       this.movePage(data.index);
-      this.setBackState(2);
+      this.setBackState(data.state);
       eventBus.$emit('showDetail', data.item);
     });
     eventBus.$on('back', () => {
@@ -326,9 +326,13 @@ export default {
         this.setVisibleDetail(false);
         this.setVisibleCalendar(true);
         eventBus.$emit('clearWrite');
-      } else {
+      } else if(this.getBackState == 2) {
         // TimeLine
         this.movePage(0);
+        this.setBackState(1);
+      } else {
+        // Gallery
+        this.movePage(2);
         this.setBackState(1);
       }
     }

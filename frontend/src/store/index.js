@@ -23,6 +23,7 @@ export default new Vuex.Store({
         visibleModalAssignGroup: false,
         visibleModalSecedeGroup: false,
         chuckList: [],
+        chuckMap: new Map(),
         comments: [],
         selectedChuckList: [],
         searchChuckList:[],
@@ -36,6 +37,9 @@ export default new Vuex.Store({
         personArrayBook: [],
         personArrayFilm: [],
         init: false,
+        videoSrc: [],
+        videoUrl: '',
+        videoMusic: '',
     },
 
     getters: {
@@ -137,6 +141,18 @@ export default new Vuex.Store({
         getInit(state) {
             return state.init
         },
+        getChuckMap(state) {
+            return state.chuckMap
+        },
+        getVideoSrc(state) {
+            return state.videoSrc
+        },
+        getVideoUrl(state) {
+            return state.videoUrl
+        },
+        getVideoMusic(state) {
+            return state.videoMusic
+        }
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -243,6 +259,22 @@ export default new Vuex.Store({
         setInit(state, payload) {
             state.init = payload
         },
+        insertChucks(state, payload) {
+            state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
+        },
+        removeChucks(state, payload) {
+            state.chuckMap.delete(payload.id)
+            state.chuckMap = new Map(state.chuckMap)
+        },
+        setVideoSrc(state, payload) {
+            state.videoSrc = payload
+        },
+        setVideoUrl(state, payload) {
+            state.videoUrl = payload
+        },
+        setVideoMusic(state, payload) {
+            state.videoMusic = payload
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -270,7 +302,7 @@ export default new Vuex.Store({
                     const image = data[i].image.split(';')
                     data[i].image = image
                     data[i].color = this.state.color[i % 10]
-                    data[i].index = i
+                    data[i].index = i          
                 }
                 commit('setChuckList', data)
             })
@@ -289,17 +321,19 @@ export default new Vuex.Store({
         },
         updateSelectedChuckList({commit}) {
             const day = [];
-            for(var i=0; i<this.state.chuckList.length; i++) {
-                if(this.state.chuckList[i].date === this.state.selectedDay) {
-                    day.push(this.state.chuckList[i])
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for(var i=0; i<chuckList.length; i++) {
+                if(chuckList[i].date === this.state.selectedDay) {
+                    day.push(chuckList[i])
                 }
             }
             commit('setSelectedChuckList', day)
         },
         updateSearchChuckList({commit}, item){
             const result = []
-            for (let index = 0; index < this.state.chuckList.length; index++) {
-                const element = this.state.chuckList[index];
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for (let index = 0; index < chuckList.length; index++) {
+                const element = chuckList[index];
                 // console.log(element.title.indexOf(item)!==-1)
                 if(element.title.indexOf(item)!==-1){
                     result.push(element)
@@ -323,6 +357,12 @@ export default new Vuex.Store({
         },
         updateInit({commit}) {
             commit('setInit', true)
-        }
+        },
+        addChuckList({commit}, item) {
+            commit('insertChucks', item)
+        },
+        delChuckList({commit}, item) {
+            commit('removeChucks', item)
+        },
     }
 })

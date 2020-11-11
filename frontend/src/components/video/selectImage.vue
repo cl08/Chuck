@@ -4,6 +4,13 @@
             <font size=4>사진 고르기</font>
         </div>
         <div class="dash" style="height:620px; text-align:left">
+            <v-row style="padding: 10px 0px 10px 10px;">
+                <img src="../../assets/tip_icon.svg" style="width:16px; margin:8px 12px 10px 20px;">
+                <font size=2 color=#56b4fc>
+                동영상을 만들기 위해서는 최소 5장의 사진이 필요합니다.<br>
+                5장 이상의 사진을 선택해 주세요.
+                </font>
+            </v-row>
             <span class="photo pointer" @click="selectAll">ALL</span>
             <span v-for="(data, i) in getFaceDataFilm" :key="i">
                 <span v-show="getPersonArrayFilm[i]">
@@ -14,12 +21,21 @@
             </span>
         </div>
         <div v-if="selectCount < 5" class="dash pointer">
-            <font size=4 color="red">다섯장 이상의 사진을 선택해야 합니다. {{selectCount}} / {{maxCount}}</font>
+            <font size=4 color="red">동영상을 만들기 위한 사진의 갯수가 부족합니다.</font>
         </div>
         <div v-else class="dash pointer" @click="nextStep">
             <font size=4>다음으로</font>
         </div>
+        <v-dialog v-model="loading" hide-overlay persistent width="300">
+            <v-card color="#8D6262" dark>
+                <v-card-text>
+                    Making Chuck Film...
+                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
+    
 </template>
 
 <script>
@@ -32,6 +48,7 @@ export default {
             selectCount: 0,
             maxCount : 0,
             imageArray: [],
+            loading: false,
         }
     },
     computed: {
@@ -40,6 +57,7 @@ export default {
             'getChuckList',
             'getFaceDataFilm',
             'getPersonArrayFilm',
+            'getVideoUrl'
         ]),
     },
     watch: {
@@ -55,7 +73,7 @@ export default {
             for(let i=0; i<this.getFaceDataFilm.length; i++) {
                 this.imageArray[i] = new Array()
             }
-        }
+        },
     },
     methods: {
         ...mapMutations([
@@ -63,8 +81,11 @@ export default {
             'setVisibleAlbum',
             'setVisibleVideo',
             'setVisiblePreview',
+            'setVideoSrc',
+            'setVideoUrl',
         ]),
         nextStep() {
+            this.loading = true
             let src = new Array()
             for(let i=0; i<this.getFaceDataFilm.length; i++) {
                 for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
@@ -73,18 +94,33 @@ export default {
                     }
                 }
             }
-            api.post('picktures/mkVideo', {
-                'music': "test",
+            api.post('pictures/mkVideo', {
+                'music': "Fingertips.mp3",
                 'userId': this.getId,
                 'path_list': src,
             })
             .then(({ data }) => {
-                console.log(data)
+                data = data.replace('final', 'middle')
+                this.setVideoUrl(data)
+                this.setVideoSrc(src)
+            
+                // 동영상 생성
+                let p = document.getElementById("media-video")
+                while (p.hasChildNodes()) {
+                    p.removeChild( p.firstChild )
+                }
+                
+                let source = document.createElement("source")
+                let url = this.getVideoUrl.replace('final', 'middle')
+                source.setAttribute('src', url)
+                p.appendChild(source)
+            
+                this.setVisibleChoice(false)
+                this.setVisibleAlbum(false)
+                this.setVisibleVideo(false)
+                this.setVisiblePreview(true)
+                this.loading = false
             })
-            this.setVisibleChoice(false)
-            this.setVisibleAlbum(false)
-            this.setVisibleVideo(false)
-            this.setVisiblePreview(true)
         },
         selectAll() {
             if(this.selectCount == this.maxCount) {

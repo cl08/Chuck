@@ -23,7 +23,7 @@
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div style="padding:28px; text-align:left;">
+        <div style="padding:28px; text-align:left; height:270px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
                 <li v-for="(image, index) in $data.imageList" :key="index" class="el-upload-list__item is-ready">
                     <img :src="image" class="el-upload-list__item-thumbnail">
@@ -52,7 +52,7 @@
                 </li>
             </ul>
         </div>
-        <div style="padding:0px 28px; text-align:right" v-if="imageList.length > 0">
+        <div style="padding:0px 34px; text-align:right" v-if="imageList.length > 0">
             <font size=5 class="pointer" @click="removeAll">전체삭제</font>
         </div>
     </div>
@@ -74,6 +74,8 @@ export default {
     computed: {
         ...mapGetters([
             'getSelectedGroup',
+            'getColor',
+            'getChuckList',
         ]),
     },
     components: {
@@ -124,15 +126,23 @@ export default {
             this.imageList.forEach(image => {
                 images.push(image);
             });
-            console.log(images)
-            console.log(diaryId)
             api.post(`pictures/insert`, {
                 diary_id: diaryId,
                 group_id: this.getSelectedGroup.id,
                 path_list: images,
             }).then((data) => {
-                eventBus.$emit('uploadeDone');
-                this.imageList = [];
+                api.get(`diaries/${diaryId}`, {
+                    headers: {
+                        token: this.$store.getters.getToken,
+                    }
+                }).then(({data}) => {
+                    const image = data.image.split(';')
+                    data.image = image
+                    data.color = this.getColor[this.getChuckList.length % 10]
+                    this.$store.dispatch('addChuckList', data)
+                    eventBus.$emit('uploadeDone');
+                    this.imageList = [];
+                })
             })
         },
         changeImage(data) {
