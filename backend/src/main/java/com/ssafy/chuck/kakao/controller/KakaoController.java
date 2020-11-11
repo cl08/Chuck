@@ -96,42 +96,37 @@ public class KakaoController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	@RestController
-	public class KKORestAPI {
+	//카카오톡 오픈빌더로 리턴할 스킬 API
+    @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
-	    //카카오톡 오픈빌더로 리턴할 스킬 API
-	    @RequestMapping(value = "/kkoChat/v1" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-	    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+        HashMap<String, Object> resultJson = new HashMap<>();
 
-	        HashMap<String, Object> resultJson = new HashMap<>();
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(params);
+            System.out.println(jsonInString);
 
-	        try{
+            List<HashMap<String,Object>> outputs = new ArrayList<>();
+            HashMap<String,Object> template = new HashMap<>();
+            HashMap<String, Object> simpleText = new HashMap<>();
+            HashMap<String, Object> text = new HashMap<>();
 
-	            ObjectMapper mapper = new ObjectMapper();
-	            String jsonInString = mapper.writeValueAsString(params);
-	            System.out.println(jsonInString);
+            text.put("text","코딩32 발화리턴입니다.");
+            simpleText.put("simpleText",text);
+            outputs.add(simpleText);
 
-	            List<HashMap<String,Object>> outputs = new ArrayList<>();
-	            HashMap<String,Object> template = new HashMap<>();
-	            HashMap<String, Object> simpleText = new HashMap<>();
-	            HashMap<String, Object> text = new HashMap<>();
+            template.put("outputs",outputs);
 
-	            text.put("text","코딩32 발화리턴입니다.");
-	            simpleText.put("simpleText",text);
-	            outputs.add(simpleText);
+            resultJson.put("version","2.0");
+            resultJson.put("template",template);
 
-	            template.put("outputs",outputs);
+        }catch (Exception e){
 
-	            resultJson.put("version","2.0");
-	            resultJson.put("template",template);
+        }
 
-	        }catch (Exception e){
+        return resultJson;
+    }
 
-	        }
-
-	        return resultJson;
-	    }
-
-	}
 	
 }
