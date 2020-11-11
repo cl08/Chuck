@@ -31,6 +31,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -101,13 +104,20 @@ public class KakaoController {
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
     	System.out.println(params.get("action"));
+    	//{id=5fab6941f282650c3236f23f, name=imageSender, params={secureimage={"privacyAgreement":"Y","imageQuantity":"1" 
+    	
+    	
+    	JsonObject action = (JsonObject) JsonParser.parseString((String) params.get("action"));
+		JsonObject param = action.get("params").getAsJsonObject();
+		System.out.println(param);
+    	
     	
         HashMap<String, Object> resultJson = new HashMap<>();
         
         try{
             ObjectMapper mapper = new ObjectMapper();
             String jsonInString = mapper.writeValueAsString(params);
-            System.out.println(jsonInString);
+//            System.out.println(jsonInString);
 
             List<HashMap<String,Object>> outputs = new ArrayList<>();
             HashMap<String,Object> template = new HashMap<>();
