@@ -1,8 +1,13 @@
 <template>
-    <div class="result">
-        <div class="List">
-            <span v-for="(item, index) in temp" :key="index" class="resultImgDiv">
-                <img class="pointer" :src="item" @click="clickedImg(index)">
+    <div style="padding:30px 0px 0px 30px;">
+        <div style="background-image:url('/assets/gallery_background.jpg'); widh:400px; height:400px;">
+            dd
+            <!-- <img src="../../assets/gallery_background.jpg"> -->
+        </div>
+
+        <div style="text-align:left; padding:20px;">
+            <span v-for="(item, index) in temp" :key="index" class="picture">
+                <img class="pointer picture" :src="item" @click="clickedImg(index)">
             </span>
         </div>
     </div>
@@ -76,31 +81,9 @@ export default {
 </script>
 
 <style scoped>
-.List {
-    margin-top: 50px;
-    margin-left: 50px;
-}
-.resultImgDiv {
-    width: 130px;
-    display: inline-block;
-    overflow: hidden;
-}
-.List img {
-    width: 110px;
-    height: 110px;
-}
-.result .selectPerson {
-    margin-top: 50px;
-    margin-left: 30px;
-}
-.selectedImgDiv {
-    margin-left: 20px;
-    width: 100px;
-}
-.selectedImgDiv img {
-    border: solid 0.1em;
-    width: 30px;
-    height: 30px;
-    filter: opacity(0.5);
+.picture {
+    width: 120px;
+    height: 120px;
+    margin: 4px;
 }
 </style>
