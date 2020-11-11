@@ -17,8 +17,6 @@ import java.util.StringTokenizer;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,20 +24,15 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.ssafy.chuck.picture.service.PictureService;
 
 import io.swagger.annotations.Api;
@@ -53,7 +46,8 @@ public class KakaoController {
 	
 	@Autowired
 	private PictureService pictureService;
-	
+	@Autowired
+    RestTemplate restTemplate;
 	
 	@PostMapping("/upload")
 	@ApiOperation(value = "카카오 챗봇 파일 업로드")
@@ -109,13 +103,27 @@ public class KakaoController {
 		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
-
+	
+	@GetMapping("/token")
+	@ApiOperation(value = "카카오 토큰 얻기")
+	public ResponseEntity<Map<String, Object>> token(){
+		Map<String, Object> m = restTemplate.getForObject("http://kauth.kakao.com/oauth/authorize?client_id=39c29afd4d7851a73acd53290c07e56d&redirect_uri=http://k3a206.p.ssafy.io/kakao_oauth&response_type=code", Map.class);
+		
+		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
+	}
+	
 	//카카오톡 오픈빌더로 리턴할 스킬 API
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-
     	
-    	//{id=5fab6941f282650c3236f23f, name=imageSender, params={secureimage={"privacyAgreement":"Y","imageQuantity":"1" 
+    	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
+    	System.out.println("userRequest 출력!!!");
+    	System.out.println(userRequest);
+    	
+    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
+    	System.out.println("user 출력!!!");
+    	System.out.println(user);    	
+    	
     	
     	HashMap<String,Object> action = (HashMap<String, Object>) params.get("action");
     	System.out.println("action 출력!!!");
@@ -132,7 +140,7 @@ public class KakaoController {
     	String origin = secureimage.get("origin").toString();
     	System.out.println("origin 출력!!");
     	System.out.println(origin);
-    	//  List(http://secure.kakaocdn.net/dna/bAxQJB/K6aSYngzcU/XXX/img_org.jpg?credential=Kq0eSbCrZgKIq51jh41Uf1jLsUh7VW 
+    	
     	String[] urls = origin.split(",");
     	if(urls.length >= 1) {
 	    	urls[0] = urls[0].substring(5, urls[0].length());
