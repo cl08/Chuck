@@ -1,13 +1,9 @@
 <template>
     <div class="result">
-        <div class="List" v-if="getFaceDataGallery">
-            <div v-for="(person, i) in getPersonArrayGallery" :key="i">
-                <div v-if="person === true">
-                    <div v-for="(item, index) in getFaceDataGallery.gallery_list[i].content_list" :key="index" class="resultImgDiv">
-                        <img class="pointer" :src="item.path" @click="clickedImg(index)">
-                    </div>
-                </div>
-            </div>
+        <div class="List">
+            <span v-for="(item, index) in temp" :key="index" class="resultImgDiv">
+                <img class="pointer" :src="item" @click="clickedImg(index)">
+            </span>
         </div>
     </div>
 </template>
@@ -20,15 +16,51 @@ import api from '@/utils/api.js'
 export default {
     data() {
         return {
-            checkArr: '',
+            checkArr: [],
+            imageList: new Map(),
+            temp: [],
         }
     },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
             'getPersonArrayGallery',
-            'getFaceDataGallery'
+            'getFaceDataGallery',
         ]),
+    },
+    watch: {
+        getPersonArrayGallery: function(data) {
+            let change = []
+            if(this.checkArr.length == 0) {
+                this.checkArr = data.slice()
+                for(let i = 0; i<data.length; i++) change.push(i)
+            } else {
+                for(let i = 0; i<data.length; i++) {
+                    if(this.checkArr[i] != data[i]) change.push(i)
+                }
+                this.checkArr = data.slice()
+            }
+            if(change.length != 0) {
+                change.forEach(index => {
+                    const flag = this.checkArr[index]
+                    const num = this.getFaceDataGallery.gallery_list[index].content_list.length
+                    for(let i = 0; i<num; i++) {
+                        const path = this.getFaceDataGallery.gallery_list[index].content_list[i].path
+                        if(this.imageList.has(path)) {
+                            const cnt = this.imageList.get(path)
+                            if(flag) this.imageList.set(path, cnt + 1)
+                            else {
+                                if(cnt == 1) this.imageList.delete(path)
+                                else this.imageList.set(path, cnt - 1)
+                            }
+                        } else {
+                            if(flag) this.imageList.set(path, 1)
+                        }
+                    } 
+                });
+            }
+            this.temp = Array.from(this.imageList.keys())
+        }
     },
     methods: {
         clickedImg(index) {

@@ -4,7 +4,7 @@
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
-        <p>{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</p>
+        <p v-if="getFaceDataGallery.gallery_list">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</p>
         <div class="selectPerson">
             <div>
                 <span class="face pointer" @click="selectAll">ALL</span>
@@ -27,6 +27,13 @@ export default {
             selectCount: 0,
         };
     },
+    created() {
+        let num = 0
+        if(this.getFaceDataGallery.gallery_list) num = this.getFaceDataGallery.gallery_list.length
+        for(let i = 0; i < num; i++) {
+            this.checkArr.push(false)
+        }
+    },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
@@ -38,7 +45,7 @@ export default {
             'setPersonArrayGallery',
         ]),
         selectAll() {
-            if(this.selectCount === this.getFaceDataGallery.gallery_list.length) {
+            if(this.getFaceDataGallery.gallery_list.length !== 0 && this.selectCount === this.getFaceDataGallery.gallery_list.length) {
                 for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
                     let el = document.getElementById('galleryFace'+i)
                     el.setAttribute('class', 'galleryFaceNoneDisplay')
@@ -58,7 +65,6 @@ export default {
             }
         },
         select(index) {
-            console.log(this.getFaceDataGallery.gallery_list.length)
             let el = document.getElementById("galleryFace" + index);
             el.classList.toggle("galleryFaceNoneDisplay");
             if (this.checkArr[index]) {
