@@ -1,6 +1,3 @@
-<!--
-    1. content 길 경우 문제. 자르고 ... 표시
--->
 <template>
     <div style="padding:30px 0px 0px 30px;">
         <v-row v-if="searchFlag">
@@ -29,20 +26,21 @@
             </span>
         </v-row>
 
-        <v-container v-if="selectedChuckList.length != 0" style="padding:0px 20px 0px 20px;">
+        <v-container v-if="selectedChuckList.length != 0" style="padding:10px 30px 0px 30px;">
             <div v-show="searchResult">'{{ searchResult }}' 검색 결과</div>
             <v-row dense>
-                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="cursor:pointer">
-                    <v-card>
+                <v-col v-for="(item, i) in selectedChuckList" :key="i" cols="12" @click="detail(item)" style="margin-bottom:10px;">
+                    <v-card class="pointer" style="box-shadow: 2px 2px 5px 1px #CED4DA;">
                         <div class="d-flex flex-no-wrap">
-                            <span :style="{backgroundColor:item.color, color:item.color}">dd</span>
-                            <v-avatar size="125" tile>
+                            <div class="belt" :style="{backgroundColor:item.color}"></div>
+                            <v-avatar size="130" tile style="margin:5px 0px;">
                                 <v-img :src="item.image[0]"></v-img>
                             </v-avatar>
                             <div style="width:400px;">
-                                <v-card-title>{{ item.title }} </v-card-title>
-                                <v-card-subtitle v-text="item.content.slice(0, 30)" style="text-align:left; paadingBottom:0px;"></v-card-subtitle>
-                                <v-card-text>
+                                <v-card-title style="font-size:16px;">{{ item.title }} </v-card-title>
+                                <v-card-subtitle v-text="item.content.slice(0, 70)" style="text-align:left; padding-bottom:0px; height:50px; font-size:14px;"></v-card-subtitle>
+                                <hr style="width:90%" color="#F2F2F2">
+                                <v-card-text style="padding:10px 20px; font-size:12px; color:#8D6262">
                                     <v-row>
                                         <span class="col-6" style="text-align:left; padding: 0px 12px;">
                                         작성자 : {{ item.writer }}
@@ -141,6 +139,12 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.belt {
+    display: inline-block;
+    height: 130px;
+    width: 10px;
+    margin: 5px;
+    border-radius: 5px;
+}
 </style>

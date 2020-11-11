@@ -39,7 +39,7 @@ public class PictureServiceImpl implements PictureService{
 	}
 
 	@Override
-	public int selectDiaryIdByPath(String path) {
+	public Object selectDiaryIdByPath(String path) {
 		return pictureDao.selectDiaryIdByPath(path);
 	}
 	

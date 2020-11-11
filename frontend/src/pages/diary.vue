@@ -138,12 +138,13 @@
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
     <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
     <Mypage></Mypage>
+    <assginGroupModal v-if="getVisibleModalAssignGroup"></assginGroupModal>
+    <secedeGroupModal v-if="getVisibleModalSecedeGroup"></secedeGroupModal>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
-import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
 import { mapMutations } from 'vuex';
 import eventBus from '@/utils/EventBus';
@@ -178,6 +179,9 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
+import assginGroupModal from "@/components/groupset/assginGroupModal.vue";
+import secedeGroupModal from "@/components/groupset/secedeGroupModal.vue";
+
 import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
@@ -204,6 +208,8 @@ export default {
     Groupset,
     Outro,
     Mypage,
+    assginGroupModal,
+    secedeGroupModal,
   },
   data() {
     return {
@@ -214,11 +220,17 @@ export default {
     };
   },
   created() {
+    if(!this.getInit) {
+      this.$router.push('/fetch')
+    }
     eventBus.$on('movePage', (data) => {
       this.movePage(data.index);
       this.setBackState(2);
       eventBus.$emit('showDetail', data.item);
     });
+    eventBus.$on('back', () => {
+      this.back();
+    })
   },
   computed: {
     ...mapGetters([
@@ -234,6 +246,9 @@ export default {
       "getVisibleVideo",
       "getVisiblePreview",
       "getBackState",
+      "getVisibleModalAssignGroup",
+      "getVisibleModalSecedeGroup",
+      "getInit",
     ]),
   },
   methods: {

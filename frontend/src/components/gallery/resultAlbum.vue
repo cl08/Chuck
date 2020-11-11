@@ -1,10 +1,10 @@
 <template>
     <div class="result">
-        <div class="List" v-if="getFaceData">
+        <div class="List" v-if="getFaceDataGallery">
             <div v-for="(person, i) in getPersonArrayGallery" :key="i">
                 <div v-if="person === true">
-                    <div v-for="(item, index) in getFaceData.cluster_list[i].path_list" :key="index" class="resultImgDiv">
-                        <img class="pointer" :src="item" @click="clickedImg(index)">
+                    <div v-for="(item, index) in getFaceDataGallery.gallery_list[i].content_list" :key="index" class="resultImgDiv">
+                        <img class="pointer" :src="item.path" @click="clickedImg(index)">
                     </div>
                 </div>
             </div>
@@ -27,7 +27,7 @@ export default {
         ...mapGetters([
             'getSelectedGroup',
             'getPersonArrayGallery',
-            'getFaceData'
+            'getFaceDataGallery'
         ]),
     },
     methods: {

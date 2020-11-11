@@ -4,11 +4,11 @@
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
-        <p>{{getFaceData.cluster_list.length}}명의 인물이 검색되었습니다.</p>
+        <p>{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</p>
         <div class="selectPerson">
             <div>
                 <span class="face pointer" @click="selectAll">ALL</span>
-                <span class="face pointer" v-for="(face, index) in getFaceData.cluster_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
+                <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
                 </span>
             </div>
@@ -24,12 +24,13 @@ export default {
     data() {
         return {
             checkArr: [],
+            selectCount: 0,
         };
     },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
-            'getFaceData',
+            'getFaceDataGallery',
         ])
     },
     methods: {
@@ -37,20 +38,35 @@ export default {
             'setPersonArrayGallery',
         ]),
         selectAll() {
-            for (let i = 0; i < this.getFaceData.cluster_list.length; i++) {
-                let el = document.getElementById("galleryFace" + i);
-                el.setAttribute("class", "");
-                this.$set(this.checkArr, i, true);
-                this.setPersonArrayGallery(this.checkArr);
+            if(this.selectCount === this.getFaceDataGallery.gallery_list.length) {
+                for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
+                    let el = document.getElementById('galleryFace'+i)
+                    el.setAttribute('class', 'galleryFaceNoneDisplay')
+                    this.$set(this.checkArr, i, false)
+                }
+                this.selectCount = 0
+                this.setPersonArrayGallery(this.checkArr)
+            }
+            else {
+                for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
+                    let el = document.getElementById('galleryFace'+i)
+                    el.setAttribute('class', '')
+                    this.$set(this.checkArr, i, true)
+                }
+                this.selectCount = this.getFaceDataGallery.gallery_list.length
+                this.setPersonArrayGallery(this.checkArr)
             }
         },
         select(index) {
+            console.log(this.getFaceDataGallery.gallery_list.length)
             let el = document.getElementById("galleryFace" + index);
             el.classList.toggle("galleryFaceNoneDisplay");
             if (this.checkArr[index]) {
                 this.$set(this.checkArr, index, false);
+                this.selectCount--
             } else {
                 this.$set(this.checkArr, index, true);
+                this.selectCount++
             }
             // store에 저장
             this.setPersonArrayGallery(this.checkArr);

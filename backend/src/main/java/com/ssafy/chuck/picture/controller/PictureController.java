@@ -152,8 +152,9 @@ public class PictureController {
 			for(int j=0;j<list.size();j++) {
 				System.out.println("그냥 path : " + list.get(j).getAsString());
 				System.out.println("path로 찾은 ");
-				galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1],
-						pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
+				Object diary_id = pictureService.selectDiaryIdByPath(list.get(j).getAsString());
+				if(diary_id != null) galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1], 
+						(int)diary_id));
 			}
 			galleryResponseList.add(new GalleryResponse(rep, galleryList));
     	}
@@ -178,12 +179,22 @@ public class PictureController {
 
 			List<DiaryDto> studioList = new ArrayList<>();
 			
+			int idx = 0;
 			for(int j=0;j<list.size();j++) {
-				System.out.println("기존 path : " + list.get(j).getAsString());
-				System.out.println("path로 구한 diary_id : " + pictureService.selectDiaryIdByPath(list.get(j).getAsString()));
-				System.out.println("diary_id로 구한 diary info : " + diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
-				studioList.add(diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
-				studioList.get(j).setImage("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
+//				System.out.println("기존 path : " + list.get(j).getAsString());
+//				System.out.println("path로 구한 diary_id : " + pictureService.selectDiaryIdByPath(list.get(j).getAsString()));
+//				System.out.println("diary_id로 구한 diary info : " + diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
+				
+				Object diary_id = pictureService.selectDiaryIdByPath(list.get(j).getAsString());
+				if(diary_id == null) {
+					System.out.println("null이야");
+					continue;
+				}
+				else {
+					studioList.add(diaryService.read((int)diary_id));
+					studioList.get(idx++).setImage("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
+				}
+				
 			}
 			studioResponseList.add(new StudioResponse(rep, studioList));
     	}
