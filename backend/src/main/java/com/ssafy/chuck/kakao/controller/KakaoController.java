@@ -103,11 +103,12 @@ public class KakaoController {
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
 
-    	System.out.println(params.get("action"));
+    	
     	//{id=5fab6941f282650c3236f23f, name=imageSender, params={secureimage={"privacyAgreement":"Y","imageQuantity":"1" 
-    	
-    	
-    	JsonObject action = (JsonObject) JsonParser.parseString((String) params.get("action"));
+    	System.out.println("action 출력!!!");
+    	System.out.println(params.get("action"));
+    	System.out.println("params 출력!!!");
+    	JsonObject action = (JsonObject) JsonParser.parseString(params.get("action").toString());
 		JsonObject param = action.get("params").getAsJsonObject();
 		System.out.println(param);
     	
