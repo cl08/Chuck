@@ -25,6 +25,7 @@ export default new Vuex.Store({
         chuckList: [],
         comments: [],
         selectedChuckList: [],
+        searchChuckList:[],
         backState: 1,
         color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
         faceDataGallery: [],
@@ -108,6 +109,9 @@ export default new Vuex.Store({
         },
         getSelectedChuckList(state) {
             return state.selectedChuckList
+        },
+        getSearchChuckList(state) {
+            return state.searchChuckList
         },
         getBackState(state) {
             return state.backState
@@ -206,6 +210,9 @@ export default new Vuex.Store({
         setSelectedChuckList(state, payload) {
             state.selectedChuckList = payload
         },
+        setSearchChuckList(state, payload){
+            state.searchChuckList = payload
+        },
         setBackState(state, payload) {
             state.backState = payload
         },
@@ -288,6 +295,17 @@ export default new Vuex.Store({
                 }
             }
             commit('setSelectedChuckList', day)
+        },
+        updateSearchChuckList({commit}, item){
+            const result = []
+            for (let index = 0; index < this.state.chuckList.length; index++) {
+                const element = this.state.chuckList[index];
+                // console.log(element.title.indexOf(item)!==-1)
+                if(element.title.indexOf(item)!==-1){
+                    result.push(element)
+                }
+            }
+            commit('setSearchChuckList', result)
         },
         updateBackState({commit}, item) {
             commit('setBackState', item)
