@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -35,6 +36,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.ssafy.chuck.picture.service.PictureService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -44,6 +46,10 @@ import io.swagger.annotations.ApiOperation;
 @RestController
 @RequestMapping("/chuck/kakao")
 public class KakaoController {
+	
+	@Autowired
+	private PictureService pictureService;
+	
 	
 	@PostMapping("/upload")
 	@ApiOperation(value = "카카오 챗봇 파일 업로드")
@@ -124,7 +130,10 @@ public class KakaoController {
     	System.out.println(origin);
     	//  List(http://secure.kakaocdn.net/dna/bAxQJB/K6aSYngzcU/XXX/img_org.jpg?credential=Kq0eSbCrZgKIq51jh41Uf1jLsUh7VW 
     	String[] urls = origin.split(",");
-    	for(String url : urls) System.out.println(url);
+    	for(String url : urls) {
+    		System.out.println(url);
+    		pictureService.insertPicture(57, url);
+    	}
     	
     	
     	
