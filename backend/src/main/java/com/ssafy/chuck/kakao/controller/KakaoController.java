@@ -114,8 +114,7 @@ public class KakaoController {
     	HashMap<String,Object> detailParams = (HashMap<String, Object>) action.get("detailParams");
     	System.out.println("params 출력!!!");
     	System.out.println(detailParams);
-//    	 {secureimage={"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXb  
-// 		{"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXbb/K6aSYANHie
+    	
     	HashMap<String,Object> secureimage = (HashMap<String,Object>) detailParams.get("secureimage");
     	System.out.println("secureimage 출력!!!");
     	System.out.println(secureimage);
@@ -123,6 +122,10 @@ public class KakaoController {
     	String origin = secureimage.get("origin").toString();
     	System.out.println("origin 출력!!");
     	System.out.println(origin);
+    	//  List(http://secure.kakaocdn.net/dna/bAxQJB/K6aSYngzcU/XXX/img_org.jpg?credential=Kq0eSbCrZgKIq51jh41Uf1jLsUh7VW 
+    	String[] urls = origin.split(",");
+    	for(String url : urls) System.out.println(url);
+    	
     	
     	
 //    	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
