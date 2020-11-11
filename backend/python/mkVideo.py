@@ -52,7 +52,7 @@ def makeVideo(paths, userid, music):
         frame_array.append(img2)
         frame_array.append(img2)
         frame_array.append(img2)
-        
+
         # fade in / fade out
         while(weight <= 1.0):
             postWeight = 1.0 - weight
@@ -68,6 +68,7 @@ def makeVideo(paths, userid, music):
 
     # 오디오 입히기
     videoclip = VideoFileClip("videos/" + userid + "/middle.mp4")
+    videoclip.write_videofile("videos/" + userid + "/middle.mp4")
     audioclip = AudioFileClip(music)
     audioclip.duration = videoclip.duration
     videoclip.audio = audioclip
