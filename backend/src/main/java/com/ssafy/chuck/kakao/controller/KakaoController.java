@@ -111,26 +111,32 @@ public class KakaoController {
     	System.out.println("action 출력!!!");
     	System.out.println(action);
     	
-    	HashMap<String,Object> prams = (HashMap<String, Object>) action.get("params");
+    	HashMap<String,Object> detailParams = (HashMap<String, Object>) action.get("detailParams");
     	System.out.println("params 출력!!!");
-    	System.out.println(prams);
+    	System.out.println(detailParams);
 //    	 {secureimage={"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXb  
 // 		{"privacyAgreement":"Y","imageQuantity":"1","secureUrls":"List(http://secure.kakaocdn.net/dna/loXbb/K6aSYANHie
-    	String secureimage = (String) prams.get("secureimage");
+    	HashMap<String,Object> secureimage = (HashMap<String,Object>) detailParams.get("secureimage");
     	System.out.println("secureimage 출력!!!");
+    	System.out.println(secureimage);
     	
-    	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
-    	String secureUrls = jsonObject.get("secureUrls").toString();
+    	String origin = secureimage.get("origin").toString();
+    	System.out.println("origin 출력!!");
+    	System.out.println(origin);
     	
-    	System.out.println("urls 출력!!");
-    	System.out.println(secureUrls);
     	
-    	String[] urls = secureUrls.split(",");
-    	urls[0] = urls[0].split("(")[1];
-    	urls[urls.length - 1] = urls[urls.length - 1].split(")")[0];
-    	for(String url : urls) {
-    		System.out.println(url);
-    	}
+//    	JsonObject jsonObject = (JsonObject) JsonParser.parseString(secureimage);
+//    	String secureUrls = jsonObject.get("secureUrls").toString();
+//    	
+//    	System.out.println("urls 출력!!");
+//    	System.out.println(secureUrls);
+//    	// "List(A, B, C)"
+//    	String[] urls = secureUrls.split(",");
+//    	urls[0] = urls[0].split("(")[1];
+//    	urls[urls.length - 1] = urls[urls.length - 1].split(")")[0];
+//    	for(String url : urls) {
+//    		System.out.println(url);
+//    	}
 
         HashMap<String, Object> resultJson = new HashMap<>();
         
