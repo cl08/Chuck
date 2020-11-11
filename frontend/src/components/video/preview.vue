@@ -6,7 +6,7 @@
 		<div class="dash" style="height:620px; padding:20px;">
 			<div class='main'>
 				<div id='media-player' width="100%">
-					<video id='media-video' controls width="100%">
+					<video id='media-video' loop width="100%">
 					</video>
 				</div>
 				<div id='media-controls' class='ctrl-box'>
@@ -62,6 +62,15 @@ export default {
     },
 	methods: {
 		download() {
+			
+			let el
+			el = document.getElementsByTagName('audio')
+			for(let i=0; i<el.length; i++) {
+				el[i].load()
+				document.getElementById('musicbar'+i).style.display = "none"
+			}
+			document.getElementById('media-video').load()
+		
 			if(this.getVideoMusic === 'middle') {
 				let link = document.createElement('a')
 				link.target = "_blank"
