@@ -126,10 +126,12 @@ public class KakaoController {
     	System.out.println(secureUrls);
     	
     	String[] urls = secureUrls.split(",");
-    	for(String url : urls) System.out.println(url);
-    	
-    	
-    	
+    	urls[0] = urls[0].split("(")[1];
+    	urls[urls.length - 1] = urls[urls.length - 1].split(")")[0];
+    	for(String url : urls) {
+    		System.out.println(url);
+    	}
+
         HashMap<String, Object> resultJson = new HashMap<>();
         
         try{
