@@ -4,6 +4,13 @@
             <font size=4>사진 고르기</font>
         </div>
         <div class="dash" style="height:620px; text-align:left">
+            <v-row style="padding: 10px 0px 10px 10px;">
+                <img src="../../assets/tip_icon.svg" style="width:16px; margin:8px 12px 10px 20px;">
+                <font size=2 color=#56b4fc>
+                동영상을 만들기 위해서는 최소 5장의 사진이 필요합니다.<br>
+                5장 이상의 사진을 선택해 주세요.
+                </font>
+            </v-row>
             <span class="photo pointer" @click="selectAll">ALL</span>
             <span v-for="(data, i) in getFaceDataFilm" :key="i">
                 <span v-show="getPersonArrayFilm[i]">
@@ -14,7 +21,7 @@
             </span>
         </div>
         <div v-if="selectCount < 5" class="dash pointer">
-            <font size=4 color="red">다섯장 이상의 사진을 선택해야 합니다. {{selectCount}} / {{maxCount}}</font>
+            <font size=4 color="red">동영상을 만들기 위한 사진의 갯수가 부족합니다.</font>
         </div>
         <div v-else class="dash pointer" @click="nextStep">
             <font size=4>다음으로</font>

@@ -6,7 +6,7 @@
 		<div class="dash" style="height:620px; padding:20px;">
 			<div class='main'>
 				<div id='media-player' width="100%">
-					<video id='media-video' controls width="100%">
+					<video id='media-video' loop width="100%">
 					</video>
 				</div>
 				<div id='media-controls' class='ctrl-box'>
@@ -21,7 +21,7 @@
 		<v-dialog v-model="loading" hide-overlay persistent width="300">
             <v-card color="#8D6262" dark>
                 <v-card-text>
-                    Making Chuck Film...
+                    Encoding Chuck Film...
                     <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
                 </v-card-text>
             </v-card>
@@ -48,10 +48,6 @@ export default {
 			var percentage = Math.floor((100 / mediaPlayer.duration) * mediaPlayer.currentTime)
 			progressBar.style.width = percentage + '%'
 			if(mediaPlayer.ended) {
-				let btn = document.getElementById('play-pause-button')
-				let ovr = document.getElementById('play-disp')
-				btn.title = 'play'
-				ovr.innerHTML = '<span class="fa fa-play"></span>'
 				progressBar.style.width = '0%'
 			}
 		}
@@ -66,6 +62,15 @@ export default {
     },
 	methods: {
 		download() {
+			
+			let el
+			el = document.getElementsByTagName('audio')
+			for(let i=0; i<el.length; i++) {
+				el[i].load()
+				document.getElementById('musicbar'+i).style.display = "none"
+			}
+			document.getElementById('media-video').load()
+		
 			if(this.getVideoMusic === 'middle') {
 				let link = document.createElement('a')
 				link.target = "_blank"

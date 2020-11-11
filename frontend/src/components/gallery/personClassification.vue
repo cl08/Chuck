@@ -1,12 +1,13 @@
 <template>
     <div style="margin: 30px 30px 0px 0px">
-        <div class="text-left ml-8">
+        <div class="text-left" style="padding-left:30px;">
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
+            <span>아이콘이 들어갈 자리</span>
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
-        <p v-if="getFaceDataGallery.gallery_list">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</p>
-        <div class="selectPerson">
-            <div>
+        <div v-if="getFaceDataGallery.gallery_list" style="text-align:left; padding:20px 0px 10px 30px;">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</div>
+        <div class="dash" style="width:550px; height:560px; text-align:left;">
+            <div style="padding:8px;">
                 <span class="face pointer" @click="selectAll">ALL</span>
                 <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
@@ -82,14 +83,6 @@ export default {
 </script>
 
 <style scoped>
-.imgDiv {
-    width: 160px;
-    display: inline-block;
-}
-p {
-    margin: 30px;
-    text-align: left;
-}
 .face {
     height: 90px;
     width: 90px;
@@ -104,9 +97,6 @@ p {
     background-size: cover;
     font-size: 26px;
     overflow: hidden;
-}
-.selectPerson {
-    width: 400px;
 }
 .face img {
     height: 100%;
