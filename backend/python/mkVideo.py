@@ -22,7 +22,7 @@ def makeVideo(paths, userid, music):
     #1. 이미지 resize
     #2. 이미지 영역 확대(1080, 720) 및 가운데 정렬
     #3. 배경에 이미지 병합
-    fps, width, height = 3, 800, 532
+    fps, width, height = 10, 800, 532
     frame_array = []
     # plt.imshow(background)
     # plt.show()
@@ -51,6 +51,14 @@ def makeVideo(paths, userid, music):
 
         frame_array.append(img2)
         frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
+        frame_array.append(img2)
 
         # fade in / fade out
         while(weight <= 1.0):
@@ -58,7 +66,7 @@ def makeVideo(paths, userid, music):
             dst = cv2.addWeighted(img1, weight, img2, postWeight, 0)
             frame_array.append(dst)
             weight = weight + 0.1
-    out = cv2.VideoWriter("videos/" + userid + "/middle.mp4",cv2.VideoWriter_fourcc(*'DIVX'), fps, (1080, 720))
+    out = cv2.VideoWriter("videos/" + userid + "/prepare.mp4",cv2.VideoWriter_fourcc(*'DIVX'), fps, (1080, 720))
     print(len(frame_array))
     for i in range(len(frame_array)):
         out.write(frame_array[i])
@@ -66,11 +74,20 @@ def makeVideo(paths, userid, music):
 
 
     # 오디오 입히기
-    videoclip = VideoFileClip("videos/" + userid + "/middle.mp4")
+    videoclip = VideoFileClip("videos/" + userid + "/prepare.mp4")
+    videoclip2 = VideoFileClip("videos/" + userid + "/prepare.mp4")
+    
     audioclip = AudioFileClip(music)
     audioclip.duration = videoclip.duration
     videoclip.audio = audioclip
     videoclip.write_videofile("videos/" + userid + "/final.mp4")
+
+    audioclip2 = AudioFileClip("silence.mp3")
+    audioclip2.duration = videoclip.duration
+    videoclip2.audio = audioclip2
+    videoclip2.write_videofile("videos/" + userid + "/middle.mp4")
+
+    # videoclip2.write_videofile("videos/" + userid + "/middle.mp4")
 
 
 def main():

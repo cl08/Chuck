@@ -5,9 +5,13 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -19,11 +23,17 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -88,5 +98,48 @@ public class KakaoController {
 		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
+
+	//카카오톡 오픈빌더로 리턴할 스킬 API
+    @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
+    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
+
+    	
+    	//{id=5fab6941f282650c3236f23f, name=imageSender, params={secureimage={"privacyAgreement":"Y","imageQuantity":"1" 
+    	System.out.println("action 출력!!!");
+    	System.out.println(params.get("action"));
+    	System.out.println("params 출력!!!");
+    	JsonObject action = (JsonObject) JsonParser.parseString(params.get("action").toString());
+		JsonObject param = action.get("params").getAsJsonObject();
+		System.out.println(param);
+    	
+    	
+        HashMap<String, Object> resultJson = new HashMap<>();
+        
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            String jsonInString = mapper.writeValueAsString(params);
+//            System.out.println(jsonInString);
+
+            List<HashMap<String,Object>> outputs = new ArrayList<>();
+            HashMap<String,Object> template = new HashMap<>();
+            HashMap<String, Object> simpleText = new HashMap<>();
+            HashMap<String, Object> text = new HashMap<>();
+
+            text.put("text","코딩32 발화리턴입니다.");
+            simpleText.put("simpleText",text);
+            outputs.add(simpleText);
+
+            template.put("outputs",outputs);
+
+            resultJson.put("version","2.0");
+            resultJson.put("template",template);
+
+        }catch (Exception e){
+
+        }
+
+        return resultJson;
+    }
+
 	
 }
