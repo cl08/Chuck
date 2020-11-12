@@ -136,16 +136,19 @@
       </div>
     </div>
     <img id="pen" src="@/assets/pen.png" alt="" @click="write" />
-    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back">
+    <img class="pointer" id="back" src="@/assets/back_button.svg" @click="back" v-show="!this.getVisibleCalendar">
     <Mypage></Mypage>
+    <assginGroupModal v-if="getVisibleModalAssignGroup"></assginGroupModal>
+    <secedeGroupModal v-if="getVisibleModalSecedeGroup"></secedeGroupModal>
   </div>
 </template>
 
 <script>
 import $ from "jquery";
-import { turn } from "@/plugins/turn.min.js";
 import { mapGetters } from "vuex";
-import { mapMutations } from 'vuex'
+import { mapMutations } from 'vuex';
+import eventBus from '@/utils/EventBus';
+
 // timeline
 import Intro from "@/components/timeline/intro.vue";
 import Timeline from "@/components/timeline/timeline.vue";
@@ -176,7 +179,9 @@ import Video5 from "@/components/video/preview.vue";
 // groupset
 import Groupset from "@/components/groupset/groupset.vue";
 import Outro from "@/components/groupset/outro.vue";
-import eventBus from '@/utils/EventBus';
+import assginGroupModal from "@/components/groupset/assginGroupModal.vue";
+import secedeGroupModal from "@/components/groupset/secedeGroupModal.vue";
+
 import Mypage from "@/components/mypage/mypage.vue";
 
 export default {
@@ -203,6 +208,8 @@ export default {
     Groupset,
     Outro,
     Mypage,
+    assginGroupModal,
+    secedeGroupModal,
   },
   data() {
     return {
@@ -213,12 +220,23 @@ export default {
     };
   },
   created() {
-    this.$store.dispatch('updateChuckList');
+    if(!this.getInit) {
+      this.$router.push('/fetch')
+    }
+    eventBus.$on('movePage', (data) => {
+      this.movePage(data.index);
+      this.setBackState(data.state);
+      eventBus.$emit('showDetail', data.item);
+    });
+    eventBus.$on('back', () => {
+      this.back();
+    })
   },
   computed: {
     ...mapGetters([
       "getChuckList",
       "getSelectedDiary",
+      "getSelectedGroup",
       "getVisibleCalendar",
       "getVisibleDetail",
       "getVisibleWrite",
@@ -227,6 +245,10 @@ export default {
       "getVisibleAlbum",
       "getVisibleVideo",
       "getVisiblePreview",
+      "getBackState",
+      "getVisibleModalAssignGroup",
+      "getVisibleModalSecedeGroup",
+      "getInit",
     ]),
   },
   methods: {
@@ -239,6 +261,7 @@ export default {
       "setVisibleVideo",
       "setVisiblePreview",
       "setSelectedDay",
+      "setBackState",
     ]),
     movePage(num) {
       this.init()
@@ -297,6 +320,21 @@ export default {
       this.setVisiblePreview(false);
     },
     back(){
+      if(this.getBackState === 1) {
+        // calender
+        this.setVisibleWrite(false);
+        this.setVisibleDetail(false);
+        this.setVisibleCalendar(true);
+        eventBus.$emit('clearWrite');
+      } else if(this.getBackState == 2) {
+        // TimeLine
+        this.movePage(0);
+        this.setBackState(1);
+      } else {
+        // Gallery
+        this.movePage(2);
+        this.setBackState(1);
+      }
     }
   },
   mounted() {
@@ -331,17 +369,17 @@ export default {
   width: 34px;
   height: 661px;
   position: relative;
-  top: -680px;
-  left: 744px;
+  top: -20px;
+  left: 40px;
 }
 #pen:hover{
   transition: all ease-in-out 0.2s;
-  top: -720px;
+  top: -60px;
 }
 #back {
   width: 160px;
   position: relative;
   left: -800px;
-  top: -540px;
+  top: 30px;
 }
 </style>

@@ -1,10 +1,13 @@
 <template>
-    <div class="music-bar">
-        <span class="bar bar-0">0</span>
-        <span class="bar bar-1">1</span>
-        <span class="bar bar-2">2</span>
-        <span class="bar bar-3">3</span>
-        <span class="bar bar-4">4</span>
+    <div>
+        <img src="../../assets/border.png" style="width:150px;">
+        <div class="music-bar">
+            <span class="bar bar-0">0</span>
+            <span class="bar bar-1">1</span>
+            <span class="bar bar-2">2</span>
+            <span class="bar bar-3">3</span>
+            <span class="bar bar-4">4</span>
+        </div>
     </div>
 </template>
 
@@ -19,13 +22,13 @@ export default {
     width:50px;
     height:50px;
     display:block;
-    background-color:ffffff;  
     position:relative;
+    top: -200px;
     margin:50px auto;
 }
 .bar{
     display:block;
-    background-color:#00b4ff;
+    background-color:#8D6262;
     height:25px;
     width:3px;
     text-indent:-9999px;

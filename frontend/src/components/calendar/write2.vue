@@ -13,8 +13,9 @@
 
 <script>
 import { mapGetters } from 'vuex';
-import evnetBus from '@/utils/EventBus';
+import eventBus from '@/utils/EventBus';
 import http from '../../utils/api.js';
+import moment from 'moment';
 
 export default {
     data() {
@@ -24,8 +25,12 @@ export default {
         }
     },
     created() {
-        evnetBus.$on('uploadeDone', () => {
+        eventBus.$on('uploadeDone', () => {
             this.done();
+        });
+        eventBus.$on('clearWrite', () => {
+            this.title = '';
+            this.content = '';
         });
     },
     computed: {
@@ -39,11 +44,13 @@ export default {
     },
     methods: {
         write() {
+            console.log(moment(this.getSelectedDay).tz('Asia/Seoul').format('YYYY-MM-DD'))
+            console.log(moment(this.getSelectedDay).tz('Asia/Seoul').format())
             http.post('diaries', {
                 title: this.title,
                 content: this.content,
                 writer: this.getId,
-                date: this.getSelectedDay,
+                date: moment(this.getSelectedDay).tz('Asia/Seoul').format(),
                 groupId: this.getSelectedGroup.id,
             },{
                 headers: {
@@ -51,12 +58,12 @@ export default {
                 }   
             })
             .then(({ data }) => {
-                evnetBus.$emit('uploadImages', data.id);
+                eventBus.$emit('uploadImages', data.id);
             });
         },
         done() {
-            this.title = '';
-            this.content = '';
+            this.title = ''
+            this.content = ''
             this.$store.commit('setVisibleWrite', false);
             this.$store.commit('setVisibleCalendar', true);
             this.$store.commit('setVisibleChoice', true);
@@ -69,7 +76,7 @@ export default {
     text-align:left;
     width: 91%;
     border: none;
-    font-size:25px;
+    font-size:20px;
     margin-top: 20px;
 }
 </style>

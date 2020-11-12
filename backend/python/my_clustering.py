@@ -40,13 +40,22 @@ def encode(groupId, imagePaths):
     f.write(pickle.dumps(data))
     f.close()
 
+def insert(groupId, imagePaths):
+    imagePaths = imagePaths[:-1]
+    imagePaths = imagePaths.split(":")
+    encode(groupId, imagePaths)
 
 def clustering(groupId):
+    files = os.listdir('/home/ubuntu/s03p31a206/backend/python/')
+    if(groupId + ".pickle" not in files):
+        return {"info" : []}
+
     data = pickle.loads(open(groupId + ".pickle", "rb").read())
     print(data)
     data = np.array(data)
     encodings = [d["encoding"] for d in data]
-
+    if(len(encodings) == 0):
+        return {"info" : []}
     clt = DBSCAN(metric="euclidean")
     clt.fit(encodings)
 
@@ -79,12 +88,42 @@ def clustering(groupId):
     print(result)
     return {"info" : result}
 
+def delete(groupId, imagePaths):
+    imagePaths = imagePaths[:-1]
+    imagePaths = imagePaths.split(":")
+    data = pickle.loads(open(groupId + ".pickle", "rb").read())
+    # paths = [d["imagePath"] for d in data]
+
+    #Deleting
+    for d in data[:]:
+        if d['imagePath'] in imagePaths:
+            data.remove(d)
+
+    f = open(groupId + ".pickle", "wb")
+    f.write(pickle.dumps(data))
+    f.close()
+    
+
+def update(groupId, imagePaths):
+    imagePaths = imagePaths[:-1]
+    imagePaths = imagePaths.split(":")
+    data = pickle.loads(open(groupId + ".pickle", "rb").read())
+    # paths = [d["imagePath"] for d in data]
+
+    #Deleting
+    for d in data[:]:
+        if d['imagePath'] in imagePaths:
+            data.remove(d)
+
 
 def main():
-    res = encode('10', ['/home/ubuntu/s03p31a206/backend/python/1/20201028163235_1.jpg'])
+    # res = encode('10', ['/home/ubuntu/s03p31a206/backend/python/1/20201028163235_1.jpg'])
     # result = cluster('average10@naver.com')
     # print(result)
-    print(res)
+    # print(res)
+    # delete('1', "/home/ubuntu/s03p31a206/backend/python/1/20201029135433_c0b84e3d1024480e98a7bee860cc990d.jpg")
+    # update('1', '/home/ubuntu/s03p31a206/backend/python/1/20201029135525_unnamed.jpg:/home/ubuntu/s03p31a206/backend/python/1/20201029135522_unnamed (1).jpg:')
+    clustering('2')
 
 if __name__ == "__main__":
     main()

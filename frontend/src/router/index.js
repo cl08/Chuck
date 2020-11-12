@@ -4,6 +4,7 @@ import landing from '@/pages/landing.vue'
 import login from '@/pages/login.vue'
 import group from '@/pages/group.vue'
 import diary from '@/pages/diary.vue'
+import fetchData from '@/pages/fetchData.vue'
 
 Vue.use(Router)
 
@@ -35,6 +36,12 @@ export default new Router({
             name: 'group',
             component: group,
             props: true,
+            beforeEnter: checkAuth(),
+        },
+        {
+            path: '/fetch',
+            name: 'fetch',
+            component: fetchData,
             beforeEnter: checkAuth(),
         },
         {

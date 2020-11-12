@@ -1,6 +1,6 @@
 <template>
     <div style="margin:30px 30px 0px 0px;">
-            <img src="../../assets/title/chuckBook_tabtitle.svg" class="subtitle">
+        <img src="../../assets/title/chuckBook_tabtitle.svg" class="subtitle">
         <div class="dash">
             <font size=4>기간 선택</font>
         </div>
@@ -33,9 +33,9 @@
         <div class="dash">
             <font size="4">인물 선택</font>
         </div>
-        <div class="dash" style="height:325px;">
+        <div class="dash" style="height:325px; text-align:left">
             <span class="face pointer" @click="selectAll">ALL</span>
-            <span class="face pointer" v-for="(face, index) in faces" :key="index" @click="select(index)" :style="'background-image:url('+face+')'">
+            <span class="face pointer" v-for="(face, index) in getFaceDataBook" :key="index" @click="select(index)" :style="'background-image:url('+face.rep_image+')'">
                 <img :id="'albumFace'+index" class="albumFaceNoneDisplay" src="../../assets/check_circle.svg">
             </span>
         </div>
@@ -43,63 +43,109 @@
 </template>
 
 <script>
+import { mapGetters } from "vuex";
+import { mapMutations } from 'vuex';
 export default {
-    data () {
+    data() {
         return {
             value1: '',
             value2: '',
             dates: [],
-            faces:
-            [
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-                'https://yt3.ggpht.com/a/AATXAJzAGhJRXaxZihohn-Ydp7s0jmLkLT28ZOGloycVXg=s900-c-k-c0x00ffffff-no-rj',
-                'https://pbs.twimg.com/profile_images/1306539284212539392/aJrYjxho.jpg',
-                'https://post-phinf.pstatic.net/MjAxOTA1MTZfMTEg/MDAxNTU3OTg3NzEyMDM4.m3__BqbSluWgyBBVca8kkg6COBQHGYtYQzwQR_hJ3RUg.3DeOn797qHrvboiIBMSLvBxY5W4vGB2OLx1XoYAENJAg.JPEG/17.jpg?type=w1200',
-            ]
+            personArray: [],
+            selectCount: 0,
         }
     },
+    computed: {
+        ...mapGetters([
+            'getFaceDataStudio',
+            'getFaceDataBook',
+        ]),
+    },
     methods: {
+        ...mapMutations([
+            'setPersonArrayBook',
+            'setFaceDataBook',
+        ]),
         removeTag(tag) {
-            this.value1.splice(this.value1.indexOf(tag), 1);
+            this.value1.splice(this.value1.indexOf(tag), 1)
+            this.pickType1()
         },
-        pickType1(){
+        pickType1() {
             this.value2 = ''
+            let arr1 = new Array()
+            for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
+                let arr2 = new Array()
+                for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
+                    if(this.value1.includes(this.getFaceDataStudio.studio_list[i].content_list[j].date)) {
+                        arr2.push(this.getFaceDataStudio.studio_list[i].content_list[j])
+                    }
+                }
+                if(arr2.length > 0) {
+                    arr1.push({
+                        'rep_image' : this.getFaceDataStudio.studio_list[i].rep_image,
+                        'content_list' : arr2
+                    })
+                }
+            }
+            this.setFaceDataBook(arr1)
         },
-        pickType2(){
+        pickType2() {
             this.value1 = ''
+            let arr1 = new Array()
+            for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
+                let arr2 = new Array()
+                for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
+                    if(this.value2[0] <= this.getFaceDataStudio.studio_list[i].content_list[j].date
+                    && this.getFaceDataStudio.studio_list[i].content_list[j].date <= this.value2[1]) {
+                        arr2.push(this.getFaceDataStudio.studio_list[i].content_list[j])
+                    }
+                }
+                if(arr2.length > 0) {
+                    arr1.push({
+                        'rep_image' : this.getFaceDataStudio.studio_list[i].rep_image,
+                        'content_list' : arr2
+                    })
+                }
+            }
+            this.setFaceDataBook(arr1)
         },
         selectAll() {
-            for(let i=0; i<this.faces.length; i++){
-                let el = document.getElementById('albumFace'+i)
-                el.setAttribute('class', '')
+            if(this.selectCount === this.getFaceDataBook.length) {
+                for(let i=0; i<this.getFaceDataBook.length; i++){
+                    let el = document.getElementById('albumFace'+i)
+                    el.setAttribute('class', 'albumFaceNoneDisplay')
+                    this.$set(this.personArray, i, false)
+                }
+                this.selectCount = 0
+                this.setPersonArrayBook(this.personArray)
+            }
+            else {
+                for(let i=0; i<this.getFaceDataBook.length; i++){
+                    let el = document.getElementById('albumFace'+i)
+                    el.setAttribute('class', '')
+                    this.$set(this.personArray, i, true)
+                }
+                this.selectCount = this.getFaceDataBook.length
+                this.setPersonArrayBook(this.personArray)
             }
         },
         select(index) {
             let el = document.getElementById('albumFace'+index)
-            el.classList.toggle("albumFaceNoneDisplay")
-        }
+            el.classList.toggle('albumFaceNoneDisplay')
+            if(this.personArray[index]) {
+                this.$set(this.personArray, index, false)
+                this.selectCount--
+            }
+            else {
+                this.$set(this.personArray, index, true)
+                this.selectCount++
+            }
+            this.setPersonArrayBook(this.personArray)
+        },
     }
   }
 </script>
 <style scoped>
-.content {
-    height: 220px;
-    text-align: left;
-    overflow: auto;
-    font-size: 3;
-}
 .face {
     height: 90px;
     width: 90px;
