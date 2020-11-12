@@ -139,6 +139,7 @@ export default {
                     const image = data.image.split(';')
                     data.image = image
                     data.color = this.getColor[this.getChuckList.length % 10]
+                    data.date = data.date.toString().slice(0,10)
                     this.$store.dispatch('addChuckList', data)
                     eventBus.$emit('uploadeDone');
                     this.imageList = [];
