@@ -117,7 +117,7 @@ public class KakaoController {
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
     	
     	System.out.println("request 출력!!!");
-    	System.out.println(request);
+    	System.out.println(request.getParameterNames());
     	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
     	System.out.println("userRequest 출력!!!");
