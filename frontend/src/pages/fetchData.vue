@@ -14,6 +14,9 @@ import { mapGetters } from 'vuex'
 import { mapMutations } from 'vuex'
 import store from '@/store'
 import api from '@/utils/api.js'
+import moment from 'moment-timezone'
+import VueMoment from 'vue-moment'
+
 export default {
     data() {
         return {
@@ -51,6 +54,7 @@ export default {
                     data[i].image = image
                     data[i].color = this.getColor[i % 10]
                     data[i].index = i
+                    data[i].date = data[i].date.toString().slice(0,10)
                     this.$store.state.chuckMap.set(data[i].id, data[i])
                 }
                 this.setChuckList(data)
