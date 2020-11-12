@@ -130,6 +130,14 @@ public class KakaoController {
     	System.out.println("user 출력!!!");
     	System.out.println(user);
     	
+    	HashMap<String, Object> properties = (HashMap<String, Object>) user.get("properties");
+    	System.out.println("properties 출력!!!");
+    	System.out.println(properties);
+    	
+    	properties.get("appUserID 출력!!");
+    	System.out.println(properties.get("appUserId"));
+    	
+    	
 //    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
 //    	System.out.println("user 출력!!!");
 //    	System.out.println(user);    	
