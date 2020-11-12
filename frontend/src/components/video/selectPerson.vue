@@ -108,7 +108,6 @@ export default {
                 }
             }
             this.setFaceDataFilm(arr1)
-            console.log(this.getFaceDataFilm)
         },
         selectAll() {
             if(this.selectCount === this.getFaceDataFilm.length) {
