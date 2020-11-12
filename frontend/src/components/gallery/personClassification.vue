@@ -2,7 +2,12 @@
     <div style="margin: 30px 30px 0px 0px">
         <div class="text-left" style="padding-left:30px;">
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
-            <span>아이콘이 들어갈 자리</span>
+            <font size=6>
+                <el-popover placement="bottom" width="240" trigger="click">
+                    <p>그룹의 모든 게시글을 분석하여 인물을 찾아냅니다. 선택된 인물이 포함된 사진을 필터링하여 볼 수 있습니다.</p>
+                    <i class="el-icon-info pointer" slot="reference" style="position:relative; left:250px; bottom:20px;"></i>
+                </el-popover>
+            </font>
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
         <div v-if="getFaceDataGallery.gallery_list" style="text-align:left; padding:20px 0px 10px 30px;">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</div>
