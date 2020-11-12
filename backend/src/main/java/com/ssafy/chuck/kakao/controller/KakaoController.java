@@ -116,6 +116,9 @@ public class KakaoController {
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
     	
+    	System.out.println("request 출력!!!");
+    	System.out.println(request);
+    	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
     	System.out.println("userRequest 출력!!!");
     	System.out.println(userRequest);

@@ -39,7 +39,7 @@ public class ReplyController {
 	
 	@GetMapping("/searchByWriter")
 	@ApiOperation(value = "작성자 ID로 댓글 조회")
-	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(long writer) {
+	public ResponseEntity<List<ReplyDto>> selectCommentByWriter(long writer) {	
 		return new ResponseEntity<List<ReplyDto>>(replyService.selectCommentByWriter(writer), HttpStatus.OK);
 	}
 	
