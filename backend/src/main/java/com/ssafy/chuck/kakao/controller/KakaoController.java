@@ -118,6 +118,7 @@ public class KakaoController {
     	
     	System.out.println("request 출력!!!");
     	System.out.println(request.getParameterNames());
+    	System.out.println(request.getParameter("user"));
     	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
     	System.out.println("userRequest 출력!!!");
