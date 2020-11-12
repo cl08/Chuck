@@ -15,6 +15,7 @@
 import { mapGetters } from 'vuex';
 import eventBus from '@/utils/EventBus';
 import http from '../../utils/api.js';
+import moment from 'moment';
 
 export default {
     data() {
@@ -43,11 +44,13 @@ export default {
     },
     methods: {
         write() {
+            console.log(moment(this.getSelectedDay).tz('Asia/Seoul').format('YYYY-MM-DD'))
+            console.log(moment(this.getSelectedDay).tz('Asia/Seoul').format())
             http.post('diaries', {
                 title: this.title,
                 content: this.content,
                 writer: this.getId,
-                date: this.getSelectedDay,
+                date: moment(this.getSelectedDay).tz('Asia/Seoul').format(),
                 groupId: this.getSelectedGroup.id,
             },{
                 headers: {
