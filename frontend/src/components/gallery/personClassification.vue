@@ -12,11 +12,14 @@
         </div>
         <div v-if="getFaceDataGallery.gallery_list" style="text-align:left; padding:20px 0px 10px 30px;">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</div>
         <div class="dash" style="width:550px; height:560px; text-align:left;">
-            <div style="padding:8px;">
+            <div v-if="getFaceDataGallery.gallery_list.length > 0" style="padding:8px;">
                 <span class="face pointer" @click="selectAll">ALL</span>
                 <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
                 </span>
+            </div>
+            <div v-else style="padding:8px; text-align:center; margin-top:100px;">
+                <img src="../../assets/gallery/noFace.jpg">
             </div>
         </div>
     </div>
