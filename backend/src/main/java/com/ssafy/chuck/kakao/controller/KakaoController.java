@@ -134,6 +134,8 @@ public class KakaoController {
     	System.out.println("properties 출력!!!");
     	System.out.println(properties);
     	
+    	System.out.println("properties의 KeySet");
+    	System.out.println(properties.keySet());
     	
     	System.out.println("plusfriendUserKey 출력!!");
     	System.out.println(properties.get("plusfriendUserKey"));
