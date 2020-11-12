@@ -12,12 +12,8 @@
                 </font>
             </v-row>
             <span class="photo pointer" @click="selectAll">ALL</span>
-            <span v-for="(data, i) in getFaceDataFilm" :key="i">
-                <span v-show="getPersonArrayFilm[i]">
-                    <span class="photo pointer" v-for="(chuck, j) in data.content_list" :key="j" @click="select(i, j)" :style="'background-image:url('+chuck.image+')'">
-                        <img :id="'videoPhoto'+i+'arr'+j" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
-                    </span>
-                </span>
+            <span class="photo pointer" v-for="(chuck, i) in temp" :key="i" @click="select(i)" :style="'background-image:url('+chuck+')'">
+                <img :id="'videoPhoto'+i" class="videoPhotoNoneDisplay" src="../../assets/check_square.svg">
             </span>
         </div>
         <div v-if="selectCount < 5" class="dash pointer">
@@ -49,6 +45,9 @@ export default {
             maxCount : 0,
             imageArray: [],
             loading: false,
+            imageList: new Map(),
+            checkArr: [],
+            temp: [],
         }
     },
     computed: {
@@ -61,18 +60,37 @@ export default {
         ]),
     },
     watch: {
-        getPersonArrayFilm: function() {
-            let count = 0
-            for(let i=0; i<this.getPersonArrayFilm.length; i++) {
-                if(this.getPersonArrayFilm[i])
-                    count = count + this.getFaceDataFilm[i].content_list.length
+        getPersonArrayFilm: function(data) {
+            let change = []
+            if(this.checkArr.length == 0) {
+                this.checkArr = data.slice()
+                for(let i = 0; i<data.length; i++) change.push(i)
+            } else {
+                for(let i = 0; i<data.length; i++) {
+                    if(this.checkArr[i] != data[i]) change.push(i)
+                }
+                this.checkArr = data.slice()
             }
-            this.maxCount = count
-        },
-        getFaceDataFilm: function() {
-            for(let i=0; i<this.getFaceDataFilm.length; i++) {
-                this.imageArray[i] = new Array()
+            if(change.length != 0) {
+                change.forEach(index => {
+                    const flag = this.checkArr[index]
+                    const num = this.getFaceDataFilm[index].content_list.length
+                    for(let i = 0; i<num; i++) {
+                        const path = this.getFaceDataFilm[index].content_list[i].image
+                        if(this.imageList.has(path)) {
+                            const cnt = this.imageList.get(path)
+                            if(flag) this.imageList.set(path, cnt + 1)
+                            else {
+                                if(cnt == 1) this.imageList.delete(path)
+                                else this.imageList.set(path, cnt - 1)
+                            }
+                        } else {
+                            if(flag) this.imageList.set(path, 1)
+                        }
+                    } 
+                });
             }
+            this.temp = Array.from(this.imageList.keys())
         },
     },
     methods: {
@@ -87,12 +105,8 @@ export default {
         nextStep() {
             this.loading = true
             let src = new Array()
-            for(let i=0; i<this.getFaceDataFilm.length; i++) {
-                for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
-                    if(this.imageArray[i][j]) {
-                        src.push(this.getFaceDataFilm[i].content_list[j].image)
-                    }
-                }
+            for(let i=0; i<this.imageArray.length; i++) {
+                if(this.imageArray[i]) src.push(this.temp[i])
             }
             api.post('pictures/mkVideo', {
                 'music': "Fingertips.mp3",
@@ -123,43 +137,35 @@ export default {
             })
         },
         selectAll() {
-            if(this.selectCount == this.maxCount) {
-                for(let i=0; i<this.getFaceDataFilm.length; i++) {
-                    if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
-                            let el = document.getElementById('videoPhoto'+i+'arr'+j)
-                            el.setAttribute('class', 'videoPhotoNoneDisplay')
-                            this.imageArray[i][j] = false
-                        }
-                    }
+            if(this.selectCount == this.temp.length) {
+                for(let i=0; i<this.temp.length; i++) {
+                    let el = document.getElementById('videoPhoto'+i)
+                    el.setAttribute('class', 'videoPhotoNoneDisplay')
+                    this.imageArray[i] = false
                 }
                 this.selectCount = 0
             }
             else {
-                for(let i=0; i<this.getFaceDataFilm.length; i++) {
-                    if(this.getPersonArrayFilm[i]) {
-                        for(let j=0; j<this.getFaceDataFilm[i].content_list.length; j++) {
-                            let el = document.getElementById('videoPhoto'+i+'arr'+j)
-                            el.setAttribute('class', '')
-                            this.imageArray[i][j] = true
-                        }
-                    }
+                for(let i=0; i<this.temp.length; i++) {
+                    let el = document.getElementById('videoPhoto'+i)
+                    el.setAttribute('class', '')
+                    this.imageArray[i] = true
                 }
-                this.selectCount = this.maxCount
+                this.selectCount = this.temp.length
             }
         },
-        select(i, j) {
-            let el = document.getElementById('videoPhoto'+i+'arr'+j)
+        select(i) {
+            let el = document.getElementById('videoPhoto'+i)
             el.classList.toggle("videoPhotoNoneDisplay")
-            if(this.imageArray[i][j]) {
-                this.imageArray[i][j] = false
+            if(this.imageArray[i]) {
+                this.imageArray[i] = false
                 this.selectCount--
             }
             else {
-                this.imageArray[i][j] = true
+                this.imageArray[i] = true
                 this.selectCount++
             }
-        }
+        },
     }
 }
 </script>

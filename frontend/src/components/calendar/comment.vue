@@ -43,16 +43,17 @@ export default {
     computed: {
         ...mapGetters([
             'getComments',
-            'getChuckList',
+            'getChuckMap',
             'getSelectedDiary',
             'getId',
         ]),
+        chuck: () => this.getChuckMap.get(this.getSelectedDiary),
     },
     methods: {
         comment() {
             api.post(`/replies/insert`, {
                 comment: this.input,
-                diaryId: this.getChuckList[this.getSelectedDiary].id,
+                diaryId: this.getChuckMap.get(this.getSelectedDiary).id,
                 writerId: this.getId,
             }).then(({data}) => {
                 store.dispatch('addComments', data)
