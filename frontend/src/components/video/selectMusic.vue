@@ -6,11 +6,20 @@
         </div>
         <div class="dash" style="height:540px;">
             <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
-                <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
-                <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
-                    <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
+                <div v-if="index > 0">
+                    <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
+                    <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
+                        <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
+                    </div>
+                    <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
                 </div>
-                <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
+                <div v-else>
+                    <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
+                    <div class="music noMusic">
+                        <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
+                    </div>
+                    <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
+                </div>
             </span>
             <audio id="audio0" loop></audio>
             <audio id="audio1" src="../../assets/music/Beside Me - Patrick Patrikios.mp3" loop></audio>
@@ -35,7 +44,7 @@ export default {
             [
                 {
                     title: '음악 없음',
-                    img: 'https://partyspace.com/images/blog_entries/no-music.png',
+                    img: '',
                     src: '',
                     value: 'middle'
                 },
@@ -127,5 +136,9 @@ export default {
 }
 .videoMusicNoneDisplay {
     display: none;
+}
+.noMusic {
+    background-image:url('../../assets/no_music.svg');
+    position: absolute;
 }
 </style>

@@ -1,12 +1,12 @@
 <template>
     <div style="padding:30px 0px 0px 30px;">
         <div class="bg" style="text-align:center">
-            <img class="currentImg" :src="currentImage">
+            <img v-if="currentImage" class="currentImg" :src="currentImage">
         </div>
 
         <div style="text-align:left; padding:20px;">
             <span v-for="(item, index) in temp" :key="index" class="picture">
-                <img class="pointer picture" :src="item" @click="clickedImg(index)">
+                <img class="pointer picture" :src="item" @click="clickedImg(index)" style="object-fit:cover">
             </span>
         </div>
     </div>
@@ -87,7 +87,7 @@ export default {
     margin: 4px;
 }
 .bg {
-    background: url('../../assets/gallery_background.jpg');
+    background: url('../../assets/gallery/background.jpg');
     background-size: cover;
     width: 550px;
     height: 350px;
@@ -97,5 +97,6 @@ export default {
     width: 420px;
     height: 250px;
     margin-top: 50px;
+    object-fit: cover;
 }
 </style>
