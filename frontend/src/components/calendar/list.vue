@@ -10,7 +10,6 @@
             <span class="col-3 float-right">
                 <el-button class="iconColor" icon="el-icon-search" circle @click="openSearchBar"></el-button>
                 <el-button  class="iconColor" icon="el-icon-edit" circle @click="write"></el-button>
-                <!-- el-icon-info -->
             </span>
         </v-row>
 
