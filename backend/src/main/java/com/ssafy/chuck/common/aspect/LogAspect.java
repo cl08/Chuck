@@ -15,6 +15,7 @@ import com.ssafy.chuck.group.dto.GroupDto;
 import com.ssafy.chuck.group.dto.MemberDto;
 import com.ssafy.chuck.log.dto.LogDto;
 import com.ssafy.chuck.log.service.LogService;
+import com.ssafy.chuck.reply.dto.ReplyDto;
 
 @Aspect
 @Component
@@ -37,7 +38,7 @@ public class LogAspect {
 		service.create(new LogDto(dto.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.DiaryLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.DiaryLog)")
 	private void diaryLog(JoinPoint point) {
 		logger.debug("그룹내 일기 작성 로그");
 		Object[] parameterValues = point.getArgs();
@@ -47,32 +48,40 @@ public class LogAspect {
 		service.create(new LogDto(dto.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.ReplyLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.ReplyLog)")
 	private void replyLog(JoinPoint point) {
 		logger.debug("그룹내 댓글 작성 로그");
 		Object[] parameterValues = point.getArgs();
-		long userId = (long)parameterValues[0];
-		int diaryId = (int)parameterValues[2];
-		DiaryDto dto = diaryService.read(diaryId);
-		String comment = userId + "새로운 댓글(" + diaryId + ")을 게시하였습니다.";
-		service.create(new LogDto(dto.getGroupId(), comment));
+		ReplyDto dto = (ReplyDto)parameterValues[0];
+		long userId = dto.getWriterId();
+		int diaryId = dto.getDiaryId();
+		DiaryDto diary = diaryService.read(diaryId);
+		String comment = userId + "님이 새로운 댓글(" + diaryId + ")을 게시하였습니다.";
+		service.create(new LogDto(diary.getGroupId(), comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.SignOutLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.SignOutLog)")
 	private void signOutLog(JoinPoint point) {
 		logger.debug("그룹 탈퇴 로그");
 		Object[] parameterValues = point.getArgs();
-		GroupDto dto = (GroupDto)parameterValues[0];
-		String comment = (long)parameterValues[1] + "님이 그룹에서 탈퇴하였습니다.";
-		service.create(new LogDto(dto.getId(), comment));
+		int id = (int)parameterValues[0];
+		long userId = (long)parameterValues[1];
+		long requestId = (long)parameterValues[2];
+		String comment = "";
+		if(userId == requestId) {
+			comment = userId + "님이 그룹을 탈퇴하였습니다.";
+		} else {
+			comment = userId + "님이 그룹에서 추방되었습니다.";
+		}
+		service.create(new LogDto(id, comment));
 	}
 
-	@After("@annotation(com.ssafy.chuck.common.annotation.ChangeLog)")
+	@AfterReturning("@annotation(com.ssafy.chuck.common.annotation.ChangeLog)")
 	private void changeLog(JoinPoint point) {
 		logger.debug("그룹장 변화 로그");
 		Object[] parameterValues = point.getArgs();
-		long userId = (long)parameterValues[1];
-		GroupDto dto = (GroupDto)parameterValues[0];
+		long userId = (long)parameterValues[3];
+		GroupDto dto = (GroupDto)parameterValues[4];
 		String comment = userId + "님이 새로운 그룹장으로 변경되었습니다.";
 		service.create(new LogDto(dto.getId(), comment));
 	}

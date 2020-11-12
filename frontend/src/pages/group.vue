@@ -2,10 +2,6 @@
     <div class="group-select">
         <br>
         <h1>그룹 선택 페이지</h1>
-        <!-- 충돌 방지하기 위해 기능 임시로 구현한 곳 -->
-        <!-- <a @click="logout">logout</a>
-        <br><br>
-        -->
         <br>
         <template>
             <div class="global-wrapper">
@@ -78,7 +74,7 @@
                                         line-height: 2;
                                         font-size: 15px;
                                         position: relative;
-                                        bottom: -25vh;
+                                        top: 20vh;
                                         cursor: pointer;
                                         width: 200px;
                                         margin: 5px auto;"
@@ -171,12 +167,13 @@ export default {
     methods: {
         selectGroup() {
             store.dispatch('updateSelectedGroup', this.selectedBook);
-            this.$router.push('/diary');
+            this.$router.push('/fetch');
         },
         uploadGroup() {
             api.post(`groups`, {
                     name: this.selectedBook.name,
-                    intro: this.selectedBook.intro
+                    intro: this.selectedBook.intro,
+                    userId: sessionStorage.getItem('id')
                 }, {
                     headers: {
                         token: sessionStorage.getItem('token')
@@ -193,10 +190,6 @@ export default {
             var h = window.innerHeight
             $('.group-select').height(h);
             $('.group-select').width(w);
-        },
-        logout() {
-            this.$store.dispatch('logout');
-            this.$router.push("/");
         },
         selectBook(book) {
             this.bookgen = false;

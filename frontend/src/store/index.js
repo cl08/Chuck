@@ -20,11 +20,28 @@ export default new Vuex.Store({
         visibleAlbum: false,
         visibleVideo: false,
         visiblePreview: false,
+        visibleModalAssignGroup: false,
+        visibleModalSecedeGroup: false,
         chuckList: [],
+        chuckMap: new Map(),
         comments: [],
-        personArray : [],
-        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"]
+        selectedChuckList: [],
+        searchChuckList:[],
+        backState: 1,
+        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
+        faceDataGallery: [],
+        faceDataStudio: [],
+        faceDataBook: [],
+        faceDataFilm: [],
+        personArrayGallery : [],
+        personArrayBook: [],
+        personArrayFilm: [],
+        init: false,
+        videoSrc: [],
+        videoUrl: '',
+        videoMusic: '',
     },
+
     getters: {
         getSelectedGroup(state) {
             return state.selectedGroup
@@ -74,23 +91,68 @@ export default new Vuex.Store({
         getVisiblePreview(state) {
             return state.visiblePreview
         },
-        getComments(state) {
-            return state.comments
-        },
-        getPersonArray(state) {
-            return state.personArray
-        },
         getPersonClassificationResult(state){
-            for(let i = 0; i < state.personArray.length; i++){
-                if(state.personArray[i]){
+            for(let i = 0; i < state.personArrayGallery.length; i++){
+                if(state.personArrayGallery[i]){
                     return true
                 }
             }
             return false
         },
+        getPersonArrayGallery(state) {
+            return state.personArrayGallery
+        },
+        getPersonArrayFilm(state) {
+            return state.personArrayFilm
+        },
+        getPersonArrayBook(state) {
+            return state.personArrayBook
+        },
         getColor(state) {
             return state.color
         },
+        getSelectedChuckList(state) {
+            return state.selectedChuckList
+        },
+        getSearchChuckList(state) {
+            return state.searchChuckList
+        },
+        getBackState(state) {
+            return state.backState
+        },
+        getFaceDataGallery(state) {
+            return state.faceDataGallery
+        },
+        getFaceDataStudio(state) {
+            return state.faceDataStudio
+        },
+        getFaceDataBook(state) {
+            return state.faceDataBook
+        },
+        getFaceDataFilm(state) {
+            return state.faceDataFilm
+        },
+        getVisibleModalAssignGroup(state){
+            return state.visibleModalAssignGroup
+        },
+        getVisibleModalSecedeGroup(state){
+            return state.visibleModalSecedeGroup
+        },
+        getInit(state) {
+            return state.init
+        },
+        getChuckMap(state) {
+            return state.chuckMap
+        },
+        getVideoSrc(state) {
+            return state.videoSrc
+        },
+        getVideoUrl(state) {
+            return state.videoUrl
+        },
+        getVideoMusic(state) {
+            return state.videoMusic
+        }
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -134,9 +196,6 @@ export default new Vuex.Store({
         setVisibleWrite(state, payload) {
             state.visibleWrite = payload
         },
-        setComments(state, payload) {
-            state.comments = payload
-        },
         deleteUser(state) {
             state.NAME = ''
             state.token = ''
@@ -155,9 +214,67 @@ export default new Vuex.Store({
         setVisiblePreview(state, payload) {
             state.visiblePreview = payload
         },
-        setPersonArray(state, payload){
-            state.personArray = payload
-        }
+        setPersonArrayGallery(state, payload){
+            state.personArrayGallery = payload
+        },
+        setPersonArrayFilm(state, payload){
+            state.personArrayFilm = payload
+        },
+        setPersonArrayBook(state, payload){
+            state.personArrayBook = payload
+        },
+        setSelectedChuckList(state, payload) {
+            state.selectedChuckList = payload
+        },
+        setSearchChuckList(state, payload){
+            state.searchChuckList = payload
+        },
+        setBackState(state, payload) {
+            state.backState = payload
+        },
+        setFaceDataGallery(state, payload) {
+            state.faceDataGallery = payload
+        },
+        setFaceDataStudio(state, payload) {
+            state.faceDataStudio = payload
+        },
+        setFaceDataBook(state, payload) {
+            state.faceDataBook = payload
+        },
+        setFaceDataFilm(state, payload) {
+            state.faceDataFilm = payload
+        },
+        setVisibleModalAssignGroup(state, payload){
+            state.visibleModalAssignGroup = payload
+        },
+        setVisibleModalSecedeGroup(state, payload){
+            state.visibleModalSecedeGroup = payload
+        },
+        insertComments(state, payload) {
+            state.comments.push(payload)
+        },
+        removeComments(state, payload) {
+            state.comments.splice(payload, 1)
+        },
+        setInit(state, payload) {
+            state.init = payload
+        },
+        insertChucks(state, payload) {
+            state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
+        },
+        removeChucks(state, payload) {
+            state.chuckMap.delete(payload.id)
+            state.chuckMap = new Map(state.chuckMap)
+        },
+        setVideoSrc(state, payload) {
+            state.videoSrc = payload
+        },
+        setVideoUrl(state, payload) {
+            state.videoUrl = payload
+        },
+        setVideoMusic(state, payload) {
+            state.videoMusic = payload
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -182,12 +299,12 @@ export default new Vuex.Store({
                 },
             }).then(({ data }) => {
                 for(var i=0; i<data.length; i++) {
-                    const image = data[i].image.split(';');
-                    data[i].image = image;
-                    data[i].color = this.state.color[i % 10];
-                    data[i].index = i;
+                    const image = data[i].image.split(';')
+                    data[i].image = image
+                    data[i].color = this.state.color[i % 10]
+                    data[i].index = i          
                 }
-                commit('setChuckList', data);
+                commit('setChuckList', data)
             })
         },
         logout({commit}) {
@@ -198,9 +315,54 @@ export default new Vuex.Store({
                     token: sessionStorage.getItem('token')
                 },
             }).then(() => {
-                commit('deleteUser');
-                sessionStorage.clear();
+                commit('deleteUser')
+                sessionStorage.clear()
             })
-        }
+        },
+        updateSelectedChuckList({commit}) {
+            const day = [];
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for(var i=0; i<chuckList.length; i++) {
+                if(chuckList[i].date === this.state.selectedDay) {
+                    day.push(chuckList[i])
+                }
+            }
+            commit('setSelectedChuckList', day)
+        },
+        updateSearchChuckList({commit}, item){
+            const result = []
+            const chuckList = Array.from(this.state.chuckMap.values()).slice().reverse()
+            for (let index = 0; index < chuckList.length; index++) {
+                const element = chuckList[index];
+                // console.log(element.title.indexOf(item)!==-1)
+                if(element.title.indexOf(item)!==-1){
+                    result.push(element)
+                }
+            }
+            commit('setSearchChuckList', result)
+        },
+        updateBackState({commit}, item) {
+            commit('setBackState', item)
+        },
+        updateComments({commit}, item) {
+            api.get(`replies/searchByDiary?diaryId=${item}`).then(({data}) => {
+                commit('setComments', data)
+            })
+        },
+        addComments({commit}, item) {
+            commit('insertComments', item)
+        },
+        delComments({commit}, item) {
+            commit('removeComments', item)
+        },
+        updateInit({commit}) {
+            commit('setInit', true)
+        },
+        addChuckList({commit}, item) {
+            commit('insertChucks', item)
+        },
+        delChuckList({commit}, item) {
+            commit('removeChucks', item)
+        },
     }
 })
