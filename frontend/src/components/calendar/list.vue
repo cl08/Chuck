@@ -90,7 +90,7 @@
           v-for="(item, i) in selectedChuckList"
           :key="i"
           cols="12"
-          @click="detail(item)"
+          @click="detail(item.id)"
           style="cursor: pointer"
         >
           <v-card>
