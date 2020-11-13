@@ -1,7 +1,8 @@
 <template>
     <div style="padding:30px 30px 0px 0px;">
         <div>
-        <img src="../../assets/title/chuck_write.svg" class="logo">
+        <img v-if="!getModify" src="../../assets/title/chuck_write.svg" class="logo">
+        <img v-else src="../../assets/title/chuck_edit.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
             <font size=4>최대 10장의 사진을 업로드할 수 있습니다.</font>
@@ -76,6 +77,7 @@ export default {
             'getSelectedGroup',
             'getColor',
             'getChuckList',
+            'getModify',
         ]),
     },
     components: {
@@ -87,6 +89,10 @@ export default {
         });
         eventBus.$on('clearWrite', () => {
             this.imageList = [];
+        });
+        eventBus.$on('modifyDiary', (data) => {
+            this.imageList = []
+            this.imageList.push(data.image)
         });
     },
     methods: {

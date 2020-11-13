@@ -18,7 +18,8 @@
 
     <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
         update DIARIES
-        SET CONTENT = #{content}
+        SET CONTENT = #{content},
+            TITLE = #{title},
         where ID = #{id}
     </update>
 

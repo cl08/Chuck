@@ -48,6 +48,7 @@ export default {
                 },
             })
             .then(({ data }) => {
+                this.$store.state.chuckMap = new Map()
                 const num = data.length-1
                 for(var i=num; i>=0; i--) {
                     const image = data[i].image.split(';')
