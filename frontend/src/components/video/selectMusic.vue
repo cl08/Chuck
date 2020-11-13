@@ -6,24 +6,17 @@
         </div>
         <div class="dash" style="height:540px;">
             <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
-                <div v-if="index > 0">
+                <div>
                     <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
-                    <div class="music" :style="'background-image:url('+music.img+')'" style="position:absolute">
-                        <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
-                    </div>
-                    <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
-                </div>
-                <div v-else>
-                    <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
-                    <div class="music noMusic">
+                    <div class="music" :style="bg[index]" style="position:absolute">
                         <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
                     </div>
                     <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
                 </div>
             </span>
-            <audio id="audio0" loop></audio>
-            <audio id="audio1" src="../../assets/music/Beside Me - Patrick Patrikios.mp3" loop></audio>
-            <audio id="audio2" src="../../assets/music/Nocturne - Asher Fulero.mp3" loop></audio>
+            <span v-for="(music, index) in musics" :key="index">
+                <audio :id="'audio'+index" :src="music.src" loop></audio>
+            </span>
         </div>
         <div class="dash pointer" @click="previousStep">
             <font size=4>이전 단계로</font>
@@ -40,25 +33,99 @@ export default {
     },
     data () {
         return {
+            bg: [
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/no_music.svg')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/BeatYourCompetition.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/BeatYourCompetition.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/Breathe.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/Contigo.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/fingertips.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/MMXX.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/Neon.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/NoYeah.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/Sahara.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/SummerRain.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../../assets/music/image/Waves.png')})`
+                },
+            ],
             musics:
             [
                 {
                     title: '음악 없음',
-                    img: '',
-                    src: '',
                     value: 'middle'
                 },
                 {
-                    title: 'Beside Me - Patrick Patrikios',
-                    img: "https://cdnimg.melon.co.kr/cm2/album/images/104/44/179/10444179_20200612165324_500.jpg?c11ac4207c13df80c4b52223fe0bd3ae/melon/resize/282/quality/80/optimize",
-                    src: '../../assets/music/Beside Me - Patrick Patrikios.mp3',
-                    value: 'Fingertips.mp3'
+                    title: 'BeatYourCompetition',
+                    value: 'BeatYourCompetition.mp3',
+                    src: '../../assets/music/BeatYourCompetition.mp3'
                 },
                 {
-                    title: 'Nocturne - Asher Fulero',
-                    img: 'https://cdnimg.melon.co.kr/cm2/album/images/104/86/979/10486979_20200907171548_500.jpg?35f390d020fc7c5e75d699329fcb166f/melon/resize/282/quality/80/optimize',
-                    src: '../../assets/music/Nocturne - Asher Fulero.mp3',
-                    value: 'Fingertips.mp3'
+                    title: 'Breathe',
+                    value: 'Breathe.mp3',
+                    src: '../../assets/music/Breathe.mp3'
+                },
+                {
+                    title: 'Contigo',
+                    value: 'Contigo.mp3',
+                    src: '../../assets/music/Contigo.mp3'
+                },
+                {
+                    title: 'Fingertips',
+                    value: 'Fingertips.mp3',
+                    src: '../../assets/music/Fingertips.mp3'
+                },
+                {
+                    title: 'MMXX',
+                    value: 'MMXX.mp3',
+                    src: '../../assets/music/MMXX.mp3'
+                },
+                {
+                    title: 'Neon',
+                    value: 'Neon.mp3',
+                    src: '../../assets/music/Neon.mp3'
+                },
+                {
+                    title: 'NoYeah',
+                    value: 'NoYeah.mp3',
+                    src: '../../assets/music/NoYeah.mp3'
+                },
+                {
+                    title: 'Sahara',
+                    value: 'Sahara.mp3',
+                    src: '../../assets/music/Sahara.mp3'
+                },
+                {
+                    title: 'SummerRain',
+                    value: 'SummerRain.mp3',
+                    src: '../../assets/music/SummerRain.mp3'
+                },
+                {
+                    title: 'Waves',
+                    value: 'Waves.mp3',
+                    src: '../../assets/music/Waves.mp3'
                 },
             ]
         }
@@ -136,9 +203,5 @@ export default {
 }
 .videoMusicNoneDisplay {
     display: none;
-}
-.noMusic {
-    background-image:url('../../assets/no_music.svg');
-    position: absolute;
 }
 </style>

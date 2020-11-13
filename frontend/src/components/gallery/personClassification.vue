@@ -3,8 +3,8 @@
         <div class="text-left" style="padding-left:30px;">
             <img src="../../assets/title/gallery_tabtitle.svg" class="tabtitle">
             <font size=6>
-                <el-popover placement="bottom" width="240" trigger="click">
-                    <p>그룹의 모든 게시글을 분석하여 인물을 찾아냅니다. 선택된 인물이 포함된 사진을 필터링하여 볼 수 있습니다.</p>
+                <el-popover placement="bottom" width="230" trigger="click">
+                    <p style="font-family:MaplestoryOTFLight;">그룹의 모든 게시글을 분석하여 인물을<br> 찾아냅니다. 선택된 인물이 포함된<br>사진을 필터링하여 볼 수 있습니다.</p>
                     <i class="el-icon-info pointer" slot="reference" style="position:relative; left:250px; bottom:20px;"></i>
                 </el-popover>
             </font>

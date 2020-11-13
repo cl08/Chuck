@@ -6,7 +6,7 @@
 		<div class="dash" style="height:620px; padding:20px;">
 			<div class='main'>
 				<div id='media-player' width="100%">
-					<video id='media-video' loop width="100%">
+					<video id='media-video' loop width="100%" autoplay>
 					</video>
 				</div>
 				<div id='media-controls' class='ctrl-box'>
