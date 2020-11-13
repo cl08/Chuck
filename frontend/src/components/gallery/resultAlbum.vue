@@ -1,12 +1,14 @@
 <template>
-    <div style="padding:30px 0px 0px 30px;">
+    <div style="padding:10px 0px 0px 30px;">
         <div class="bg" style="text-align:center">
-            <img class="currentImg" :src="currentImage">
+            <img v-if="currentImage" class="currentImg" :src="currentImage">
+            <img v-else class="currentImg" src="http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif">
+        <div class="pointer" style="margin-top:30px;">
+            <el-tag effect="dark" color="#8D6262" style="border-color:#8D6262;" @click="moveChuck">Chuck으로 이동</el-tag></div>
         </div>
-
-        <div style="text-align:left; padding:20px;">
+        <div class="dash" style="text-align:left; height:330px; margin-top:30px;">
             <span v-for="(item, index) in temp" :key="index" class="picture">
-                <img class="pointer picture" :src="item" @click="clickedImg(index)">
+                <img class="pointer picture" :src="item" @click="clickedImg(index)" style="object-fit:cover">
             </span>
         </div>
     </div>
@@ -25,6 +27,7 @@ export default {
             imageList: new Map(),
             temp: [],
             currentImage: '',
+            currentImageIndex: '',
         }
     },
     computed: {
@@ -72,10 +75,13 @@ export default {
     },
     methods: {
         clickedImg(index) {
-            // const id = this.imageList.get(this.temp[index]).diaryId
-            // eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
             this.currentImage = this.temp[index]
+            this.currentImageIndex = index
         },
+        moveChuck() {
+            const id = this.imageList.get(this.temp[this.currentImageIndex]).diaryId
+            eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
+        }
     },
 };
 </script>
@@ -84,10 +90,10 @@ export default {
 .picture {
     width: 120px;
     height: 120px;
-    margin: 4px;
+    margin: 3px;
 }
 .bg {
-    background: url('../../assets/gallery_background.jpg');
+    background: url('../../assets/gallery/background.jpg');
     background-size: cover;
     width: 550px;
     height: 350px;
@@ -97,5 +103,6 @@ export default {
     width: 420px;
     height: 250px;
     margin-top: 50px;
+    object-fit: cover;
 }
 </style>

@@ -1,42 +1,29 @@
 <template>
-  <div style="padding: 30px 0px 0px 30px">
-    <!-- 상단 (날짜, 검색기능, 글쓰기 버튼) -->
-    <v-row v-if="searchFlag">
-      <span class="col-3"> </span>
-      <span class="col-6">
-        <font size="6">{{ this.getSelectedDay }}</font>
-      </span>
-      <span class="col-3 float-right">
-        <el-button
-          icon="el-icon-search"
-          circle
-          @click="openSearchBar"
-        ></el-button>
-        <el-button icon="el-icon-edit" circle @click="write"></el-button>
-      </span>
-    </v-row>
+    <div style="padding:30px 0px 0px 30px;">
+        <!-- 상단 (날짜, 검색기능, 글쓰기 버튼) -->
+        <v-row v-if="searchFlag">
+            <span class="col-3">
+            </span>
+            <span class="col-6">
+                <font size=6>{{ this.getSelectedDay }}</font>
+            </span>
+            <span class="col-3 float-right">
+                <el-button class="iconColor" icon="el-icon-search" circle @click="openSearchBar"></el-button>
+                <el-button  class="iconColor" icon="el-icon-edit" circle @click="write"></el-button>
+            </span>
+        </v-row>
 
-    <v-row v-else>
-      <span class="col-12 float-right">
-        <div
-          class="el-input el-input--suffix"
-          style="width: 80%; margin: 0px 12px 0px 26px"
-        >
-          <input
-            type="text"
-            autocomplete="off"
-            class="el-input__inner"
-            id="searchBar"
-            v-model="keyword"
-            @keydown.enter="search"
-            style="text-align: left"
-          />
-          <span class="el-input__suffix">
-            <span class="el-input__suffix-inner">
-              <i
-                class="el-input__icon el-icon-close pointer"
-                @click="closeSearchBar"
-              ></i>
+        <v-row v-else>
+            <span class="col-12 float-right">
+                <div class="el-input el-input--suffix" style="width: 80%; margin:0px 12px 0px 26px; color:#8D6262; border-color:#8D6262">
+                    <input type="text" autocomplete="off" class="el-input__inner iconColor" id="searchBar" v-model="keyword" @keydown.enter="search" style="text-align:left">
+                    <span class="el-input__suffix">
+                        <span class="el-input__suffix-inner">
+                            <i class="el-input__icon el-icon-close pointer iconColor" @click="closeSearchBar"></i>
+                        </span>
+                    </span>
+                </div>
+                <el-button class="iconColor" icon="el-icon-edit" circle @click="write"></el-button>
             </span>
           </span>
         </div>

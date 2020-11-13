@@ -1,6 +1,6 @@
 <template>
     <div>
-        <img src="../../assets/border.png" style="width:150px;">
+        <img src="../../assets/music_border.svg" style="width:150px;">
         <div class="music-bar">
             <span class="bar bar-0">0</span>
             <span class="bar bar-1">1</span>

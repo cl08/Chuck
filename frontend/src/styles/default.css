@@ -15,6 +15,7 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #8D6262;
+    overflow: auto;
 }
 @font-face {
     font-family: 'MaplestoryOTFLight';
@@ -57,4 +58,8 @@
 }
 hr {
     margin: 0px auto;
+}
+.iconColor {
+    color: #8D6262;
+    border-color: #8D6262;
 }

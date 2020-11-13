@@ -128,6 +128,7 @@ export default {
                 let url = this.getVideoUrl.replace('final', 'middle')
                 source.setAttribute('src', url)
                 p.appendChild(source)
+                p.play()
             
                 this.setVisibleChoice(false)
                 this.setVisibleAlbum(false)

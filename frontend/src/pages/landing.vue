@@ -18,6 +18,10 @@ export default {
         $('#landing_page').height(h);
         $('#landing_page').width(w);
         window.addEventListener("resize", this.handleResize)
+        
+        //preload image
+        var image = new Image();
+        image.src = '../assets/login_bg.png'
     },
     methods: {
         handleResize(e){
@@ -26,6 +30,7 @@ export default {
             $('#landing_page').width(w);
             $('#landing_book').css('top', '50%')
         },
+        
     }
 }
 </script>
