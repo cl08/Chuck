@@ -74,9 +74,9 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
+            print(data[i]["imagePath"])
             pathNames.append(data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
-            print(top, right, bottom, left)
             face = image[top:bottom, left:right]
             face = cv2.resize(face, (96, 96))
             faces.append(face)
