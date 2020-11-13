@@ -5,7 +5,8 @@
                 <img src="../../assets/logo.svg" class="logo">
             </span>
             <span class="float-right mr-10 mt-4">
-                <font size=5>{{ this.getSelectedDay }}</font>
+                <font size=5 v-if="getBackState != 2">{{ this.getSelectedDay }}</font>
+                <font size=5 v-else>{{ this.getChuckMap.get(this.getSelectedDiary).date }}</font>
             </span>
         </div>
         <div v-if="getChuckMap.get(getSelectedDiary)" style="margin: 10px 30px 10px 30px;">
@@ -67,43 +68,12 @@
         </div>
         <div v-if="getChuckMap.get(getSelectedDiary) && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckMap.get(getSelectedDiary).content">
         </div>
-        <textarea
-            v-if="changeContent"
-            v-model="content"
-            ref="content"
-            style="font-size:20px; padding:0px 30px 0px 30px; height:90px; width:596px;"
-        />
-        <v-dialog v-model="dialog" max-width="290" v-if="changeContent">
-            <template v-slot:activator="{ on, attrs }">
-                <v-btn
-                dark
-                @click.prevent="cancle"
-                >
-                취소
-                </v-btn>
-                <v-btn
-                dark
-                v-bind="attrs"
-                v-on="on"
-                >
-                수정
-                </v-btn>
-            </template>
-            <v-card>
-                <v-card-title class="headline"></v-card-title>
-                <v-card-text><b>정말로 수정하시겠습니까?</b></v-card-text>
-                <v-card-actions>
-                <v-spacer></v-spacer>
-                <v-btn color="green darken-1" text @click="updateContent()">확인</v-btn>
-                <v-btn color="green darken-1" text @click="dialog = false">취소</v-btn>
-                </v-card-actions>
-            </v-card>
-        </v-dialog>
     </div>
 </template>
 
 <script>
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex';
 import api from '@/utils/api'
 import eventBus from '@/utils/EventBus'
 import axios from 'axios'
@@ -125,15 +95,28 @@ export default {
             'getSelectedDiary',
             'getId',
             'getChuckMap',
+            'getBackState',
         ])
     },
     methods: {
+        ...mapMutations([
+            "setVisibleCalendar",
+            "setVisibleDetail",
+            "setVisibleWrite",
+            "setVisibleChoice",
+            "setVisibleAlbum",
+            "setVisibleVideo",
+            "setVisiblePreview",
+            "setSelectedDay",
+            "setBackState",
+        ]),
         edit() {
-            this.content = this.getChuckMap.get(this.getSelectedDiary).content
-            this.changeContent = true 
-            this.$nextTick(() => {
-                this.$refs.content.focus();
-            });
+            const diary = this.getChuckMap.get(this.getSelectedDiary)
+            this.$store.dispatch('updateModify', true)
+            this.setVisibleWrite(true);
+            this.setVisibleDetail(false);
+            this.setVisibleCalendar(false);
+            eventBus.$emit('modifyDiary', diary)
         },
         remove() {
             this.dialog = false
