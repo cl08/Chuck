@@ -74,7 +74,7 @@ export default {
                         this.$router.push('/diary')
                     })
                     .catch(( { error }) => {
-                        console.log(error)
+                        console.log(error)  
                         alert("error")
                     })
                 })
