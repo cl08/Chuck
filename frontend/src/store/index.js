@@ -282,6 +282,9 @@ export default new Vuex.Store({
         setModify(state, payload) {
             state.isModify = payload
         },
+        setChuckMap(state, payload) {
+            state.chuckMap.set(payload.id, payload)
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {

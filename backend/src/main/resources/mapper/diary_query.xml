@@ -17,10 +17,7 @@
     </select>
 
     <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
-        update DIARIES
-        SET CONTENT = #{content},
-            TITLE = #{title},
-        where ID = #{id}
+        update DIARIES SET CONTENT = #{content}, TITLE = #{title} where ID = #{id}
     </update>
 
     <delete id="delete" parameterType="int">

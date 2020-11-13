@@ -264,6 +264,9 @@ export default {
       "setBackState",
     ]),
     movePage(num) {
+      eventBus.$emit('clearImage')
+      eventBus.$emit('clearWrite')
+      this.$store.dispatch('updateModify', false)
       this.init()
       $(".sample-docs").turn("disable", false);
       $(".sample-docs").turn("page", 2 + 2 * num);
@@ -320,12 +323,14 @@ export default {
       this.setVisiblePreview(false);
     },
     back(){
+      eventBus.$emit('clearImage')
+      eventBus.$emit('clearWrite')
+      this.$store.dispatch('updateModify', false)
       if(this.getBackState === 1) {
         // calender
         this.setVisibleWrite(false);
         this.setVisibleDetail(false);
         this.setVisibleCalendar(true);
-        eventBus.$emit('clearWrite');
       } else if(this.getBackState == 2) {
         // TimeLine
         this.movePage(0);
