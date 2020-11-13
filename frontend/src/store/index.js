@@ -40,6 +40,7 @@ export default new Vuex.Store({
         videoSrc: [],
         videoUrl: '',
         videoMusic: '',
+        isModify: false,
     },
 
     getters: {
@@ -152,6 +153,9 @@ export default new Vuex.Store({
         },
         getVideoMusic(state) {
             return state.videoMusic
+        },
+        getModify(state) {
+            return state.isModify
         }
     },
     mutations: {
@@ -275,6 +279,9 @@ export default new Vuex.Store({
         setVideoMusic(state, payload) {
             state.videoMusic = payload
         },
+        setModify(state, payload) {
+            state.isModify = payload
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -363,6 +370,9 @@ export default new Vuex.Store({
         },
         delChuckList({commit}, item) {
             commit('removeChucks', item)
+        },
+        updateModify({commit}, item) {
+            commit('setModify', item)
         },
     }
 })

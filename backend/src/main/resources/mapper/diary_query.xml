@@ -18,7 +18,8 @@
 
     <update id="update" parameterType="com.ssafy.chuck.diary.dto.DiaryDto">
         update DIARIES
-        SET CONTENT = #{content}
+        SET CONTENT = #{content},
+            TITLE = #{title},
         where ID = #{id}
     </update>
 
@@ -35,7 +36,7 @@
         AND P.DIARY_ID = D.ID
         AND U.ID = D.WRITER
         GROUP BY D.ID
-        ORDER BY ID DESC
+        ORDER BY DATE DESC
     </select>
 
     <select id="search" parameterType="map" resultType="com.ssafy.chuck.diary.dto.DiaryDto">

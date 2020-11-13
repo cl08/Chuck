@@ -116,13 +116,46 @@ public class KakaoController {
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
     	
+    	System.out.println("request 출력!!!");
+    	System.out.println(request.getParameterNames());
+    	System.out.println(request.getParameter("user"));
+    	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+    	
+    	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
     	System.out.println("userRequest 출력!!!");
     	System.out.println(userRequest);
     	
-    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
+    	HashMap<String, Object> user = (HashMap<String, Object>) userRequest.get("user");
     	System.out.println("user 출력!!!");
-    	System.out.println(user);    	
+    	System.out.println(user);
+    	
+    	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡPropertiesㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+    	
+    	HashMap<String, Object> properties = (HashMap<String, Object>) user.get("properties");
+    	System.out.println("properties 출력!!!");
+    	System.out.println(properties);
+    	
+    	System.out.println("properties의 KeySet");
+    	System.out.println(properties.keySet());
+    	
+    	System.out.println(properties.get("botUserKey"));
+    	System.out.println(properties.get("bot_user_key"));
+    	System.out.println(properties.get("plusfriend_user_key"));
+    	
+    	System.out.println("plusfriendUserKey 출력!!");
+    	System.out.println(properties.get("plusfriendUserKey"));
+    	
+    	
+    	
+    	
+    	System.out.println("appUserId 출력!!!");
+    	System.out.println(properties.get("appUserId"));
+    	
+    	
+//    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
+//    	System.out.println("user 출력!!!");
+//    	System.out.println(user);    	
     	
     	
     	HashMap<String,Object> action = (HashMap<String, Object>) params.get("action");
