@@ -116,10 +116,10 @@ public class KakaoController {
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
     public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
     	
-    	System.out.println("request 출력!!!");
-    	System.out.println(request.getParameterNames());
-    	System.out.println(request.getParameter("user"));
-    	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
+//    	System.out.println("request 출력!!!");
+//    	System.out.println(request.getParameterNames());
+//    	System.out.println(request.getParameter("user"));
+//    	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
     	
     	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
@@ -151,11 +151,20 @@ public class KakaoController {
     	
     	System.out.println("appUserId 출력!!!");
     	System.out.println(properties.get("appUserId"));
+    	String appUserId = (String) properties.get("appUserId");
     	
-    	
-//    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
-//    	System.out.println("user 출력!!!");
-//    	System.out.println(user);    	
+    	//1. 개인별 폴더 생성
+    	String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + appUserId;
+    	File folder = new File(path);
+    	if(!folder.exists()) {
+    		try {
+    			folder.mkdir();
+    			System.out.println("폴더 생성");
+    		} catch(Exception e) {
+    			e.getStackTrace();
+    		}
+    	}
+    	else System.out.println("이미 폴더가 있습니다.");
     	
     	
     	HashMap<String,Object> action = (HashMap<String, Object>) params.get("action");
@@ -182,7 +191,7 @@ public class KakaoController {
     	for(String url : urls) {
     		System.out.println(url);
     		try {
-				saveImage(url);
+				saveImage(url, appUserId);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -217,7 +226,7 @@ public class KakaoController {
     }
 
     
-    private static void saveImage(String strUrl) throws IOException {
+    private static void saveImage(String strUrl, String id) throws IOException {
         URL url = null;
         InputStream in = null;
         OutputStream out = null;
@@ -230,7 +239,7 @@ public class KakaoController {
         try {
             url = new URL(strUrl);
             in = url.openStream();
-            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + dateString + ".jpg"); //저장경로
+            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + id + "/" + dateString + ".jpg"); //저장경로
             while(true){
                 //이미지를 읽어온다.
                 int data = in.read();
