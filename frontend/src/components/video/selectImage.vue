@@ -6,7 +6,7 @@
         <div class="dash" style="height:620px; text-align:left">
             <v-row style="padding: 10px 0px 10px 10px;">
                 <img src="../../assets/tip_icon.svg" style="width:16px; margin:8px 12px 10px 20px;">
-                <font size=2 color=#56b4fc>
+                <font size=2 color="#3D91FF">
                 동영상을 만들기 위해서는 최소 5장의 사진이 필요합니다.<br>
                 5장 이상의 사진을 선택해 주세요.
                 </font>

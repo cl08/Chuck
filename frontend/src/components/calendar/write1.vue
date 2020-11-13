@@ -5,7 +5,7 @@
         <img v-else src="../../assets/title/chuck_edit.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
-            <font size=4>최대 10장의 사진을 업로드할 수 있습니다.</font>
+            <font size=4 color="#3D91FF">최대 10장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
             <el-upload 
@@ -54,7 +54,7 @@
             </ul>
         </div>
         <div style="padding:0px 34px; text-align:right" v-if="imageList.length > 0">
-            <font size=5 class="pointer" @click="removeAll">전체삭제</font>
+            <font size=5 color="#3D91FF" class="pointer" @click="removeAll">전체삭제</font>
         </div>
     </div>
 </template>

@@ -28,7 +28,7 @@ export default new Vuex.Store({
         selectedChuckList: [],
         searchChuckList:[],
         backState: 1,
-        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
+        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#F0DDFE", "#FFE1F1"],
         faceDataGallery: [],
         faceDataStudio: [],
         faceDataBook: [],

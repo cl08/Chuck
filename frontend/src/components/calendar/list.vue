@@ -25,11 +25,7 @@
                 </div>
                 <el-button class="iconColor" icon="el-icon-edit" circle @click="write"></el-button>
             </span>
-          </span>
-        </div>
-        <el-button icon="el-icon-edit" circle @click="write"></el-button>
-      </span>
-    </v-row>
+        </v-row>
     <!-- detail ( 검색결과, 날짜 클릭 결과, 오늘의 척 등록하세요 문구 ) -->
     <!-- 검색 클릭시 나오는 화면 -->
     <v-container v-if="!searchFlag" style="padding: 0px 20px 0px 20px">
