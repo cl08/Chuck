@@ -87,6 +87,7 @@ export default {
 #login_page {
     background: url('../assets/login_bg.png');
     background-position: bottom center;
+    background-repeat: no-repeat;
 }
 #login_kakao {
     position:absolute;
