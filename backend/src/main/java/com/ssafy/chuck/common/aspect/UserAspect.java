@@ -152,7 +152,7 @@ public class UserAspect {
 
 	private String getAccessToken(String refreshToken) {
 		logger.debug("AccessToken 호출");
-		final String apiKey = "39c29afd4d7851a73acd53290c07e56d";
+		final String apiKey = "af3fbd88dda8f08e922abaa01884432b";
 		String accessToken = "";
 
 		String reqURL = "https://kauth.kakao.com/oauth/token";
