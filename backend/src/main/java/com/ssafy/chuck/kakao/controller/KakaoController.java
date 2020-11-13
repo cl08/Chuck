@@ -44,50 +44,10 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping("/chuck/kakao")
 public class KakaoController {
 	
-	@Autowired
-	private PictureService pictureService;
-	@Autowired
-    RestTemplate restTemplate;
-	
-	@PostMapping("/upload")
-	@ApiOperation(value = "카카오 챗봇 파일 업로드")
-	public ResponseEntity<String> fileUploadForKakao(@RequestPart("filename") MultipartFile mFile, HttpServletRequest request, int id){
-
-		//1. 개인별 폴더 생성
-		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
-		File folder = new File(path);
-		if(!folder.exists()) {
-			try {
-				folder.mkdir();
-				System.out.println("폴더 생성");
-			} catch(Exception e) {
-				e.getStackTrace();
-			}
-		}
-		else System.out.println("이미 폴더가 있습니다.");
-		
-		//2. 개인별 폴더에 사진 저장
-		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
-		Date nowdate = new Date();
-		String dateString = formatter.format(nowdate);	//현재시간 문자열
-		String real_path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id + "/" + 
-				dateString + "_" + mFile.getOriginalFilename();			//경로 + 날짜시간 + _ +파일이름으로 저장
-		String access_path = "http://k3a206.p.ssafy.io/images/kakao/" + id + "/" + dateString + "_" + mFile.getOriginalFilename();
-		
-		try {
-			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
-			return new ResponseEntity<String>(access_path, HttpStatus.OK);	// 접근경로 return
-		} catch (IOException e) {
-			System.out.println("파일 업로드 실패");
-			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
-		}
-	}
-	
 	@GetMapping("/list")
 	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
 	public ResponseEntity<List<String>> getList(int id){
 		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
-//		String path = "C:\\Users\\multicampus\\s03p31a206\\backend\\python";
 		File folder = new File(path);
 		File[] fileList = folder.listFiles();
 		List<String> list = new ArrayList<>();
@@ -104,23 +64,9 @@ public class KakaoController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-	@GetMapping("/token")
-	@ApiOperation(value = "카카오 토큰 얻기")
-	public ResponseEntity<Map<String, Object>> token(){
-		Map<String, Object> m = restTemplate.getForObject("http://kauth.kakao.com/oauth/authorize?client_id=39c29afd4d7851a73acd53290c07e56d&redirect_uri=http://k3a206.p.ssafy.io/kakao_oauth&response_type=code", Map.class);
-		
-		return new ResponseEntity<Map<String, Object>>(m, HttpStatus.OK);
-	}
-	
 	//카카오톡 오픈빌더로 리턴할 스킬 API
     @RequestMapping(value = "/connection" , method= {RequestMethod.POST , RequestMethod.GET },headers = {"Accept=application/json"})
-    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {
-    	
-    	System.out.println("request 출력!!!");
-    	System.out.println(request.getParameterNames());
-    	System.out.println(request.getParameter("user"));
-    	System.out.println("ㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡㅡ");
-    	
+    public HashMap<String,Object> callAPI(@RequestBody Map<String, Object> params, HttpServletRequest request, HttpServletResponse response) {    	
     	
     	HashMap<String, Object> userRequest = (HashMap<String, Object>) params.get("userRequest");
     	System.out.println("userRequest 출력!!!");
@@ -147,15 +93,22 @@ public class KakaoController {
     	System.out.println(properties.get("plusfriendUserKey"));
     	
     	
-    	
-    	
     	System.out.println("appUserId 출력!!!");
     	System.out.println(properties.get("appUserId"));
+    	String appUserId = (String) properties.get("appUserId");
     	
-    	
-//    	HashMap<String, Object> user = (HashMap<String, Object>) params.get("user");
-//    	System.out.println("user 출력!!!");
-//    	System.out.println(user);    	
+    	//1. 개인별 폴더 생성
+    	String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + appUserId;
+    	File folder = new File(path);
+    	if(!folder.exists()) {
+    		try {
+    			folder.mkdir();
+    			System.out.println("폴더 생성");
+    		} catch(Exception e) {
+    			e.getStackTrace();
+    		}
+    	}
+    	else System.out.println("이미 폴더가 있습니다.");
     	
     	
     	HashMap<String,Object> action = (HashMap<String, Object>) params.get("action");
@@ -182,7 +135,7 @@ public class KakaoController {
     	for(String url : urls) {
     		System.out.println(url);
     		try {
-				saveImage(url);
+				saveImage(url, appUserId);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -217,7 +170,7 @@ public class KakaoController {
     }
 
     
-    private static void saveImage(String strUrl) throws IOException {
+    private static void saveImage(String strUrl, String id) throws IOException {
         URL url = null;
         InputStream in = null;
         OutputStream out = null;
@@ -230,7 +183,7 @@ public class KakaoController {
         try {
             url = new URL(strUrl);
             in = url.openStream();
-            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + dateString + ".jpg"); //저장경로
+            out = new FileOutputStream("/home/ubuntu/s03p31a206/backend/python/kakao/" + id + "/" + dateString + ".jpg"); //저장경로
             while(true){
                 //이미지를 읽어온다.
                 int data = in.read();

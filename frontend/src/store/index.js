@@ -28,7 +28,7 @@ export default new Vuex.Store({
         selectedChuckList: [],
         searchChuckList:[],
         backState: 1,
-        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#FFC8FD", "#FFC8E2"],
+        color: ["#FFB6B6", "#FFD9A1", "#FBFFC8", "#C8FFCE", "#C8CDFF", "#C8EBFF", "#C8FFFD", "#C8FFEB", "#F0DDFE", "#FFE1F1"],
         faceDataGallery: [],
         faceDataStudio: [],
         faceDataBook: [],
@@ -282,6 +282,9 @@ export default new Vuex.Store({
         setModify(state, payload) {
             state.isModify = payload
         },
+        setChuckMap(state, payload) {
+            state.chuckMap.set(payload.id, payload)
+        },
     },
     actions: {
         updateSelectedGroup({commit}, items) {
@@ -342,7 +345,7 @@ export default new Vuex.Store({
             for (let index = 0; index < chuckList.length; index++) {
                 const element = chuckList[index];
                 // console.log(element.title.indexOf(item)!==-1)
-                if(element.title.indexOf(item)!==-1){
+                if(element.title.indexOf(item)!==-1 || element.content.indexOf(item)!==-1){
                     result.push(element)
                 }
             }

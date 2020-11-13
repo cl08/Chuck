@@ -5,7 +5,7 @@
         <img v-else src="../../assets/title/chuck_edit.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
-            <font size=4>최대 10장의 사진을 업로드할 수 있습니다.</font>
+            <font size=4 color="#3D91FF">최대 10장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
             <el-upload 
@@ -54,7 +54,7 @@
             </ul>
         </div>
         <div style="padding:0px 34px; text-align:right" v-if="imageList.length > 0">
-            <font size=5 class="pointer" @click="removeAll">전체삭제</font>
+            <font size=5 color="#3D91FF" class="pointer" @click="removeAll">전체삭제</font>
         </div>
     </div>
 </template>
@@ -70,6 +70,8 @@ export default {
             disabled: false,
             imageList: [],
             imageChange: false,
+            change: new Set(),
+            removeImages: [],
         };
     },
     computed: {
@@ -78,6 +80,7 @@ export default {
             'getColor',
             'getChuckList',
             'getModify',
+            'getChuckMap',
         ]),
     },
     components: {
@@ -92,8 +95,12 @@ export default {
         });
         eventBus.$on('modifyDiary', (data) => {
             this.imageList = []
-            this.imageList.push(data.image)
+            data.image.forEach(image => {
+                this.imageList.push(image)
+                this.change.add(image)
+            })
         });
+        eventBus.$on('clearImage', () => this.clear());
     },
     methods: {
         beforeImageUpload(file) {
@@ -116,45 +123,105 @@ export default {
             this.imageList = this.imageList.concat(res);
         },
         handleRemove(file, index) {
-            api.delete(`pictures/deleteByPath?path=${file}`).then(()=> {
-                this.imageList.splice(index, 1);
-            })
+            if(!this.change.has(file)) {
+                this.remove(file, index)
+            } else {
+                if(this.change.has(file)) {
+                    this.imageList.splice(index, 1)
+                    this.removeImages.push(file)
+                } else {
+                    this.remove(file, index)
+                }
+            }
+        },
+        remove(file, index) {
+            api.delete(`pictures/deleteByPath?path=${file}`).then(()=> {this.imageList.splice(index, 1)})
         },
         removeAll() {
-            for(let i=0; i<this.imageList.length; i++) {
-                api.delete(`pictures/deleteByPath?path=${this.imageList[i]}`).then(()=> {
-                    this.imageList.splice(i--, 1)
-                })
+            if(!this.getModify) {
+                for(let i=0; i<this.imageList.length; i++) {
+                    api.delete(`pictures/deleteByPath?path=${this.imageList[i]}`).then(()=> {
+                        this.imageList.splice(i--, 1)
+                    })
+                }
+            } else {
+                for(let i=0; i<this.imageList.length; i++) {
+                    if(this.change.has(this.imageList[i])) {
+                        this.imageList.splice(i--, 1)
+                        this.removeImages.push(this.imageList[i])
+                    } else {
+                        api.delete(`pictures/deleteByPath?path=${this.imageList[i]}`).then(()=> {
+                            this.imageList.splice(i--, 1)
+                        })
+                    }
+                }
             }
         },
         uploadImages(diaryId) {
+            if(this.getModify && this.removeImages) {
+                this.removeImages.forEach(image => {
+                    api.delete(`pictures/deleteByPath?path=${image}`).then(()=> {})
+                })
+            }
             let images = [];
             this.imageList.forEach(image => {
                 images.push(image);
             });
-            api.post(`pictures/insert`, {
-                diary_id: diaryId,
-                group_id: this.getSelectedGroup.id,
-                path_list: images,
-            }).then((data) => {
-                api.get(`diaries/${diaryId}`, {
-                    headers: {
-                        token: this.$store.getters.getToken,
-                    }
-                }).then(({data}) => {
-                    const image = data.image.split(';')
-                    data.image = image
-                    data.color = this.getColor[this.getChuckList.length % 10]
-                    data.date = data.date.toString().slice(0,10)
-                    this.$store.dispatch('addChuckList', data)
-                    eventBus.$emit('uploadeDone');
-                    this.imageList = [];
+            if(this.getModify) {
+                api.put(`pictures/modify`, {
+                    diary_id: diaryId,
+                    group_id: this.getSelectedGroup.id,
+                    path_list: images,
+                }).then((data) => {
+                    api.get(`diaries/${diaryId}`, {
+                        headers: {
+                            token: this.$store.getters.getToken,
+                        }
+                    }).then(({data}) => {
+                        const images = data.image.split(';')
+                        data.image = images
+                        data.color = this.getColor[this.getChuckList.length % 10]
+                        data.date = data.date.toString().slice(0,10)
+                        this.$store.commit('setChuckMap', data)
+                        this.$store.dispatch('updateModify', false)
+                        this.clear()
+                        this.imageList = [];
+                        eventBus.$emit('uploadeDone');
+                    })
                 })
-            })
+
+            } else {
+                api.post(`pictures/insert`, {
+                    diary_id: diaryId,
+                    group_id: this.getSelectedGroup.id,
+                    path_list: images,
+                }).then((data) => {
+                    api.get(`diaries/${diaryId}`, {
+                        headers: {
+                            token: this.$store.getters.getToken,
+                        }
+                    }).then(({data}) => {
+                        const image = data.image.split(';')
+                        data.image = image
+                        data.color = this.getColor[this.getChuckList.length % 10]
+                        data.date = data.date.toString().slice(0,10)
+                        this.$store.dispatch('addChuckList', data)
+                        eventBus.$emit('uploadeDone');
+                        this.imageList = [];
+                    })
+                })
+            }
         },
         changeImage(data) {
             this.handleRemove(this.imageList[data.index], data.index+1);
             this.imageList.splice(data.index, 0, data.res)
+        },
+        clear() {
+            this.disabled = false
+            this.imageList = []
+            this.imageChange = false
+            this.change = new Set()
+            this.removeImages = []
         }
     }
 }

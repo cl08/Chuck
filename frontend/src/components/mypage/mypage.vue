@@ -18,14 +18,14 @@
         닉네임
         <v-btn
           @click="focusNickname"
-          color="#2680EB"
+          color="#3D91FF"
           text
           v-show="!changeNicknameClicked"
           >바꾸기</v-btn
         >
         <v-btn
           @click="changeNickname"
-          color="#2680EB"
+          color="#3D91FF"
           text
           v-show="changeNicknameClicked"
           >수정완료</v-btn
