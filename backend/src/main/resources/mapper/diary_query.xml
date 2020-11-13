@@ -36,7 +36,7 @@
         AND P.DIARY_ID = D.ID
         AND U.ID = D.WRITER
         GROUP BY D.ID
-        ORDER BY DATE DESC
+        ORDER BY D.DATE DESC, D.ID DESC
     </select>
 
     <select id="search" parameterType="map" resultType="com.ssafy.chuck.diary.dto.DiaryDto">

@@ -2,7 +2,7 @@
     <div id="login_page">
         <div id="login_kakao">
             <kakao-login
-            api-key='d1baf2cad3354a9138989baea6e65995'
+            api-key='1015ac6b17bb84663194c301657eac77'
             :on-success=onSuccess
             :on-failure=onFailure
             image="kakao_account_login_btn_medium_narrow"

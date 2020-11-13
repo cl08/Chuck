@@ -128,7 +128,6 @@ public class DiaryController {
 		logger.debug("다이어리 리스트 조회 호출");
 		// long userId = permissionCheck.check(token).getId();
 		List<DiaryDto> list = service.readAll(id);
-		System.out.println(list.get(0).getDate());
 		return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
