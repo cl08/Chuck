@@ -334,7 +334,7 @@ export default new Vuex.Store({
             for (let index = 0; index < this.state.chuckList.length; index++) {
                 const element = this.state.chuckList[index];
                 // console.log(element.title.indexOf(item)!==-1)
-                if(element.title.indexOf(item)!==-1){
+                if(element.title.indexOf(item)!==-1 || element.content.indexOf(item)!==-1){
                     result.push(element)
                 }
             }

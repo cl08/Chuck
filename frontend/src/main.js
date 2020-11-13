@@ -36,6 +36,8 @@ Vue.use(FlippingWidgets);
 import "./styles/default.css"
 import "./styles/custom.css"
 
+import TextHighlight from "vue-text-highlight";
+Vue.component('text-highlight', TextHighlight);
 new Vue({
   render: h => h(App),
   vuetify : new Vuetify(),
