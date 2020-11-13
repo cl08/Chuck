@@ -25,6 +25,7 @@ def encode(groupId, imagePaths):
     for (i, imagePath) in enumerate(imagePaths):
         print("[INFO] processing image {}/{}".format(i + 1, len(imagePaths)))
         image = cv2.imread(imagePath)
+        print(imagePath)
         rgb = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         boxes = face_recognition.face_locations(rgb, model="hog") # hor or cnn
         encodings = face_recognition.face_encodings(rgb, boxes)
