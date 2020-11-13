@@ -6,11 +6,12 @@ import store from './store'
 import Vuetify from 'vuetify'
 import 'vuetify/dist/vuetify.min.css'
 
-import ElementUI from 'element-ui';
+import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css';
 import locale from 'element-ui/lib/locale/lang/ko'
 
-import VueMoment from 'vue-moment';
+import VueMoment from 'vue-moment'
+import moment from 'moment-timezone'
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome"
@@ -26,6 +27,7 @@ Vue.use(Vuetify);
 Vue.use(ElementUI, {locale});
 
 Vue.use(VueMoment);
+Vue.use(moment);
 
 // vue-turnjs install
 import { FlippingWidgets } from "vue-turnjs";

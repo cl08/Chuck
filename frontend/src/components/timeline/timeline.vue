@@ -5,9 +5,9 @@
             <div class="underline"></div>
         </div>
         <v-container v-if="chuckMap.length != 0" style="padding:30px 0px 0px 10px; text-align:left;">
-            <v-col v-for="(item, index) in Array.from(chuckMap.values()).slice().reverse()" :key="index" cols="12" @click="detail(item)" style="padding:0px; margin-bottom:-7px;">
+            <v-col v-for="(item, index) in chuckMap" :key="index" cols="12" @click="detail(item)" style="padding:0px; margin-bottom:-7px;">
                 <img v-if="index===0" src="../../assets/timeline01.png" class="line" style="height:80px">
-                <img v-else-if="chuckList[index-1].date === chuckList[index].date" src="../../assets/timeline02.png" class="line" style="height:80px;">
+                <img v-else-if="chuckMap[index-1].date === chuckMap[index].date" src="../../assets/timeline02.png" class="line" style="height:80px;">
                 <img v-else src="../../assets/timeline03.png" class="line" style="height:120px; width:80px;">
                 <v-card class="pointer" style="box-shadow: 2px 2px 5px 1px #CED4DA; display:inline-block; bottom:12px;">
                     <div class="d-flex flex-no-wrap">
@@ -41,7 +41,7 @@ export default {
     computed: {
         groupInfo: () => store.getters.getSelectedGroup,
         chuckList: () => store.getters.getChuckList,
-        chuckMap: () => store.getters.getChuckMap,
+        chuckMap: () => Array.from(store.getters.getChuckMap.values()).slice().reverse(),
     },
     methods: {
         ...mapMutations([

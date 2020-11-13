@@ -14,14 +14,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
 import com.ssafy.chuck.common.PermissionCheck;
 import com.ssafy.chuck.diary.dto.DiaryDto;
 import com.ssafy.chuck.diary.service.DiaryService;
-import com.ssafy.chuck.diary.service.FileService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,23 +40,6 @@ public class DiaryController {
 	@Autowired
 	PermissionCheck permissionCheck;
 
-	@Autowired
-	FileService fileService;
-
-	@RequestMapping(method = RequestMethod.POST, value = "/images", produces = "application/json")
-	@ApiOperation(value = "이미지 업로드")
-	@ApiResponses({
-		@ApiResponse(code = 200, message = "이미지 업로드 성공"),
-		@ApiResponse(code = 400, message = "잘못된 요청입니다"),
-		@ApiResponse(code = 401, message = "로그인 후 이용해 주세요"),
-		@ApiResponse(code = 403, message = "권한이 없습니다"),
-		@ApiResponse(code = 404, message = "이미지 업로드 실패")
-	})
-	private ResponseEntity<?> create(@RequestPart(value = "file") MultipartFile image) {
-		logger.debug("이미지 업로드 호출");
-		return new ResponseEntity<>(fileService.store(image), HttpStatus.OK);
-	}
-
 	@RequestMapping(method = RequestMethod.POST, produces = "application/json")
 	@ApiOperation(value = "다이어리 생성", notes = "그룹의 추억 쌓기", response = DiaryDto.class)
 	@ApiResponses({
@@ -71,6 +51,7 @@ public class DiaryController {
 	})
 	private ResponseEntity<?> create(@RequestBody DiaryDto diary, @RequestHeader(value = "token") String token) {
 		logger.debug("다이어리 생성 호출");
+		System.out.println(diary.toString());
 		long userId = permissionCheck.check(token).getId();
 		service.create(userId, 1, diary);
 		return new ResponseEntity<>(diary, HttpStatus.OK);

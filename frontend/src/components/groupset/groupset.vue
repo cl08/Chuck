@@ -45,8 +45,8 @@
       />
     </div>
     <!-- 그룹원 -->
-    <font size="5"
-      >그룹원 목록
+    <font size="5">
+      그룹원 목록
       <v-btn @click="InviteGroup" color="#3D91FF" text>그룹원 초대하기</v-btn>
     </font>
     <div class="list">
@@ -68,7 +68,7 @@
     </div>
     <!-- 그룹 로그 -->
     <font size="5">그룹 로그</font>
-    <div class="log" style="margin-bottom: 0px">
+    <div class="log" style="margin-bottom:0px;">
       <div v-for="(log, index) in logList" :key="index">
         {{ log.content }}
       </div>
@@ -210,6 +210,7 @@ export default {
   text-align: left;
 }
 .groupset > div {
+  margin-top:5px;
   margin-bottom: 24px;
   color: #2d2d2d;
 }
@@ -217,16 +218,15 @@ export default {
   left: 300px;
 }
 .list {
-  padding-top: 10px;
-  height: 160px;
+  height: 140px;
   overflow: scroll;
 }
 .list div {
-  line-height: 36px;
+  line-height: 24px;
   vertical-align: middle;
 }
 .log {
-  height: 200px;
+  height: 190px;
   overflow: scroll;
 }
 .createDate font {

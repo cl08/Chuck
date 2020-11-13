@@ -1,7 +1,8 @@
 <template>
     <div style="padding:30px 30px 0px 0px;">
         <div>
-        <img src="../../assets/title/chuck_write.svg" class="logo">
+        <img v-if="!getModify" src="../../assets/title/chuck_write.svg" class="logo">
+        <img v-else src="../../assets/title/chuck_edit.svg" class="logo">
         </div>
         <div style="margin:20px 0px 20px 0px;">
             <font size=4>최대 10장의 사진을 업로드할 수 있습니다.</font>
@@ -23,7 +24,7 @@
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div style="padding:28px; text-align:left;">
+        <div style="padding:28px; text-align:left; height:270px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
                 <li v-for="(image, index) in $data.imageList" :key="index" class="el-upload-list__item is-ready">
                     <img :src="image" class="el-upload-list__item-thumbnail">
@@ -52,7 +53,7 @@
                 </li>
             </ul>
         </div>
-        <div style="padding:0px 28px; text-align:right" v-if="imageList.length > 0">
+        <div style="padding:0px 34px; text-align:right" v-if="imageList.length > 0">
             <font size=5 class="pointer" @click="removeAll">전체삭제</font>
         </div>
     </div>
@@ -76,6 +77,7 @@ export default {
             'getSelectedGroup',
             'getColor',
             'getChuckList',
+            'getModify',
         ]),
     },
     components: {
@@ -87,6 +89,10 @@ export default {
         });
         eventBus.$on('clearWrite', () => {
             this.imageList = [];
+        });
+        eventBus.$on('modifyDiary', (data) => {
+            this.imageList = []
+            this.imageList.push(data.image)
         });
     },
     methods: {
@@ -139,6 +145,7 @@ export default {
                     const image = data.image.split(';')
                     data.image = image
                     data.color = this.getColor[this.getChuckList.length % 10]
+                    data.date = data.date.toString().slice(0,10)
                     this.$store.dispatch('addChuckList', data)
                     eventBus.$emit('uploadeDone');
                     this.imageList = [];

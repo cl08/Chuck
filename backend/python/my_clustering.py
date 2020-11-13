@@ -54,7 +54,8 @@ def clustering(groupId):
     print(data)
     data = np.array(data)
     encodings = [d["encoding"] for d in data]
-
+    if(len(encodings) == 0):
+        return {"info" : []}
     clt = DBSCAN(metric="euclidean")
     clt.fit(encodings)
 
@@ -73,9 +74,9 @@ def clustering(groupId):
         pathNames = []
         for i in idxs:
             image = cv2.imread(data[i]["imagePath"])
+            print(data[i]["imagePath"])
             pathNames.append(data[i]["imagePath"])
             (top, right, bottom, left) = data[i]["loc"]
-            print(top, right, bottom, left)
             face = image[top:bottom, left:right]
             face = cv2.resize(face, (96, 96))
             faces.append(face)

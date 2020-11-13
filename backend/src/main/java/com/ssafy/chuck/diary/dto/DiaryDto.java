@@ -29,7 +29,7 @@ public class DiaryDto {
 	@ApiModelProperty(value = "그룹 아이디", example = "1")
 	private int groupId;
 
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm", timezone = "Asia/Seoul")
 	@ApiModelProperty(value = "작성일", example = "2020-10-05")
 	private Date date;
 

@@ -193,12 +193,17 @@ export default {
     ...mapGetters(["getChuckList", "getSelectedDay"]),
     selectedChuckList: () => store.getters.getSelectedChuckList,
     searchChuckList: () => store.getters.getSearchChuckList,
+    chuckMap: () => store.getters.getChuckMap,
   },
   watch: {
     getSelectedDay() {
       store.dispatch("updateSelectedChuckList");
       this.closeSearchBar();
     },
+    chuckMap: function() {
+            store.dispatch('updateSelectedChuckList')
+            this.closeSearchBar()
+        },
   },
     methods: {
         ...mapMutations([

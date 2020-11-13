@@ -63,6 +63,13 @@ export default {
             'setVideoMusic',
         ]),
         previousStep() {
+            let el
+            for(let i=0; i<this.musics.length; i++) {
+                el = document.getElementById('audio'+i)
+                el.load()
+                el = document.getElementById('musicbar'+i)
+                el.style.display = "none"
+            }
             this.setVisibleChoice(false)
             this.setVisibleAlbum(false)
             this.setVisibleVideo(true)
@@ -80,7 +87,7 @@ export default {
             let el
             for(let i=0; i<this.musics.length; i++) {
                 el = document.getElementById('audio'+i)
-                el.pause()
+                el.load()
                 el = document.getElementById('musicbar'+i)
                 el.style.display = "none"
             }

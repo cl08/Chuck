@@ -36,16 +36,16 @@ def makeVideo(paths, userid, music):
         weight, img2, img1 = 0, cv2.resize(cv2.imread(pathList[idx]), (width, height)), cv2.resize(cv2.imread(pathList[idx+1]), (width, height))
         # weight, img2, img1 = 0, 
         row, col = img1.shape[:2]
-        translation = np.float32([[1, 0, 280], [0, 1, 188]])
+        translation = np.float32([[1, 0, 280], [0, 1, 200]])
         img_translation = cv2.warpAffine(img1, translation, (col+280, row+188))
-        translation = np.float32([[1, 0, -140], [0, 1, -94]])
+        translation = np.float32([[1, 0, -140], [0, 1, -100]])
         img_translation = cv2.warpAffine(img_translation, translation, (col+280, row+188))
         img1 = background + img_translation
         background = cv2.imread("film_frame.png")
         # row, col = img.shape[:2]
-        translation = np.float32([[1, 0, 280], [0, 1, 188]])
+        translation = np.float32([[1, 0, 280], [0, 1, 200]])    # 188
         img_translation = cv2.warpAffine(img2, translation, (col+280, row+188))
-        translation = np.float32([[1, 0, -140], [0, 1, -94]])
+        translation = np.float32([[1, 0, -140], [0, 1, -100]]) # -94
         img_translation = cv2.warpAffine(img_translation, translation, (col+280, row+188))
         img2 = background + img_translation
 

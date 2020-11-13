@@ -50,7 +50,7 @@ public class GroupServiceImpl implements GroupService {
 		}
 	}
 
-	@GroupOwnerCheck
+	// @GroupOwnerCheck
 	@Override
 	public void update(GroupDto group, long userId) {
 		try {
