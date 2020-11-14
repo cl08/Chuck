@@ -57,7 +57,10 @@ export default {
             books: [],
             selected: false,
             bookgen: false,
-            selectedBook: {},
+            selectedBook: {
+                name: '',
+                intro: '',
+            },
         };
     },
     mounted() {
@@ -106,11 +109,11 @@ export default {
             this.selected = true;
             this.selectedBook = book;
             
-            $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"}); 	
+            // $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"}); 	
 
-            let el = document.getElementsByClassName('side-menu')
-            console.log(el) 
-            console.log(el.length)
+            // let el = document.getElementsByClassName('side-menu')
+            // console.log(el) 
+            // console.log(el.length)
             // ??
         },
         closeMenu() {

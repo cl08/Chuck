@@ -13,8 +13,6 @@
                     </div>
                     <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
                 </div>
-            </span>
-            <span v-for="(music, index) in musics" :key="index">
                 <audio :id="'audio'+index" :src="music.src" loop></audio>
             </span>
         </div>
@@ -36,9 +34,6 @@ export default {
             bg: [
                 {
                     backgroundImage: `url(${require('../../assets/music/image/no_music.svg')})`
-                },
-                {
-                    backgroundImage: `url(${require('../../assets/music/image/BeatYourCompetition.png')})`
                 },
                 {
                     backgroundImage: `url(${require('../../assets/music/image/BeatYourCompetition.png')})`

@@ -76,16 +76,20 @@ export default {
                     .catch(( { error }) => {
                         console.log(error)  
                         alert("error")
+                        this.$router.push('/group')
+                        
                     })
                 })
                 .catch(( { error }) => {
                     console.log(error)
                     alert("error")
+                    this.$router.push('/group')
                 })
             })
             .catch(( { error }) => {
                 console.log(error)
                 alert("error")
+                this.$router.push('/group')
             })
         },
     }
