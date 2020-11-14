@@ -250,13 +250,13 @@ export default {
     }
 }
 .side-menu {
-    width: 1440px;
-    height: 810px;
+    width: 736px;
+    height: 584px;
     overflow-y: scroll;
     position: absolute;
     bottom:0px;
     left: 50%;
-    transform: translate(-720px);
+    transform: translate(-368px);
     margin: 0 auto;
     background-image: url("../assets/select_group/select_group_0.png");
     background-size: cover;
