@@ -76,7 +76,7 @@ export default {
             for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
                 let arr2 = new Array()
                 for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
-                    if(this.value1.includes(this.getFaceDataStudio.studio_list[i].content_list[j].date)) {
+                    if(this.value1.includes(this.getFaceDataStudio.studio_list[i].content_list[j].date.slice(0, 10))) {
                         arr2.push(this.getFaceDataStudio.studio_list[i].content_list[j])
                     }
                 }
@@ -95,8 +95,8 @@ export default {
             for(let i=0; i<this.getFaceDataStudio.studio_list.length; i++) {
                 let arr2 = new Array()
                 for(let j=0; j<this.getFaceDataStudio.studio_list[i].content_list.length; j++) {
-                    if(this.value2[0] <= this.getFaceDataStudio.studio_list[i].content_list[j].date
-                    && this.getFaceDataStudio.studio_list[i].content_list[j].date <= this.value2[1]) {
+                    if(this.value2[0] <= this.getFaceDataStudio.studio_list[i].content_list[j].date.slice(0, 10)
+                    && this.getFaceDataStudio.studio_list[i].content_list[j].date.slice(0, 10) <= this.value2[1]) {
                         arr2.push(this.getFaceDataStudio.studio_list[i].content_list[j])
                     }
                 }
