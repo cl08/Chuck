@@ -29,14 +29,14 @@
                     <div class="side-menu">
                         <div  v-if="this.bookgen === false" style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
-                            <div class="group-title">{{selectedBook.name}}</div>
-                            <div class="group-intro">{{selectedBook.intro}}</div>
+                            <div class="group-title">{{ selectedBook.name }}</div>
+                            <div class="group-intro">{{ selectedBook.intro }}</div>
                             <div class="picker" @click="selectGroup()">그룹 선택</div>
                         </div>
                         <div v-else style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
-                            <input class="description" v-model="selectedBook.name" placeholder="그룹명을 입력해주세요." />
-                            <textarea class="description" rows=3 v-model="selectedBook.intro" placeholder="그룹 소개를 입력해주세요." style="resize:none;" />
+                            <input class="description" v-model="createBook.name" placeholder="그룹명을 입력해주세요." />
+                            <textarea class="description" rows=3 v-model="createBook.intro" placeholder="그룹 소개를 입력해주세요." style="resize:none;" />
                             <div class="create" @click="uploadGroup">그룹 만들기</div>
                         </div>
                     </div>
@@ -61,6 +61,10 @@ export default {
                 name: '',
                 intro: '',
             },
+            createBook: {
+                name: '',
+                intro: '',
+            },
         };
     },
     mounted() {
@@ -80,16 +84,16 @@ export default {
             this.$router.push('/fetch');
         },
         uploadGroup() {
-            if(this.selectedBook.name.length === 0 || this.selectedBook.intro.length === 0) {
+            if(this.createBook.name.length === 0 || this.createBook.intro.length === 0) {
                 alert("그룹명과 그룹소개를 입력해주세요.")
             }
-            else if(this.selectedBook.name.length > 10) {
+            else if(this.createBook.name.length > 10) {
                 alert("그룹명은 10자 이내로 작성해주세요.")
             }
             else {
                 api.post(`groups`, {
-                        name: this.selectedBook.name,
-                        intro: this.selectedBook.intro,
+                        name: this.createBook.name,
+                        intro: this.createBook.intro,
                         userId: sessionStorage.getItem('id')
                     }, {
                         headers: {
@@ -99,7 +103,7 @@ export default {
                     this.books.splice(this.books.length - 1, 0, res.data);
                     this.bookgen = false;
                     this.selected = false;
-                    this.selectedBook = {};
+                    this.createBook = {};
                 })
             }
         },

@@ -73,10 +73,11 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { mapMutations } from 'vuex';
+import { mapMutations } from 'vuex'
 import api from '@/utils/api'
 import eventBus from '@/utils/EventBus'
 import axios from 'axios'
+import store from '@/store'
 
 export default {
     data () {
@@ -96,7 +97,8 @@ export default {
             'getId',
             'getChuckMap',
             'getBackState',
-        ])
+            'getSelectedGroup',
+        ]),
     },
     methods: {
         ...mapMutations([
@@ -116,19 +118,25 @@ export default {
             this.setVisibleWrite(true);
             this.setVisibleDetail(false);
             this.setVisibleCalendar(false);
+            diary.image.forEach(e => {
+                this.$store.state.images.push(e)
+            })
             eventBus.$emit('modifyDiary', diary)
         },
         remove() {
             this.dialog = false
             this.menu = false
-            api.delete(`diaries/${this.getSelectedDiary}`, {
-                headers: {
-                    token: this.$store.getters.getToken,
-                }
-            }).then(() => {
-                this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
-                eventBus.$emit('updateList')
-                eventBus.$emit('back')
+            api.delete(`pictures/deleteByDiary?diary_id=${this.getSelectedDiary}&group_id=${this.getSelectedGroup.id}`)
+            .then(() => {
+                api.delete(`diaries/${this.getSelectedDiary}`, {
+                    headers: {
+                        token: this.$store.getters.getToken,
+                    }
+                }).then(() => {
+                    this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
+                    eventBus.$emit('updateList')
+                    eventBus.$emit('back')
+                })
             })
         },
         getImageUrl() {
@@ -172,31 +180,6 @@ export default {
             this.dialog = false
             this.menu = false
         },
-        updateContent() {
-            const prev_content = this.getChuckMap.get(this.getSelectedDiary).content
-             if(this.content === prev_content) {
-                alert('변경된 내용이 없습니다.')
-                this.dialog = false
-                this.$nextTick(() => {
-                    this.$refs.content.focus();
-                });
-            } else {
-                api.put(`diaries/${this.getSelectedDiary}`, {
-                    content: this.content,
-                    writerId: this.getChuckMap.get(this.getSelectedDiary).writerId,
-                    id: this.getChuckMap.get(this.getSelectedDiary).id,
-                }, {
-                    headers: {
-                        token: this.$store.getters.getToken,
-                    }
-                }).then(() => {
-                    this.$store.state.chuckMap.get(this.getSelectedDiary).content = this.content
-                    this.dialog = false
-                    this.changeContent = false
-                    this.content = ''
-                })
-            }
-        }
     }
 }
 </script>

@@ -264,7 +264,6 @@ export default {
       "setBackState",
     ]),
     movePage(num) {
-      eventBus.$emit('clearImage')
       eventBus.$emit('clearWrite')
       this.$store.dispatch('updateModify', false)
       this.init()

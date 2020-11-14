@@ -41,6 +41,8 @@ export default new Vuex.Store({
         videoUrl: '',
         videoMusic: '',
         isModify: false,
+        images: [],
+        deletedImages: [],
     },
 
     getters: {
@@ -156,7 +158,13 @@ export default new Vuex.Store({
         },
         getModify(state) {
             return state.isModify
-        }
+        },
+        getImages(state) {
+            return state.images
+        },
+        getDeletedImages(state) {
+            return state.deletedImages
+        },
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -283,7 +291,7 @@ export default new Vuex.Store({
             state.isModify = payload
         },
         setChuckMap(state, payload) {
-            state.chuckMap.set(payload.id, payload)
+            state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
         },
     },
     actions: {
