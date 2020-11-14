@@ -71,7 +71,6 @@ export default {
         })
         .then((res) => {
             this.books = this.books.concat(res.data);
-            this.books = this.books.concat({name: "그룹생성", intro: ""});
         });
     },
 

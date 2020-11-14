@@ -125,7 +125,7 @@ export default {
                 }
                 
                 let source = document.createElement("source")
-                let url = this.getVideoUrl.replace('final', 'middle')
+                let url = this.getVideoUrl
                 source.setAttribute('src', url)
                 p.appendChild(source)
                 p.play()

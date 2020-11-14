@@ -7,14 +7,24 @@
         <div class="dash" style="height:540px;">
             <span class="wrap pointer" v-for="(music, index) in musics" :key="index" @mouseover="mouseover(index)" @mouseout="mouseout(index)" @click="selectMusic(index)">
                 <div>
-                    <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position: absolute; width: 150px; transform: translateX(-75px); z-index:10">
-                    <div class="music" :style="bg[index]" style="position:absolute">
+                    <div class="music" :style="bg[index]">
                         <MusicBar :id="'musicbar'+index" style="display:none;"></MusicBar>
                     </div>
-                    <div style="padding:5px; position: relative; padding: 5px; top: 150px;">{{ music.title }}</div>
+                    <img :id="'videoMusic'+index" class="videoMusicNoneDisplay" src="../../assets/music_play.svg" style="position:relative; top:-150px; width:150px;">
+                    <div style="padding:5px; padding: 5px; top: 150px;">{{ music.title }}</div>
                 </div>
-                <audio :id="'audio'+index" :src="music.src" loop></audio>
             </span>
+            <audio id="audio0" src="" loop></audio>
+            <audio id="audio1" src="../../assets/music/BeatYourCompetition.mp3" loop></audio>
+            <audio id="audio2" src="../../assets/music/Breathe.mp3" loop></audio>
+            <audio id="audio3" src="../../assets/music/Contigo.mp3" loop></audio>
+            <audio id="audio4" src="../../assets/music/Fingertips.mp3" loop></audio>
+            <audio id="audio5" src="../../assets/music/MMXX.mp3" loop></audio>
+            <audio id="audio6" src="../../assets/music/Neon.mp3" loop></audio>
+            <audio id="audio7" src="../../assets/music/NoYeah.mp3" loop></audio>
+            <audio id="audio8" src="../../assets/music/Sahara.mp3" loop></audio>
+            <audio id="audio9" src="../../assets/music/SummerRain.mp3" loop></audio>
+            <audio id="audio10" src="../../assets/music/Waves.mp3" loop></audio>
         </div>
         <div class="dash pointer" @click="previousStep">
             <font size=4>이전 단계로</font>
@@ -74,53 +84,43 @@ export default {
                 },
                 {
                     title: 'BeatYourCompetition',
-                    value: 'BeatYourCompetition.mp3',
-                    src: '../../assets/music/BeatYourCompetition.mp3'
+                    value: 'BeatYourCompetition.mp3'
                 },
                 {
                     title: 'Breathe',
-                    value: 'Breathe.mp3',
-                    src: '../../assets/music/Breathe.mp3'
+                    value: 'Breathe.mp3'
                 },
                 {
                     title: 'Contigo',
-                    value: 'Contigo.mp3',
-                    src: '../../assets/music/Contigo.mp3'
+                    value: 'Contigo.mp3'
                 },
                 {
                     title: 'Fingertips',
-                    value: 'Fingertips.mp3',
-                    src: '../../assets/music/Fingertips.mp3'
+                    value: 'Fingertips.mp3'
                 },
                 {
                     title: 'MMXX',
-                    value: 'MMXX.mp3',
-                    src: '../../assets/music/MMXX.mp3'
+                    value: 'MMXX.mp3'
                 },
                 {
                     title: 'Neon',
-                    value: 'Neon.mp3',
-                    src: '../../assets/music/Neon.mp3'
+                    value: 'Neon.mp3'
                 },
                 {
                     title: 'NoYeah',
-                    value: 'NoYeah.mp3',
-                    src: '../../assets/music/NoYeah.mp3'
+                    value: 'NoYeah.mp3'
                 },
                 {
                     title: 'Sahara',
-                    value: 'Sahara.mp3',
-                    src: '../../assets/music/Sahara.mp3'
+                    value: 'Sahara.mp3'
                 },
                 {
                     title: 'SummerRain',
-                    value: 'SummerRain.mp3',
-                    src: '../../assets/music/SummerRain.mp3'
+                    value: 'SummerRain.mp3'
                 },
                 {
                     title: 'Waves',
-                    value: 'Waves.mp3',
-                    src: '../../assets/music/Waves.mp3'
+                    value: 'Waves.mp3'
                 },
             ]
         }
@@ -181,7 +181,7 @@ export default {
 
 <style>
 .wrap {
-    height: 180px;
+    height: 200px;
     width: 150px;
     margin: 7px;
     display: inline-block;

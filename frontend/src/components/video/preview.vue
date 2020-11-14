@@ -13,6 +13,7 @@
 					<div id="play-bar" class="play-bar"></div>
 					<div class="play-bar-border"></div>
 				</div>
+				{{ getVideoMusic }}
 			</div>
         </div>
         <div class="dash pointer" @click="download">
@@ -72,14 +73,17 @@ export default {
 			document.getElementById('media-video').load()
 		
 			if(this.getVideoMusic === 'middle') {
+				console.log("진입1")
 				let link = document.createElement('a')
 				link.target = "_blank"
-				link.href = this.getVideoUrl.replace()
+				link.href = this.getVideoUrl
 				link.download = 'ChuckFilm.mp4'
 				link.click()
+				link.remove()
 				this.loading = false
 			}
 			else {
+				console.log("진입2")
 				this.loading = true
 				api.post('pictures/mkVideo', {
 					'music': this.getVideoMusic,
@@ -87,12 +91,14 @@ export default {
 					'path_list': this.getVideoSrc,
 				})
 				.then(({ data }) => {
-					document.execCommand('SaveAs', null, 'SaveAsTest.html')
+					console.log("진입3")
+					console.log(data)
 					let link = document.createElement('a')
 					link.target = "_blank"
 					link.href = data
 					link.download = 'ChuckFilm.mp4'
 					link.click()
+					link.remove()
 					this.loading = false
 				})
 			}
