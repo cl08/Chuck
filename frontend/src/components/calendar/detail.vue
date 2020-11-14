@@ -133,9 +133,17 @@ export default {
                         token: this.$store.getters.getToken,
                     }
                 }).then(() => {
-                    this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
-                    eventBus.$emit('updateList')
-                    eventBus.$emit('back')
+                    api.get(`pictures/gallery?groupId=${this.getSelectedGroup.id}`)
+                    .then(({ data }) => {
+                        this.$store.commit('setFaceDataGallery', data)
+                        api.get(`pictures/studio?groupId=${this.getSelectedGroup.id}`)
+                        .then(({ data }) => {
+                            this.$store.commit('setFaceDataStudio', data)
+                            this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
+                            eventBus.$emit('updateList')
+                            eventBus.$emit('back')
+                        })
+                    })
                 })
             })
         },
