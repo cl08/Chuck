@@ -8,12 +8,13 @@
             <font size=4 color="#3D91FF">최대 10장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
-            <el-upload 
+            <el-upload
+            ref="upload"
             drag
             multiple
             action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
             :data="{groupId:this.getSelectedGroup.id}"
-            :limit=10
+            :limit=20
             :show-file-list="false"
             :auto-upload="true"
             :before-upload="beforeImageUpload"
@@ -30,7 +31,6 @@
                     <img :src="image" class="el-upload-list__item-thumbnail">
                     <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-preview">
-                            <!-- <i class="el-icon-zoom-in"></i> -->
                             <change
                                 :index="index"
                                 @changeImage="changeImage"
@@ -102,18 +102,21 @@ export default {
             store.state.images.push(res)
         },
         handleRemove(file, index) {
+            this.$refs.upload.fileList.pop()
             store.state.deletedImages.push(store.state.images[index])
             store.state.images.splice(index, 1)
         },
         removeAll() {
+            this.$refs.upload.clearFiles()
             store.state.images.forEach(element => {
                 store.state.deletedImages.push(element)
             });
             store.state.images = new Array()
         },
         changeImage(data) {
-            this.handleRemove(this.imageList[data.index], data.index+1);
-            this.imageList.splice(data.index, 0, data.res)
+            store.state.deletedImages.push(store.state.images[data.index])
+            store.state.images.splice(data.index, 1)
+            store.state.images.splice(data.index, 0, data.res)
         },
     }
 }
