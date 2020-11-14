@@ -205,6 +205,7 @@ export default {
             this.setVisibleWrite(false)
         },
         write() {
+            eventBus.$emit('init-el')
             this.setVisibleWrite(true)
             this.setVisibleDetail(false)
             this.setVisibleCalendar(false)

@@ -14,7 +14,7 @@
             multiple
             action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
             :data="{groupId:this.getSelectedGroup.id}"
-            :limit=20
+            :limit=10
             :show-file-list="false"
             :auto-upload="true"
             :before-upload="beforeImageUpload"
@@ -81,6 +81,11 @@ export default {
     components: {
         Change: () => import('@/components/calendar/change.vue'),
     },
+    updated() {
+        eventBus.$on('init-el', () => {
+            this.$refs.upload.clearFiles()
+        })
+    },
     methods: {
         beforeImageUpload(file) {
             const isJPG = file.type === 'image/jpeg';
@@ -95,7 +100,7 @@ export default {
             }
             return (isJPG || isPNG) && isLt10M;
         },
-        handleExceed(file, fileList){
+        handleExceed(file, fileList) {
             alert("사진은 최대 10장의 사진을 업로드 할 수 있습니다.")
         },
         handleSuccess(res, file) {
