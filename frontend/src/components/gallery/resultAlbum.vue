@@ -1,0 +1,108 @@
+<template>
+    <div style="padding:10px 0px 0px 30px;">
+        <div class="bg" style="text-align:center">
+            <img v-if="currentImage" class="currentImg" :src="currentImage">
+            <img v-else class="currentImg" src="http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif">
+        <div class="pointer" style="margin-top:30px;">
+            <el-tag effect="dark" color="#8D6262" style="border-color:#8D6262;" @click="moveChuck">Chuck으로 이동</el-tag></div>
+        </div>
+        <div class="dash" style="text-align:left; height:330px; margin-top:30px;">
+            <span v-for="(item, index) in temp" :key="index" class="picture">
+                <img class="pointer picture" :src="item" @click="clickedImg(index)" style="object-fit:cover">
+            </span>
+        </div>
+    </div>
+</template>
+
+<script>
+import { mapGetters } from "vuex"
+import { mapMutations } from "vuex"
+import api from '@/utils/api.js'
+import eventBus from '@/utils/EventBus'
+
+export default {
+    data() {
+        return {
+            checkArr: [],
+            imageList: new Map(),
+            temp: [],
+            currentImage: '',
+            currentImageIndex: '',
+        }
+    },
+    computed: {
+        ...mapGetters([
+            'getSelectedGroup',
+            'getPersonArrayGallery',
+            'getFaceDataGallery',
+            'getChuckMap',
+        ]),
+    },
+    watch: {
+        getPersonArrayGallery: function(data) {
+            let change = []
+            if(this.checkArr.length == 0) {
+                this.checkArr = data.slice()
+                for(let i = 0; i<data.length; i++) change.push(i)
+            } else {
+                for(let i = 0; i<data.length; i++) {
+                    if(this.checkArr[i] != data[i]) change.push(i)
+                }
+                this.checkArr = data.slice()
+            }
+            if(change.length != 0) {
+                change.forEach(index => {
+                    const flag = this.checkArr[index]
+                    const num = this.getFaceDataGallery.gallery_list[index].content_list.length
+                    for(let i = 0; i<num; i++) {
+                        const diary_id = this.getFaceDataGallery.gallery_list[index].content_list[i].diary_id
+                        const path = this.getFaceDataGallery.gallery_list[index].content_list[i].path
+                        if(this.imageList.has(path)) {
+                            const cnt = this.imageList.get(path).cnt
+                            if(flag) this.imageList.set(path, {cnt: cnt + 1, diaryId: diary_id})
+                            else {
+                                if(cnt == 1) this.imageList.delete(path)
+                                else this.imageList.set(path, {cnt: cnt - 1, diaryId: diary_id})
+                            }
+                        } else {
+                            if(flag) this.imageList.set(path, {cnt: 1, diaryId: diary_id})
+                        }
+                    } 
+                });
+            }
+            this.temp = Array.from(this.imageList.keys())
+        }
+    },
+    methods: {
+        clickedImg(index) {
+            this.currentImage = this.temp[index]
+            this.currentImageIndex = index
+        },
+        moveChuck() {
+            const id = this.imageList.get(this.temp[this.currentImageIndex]).diaryId
+            eventBus.$emit('movePage', {index: 1, item: this.getChuckMap.get(id), state: 3})
+        }
+    },
+};
+</script>
+
+<style scoped>
+.picture {
+    width: 120px;
+    height: 120px;
+    margin: 3px;
+}
+.bg {
+    background: url('../../assets/gallery/background.jpg');
+    background-size: cover;
+    width: 550px;
+    height: 350px;
+    margin: 20px 20px 0px 20px;
+}
+.currentImg {
+    width: 420px;
+    height: 250px;
+    margin-top: 50px;
+    object-fit: cover;
+}
+</style>
