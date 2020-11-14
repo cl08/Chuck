@@ -8,7 +8,8 @@
             <font size=4 color="#3D91FF">최대 10장의 사진을 업로드할 수 있습니다.</font>
         </div>
         <div class="dash" style="height:230px;">
-            <el-upload 
+            <el-upload
+            ref="upload"
             drag
             multiple
             action="http://k3a206.p.ssafy.io:8888/chuck/pictures/upload"
@@ -30,7 +31,6 @@
                     <img :src="image" class="el-upload-list__item-thumbnail">
                     <span class="el-upload-list__item-actions">
                         <span class="el-upload-list__item-preview">
-                            <!-- <i class="el-icon-zoom-in"></i> -->
                             <change
                                 :index="index"
                                 @changeImage="changeImage"
@@ -81,6 +81,11 @@ export default {
     components: {
         Change: () => import('@/components/calendar/change.vue'),
     },
+    updated() {
+        eventBus.$on('init-el', () => {
+            this.$refs.upload.clearFiles()
+        })
+    },
     methods: {
         beforeImageUpload(file) {
             const isJPG = file.type === 'image/jpeg';
@@ -95,25 +100,28 @@ export default {
             }
             return (isJPG || isPNG) && isLt10M;
         },
-        handleExceed(file, fileList){
+        handleExceed(file, fileList) {
             alert("사진은 최대 10장의 사진을 업로드 할 수 있습니다.")
         },
         handleSuccess(res, file) {
             store.state.images.push(res)
         },
         handleRemove(file, index) {
+            this.$refs.upload.fileList.pop()
             store.state.deletedImages.push(store.state.images[index])
             store.state.images.splice(index, 1)
         },
         removeAll() {
+            this.$refs.upload.clearFiles()
             store.state.images.forEach(element => {
                 store.state.deletedImages.push(element)
             });
             store.state.images = new Array()
         },
         changeImage(data) {
-            this.handleRemove(this.imageList[data.index], data.index+1);
-            this.imageList.splice(data.index, 0, data.res)
+            store.state.deletedImages.push(store.state.images[data.index])
+            store.state.images.splice(data.index, 1)
+            store.state.images.splice(data.index, 0, data.res)
         },
     }
 }

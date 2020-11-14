@@ -118,7 +118,7 @@ export default {
         alert("테스트 아이디는 카카오 초대가 불가능합니다.");
       } else {
         window.Kakao.Link.sendCustom({
-          templateId: 39047,
+          templateId: 40694,
           templateArgs: {
             key: this.groupInfo.token,
             group: this.groupInfo.name, // this.groupName,
