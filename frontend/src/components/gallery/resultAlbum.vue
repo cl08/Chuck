@@ -48,6 +48,7 @@ export default {
     watch: {
         getPersonArrayGallery: function(data) {
             let change = []
+            console.log(data)
             if(this.checkArr.length == 0) {
                 this.checkArr = data.slice()
                 for(let i = 0; i<data.length; i++) change.push(i)
@@ -78,6 +79,10 @@ export default {
                 });
             }
             this.temp = Array.from(this.imageList.keys())
+            if(!this.temp.includes(this.currentImage)) {
+                this.currentImage = ''
+                this.currentImageIndex = ''
+            }
         }
     },
     methods: {
