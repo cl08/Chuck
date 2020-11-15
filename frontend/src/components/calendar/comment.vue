@@ -6,7 +6,7 @@
                 <strong>{{ item.writer }}</strong>
                 <v-dialog v-model="dialog" max-width="290">
                     <template v-slot:activator="{ on, attrs }">
-                        <img src="@/assets/eraser.svg" alt="" v-show="getId===item.writerId" v-bind="attrs" v-on="on">
+                        <img src="@/assets/eraser.svg" alt="" v-show="getId==item.writerId" v-bind="attrs" v-on="on">
                     </template>
                     <v-card>
                         <v-card-title class="headline"></v-card-title>
