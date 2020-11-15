@@ -270,7 +270,13 @@ export default new Vuex.Store({
             state.comments.push(payload)
         },
         removeComments(state, payload) {
-            state.comments.splice(payload, 1)
+            const num = state.comments.length
+            for(let i=0; i<num; i++) {
+                if(state.comments[i].id == payload.id) {
+                    state.comments.splice(i, 1)
+                    break;
+                }
+            }
         },
         setInit(state, payload) {
             state.init = payload
