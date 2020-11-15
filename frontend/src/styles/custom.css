@@ -59,3 +59,15 @@
     color: #8D6262;
     text-align: justify;
 }
+
+.el-button--chuck.is-plain {
+    color: #8D6262;
+    background: #FFF;
+    border-color: #8D6262;
+}
+
+.el-button--chuck.is-plain:focus, .el-button--chuck.is-plain:hover {
+    background: #8D6262;
+    border-color: #8D6262;
+    color: #FFF;
+}

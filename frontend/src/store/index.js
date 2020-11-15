@@ -43,6 +43,7 @@ export default new Vuex.Store({
         isModify: false,
         images: [],
         deletedImages: [],
+        cloudImages: [],
     },
 
     getters: {
@@ -165,6 +166,9 @@ export default new Vuex.Store({
         getDeletedImages(state) {
             return state.deletedImages
         },
+        getCloudImages(state) {
+            return state.cloudImages
+        }
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -293,6 +297,9 @@ export default new Vuex.Store({
         setChuckMap(state, payload) {
             state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
         },
+        setCloudImages(state, payload) {
+            state.cloudImages = payload
+        }
     },
     actions: {
         updateSelectedGroup({commit}, items) {

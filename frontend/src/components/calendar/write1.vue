@@ -25,7 +25,38 @@
                 <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여 이미지를 업로드 하세요.</div>
             </el-upload>
         </div>
-        <div style="padding:28px; text-align:left; height:270px;">
+        <v-dialog v-model="dialog" width="900">
+            <template v-slot:activator="{ on, attrs }">
+                <el-button plain type="chuck" icon="el-icon-cloudy" @click="openCloud" v-bind="attrs" v-on="on">클라우드 이미지 불러오기</el-button>
+            </template>
+            <v-card>
+                <v-card-title>
+                    <font size=6 color="#8D6262">Cloud Images</font>
+                </v-card-title>
+                <v-card-text>
+                    <v-row>
+                        <v-col cols=6 style="height:400px;">
+                            <div style="margin-bopxttom:10px; text-align:left; margin-top:20px;"><font size=5>미리보기</font></div>
+                            <img v-if="selectedImage" :src="selectedImage" style="width:360px; height:270px; object-fit:cover; margin-top:30px;">
+                            <img v-else src="../../assets/gallery/Camera_non.svg" style="width:360px; height:270px; margin-top:30px; object-fit:scale-down">
+                        </v-col>
+                        <v-col cols=6 style="text-align:left; border-left: solid 1px #E0E0E0; padding-left:30px;">
+                            <span class="photo pointer"  v-for="(image, index) in getCloudImages" :key="index" @click="select(index)" :style="'background-image:url('+image+')'">
+                                <img :id="'cloudImage'+index" class="cloudImageNoneDisplay" src="../../assets/check_square.svg" style="width:86px; height:86px;">
+                            </span>
+                        </v-col>
+                    </v-row>
+                </v-card-text>
+                <v-card-actions>
+                    <v-spacer></v-spacer>
+                    <el-button plain type="chuck" @click="selectCloud">선택 완료</el-button>
+                    <el-button plain type="chuck" @click="dialog=false">닫기</el-button>
+                <v-spacer></v-spacer>
+                
+                </v-card-actions>
+            </v-card>
+        </v-dialog>
+        <div style="padding:14px 28px; text-align:left; height:250px;">
             <ul class="el-upload-list el-upload-list--picture-card" style="padding:0px;">
                 <li v-for="(image, index) in this.$store.state.images" :key="index" class="el-upload-list__item is-ready">
                     <img :src="image" class="el-upload-list__item-thumbnail">
@@ -67,7 +98,12 @@ import store from '@/store'
 
 export default {
     data() {
-        return {};
+        return {
+            dialog: false,
+            selectedImage: '',
+            selectedImageArray: [],
+            selectedImages: '',
+        }
     },
     computed: {
         ...mapGetters([
@@ -76,10 +112,16 @@ export default {
             'getChuckList',
             'getModify',
             'getChuckMap',
+            'getCloudImages',
         ]),
     },
     components: {
         Change: () => import('@/components/calendar/change.vue'),
+    },
+    mounted() {
+        for(let i=0; i<this.getCloudImages.length; i++) {
+            this.selectedImageArray.push(false)
+        }
     },
     updated() {
         eventBus.$on('init-el', () => {
@@ -131,8 +173,50 @@ export default {
             store.state.images.splice(data.index, 1)
             store.state.images.splice(data.index, 0, data.res)
         },
+        select(index) {
+            let el = document.getElementById('cloudImage'+index)
+            el.classList.toggle("cloudImageNoneDisplay")
+            this.selectedImage = this.getCloudImages[index]
+            if(this.selectedImageArray[index]) {
+                this.$set(this.selectedImageArray, index, false)
+            }
+            else {
+                this.$set(this.selectedImageArray, index, true)
+            }
+        },
+        selectCloud() {
+            for(let i=0; i<this.selectedImageArray.length; i++) {
+                if(this.selectedImageArray[i]) {
+                    this.$store.state.images.push(this.getCloudImages[i])
+                }
+            }
+            this.dialog = false
+        },
+        openCloud() {
+            this.dialog=true
+            for(let i=0; i<this.selectedImageArray.length; i++) {
+                this.selectedImageArray[i] = false
+            }
+        }
     }
 }
 </script>
 <style scoped>
+.photo {
+    height: 86px;
+    width: 86px;
+    line-height: 86px;
+    margin: 5px;
+    display: inline-block;
+    box-sizing: border-box;
+    text-align: center;
+    color: #fff;
+    background: #C0C4CC;
+    background-size: cover;
+    font-size: 26px;
+    overflow: hidden;
+}
+.cloudImageNoneDisplay {
+    display: none;
+}
 </style>

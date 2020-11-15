@@ -27,6 +27,7 @@ export default {
     },
     computed: {
         ...mapGetters([
+            'getId',
             'getSelectedGroup',
             'getColor'
         ]),
@@ -37,10 +38,9 @@ export default {
     methods: {
         ...mapMutations([
             "setChuckList",
+            'setCloudImages',
         ]),
         fetchData() {
-            setTimeout(() => {
-            }, 2000)
             // 게시글 불러오기
             api.get(`diaries/group/${this.getSelectedGroup.id}`, {
                 headers: {
@@ -66,12 +66,27 @@ export default {
 
                     this.$store.commit('setFaceDataGallery', data)
 
+                    // 스튜디오 정보 불러오기
                     api.get(`pictures/studio?groupId=${this.getSelectedGroup.id}`)
                     .then(({ data }) => {
                         this.$store.commit('setFaceDataStudio', data)
-                        this.$store.dispatch('updateInit')
-                        // 페이지 이동
-                        this.$router.push('/diary')
+                        
+                        // 클라우드 이미지 정보 불러오기
+                        // api.get(`kakao/list?id=${this.getId}`)
+                        api.get(`kakao/list?id=1532959969`)
+                        .then(({ data }) => {
+                            this.setCloudImages(data)
+                            
+                            // 페이지 이동
+                            this.$store.dispatch('updateInit')
+                            this.$router.push('/diary')
+                        })
+                        .catch(( { error }) => {
+                            console.log(error)  
+                            alert("error")
+                            this.$router.push('/group')
+                            
+                        })
                     })
                     .catch(( { error }) => {
                         console.log(error)  
