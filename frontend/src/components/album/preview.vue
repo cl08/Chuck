@@ -91,18 +91,17 @@ export default {
       doc.setFont("MaplestoryLight");
       doc.setFontSize(40);
       doc.text(this.$store.getters.getSelectedGroup.name + "의 Chuck", 35, 25);
-      //이미지 삽입시 get으로 서버에서 받아오기 때문에 헤더 설정필요
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
         const element = this.selectedChucks[index];
         doc.addPage();
         doc.setFontSize(30);
         doc.text(element.title, 35, 25);
-        doc.setFontSize(20);
-        doc.text(element.writer, 35, 45);
-        doc.text(element.content, 35, 65);
+        doc.setFontSize(15);
+        doc.text(element.writer, 35, 35);
+        doc.text(element.content, 35, 45);
         console.log(element.image)
-        doc.addImage(element.image, "JPEG", 15, 145, 180, 180);
+        doc.addImage(element.image, "JPEG", 35, 55);
       }
 
       doc.save(this.$store.getters.getSelectedGroup.name + "Chcuk"+this.$moment(new Date()).format('MM_DD')+".pdf");
