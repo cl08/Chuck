@@ -22,7 +22,7 @@
             :on-exceed="handleExceed"
             >
                 <img src="../../assets/uploadIcon.svg" style="margin-top:40px; width:100px;">
-                <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여<br>이미지를 업로드 하세요.</div>
+                <div class="el-upload__text"><em>클릭</em>하거나 <em>드래그</em>하여<br>이미지를 업로드 하세요</div>
             </el-upload>
         </div>
         <div class="dash" style="height:230px; width:260px; display:inline-block; margin:5px;">
@@ -30,7 +30,7 @@
                 <template v-slot:activator="{ on, attrs }">
                     <div @click="openCloud" v-bind="attrs" v-on="on">
                     <img src="../../assets/cloud.svg" style="margin-top:40px; width:100px;">
-                    <div style="font-size:14px; color:#606266;"><font color="#409EFF">클라우드 서버</font>에서<br>이미지를 불러오세요.</div>
+                    <div style="font-size:14px; color:#606266;"><font color="#409EFF">클라우드 서버</font>에서<br>이미지를 불러오세요</div>
                     </div>
                 </template>
                 <v-card>
