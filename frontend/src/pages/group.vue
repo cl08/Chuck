@@ -35,7 +35,8 @@
                         </div>
                         <div v-else style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
-                            <input class="description" v-model="createBook.name" placeholder="그룹명을 입력해주세요." />
+                            <input class="group-name" v-model="createBook.name" placeholder="그룹명을 입력해주세요." />
+                            <hr size="0.5" color="#E0E0E0" width="70%">
                             <textarea class="description" rows=3 v-model="createBook.intro" placeholder="그룹 소개를 입력해주세요." style="resize:none;" />
                             <div class="create" @click="uploadGroup">그룹 만들기</div>
                         </div>
@@ -282,13 +283,22 @@ export default {
         text-overflow: ellipsis;
         overflow: hidden;
     }
-
+    .group-name {
+        line-height: 1.7;
+        font-size: 15px;
+        position: relative;
+        width: 200px;
+        margin: 0 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
     .description {
         line-height: 1.7;
         font-size: 15px;
         position: relative;
         width: 200px;
         margin: 0 auto;
+        margin-top: 40px;
         margin-bottom: 40px;
         text-overflow: ellipsis;
         overflow: hidden;
