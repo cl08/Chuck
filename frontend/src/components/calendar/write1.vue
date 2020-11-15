@@ -188,8 +188,6 @@ export default {
             for(let i=0; i<this.selectedImageArray.length; i++) {
                 if(this.selectedImageArray[i]) {
                     this.$store.state.images.push(this.getCloudImages[i])
-                    let el = document.getElementById('cloudImage'+i)
-                    el.classList.toggle("cloudImageNoneDisplay")
                 }
             }
             this.dialog = false
@@ -197,7 +195,11 @@ export default {
         openCloud() {
             this.dialog=true
             for(let i=0; i<this.selectedImageArray.length; i++) {
-                this.selectedImageArray[i] = false
+                if(this.selectedImageArray[i]) {
+                    this.selectedImageArray[i] = false
+                    let el = document.getElementById('cloudImage'+i)
+                    el.classList.toggle("cloudImageNoneDisplay")
+                }
             }
         }
     }
