@@ -110,7 +110,8 @@ export default {
         doc.text(element.writer, 40, 40);
         doc.text(element.content, 40, 50);
         console.log(element.image);
-        doc.addImage(element.image, "JPEG", 40, 65, 130, 130*img.height/img.width);
+        // doc.addImage(element.image, "JPEG", 40, 65, 130, 130*img.height/img.width);
+        doc.addImage(element.image, "JPEG", 40, 65);
       }
 
       doc.save(this.$store.getters.getSelectedGroup.name + "'sChuck"+this.$moment(new Date()).format('MMDD')+".pdf");
