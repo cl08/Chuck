@@ -46,16 +46,13 @@ public class KakaoController {
 	
 	@GetMapping("/list")
 	@ApiOperation(value = "계정별 올린 사진 리스트 반환")
-	public ResponseEntity<List<String>> getList(int id){
-		String prePath = "/home/ubuntu/s03p31a206/backend/python/kakao";
-		File preFolder = new File(prePath);
-		
+	public ResponseEntity<List<String>> getList(int id){		
 		String path = "/home/ubuntu/s03p31a206/backend/python/kakao/" + id;
 		File folder = new File(path);
 		File[] fileList = folder.listFiles();
 		List<String> list = new ArrayList<>();
 		
-		if(!preFolder.exists()) return new ResponseEntity<List<String>>(list, HttpStatus.OK);
+		if(!folder.exists()) return new ResponseEntity<List<String>>(list, HttpStatus.OK);
 		
 		for(int i = 0; i < fileList.length;i++) list.add("http://k3a206.p.ssafy.io/images/kakao/" + id + "/" + fileList[i].getName());
 		return new ResponseEntity<List<String>>(list, HttpStatus.OK);
