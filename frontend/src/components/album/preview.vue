@@ -43,10 +43,21 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(["getFaceDataBook", "getPersonArrayBook"]),
+    ...mapGetters([
+      'getFaceDataBook',
+      'getPersonArrayBook',
+      'getFaceDataStudio',
+    ]),
   },
   watch: {
+    getFaceDataStudio: function(data) {
+      this.checkArr = []
+      this.selectedMap = new Map()
+      this.selectedChucks = []
+      this.$forceUpdate()
+    },
     getPersonArrayBook: function (data) {
+      this.$forceUpdate()
       let change = [];
       if (this.checkArr.length == 0) {
         this.checkArr = data.slice();

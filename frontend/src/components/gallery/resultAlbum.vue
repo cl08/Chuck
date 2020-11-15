@@ -7,11 +7,12 @@
             <img src="../../assets/gallery/bottom_right.svg" class="tape" style="top:310px; left:510px;">
             <img v-if="currentImage" class="currentImg" :src="currentImage">
             <div v-else style="color:#C0C0C0; margin-bottom:96px;">
-            <img src="../../assets/gallery/Camera_non.svg" style="width:100px; margin-top:90px;">
+                <img src="../../assets/gallery/Camera_non.svg" style="width:100px; margin-top:90px;">
                 <p>아래에서 사진을<br>선택해주세요</p>
             </div>
-        <div class="pointer" style="margin-top:14px;">
-            <el-tag effect="dark" color="#8D6262" style="border-color:#8D6262;" @click="moveChuck">Chuck으로 이동</el-tag></div>
+            <div class="pointer" style="margin-top:14px;">
+                <span class="chuck-tag el-tag--dark" style="background-color: rgb(141, 98, 98); border-color: rgb(141, 98, 98);">Chuck으로 이동</span>
+            </div>
         </div>
         <div class="dash" style="text-align:left; height:320px; margin-top:44px;">
             <span v-for="(item, index) in temp" :key="index" class="picture">
@@ -47,8 +48,8 @@ export default {
     },
     watch: {
         getPersonArrayGallery: function(data) {
+            this.$forceUpdate()
             let change = []
-            console.log(data)
             if(this.checkArr.length == 0) {
                 this.checkArr = data.slice()
                 for(let i = 0; i<data.length; i++) change.push(i)

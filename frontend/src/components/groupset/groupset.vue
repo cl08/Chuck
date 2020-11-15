@@ -230,7 +230,7 @@ export default {
   vertical-align: middle;
 }
 .log {
-  height: 190px;
+  height: 160px;
   overflow: scroll;
 }
 .createDate font {

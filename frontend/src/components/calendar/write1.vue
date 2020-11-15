@@ -35,7 +35,10 @@
                 </template>
                 <v-card>
                     <v-card-title>
-                        <font size=6 color="#8D6262">Cloud Images</font>
+                        <font size=6 color="#8D6262">
+                            나의 클라우드 저장소
+                        </font>
+                        <img src="../../assets/update.svg" class="pointer" style="width:30px; height:30px; margin-left:20px;">
                     </v-card-title>
                     <v-card-text>
                         <v-row>
@@ -99,6 +102,7 @@
 import api from '@/utils/api'
 import eventBus from '@/utils/EventBus'
 import { mapGetters } from 'vuex'
+import { mapMutations } from 'vuex'
 import store from '@/store'
 
 export default {
@@ -112,6 +116,7 @@ export default {
     },
     computed: {
         ...mapGetters([
+            'getId',
             'getSelectedGroup',
             'getColor',
             'getChuckList',
@@ -134,6 +139,9 @@ export default {
         })
     },
     methods: {
+        ...mapMutations([
+            'setCloudImages',
+        ]),
         beforeImageUpload(file) {
             const isJPG = file.type === 'image/jpeg';
             const isPNG = file.type === 'image/png';
@@ -156,14 +164,18 @@ export default {
             return (isJPG || isPNG) && isLt10M;
         },
         handleExceed(file, fileList) {
-            alert("사진은 최대 10장의 사진을 업로드 할 수 있습니다.")
+            this.$notify({
+                title: '사진은 최대 10장 업로드할 수 있습니다.',
+                dangerouslyUseHTMLString: true,
+                duration: 3000
+            });
         },
         handleSuccess(res, file) {
             store.state.images.push(res)
         },
         handleRemove(file, index) {
             this.$refs.upload.fileList.pop()
-            store.state.deletedImages.push(store.state.images[index])
+            // store.state.deletedImages.push(store.state.images[index])
             store.state.images.splice(index, 1)
         },
         removeAll() {
@@ -206,6 +218,12 @@ export default {
                     el.classList.toggle("cloudImageNoneDisplay")
                 }
             }
+        },
+        re() {
+            api.get(`kakao/list?id=${this.getId}`)
+            .then(({ data }) => {
+                this.setCloudImages(data)
+            })
         }
     }
 }

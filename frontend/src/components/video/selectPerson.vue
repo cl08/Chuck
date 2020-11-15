@@ -61,6 +61,18 @@ export default {
             'getFaceDataFilm',
         ]),
     },
+    watch: {
+        getFaceDataStudio: function(data) {
+            this.value1 = ''
+            this.value2 = ''
+            this.dates = []
+            this.personArray = []
+            this.selectCount = 0
+            this.setPersonArrayFilm(this.personArray)
+            this.setFaceDataFilm(null)
+            this.$forceUpdate()
+        }
+    },
     methods: {
         ...mapMutations([
             'setPersonArrayFilm',

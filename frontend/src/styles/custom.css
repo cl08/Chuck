@@ -71,3 +71,16 @@
     border-color: #8D6262;
     color: #FFF;
 }
+
+.chuck-tag {
+    display: inline-block;
+    height: 30px;
+    padding: 0 16px;
+    line-height: 30px;
+    font-size: 12px;
+    border-width: 1px;
+    border-style: solid;
+    border-radius: 25px;
+    box-sizing: border-box;
+    white-space: nowrap;
+}

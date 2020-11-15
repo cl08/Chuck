@@ -55,10 +55,23 @@ export default {
             selectCount: 0,
         }
     },
+    watch: {
+        getFaceDataStudio: function(data) {
+            this.value1 = ''
+            this.value2 = ''
+            this.dates = []
+            this.personArray = []
+            this.selectCount = 0
+            this.setPersonArrayBook(this.personArray)
+            this.setFaceDataBook(null)
+            this.$forceUpdate()
+        }
+    },
     computed: {
         ...mapGetters([
             'getFaceDataStudio',
             'getFaceDataBook',
+            'getPersonArrayBook',
         ]),
     },
     methods: {

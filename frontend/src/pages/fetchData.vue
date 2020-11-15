@@ -72,8 +72,7 @@ export default {
                         this.$store.commit('setFaceDataStudio', data)
                         
                         // 클라우드 이미지 정보 불러오기
-                        // api.get(`kakao/list?id=${this.getId}`)
-                        api.get(`kakao/list?id=1532959969`)
+                        api.get(`kakao/list?id=${this.getId}`)
                         .then(({ data }) => {
                             this.setCloudImages(data)
                             

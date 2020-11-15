@@ -56,10 +56,21 @@ export default {
             'getChuckList',
             'getFaceDataFilm',
             'getPersonArrayFilm',
-            'getVideoUrl'
+            'getVideoUrl',
+            'getFaceDataStudio',
         ]),
     },
     watch: {
+        getFaceDataStudio: function(data) {
+            this.selectCount = 0
+            this.maxCount = 0
+            this.imageArray = []
+            this.loading = false
+            this.imageList = new Map()
+            this.checkArr = []
+            this.temp = []
+            this.$forceUpdate()
+        },
         getPersonArrayFilm: function(data) {
             let change = []
             if(this.checkArr.length == 0) {

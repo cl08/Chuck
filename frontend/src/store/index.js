@@ -44,6 +44,7 @@ export default new Vuex.Store({
         images: [],
         deletedImages: [],
         cloudImages: [],
+        change: false,
     },
 
     getters: {
@@ -168,6 +169,9 @@ export default new Vuex.Store({
         },
         getCloudImages(state) {
             return state.cloudImages
+        },
+        getChange(state) {
+            return state.change
         }
     },
     mutations: {
