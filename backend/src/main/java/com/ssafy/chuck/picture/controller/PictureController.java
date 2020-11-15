@@ -223,8 +223,8 @@ public class PictureController {
 		Date nowdate = new Date();
 		String dateString = formatter.format(nowdate);	//현재시간 문자열
 		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + groupId + "/" +
-				dateString + "_" + mFile.getOriginalFilename();			//경로 + 날짜시간 + _ +파일이름으로 저장
-		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + mFile.getOriginalFilename();
+				dateString + "_" + (int)(Math.random()*1000000);			//경로 + 날짜시간 + _ +파일이름으로 저장
+		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + (int)(Math.random()*1000000);
 
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
