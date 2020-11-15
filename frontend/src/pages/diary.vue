@@ -303,6 +303,7 @@ export default {
     // 글작성 페이지 이동
     write() {
       // 캘린더 페이지 이동
+      eventBus.$emit('init-el')
       this.movePage(1);
       this.setSelectedDay(new Date().getFullYear()+'-'+(new Date().getMonth()+1)+'-'+ (new Date().getDate() < 10 ? `0${new Date().getDate()}` : new Date().getDate()));
       this.setVisibleWrite(true);

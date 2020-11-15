@@ -103,9 +103,17 @@ export default {
             this.date = ''
             this.$store.state.images = new Array()
             this.$store.state.deletedImages = new Array()
-            this.$store.commit('setVisibleWrite', false)
-            this.$store.commit('setVisibleCalendar', true)
-            this.$store.commit('setVisibleChoice', true)
+            api.get(`pictures/gallery?groupId=${this.getSelectedGroup.id}`)
+            .then(({ data }) => {
+                this.$store.commit('setFaceDataGallery', data)
+                api.get(`pictures/studio?groupId=${this.getSelectedGroup.id}`)
+                .then(({ data }) => {
+                    this.$store.commit('setFaceDataStudio', data)
+                    this.$store.commit('setVisibleWrite', false)
+                    this.$store.commit('setVisibleCalendar', true)
+                    this.$store.commit('setVisibleChoice', true)
+                })
+            })
             eventBus.$emit('updateList')
         },
         clear() {
