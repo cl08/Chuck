@@ -89,17 +89,21 @@ export default {
       doc.addFont("MaplestoryLight.ttf", "MaplestoryLight", "normal");
       doc.setFont("MaplestoryLight");
       doc.setFontSize(40);
-      doc.text(this.$store.getters.getSelectedGroup.name + "의 Chuck", 35, 25);
+      doc.text(this.$store.getters.getSelectedGroup.name + "의 Chuck", 35, 55);
+      doc.setFontSize(20);
+      doc.text(this.$moment(new Date()).format('YYYY년MM월DD일'), 120, 250);
+      doc.text(this.$store.getters.getName, 120, 260);
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
         const element = this.selectedChucks[index];
         doc.addPage();
         doc.setFontSize(30);
-        doc.text(element.title, 35, 25);
+        doc.text(element.title, 35, 55);
         doc.setFontSize(15);
-        doc.text(element.writer, 35, 35);
-        doc.text(element.content, 35, 45);
-        doc.addImage(element.image, "JPEG", 35, 55);
+        doc.text(element.writer, 35, 65);
+        doc.text(element.content, 35, 75);
+        
+        doc.addImage(element.image, "JPEG", 35, 100,300);
       }
 
       doc.save(this.$store.getters.getSelectedGroup.name + "Chcuk"+this.$moment(new Date()).format('MM_DD')+".pdf");
