@@ -84,7 +84,6 @@ export default {
     },
     generatePdf() {
       let font = this.getFont();
-      console.log("pdf생성 시작!!!");
       var doc = new jsPDF();
       doc.addFileToVFS("MaplestoryLight.ttf", font);
       doc.addFont("MaplestoryLight.ttf", "MaplestoryLight", "normal");
@@ -100,7 +99,6 @@ export default {
         doc.setFontSize(15);
         doc.text(element.writer, 35, 35);
         doc.text(element.content, 35, 45);
-        console.log(element.image)
         doc.addImage(element.image, "JPEG", 35, 55);
       }
 
