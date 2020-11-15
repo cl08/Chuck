@@ -48,7 +48,6 @@ export default {
     watch: {
         getPersonArrayGallery: function(data) {
             let change = []
-            console.log(data)
             if(this.checkArr.length == 0) {
                 this.checkArr = data.slice()
                 for(let i = 0; i<data.length; i++) change.push(i)
