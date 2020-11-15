@@ -25,6 +25,7 @@
                 <v-calendar ref="calendar"
                 v-model="focus"
                 color="primary"
+                locale="ko"
                 :events="events"
                 :event-color="getEventColor"
                 :type="type"
