@@ -100,7 +100,7 @@ export default {
         let img = new Image();
         img.onload = () => {
           console.log(`the image dimensions are ${img.width}x${img.height}`)
-          doc.addImage(element.image, "JPEG", 35, 100, 400, 400*img.height/img.width);
+          doc.addImage(element.image, "JPEG", 35, 100, 150, 150*img.height/img.width);
         }
         img.src = element.image;
 
@@ -111,7 +111,7 @@ export default {
         doc.text(element.writer, 35, 65);
         doc.text(element.content, 35, 75);
         console.log(element.image);
-        doc.addImage(element.image, "JPEG", 35, 100, 400, 400*img.height/img.width);
+        doc.addImage(element.image, "JPEG", 35, 100, 150, 150*img.height/img.width);
       }
 
       doc.save(this.$store.getters.getSelectedGroup.name + "Chcuk"+this.$moment(new Date()).format('MM_DD')+".pdf");
