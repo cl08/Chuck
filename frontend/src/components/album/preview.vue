@@ -89,32 +89,32 @@ export default {
       doc.addFont("MaplestoryLight.ttf", "MaplestoryLight", "normal");
       doc.setFont("MaplestoryLight");
       doc.setFontSize(40);
-      doc.text(this.$store.getters.getSelectedGroup.name + "의 Chuck", 35, 55);
+      doc.text(this.$store.getters.getSelectedGroup.name + "의 Chuck", 40, 55);
       doc.setFontSize(20);
       doc.text(this.$moment(new Date()).format("YYYY년MM월DD일"), 120, 250);
       doc.text(this.$store.getters.getName, 120, 260);
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
         const element = this.selectedChucks[index];
-
+        console.log(element)
         let img = new Image();
         img.onload = () => {
           console.log(`the image dimensions are ${img.width}x${img.height}`)
-          doc.addImage(element.image, "JPEG", 35, 100, 150, 150*img.height/img.width);
+          doc.addImage(element.image, "JPEG", 30, 65, 130, 130*img.height/img.width);
         }
         img.src = element.image;
 
         doc.addPage();
         doc.setFontSize(30);
-        doc.text(element.title, 35, 55);
+        doc.text(element.title, 40, 30);
         doc.setFontSize(15);
-        doc.text(element.writer, 35, 65);
-        doc.text(element.content, 35, 75);
+        doc.text(element.writer, 40, 40);
+        doc.text(element.content, 40, 50);
         console.log(element.image);
-        doc.addImage(element.image, "JPEG", 35, 100, 150, 150*img.height/img.width);
+        doc.addImage(element.image, "JPEG", 30, 65, 130, 130*img.height/img.width);
       }
 
-      doc.save(this.$store.getters.getSelectedGroup.name + "Chcuk"+this.$moment(new Date()).format('MM_DD')+".pdf");
+      doc.save(this.$store.getters.getSelectedGroup.name + "'sChuck"+this.$moment(new Date()).format('MMDD')+".pdf");
     },
   },
 };
