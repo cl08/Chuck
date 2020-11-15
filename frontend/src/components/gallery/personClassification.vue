@@ -18,8 +18,12 @@
                     <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
                 </span>
             </div>
-            <div v-else style="padding:8px; text-align:center; margin-top:100px;">
-                <img src="../../assets/gallery/noFace.jpg">
+            <div v-else style="padding:8px; text-align:center; margin-top:160px; color:#C0C0C0;">
+                <img src="../../assets/gallery/Oops.svg" style="width:200px;">
+                <p>
+                    게시된 Chuck의 인물 데이터가<br>
+                    충분하지 않아요!
+                </p>
             </div>
         </div>
     </div>

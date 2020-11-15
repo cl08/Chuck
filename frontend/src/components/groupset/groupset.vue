@@ -115,7 +115,11 @@ export default {
   methods: {
     InviteGroup() {
       if (sessionStorage.getItem("ID") === "1") {
-        alert("테스트 아이디는 카카오 초대가 불가능합니다.");
+        this.$notify({
+          title: '테스트 계정은 일부 기능이 제한됩니다.',
+          dangerouslyUseHTMLString: true,
+          duration: 3000
+        });
       } else {
         window.Kakao.Link.sendCustom({
           templateId: 40694,

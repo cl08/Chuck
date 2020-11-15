@@ -1,16 +1,19 @@
 <template>
-    <div style="padding:10px 0px 0px 30px;">
+    <div style="padding:20px 0px 0px 30px;">
         <div class="bg" style="text-align:center">
-            <img src="../../assets/gallery/top_left.svg" class="tape" style="top:10px; left:70px;">
-            <img src="../../assets/gallery/top_right.svg" class="tape" style="top:20px; left:530px;">
-            <img src="../../assets/gallery/bottom_left.svg" class="tape" style="top:320px; left:70px;">
-            <img src="../../assets/gallery/bottom_right.svg" class="tape" style="top:300px; left:510px;">
+            <img src="../../assets/gallery/top_left.svg" class="tape" style="top:20px; left:70px;">
+            <img src="../../assets/gallery/top_right.svg" class="tape" style="top:30px; left:530px;">
+            <img src="../../assets/gallery/bottom_left.svg" class="tape" style="top:330px; left:70px;">
+            <img src="../../assets/gallery/bottom_right.svg" class="tape" style="top:310px; left:510px;">
             <img v-if="currentImage" class="currentImg" :src="currentImage">
-            <img v-else class="currentImg" src="http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif">
+            <div v-else style="color:#C0C0C0; margin-bottom:96px;">
+            <img src="../../assets/gallery/Camera_non.svg" style="width:100px; margin-top:90px;">
+                <p>아래에서 사진을<br>선택해주세요</p>
+            </div>
         <div class="pointer" style="margin-top:14px;">
             <el-tag effect="dark" color="#8D6262" style="border-color:#8D6262;" @click="moveChuck">Chuck으로 이동</el-tag></div>
         </div>
-        <div class="dash" style="text-align:left; height:330px; margin-top:44px;">
+        <div class="dash" style="text-align:left; height:320px; margin-top:44px;">
             <span v-for="(item, index) in temp" :key="index" class="picture">
                 <img class="pointer picture" :src="item" @click="clickedImg(index)" style="object-fit:cover">
             </span>

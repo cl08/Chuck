@@ -141,6 +141,11 @@ export default {
                             this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
                             eventBus.$emit('updateList')
                             eventBus.$emit('back')
+                            this.$notify({
+                                title: 'Chuck이 삭제 되었습니다.',
+                                dangerouslyUseHTMLString: true,
+                                duration: 3000
+                            });
                         })
                     })
                 })
@@ -169,7 +174,6 @@ export default {
         },
         forceFileDownload(response) {
             const headers = response.headers;
-            // const extension = this.picture.substring(this.picture.lastIndexOf('.')+1)
             const blob = new Blob([response.data], {type: headers['content-type']});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);

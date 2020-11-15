@@ -156,7 +156,11 @@ export default {
                     })
                 })
             } else {
-                alert('사진을 1장이상 선택해주세요')
+                this.$notify({
+                    title: '사진을 1장이상 올려주세요.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
             }
         }
     }

@@ -42,10 +42,18 @@ export default {
             const isLt10M = file.size / 1024 / 1024 < 10;
 
             if (!(isPNG || isJPG)) {
-                alert('JPG, PNG 포맷만 지원합니다.');
+                this.$notify({
+                    title: 'JPG, PNG 포맷만 지원합니다.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
             }
             if (!isLt10M) {
-                alert('파일 크기 제한은 10MB입니다.');
+                this.$notify({
+                    title: '파일 크기 제한은 10MB입니다.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
             }
             return (isJPG || isPNG) && isLt10M;
         },
