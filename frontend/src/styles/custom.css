@@ -2,8 +2,8 @@
     text-align: center;
 }
 .el-upload-dragger {
-    padding-top: 20px;
-    width: 520px !important;
+    /* padding-top: 20px; */
+    width: 240px !important;
     height: 200px !important;
     border: 0px !important; 
 }

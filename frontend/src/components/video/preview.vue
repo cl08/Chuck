@@ -13,7 +13,9 @@
 					<div id="play-bar" class="play-bar"></div>
 					<div class="play-bar-border"></div>
 				</div>
-				{{ getVideoMusic }}
+				선택된 노래 : 
+				<span v-if="getVideoMusic === 'middle'">없음</span>
+				<span v-else>{{ getVideoMusic.replace('.mp3', '') }}</span>
 			</div>
         </div>
         <div class="dash pointer" @click="download">

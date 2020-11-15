@@ -40,13 +40,6 @@ export default {
             selectCount: 0,
         };
     },
-    created() {
-        let num = 0
-        if(this.getFaceDataGallery.gallery_list) num = this.getFaceDataGallery.gallery_list.length
-        for(let i = 0; i < num; i++) {
-            this.checkArr.push(false)
-        }
-    },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
@@ -58,7 +51,6 @@ export default {
             'setPersonArrayGallery',
         ]),
         selectAll() {
-            console.log(this.getFaceDataGallery.gallery_list)
             if(this.getFaceDataGallery.gallery_list.length !== 0 && this.selectCount === this.getFaceDataGallery.gallery_list.length) {
                 for(let i=0; i<this.getFaceDataGallery.gallery_list.length; i++){
                     let el = document.getElementById('galleryFace'+i)

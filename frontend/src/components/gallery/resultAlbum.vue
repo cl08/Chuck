@@ -78,6 +78,10 @@ export default {
                 });
             }
             this.temp = Array.from(this.imageList.keys())
+            if(!this.temp.includes(this.currentImage)) {
+                this.currentImage = ''
+                this.currentImageIndex = ''
+            }
         }
     },
     methods: {
