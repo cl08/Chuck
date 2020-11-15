@@ -117,7 +117,6 @@ public class PictureController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 	
-
 	@DeleteMapping("/deleteByPath")
 	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(File)")
 	public ResponseEntity<String> deletePictureByPath(String path) {
@@ -129,8 +128,6 @@ public class PictureController {
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	
- 
 	@GetMapping("/gallery")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
 	public ResponseEntity<GalleryListResponse> gallery(int groupId) throws Exception {
