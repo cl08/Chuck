@@ -46,18 +46,6 @@ export default {
             'getFaceDataGallery',
         ])
     },
-    watch: {
-        getFaceDataGallery: function() {
-            let num = 0
-            const cnt = this.checkArr.length
-            if(this.getFaceDataGallery.gallery_list) num = this.getFaceDataGallery.gallery_list.length
-            if(cnt != num) {
-                for(let i = 0; i < (cnt - num) < 0 ? (num - cnt) : (cnt - num); i++) {
-                    this.checkArr.push(false)
-                }
-            }
-        }
-    },
     methods: {
         ...mapMutations([
             'setPersonArrayGallery',
