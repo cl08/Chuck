@@ -21,5 +21,6 @@ export default {
 .noResult{
     margin-top: 300px;
     text-align: center;
+    color: #C0C0C0;
 }
 </style>

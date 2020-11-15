@@ -1,9 +1,7 @@
-<!--
-    1. 댓글 좌우 번갈아 가면서 나오기
--->
 <template>
     <div style="padding:30px 0px 0px 30px; height:680px; overflow:scroll;">
-        <div v-for="(item, index) in getComments" :key="index" class="post-it" >
+        <div><img src="../../assets/title/comment_tabtitle.svg" style="height:40px; margin-bottom:30px;"></div>
+        <div v-for="(item, index) in getComments" :key="index" class="post-it">
             <div class="note" :class="{postodd:flagOddEven(index), posteven:!flagOddEven(index)}">
                 <strong>{{ item.writer }}</strong>
                 <img @click="deleteComment(index)" src="@/assets/eraser.svg" alt="" v-show="getId===item.writerId">

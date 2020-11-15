@@ -27,7 +27,7 @@
             <transition name="menu" tag="div">
                 <template v-if="selected">
                     <div class="side-menu">
-                        <div  v-if="this.bookgen === false" style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
+                        <div  v-if="this.bookgen === false" style="position:absolute; bottom:100px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
                             <div class="group-title">{{ selectedBook.name }}</div>
                             <div class="group-intro">{{ selectedBook.intro }}</div>
@@ -112,7 +112,7 @@ export default {
             this.selected = true;
             this.selectedBook = book;
             
-            // $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"}); 	
+            // $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"})
 
             // let el = document.getElementsByClassName('side-menu')
             // console.log(el) 
@@ -123,8 +123,8 @@ export default {
             this.selected = false;
         },
         addGroup() {
-            this.selectedBook.name = '';
-            this.selectedBook.intro = '';
+            this.createBook.name = '';
+            this.createBook.intro = '';
             this.bookgen = true;
             this.selected = true;
         }
