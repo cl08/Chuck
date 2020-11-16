@@ -38,7 +38,7 @@
                         <font size=6 color="#8D6262">
                             나의 클라우드 저장소
                         </font>
-                        <img src="../../assets/update.svg" class="pointer" style="width:30px; height:30px; margin-left:20px;">
+                        <img src="../../assets/update.svg" class="pointer" style="width:30px; height:30px; margin-left:20px;" @click="refresh">
                     </v-card-title>
                     <v-card-text>
                         <v-row>
@@ -219,10 +219,14 @@ export default {
                 }
             }
         },
-        re() {
+        refresh() {
             api.get(`kakao/list?id=${this.getId}`)
             .then(({ data }) => {
                 this.setCloudImages(data)
+                for(let i=0; i<data.length; i++) {
+                    this.selectedImageArray.push(false)
+                }
+                this.$forceUpdate()
             })
         }
     }

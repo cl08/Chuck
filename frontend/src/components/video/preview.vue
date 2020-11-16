@@ -73,7 +73,7 @@ export default {
 			}
 			document.getElementById('media-video').load()
 		
-			if(this.getVideoMusic === 'middle') {
+			if(this.getVideoMusic == 'middle') {
 				let link = document.createElement('a')
 				link.target = "_blank"
 				link.href = this.getVideoUrl
