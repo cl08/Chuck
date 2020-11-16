@@ -101,11 +101,6 @@ export default {
       doc.text(this.$store.getters.getName, 120, 260);
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
-        doc.addImage(backgroundUrl, 40, 200, 130, 100);
-        doc.addImage(topleftUrl, 40, 200, 130, 100);
-        doc.addImage(toprightUrl, 40, 200, 130, 100);
-        doc.addImage(bottomleftUrl, 40, 200, 130, 100);
-        doc.addImage(bottomrightUrl, 40, 200, 130, 100);
         const element = this.selectedChucks[index];
         console.log(element)
         let img = new Image();
@@ -122,6 +117,19 @@ export default {
         doc.text(element.content, 40, 50);
         console.log(element.image);
         doc.addImage(element.image, 40, 65, 130, 130*img.height/img.width);
+        
+        // 배경이미지
+        console.log("배경이미지 삽입")
+        doc.addImage(backgroundUrl, 40, 200, 130, 100);
+        console.log(backgroundUrl)
+        doc.addImage(topleftUrl, 40, 200, 130, 100);
+        console.log(topleftUrl)
+        doc.addImage(toprightUrl, 40, 200, 130, 100);
+        console.log(toprightUrl)
+        doc.addImage(bottomleftUrl, 40, 200, 130, 100);
+        console.log(bottomleftUrl)
+        doc.addImage(bottomrightUrl, 40, 200, 130, 100);
+        console.log(bottomrightUrl)
       }
 
       doc.save(this.$store.getters.getSelectedGroup.name + "'sChuck"+this.$moment(new Date()).format('MMDD')+".pdf");
