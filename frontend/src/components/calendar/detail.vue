@@ -19,7 +19,8 @@
                 by. {{ getChuckMap.get(getSelectedDiary).writer }}
             </span>
             <span class="float-right mr-10">
-                <a :href="picture" @click="getImageUrl" target="_blank" download style="text-decoration:none;">
+                <!-- <a :href="picture" @click="download" target="_blank" download style="text-decoration:none;"> -->
+                <a :href="picture" @click="download()" style="text-decoration:none;">
                     <img src="../../assets/download.svg" style="width:20px;">
                 </a>
                 <v-menu
@@ -173,11 +174,13 @@ export default {
             })
         },
         forceFileDownload(response) {
+            console.log(response.data)
+            console.log(response.data.config.url)
             const headers = response.headers;
             const blob = new Blob([response.data], {type: headers['content-type']});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = this.picture;
+            link.download = this.picture.split('/')[5] + '.png';
             document.body.appendChild(link);
             link.click();
             link.remove()
