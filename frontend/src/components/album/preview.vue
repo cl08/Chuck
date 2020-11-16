@@ -128,7 +128,7 @@ export default {
         img.src = element.image;
 
         // console.log(element.image);
-        doc.addImage(element.image, 30, 30, 150, 120);
+        doc.addImage(element.image, 30, 35, 150, 100);
         doc.setFontSize(30);
         doc.text(element.title, 40, 180);
         doc.setFontSize(15);
