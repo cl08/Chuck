@@ -14,8 +14,9 @@
         <div v-if="getFaceDataGallery.gallery_list" class="dash" style="width:550px; height:560px; text-align:left;">
             <div v-if="getFaceDataGallery.gallery_list.length > 0" style="padding:8px;">
                 <span class="face pointer" @click="selectAll">ALL</span>
-                <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
-                    <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
+                <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)">
+                    <img :src="face.rep_image">
+                    <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg" style="position:relative; top:-128px;">
                 </span>
             </div>
             <div v-else style="padding:8px; text-align:center; margin-top:160px; color:#C0C0C0;">
@@ -28,7 +29,6 @@
         </div>
     </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex"
 import { mapMutations } from "vuex"
@@ -48,6 +48,8 @@ export default {
     },
     watch: {
         getFaceDataGallery: function() {
+            this.checkArr = []
+            this.selectCount = 0
             this.$forceUpdate()
         }
     },

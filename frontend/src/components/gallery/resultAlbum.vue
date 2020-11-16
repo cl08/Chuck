@@ -11,7 +11,7 @@
                 <p>아래에서 사진을<br>선택해주세요</p>
             </div>
             <div class="pointer" style="margin-top:14px;">
-                <span class="chuck-tag el-tag--dark" style="background-color: rgb(141, 98, 98); border-color: rgb(141, 98, 98);">Chuck으로 이동</span>
+                <span class="chuck-tag el-tag--dark" style="background-color: rgb(141, 98, 98); border-color: rgb(141, 98, 98);" @click="moveChuck(index)">Chuck으로 이동</span>
             </div>
         </div>
         <div class="dash" style="text-align:left; height:320px; margin-top:44px;">
@@ -47,8 +47,15 @@ export default {
         ]),
     },
     watch: {
-        getPersonArrayGallery: function(data) {
+         getFaceDataGallery: function() {
+            this.checkArr = []
+            this.imageList = new Map()
+            this.temp = []
+            this.currentImage =  ''
+            this.currentImageIndex = ''
             this.$forceUpdate()
+        },
+        getPersonArrayGallery: function(data) {
             let change = []
             if(this.checkArr.length == 0) {
                 this.checkArr = data.slice()
