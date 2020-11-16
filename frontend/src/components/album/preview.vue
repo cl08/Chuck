@@ -10,7 +10,7 @@
             <img
               :src="chuck.image"
               style="
-                object-fit: none;
+                object-fit: cover;
                 width: 400px;
                 height: 300px;
                 margin-top: 60px;
