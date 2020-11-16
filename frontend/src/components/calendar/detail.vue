@@ -172,14 +172,13 @@ export default {
             }).then((res) => {
                 this.forceFileDownload(res)
             })
-            this.forceFileDownload(res)
         },
         forceFileDownload(response) {
             const headers = response.headers;
             const blob = new Blob([response.data], {type: headers['content-type']});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = this.picture + '.png';
+            link.download = this.picture.split('/')[5] + '.png';
             document.body.appendChild(link);
             link.click();
             link.remove()
