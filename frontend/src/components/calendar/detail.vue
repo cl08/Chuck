@@ -20,9 +20,9 @@
             </span>
             <span class="float-right mr-10">
                 <!-- <a :href="picture" @click="download" target="_blank" download style="text-decoration:none;"> -->
-                <a :href="picture" @click="download()" style="text-decoration:none;">
+                <span :href="picture" @click="download()" style="text-decoration:none; cursor: pointer">
                     <img src="../../assets/download.svg" style="width:20px;">
-                </a>
+                </span>
                 <v-menu
                     offset-y
                     v-model="menu"
@@ -161,7 +161,7 @@ export default {
                 }
             }
             picture = picture.slice(5, -2)
-            this.picture = picture
+            this.picture = picture + '.png'
         },
         download() {
             this.getImageUrl();
@@ -172,15 +172,18 @@ export default {
             }).then((res) => {
                 this.forceFileDownload(res)
             })
+            // this.forceFileDownload(this.picture)
         },
         forceFileDownload(response) {
-            console.log(response.data)
-            console.log(response.data.config.url)
+            // console.log(response.data)
+            // console.log(response.data.config.url)
             const headers = response.headers;
             const blob = new Blob([response.data], {type: headers['content-type']});
+            // const headers = '';
+            // const blob = new Blob([response.data], {type: headers['content-type']});
             const link = document.createElement('a');
             link.href = window.URL.createObjectURL(blob);
-            link.download = this.picture.split('/')[5] + '.png';
+            link.download = this.picture.split('/')[5] + '.png'
             document.body.appendChild(link);
             link.click();
             link.remove()
