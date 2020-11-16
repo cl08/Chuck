@@ -111,10 +111,11 @@ export default {
       doc.text(this.$store.getters.getName, 120, 260);
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
+        doc.addPage();
         // 배경이미지
-        console.log("배경이미지 삽입")
-        console.log(backgroundUrl)
-        doc.addImage(backgroundUrl,'JPEG', 30, 30, 180, 160);
+        // console.log("배경이미지 삽입")
+        // console.log(backgroundUrl)
+        doc.addImage(backgroundUrl,'JPEG', 15, 20, 180, 140);
 
         const element = this.selectedChucks[index];
         // console.log(element)
@@ -126,9 +127,8 @@ export default {
         }
         img.src = element.image;
 
-        doc.addPage();
         // console.log(element.image);
-        doc.addImage(element.image, 40, 40, 150, 130);
+        doc.addImage(element.image, 30, 30, 150, 120);
         doc.setFontSize(30);
         doc.text(element.title, 40, 180);
         doc.setFontSize(15);
