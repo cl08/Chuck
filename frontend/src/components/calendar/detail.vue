@@ -19,7 +19,7 @@
                 by. {{ getChuckMap.get(getSelectedDiary).writer }}
             </span>
             <span class="float-right mr-10">
-                <a :href="picture" @click="download" target="_blank" download style="text-decoration:none;">
+                <a :href="picture" @click="getImageUrl" target="_blank" download style="text-decoration:none;">
                     <img src="../../assets/download.svg" style="width:20px;">
                 </a>
                 <v-menu
