@@ -6,7 +6,7 @@
             <div class="floor-wrapper">
                 <div class="floor">
                     <div class="book-list">       
-                        <div v-for="(book, i) in books" :key="i" class="book-item" @click="selectBook(book)">
+                        <div v-for="(book, i) in books" :key="i" class="book-item" @click="selectBook(book, i)">
                             <img class="cover" :src="require(`../assets/books/book${(i % 10)}.png`)"/>
                             <div class="bookTitle">{{ book.name }}</div>
                             <div class="bookIntro">{{ book.intro.slice(0, 10) }}</div>
@@ -26,7 +26,7 @@
 
             <transition name="menu" tag="div">
                 <template v-if="selected">
-                    <div class="side-menu">
+                    <div class="side-menu" :style="bg[index]">
                         <div  v-if="this.bookgen === false" style="position:absolute; bottom:100px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
                             <div class="group-title">{{ selectedBook.name }}</div>
@@ -66,6 +66,40 @@ export default {
                 name: '',
                 intro: '',
             },
+            index: '0',
+            bg: [
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_0.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_1.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_2.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_3.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_4.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_5.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_6.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_7.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_8.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_9.png')})`
+                },
+                
+            ],
         };
     },
     mounted() {
@@ -109,16 +143,10 @@ export default {
             }
         },
         selectBook(book, index) {
+            this.index = index;
             this.bookgen = false;
             this.selected = true;
             this.selectedBook = book;
-            
-            // $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"})
-
-            // let el = document.getElementsByClassName('side-menu')
-            // console.log(el) 
-            // console.log(el.length)
-            // ??
         },
         closeMenu() {
             this.selected = false;
@@ -259,7 +287,6 @@ export default {
     left: 50%;
     transform: translate(-368px);
     margin: 0 auto;
-    background-image: url("../assets/select_group/select_group_0.png");
     background-size: cover;
 
     .group-title {
