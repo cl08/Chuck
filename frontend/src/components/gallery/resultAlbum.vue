@@ -1,12 +1,20 @@
 <template>
-    <div style="padding:10px 0px 0px 30px;">
+    <div style="padding:20px 0px 0px 30px;">
         <div class="bg" style="text-align:center">
+            <img src="../../assets/gallery/top_left.svg" class="tape" style="top:20px; left:70px;">
+            <img src="../../assets/gallery/top_right.svg" class="tape" style="top:30px; left:530px;">
+            <img src="../../assets/gallery/bottom_left.svg" class="tape" style="top:330px; left:70px;">
+            <img src="../../assets/gallery/bottom_right.svg" class="tape" style="top:310px; left:510px;">
             <img v-if="currentImage" class="currentImg" :src="currentImage">
-            <img v-else class="currentImg" src="http://memorymaker.co.kr/en/plugin/wz.booking.pension.prm/img/noimage.gif">
-        <div class="pointer" style="margin-top:30px;">
-            <el-tag effect="dark" color="#8D6262" style="border-color:#8D6262;" @click="moveChuck">Chuck으로 이동</el-tag></div>
+            <div v-else style="color:#C0C0C0; margin-bottom:96px;">
+                <img src="../../assets/gallery/Camera_non.svg" style="width:100px; margin-top:90px;">
+                <p>아래에서 사진을<br>선택해주세요</p>
+            </div>
+            <div class="pointer" style="margin-top:14px;">
+                <span class="chuck-tag el-tag--dark" style="background-color: rgb(141, 98, 98); border-color: rgb(141, 98, 98);" @click="moveChuck()">Chuck으로 이동</span>
+            </div>
         </div>
-        <div class="dash" style="text-align:left; height:330px; margin-top:30px;">
+        <div class="dash" style="text-align:left; height:320px; margin-top:44px;">
             <span v-for="(item, index) in temp" :key="index" class="picture">
                 <img class="pointer picture" :src="item" @click="clickedImg(index)" style="object-fit:cover">
             </span>
@@ -39,6 +47,14 @@ export default {
         ]),
     },
     watch: {
+         getFaceDataGallery: function() {
+            this.checkArr = []
+            this.imageList = new Map()
+            this.temp = []
+            this.currentImage =  ''
+            this.currentImageIndex = ''
+            this.$forceUpdate()
+        },
         getPersonArrayGallery: function(data) {
             let change = []
             if(this.checkArr.length == 0) {
@@ -71,6 +87,10 @@ export default {
                 });
             }
             this.temp = Array.from(this.imageList.keys())
+            if(!this.temp.includes(this.currentImage)) {
+                this.currentImage = ''
+                this.currentImageIndex = ''
+            }
         }
     },
     methods: {
@@ -93,16 +113,20 @@ export default {
     margin: 3px;
 }
 .bg {
-    background: url('../../assets/gallery/background.jpg');
+    background: url('../../assets/gallery/background.svg');
     background-size: cover;
-    width: 550px;
-    height: 350px;
-    margin: 20px 20px 0px 20px;
+    width: 500px;
+    height: 340px;
+    margin: 20px auto;
+    margin-bottom: 0px;
 }
 .currentImg {
-    width: 420px;
-    height: 250px;
-    margin-top: 50px;
+    width: 440px;
+    height: 300px;
+    margin-top: 20px;
     object-fit: cover;
+}
+.tape {
+    position: absolute;
 }
 </style>

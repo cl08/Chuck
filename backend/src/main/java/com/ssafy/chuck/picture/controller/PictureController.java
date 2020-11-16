@@ -52,7 +52,7 @@ public class PictureController {
 
 	@Autowired
 	private PictureService pictureService;
-	
+
 	@Autowired
 	DiaryService diaryService;
 
@@ -72,7 +72,7 @@ public class PictureController {
 		System.out.println(obj);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/modify")
 	@ApiOperation(value = "수정된 다이어리의 accessPath 리스트로 DB, Pickle 수정 및 Clutering")
 	public ResponseEntity<List<PictureDto>> modify(@RequestBody PictureResponse pictureResponse){
@@ -81,7 +81,7 @@ public class PictureController {
 		System.out.println(list);
 		StringBuilder past = new StringBuilder();
 		for(PictureDto picture : list) past.append(picture.getPath() + ":");
-		
+
 		// diary id에 포함된 사진들을 모두 삭제.
 		pictureService.deletePictureByDiaryId(pictureResponse.getDiary_id());
 		// 해당 path list의 사진들로 모두 db에 insert
@@ -94,10 +94,10 @@ public class PictureController {
 		// pickle 수정. 기존 사진의 pickle 모두 삭제 및 새 사진 pickle 추가
 		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + past.toString(), String.class);
 		String ins = restTemplate.getForObject("http://127.0.0.1:5000/insert?groupId=" + pictureResponse.getGroup_id() + "&imagePath=" + sb.toString(), String.class);
-		
+
 		return new ResponseEntity<List<PictureDto>>(list, HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/deleteByDiary")
 	@ApiOperation(value = "다이어리 삭제 시, 다이어리에 포함되어 있던 사진 삭제(File, DB, pickle)")
 	public ResponseEntity<String> deleteByDiary(int diary_id, int group_id) {
@@ -116,7 +116,6 @@ public class PictureController {
 		String del = restTemplate.getForObject("http://127.0.0.1:5000/delete?groupId=" + group_id + "&imagePath=" + sb.toString(), String.class);
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
-	
 
 	@DeleteMapping("/deleteByPath")
 	@ApiOperation(value = "사진의 상대 경로로 사진 삭제(File)")
@@ -125,12 +124,10 @@ public class PictureController {
 		System.out.println(real_path);
 		//1. 파일 삭제
 		File file = new File(real_path);
-		file.delete(); 
+		file.delete();
 		return new ResponseEntity<String>("success", HttpStatus.OK);
 	}
 
-	
- 
 	@GetMapping("/gallery")
 	@ApiOperation(value = "인물 분류 페이지(인물 분류 페이지에 접근할 때, 그룹별 클러스터링 결과를 반환)")
 	public ResponseEntity<GalleryListResponse> gallery(int groupId) throws Exception {
@@ -148,12 +145,12 @@ public class PictureController {
 			JsonArray list = element.getAsJsonArray("paths");
 
 			List<Gallery> galleryList = new ArrayList<>();
-			
+
 			for(int j=0;j<list.size();j++) {
 				System.out.println("그냥 path : " + list.get(j).getAsString());
 				System.out.println("path로 찾은 ");
 				Object diary_id = pictureService.selectDiaryIdByPath(list.get(j).getAsString());
-				if(diary_id != null) galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1], 
+				if(diary_id != null) galleryList.add(new Gallery("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1],
 						(int)diary_id));
 			}
 			galleryResponseList.add(new GalleryResponse(rep, galleryList));
@@ -162,7 +159,7 @@ public class PictureController {
 		GalleryListResponse galleryListResponse = new GalleryListResponse(galleryResponseList);
 		return new ResponseEntity<GalleryListResponse>(galleryListResponse, HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/studio")
 	@ApiOperation(value = "스튜디오 페이지")
 	public ResponseEntity<StudioListResponse> studio(int groupId) throws Exception {
@@ -178,13 +175,13 @@ public class PictureController {
 			JsonArray list = element.getAsJsonArray("paths");
 
 			List<DiaryDto> studioList = new ArrayList<>();
-			
+
 			int idx = 0;
 			for(int j=0;j<list.size();j++) {
 //				System.out.println("기존 path : " + list.get(j).getAsString());
 //				System.out.println("path로 구한 diary_id : " + pictureService.selectDiaryIdByPath(list.get(j).getAsString()));
 //				System.out.println("diary_id로 구한 diary info : " + diaryService.read(pictureService.selectDiaryIdByPath(list.get(j).getAsString())));
-				
+
 				Object diary_id = pictureService.selectDiaryIdByPath(list.get(j).getAsString());
 				if(diary_id == null) {
 					System.out.println("null이야");
@@ -194,7 +191,7 @@ public class PictureController {
 					studioList.add(diaryService.read((int)diary_id));
 					studioList.get(idx++).setImage("http://k3a206.p.ssafy.io/images/" + list.get(j).getAsString().split("python/")[1]);
 				}
-				
+
 			}
 			studioResponseList.add(new StudioResponse(rep, studioList));
     	}
@@ -202,7 +199,7 @@ public class PictureController {
 		StudioListResponse studioListResponse = new StudioListResponse(studioResponseList);
 		return new ResponseEntity<StudioListResponse>(studioListResponse, HttpStatus.OK);
 	}
-	
+
 
 	@PostMapping("/upload")
 	@ApiOperation(value = "사진 업로드(사진이 업로드 될 때마다) - 그룹id로 폴더 생성, 그룹 폴더 내 사진 저장", produces = "multipart/form-data")
@@ -224,10 +221,11 @@ public class PictureController {
 		//2. 그룹 폴더 안에 사진 저장
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date nowdate = new Date();
+		int rand = (int)(Math.random()*1000000);
 		String dateString = formatter.format(nowdate);	//현재시간 문자열
 		String real_path = "/home/ubuntu/s03p31a206/backend/python/" + groupId + "/" +
-				dateString + "_" + mFile.getOriginalFilename();			//경로 + 날짜시간 + _ +파일이름으로 저장
-		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + mFile.getOriginalFilename();
+				dateString + "_" + rand + ".png";			//경로 + 날짜시간 + _ +파일이름으로 저장
+		String access_path = "http://k3a206.p.ssafy.io/images/" + groupId + "/" + dateString + "_" + rand + ".png";
 
 		try {
 			mFile.transferTo(new File(real_path));							// 실제경로로 파일을 저장
@@ -237,8 +235,8 @@ public class PictureController {
 			return new ResponseEntity<String>("fail", HttpStatus.FORBIDDEN);
 		}
 	}
-	
-	
+
+
 	@PostMapping("/mkVideo")
 	@ApiOperation(value = "Path List로 동영상 생성 후 동영상의 경로 return")
 	public ResponseEntity<String> mkVideo(@RequestBody PathListResponse pathResponse) {

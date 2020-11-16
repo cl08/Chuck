@@ -16,13 +16,11 @@
         </div>
         <div class="mb-15">
             <span v-if="getChuckMap.get(getSelectedDiary)" class="float-left ml-10" style="font-size:large">
-                {{ getChuckMap.get(getSelectedDiary).writer }}
+                by. {{ getChuckMap.get(getSelectedDiary).writer }}
             </span>
             <span class="float-right mr-10">
-                <a :href="picture" @click="download" target="_blank" download style="text-decoration:none;">
-                    <v-icon class="pointer">
-                        mdi-download
-                    </v-icon>
+                <a :href="picture" @click="getImageUrl()" target="_blank" download style="text-decoration:none;">
+                    <img src="../../assets/download.svg" style="width:20px;">
                 </a>
                 <v-menu
                     offset-y
@@ -31,7 +29,7 @@
                     &&this.getId == this.getChuckMap.get(this.getSelectedDiary).writerId"
                 >
                     <template v-slot:activator="{ on, attrs }">
-                        <v-icon v-bind="attrs" v-on="on">
+                        <v-icon v-bind="attrs" v-on="on" style="margin:0px 0px 10px 5px;">
                             mdi-dots-horizontal
                         </v-icon>
                     </template>
@@ -63,10 +61,11 @@
                 </v-menu>
             </span>
         </div>
-        <div v-if="getChuckMap.get(getSelectedDiary)" class="mb-5" style="font-size:30px; padding:0px 30px 0px 30px;">
+        <div v-if="getChuckMap.get(getSelectedDiary)" class="mb-5" style="font-size:30px; padding:0px 30px 0px 40px; text-align:left;">
             {{ getChuckMap.get(getSelectedDiary).title }}
+            <div class="underline" style="margin-top:0px;"></div>
         </div>
-        <div v-if="getChuckMap.get(getSelectedDiary) && !changeContent" style="font-size:20px; padding:0px 30px 0px 30px;" v-html="getChuckMap.get(getSelectedDiary).content">
+        <div v-if="getChuckMap.get(getSelectedDiary) && !changeContent" style="font-size:20px; padding:0px 30px 0px 40px; text-align:left; color:#2F2F2F;" v-html="getChuckMap.get(getSelectedDiary).content">
         </div>
     </div>
 </template>
@@ -142,6 +141,11 @@ export default {
                             this.$store.dispatch('delChuckList', {index: this.getSelectedDiary, id: this.getSelectedDiary})
                             eventBus.$emit('updateList')
                             eventBus.$emit('back')
+                            this.$notify({
+                                title: 'Chuck이 삭제 되었습니다.',
+                                dangerouslyUseHTMLString: true,
+                                duration: 3000
+                            });
                         })
                     })
                 })
@@ -169,14 +173,13 @@ export default {
             })
         },
         forceFileDownload(response) {
-            const headers = response.headers;
-            // const extension = this.picture.substring(this.picture.lastIndexOf('.')+1)
-            const blob = new Blob([response.data], {type: headers['content-type']});
-            const link = document.createElement('a');
-            link.href = window.URL.createObjectURL(blob);
-            link.download = this.picture;
-            document.body.appendChild(link);
-            link.click();
+            const headers = response.headers
+            const blob = new Blob([response.data], {type: headers['content-type']})
+            const link = document.createElement('a')
+            link.href = window.URL.createObjectURL(blob)
+            link.download = this.picture
+            document.body.appendChild(link)
+            link.click()
             link.remove()
         },
         cancle() {

@@ -1,12 +1,23 @@
-<!--
-    1. 댓글 좌우 번갈아 가면서 나오기
--->
 <template>
     <div style="padding:30px 0px 0px 30px; height:680px; overflow:scroll;">
-        <div v-for="(item, index) in getComments" :key="index" class="post-it" >
+        <div><img src="../../assets/title/comment_tabtitle.svg" style="height:24px; margin:10px 0px 30px 0px;"></div>
+        <div v-for="(item, index) in getComments" :key="index" class="post-it">
             <div class="note" :class="{postodd:flagOddEven(index), posteven:!flagOddEven(index)}">
                 <strong>{{ item.writer }}</strong>
-                <img @click="deleteComment(index)" src="@/assets/eraser.svg" alt="" v-show="getId===item.writerId">
+                <v-dialog v-model="dialog" max-width="290">
+                    <template v-slot:activator="{ on, attrs }">
+                        <img src="@/assets/eraser.svg" alt="" v-show="getId==item.writerId" v-bind="attrs" v-on="on">
+                    </template>
+                    <v-card>
+                        <v-card-title class="headline"></v-card-title>
+                        <v-card-text><b>정말로 삭제하시겠습니까?</b></v-card-text>
+                        <v-card-actions>
+                        <v-spacer></v-spacer>
+                        <v-btn color="green darken-1" text @click="deleteComment(item)">확인</v-btn>
+                        <v-btn color="green darken-1" text @click="cancel()">취소</v-btn>
+                        </v-card-actions>
+                    </v-card>
+                </v-dialog>
                 <p class="detail">{{ item.comment }}</p>
             </div>
         </div>
@@ -38,6 +49,7 @@ export default {
     data() {
         return{
             input:'',
+            dialog: false,
         }
     },
     computed: {
@@ -47,7 +59,6 @@ export default {
             'getSelectedDiary',
             'getId',
         ]),
-        chuck: () => this.getChuckMap.get(this.getSelectedDiary),
     },
     methods: {
         comment() {
@@ -60,18 +71,24 @@ export default {
                 this.input = ''
             })
         },
-        deleteComment(index) {
-            api.delete(`/replies/${this.getComments[index].id}`)
+        deleteComment(item) {
+            this.dialog = false
+            api.delete(`/replies/${item.id}`)
             .then((res)=>{
-                // console.log(res)
-                store.dispatch('delComments', index)
-                }
-            )
+                store.dispatch('delComments', item)
+                this.$notify({
+                    title: '댓글이 삭제 되었습니다.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
+            })
         },
         flagOddEven(index){
             // 두번씩 true, false가 반복
             return (index/2%2)<1?true:false
-            // test
+        },
+        cancel() {
+            this.dialog = false
         }
     }
 }

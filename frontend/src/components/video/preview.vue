@@ -13,7 +13,9 @@
 					<div id="play-bar" class="play-bar"></div>
 					<div class="play-bar-border"></div>
 				</div>
-				{{ getVideoMusic }}
+				선택된 노래 : 
+				<span v-if="getVideoMusic === 'middle'">없음</span>
+				<span v-else>{{ getVideoMusic.replace('.mp3', '') }}</span>
 			</div>
         </div>
         <div class="dash pointer" @click="download">
@@ -63,7 +65,6 @@ export default {
     },
 	methods: {
 		download() {
-			
 			let el
 			el = document.getElementsByTagName('audio')
 			for(let i=0; i<el.length; i++) {
@@ -72,8 +73,7 @@ export default {
 			}
 			document.getElementById('media-video').load()
 		
-			if(this.getVideoMusic === 'middle') {
-				console.log("진입1")
+			if(this.getVideoMusic == 'middle') {
 				let link = document.createElement('a')
 				link.target = "_blank"
 				link.href = this.getVideoUrl
@@ -83,7 +83,6 @@ export default {
 				this.loading = false
 			}
 			else {
-				console.log("진입2")
 				this.loading = true
 				api.post('pictures/mkVideo', {
 					'music': this.getVideoMusic,
@@ -91,7 +90,6 @@ export default {
 					'path_list': this.getVideoSrc,
 				})
 				.then(({ data }) => {
-					console.log("진입3")
 					console.log(data)
 					let link = document.createElement('a')
 					link.target = "_blank"

@@ -43,6 +43,8 @@ export default new Vuex.Store({
         isModify: false,
         images: [],
         deletedImages: [],
+        cloudImages: [],
+        change: false,
     },
 
     getters: {
@@ -165,6 +167,12 @@ export default new Vuex.Store({
         getDeletedImages(state) {
             return state.deletedImages
         },
+        getCloudImages(state) {
+            return state.cloudImages
+        },
+        getChange(state) {
+            return state.change
+        }
     },
     mutations: {
         setSelectedGroup(state, payload) {
@@ -266,7 +274,13 @@ export default new Vuex.Store({
             state.comments.push(payload)
         },
         removeComments(state, payload) {
-            state.comments.splice(payload, 1)
+            const num = state.comments.length
+            for(let i=0; i<num; i++) {
+                if(state.comments[i].id == payload.id) {
+                    state.comments.splice(i, 1)
+                    break;
+                }
+            }
         },
         setInit(state, payload) {
             state.init = payload
@@ -293,6 +307,9 @@ export default new Vuex.Store({
         setChuckMap(state, payload) {
             state.chuckMap = new Map(state.chuckMap.set(payload.id, payload))
         },
+        setCloudImages(state, payload) {
+            state.cloudImages = payload
+        }
     },
     actions: {
         updateSelectedGroup({commit}, items) {

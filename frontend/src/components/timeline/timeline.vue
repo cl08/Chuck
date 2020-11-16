@@ -1,5 +1,5 @@
 <template>
-    <div style="padding:30px 0px 0px 30px;">
+    <div style="padding:30px 0px 30px 30px;">
         <div class="text-left ml-5">
             <img src="../../assets/title/timeline_tabtitle.svg" class="tabtitle">
             <div class="underline"></div>
@@ -29,6 +29,7 @@
                     </div>
                 </v-card>
             </v-col>
+            <v-col style="text-align:center">마지막 글입니다.</v-col>
         </v-container>
     </div>
 </template>

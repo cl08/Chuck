@@ -160,7 +160,7 @@ export default {
       height: 30px;
       outline: none;
       position: absolute;
-      left: 225px;
+      left: 200px;
       bottom: 35px;
     }
     #logout {
@@ -168,25 +168,24 @@ export default {
       height: 50px;
       outline: none;
       text-align: left;
-      color: #2d2d2d;
+      color: #d0d0d0;
     }
     h2 {
-      margin: 60px;
-      position: absolute;
-      left: 30px;
+      margin-top: 78px;
+      position: relative;
     }
     img {
-      margin-top: 100px;
-      width: 280px;
-      height: 180px;
+      margin-top: 24px;
+      width: 250px;
+      height: 160px;
     }
     .hole {
-      background-color: #858585;
+      background-color: #e0e0e0;
       border-radius: 50px;
       width: 30px;
       height: 30px;
       position: absolute;
-      left: 125px;
+      left: 115px;
       top: 10px;
     }
     .nickname:focus{
@@ -210,10 +209,10 @@ export default {
 
   &.menu-on {
     background: #fff;
-    max-width: 280px;
-    max-height: 700px;
+    max-width: 250px;
+    max-height: 600px;
     border-radius: 10px;
-    left: 1350px;
+    left: 1370px;
     bottom: 500px;
     .floating-button-menu-links {
       width: 100%;

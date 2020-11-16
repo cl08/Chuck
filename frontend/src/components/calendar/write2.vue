@@ -12,6 +12,14 @@
         <div class="solid pointer" v-else @click.prevent="modify">
             <font size=4>수정 완료</font>
         </div>
+        <v-dialog v-model="loading" hide-overlay persistent width="300">
+            <v-card color="#8D6262" dark>
+                <v-card-text>
+                    Chuck 기록중...
+                    <v-progress-linear indeterminate color="white" class="mb-0"></v-progress-linear>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
     </div>
 </template>
 
@@ -28,6 +36,7 @@ export default {
             content: '',
             date: '',
             id: '',
+            loading: false,
         }
     },
     created() {
@@ -58,6 +67,7 @@ export default {
     methods: {
         write() {
             if(this.getImages.length > 0) {
+                this.loading=true
                 api.post('diaries', {
                     title: this.title,
                     content: this.content,
@@ -93,7 +103,11 @@ export default {
                     })
                 });
             } else {
-                alert('사진을 1장이상 선택해주세요')
+                this.$notify({
+                    title: '사진을 한 장 이상 올려주세요.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
             }
         },
         done() {
@@ -112,9 +126,16 @@ export default {
                     this.$store.commit('setVisibleWrite', false)
                     this.$store.commit('setVisibleCalendar', true)
                     this.$store.commit('setVisibleChoice', true)
+                    this.$notify({
+                        title: '새로운 Chuck이 기록되었습니다.',
+                        dangerouslyUseHTMLString: true,
+                        duration: 3000
+                    })
+                    this.loading=false
                 })
             })
             eventBus.$emit('updateList')
+            
         },
         clear() {
             this.title = ''
@@ -156,7 +177,11 @@ export default {
                     })
                 })
             } else {
-                alert('사진을 1장이상 선택해주세요')
+                this.$notify({
+                    title: '사진을 한 장 이상 올려주세요.',
+                    dangerouslyUseHTMLString: true,
+                    duration: 3000
+                });
             }
         }
     }

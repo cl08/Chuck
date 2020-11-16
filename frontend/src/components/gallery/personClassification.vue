@@ -11,20 +11,24 @@
         <div class="underline" style="margin-top: -5px;"></div>
         </div>
         <div v-if="getFaceDataGallery.gallery_list" style="text-align:left; padding:20px 0px 10px 30px;">{{getFaceDataGallery.gallery_list.length}}명의 인물이 검색되었습니다.</div>
-        <div class="dash" style="width:550px; height:560px; text-align:left;">
-            <div v-if="getFaceDataGallery.gallery_list" style="padding:8px;">
+        <div v-if="getFaceDataGallery.gallery_list" class="dash" style="width:550px; height:560px; text-align:left;">
+            <div v-if="getFaceDataGallery.gallery_list.length > 0" style="padding:8px;">
                 <span class="face pointer" @click="selectAll">ALL</span>
-                <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)" :style="'background-image:url(' + face.rep_image + ')'">
-                    <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg">
+                <span class="face pointer" v-for="(face, index) in getFaceDataGallery.gallery_list" :key="index" @click="select(index)">
+                    <img :src="face.rep_image">
+                    <img :id="'galleryFace' + index" class="galleryFaceNoneDisplay" src="@/assets/check_circle.svg" style="position:relative; top:-128px;">
                 </span>
             </div>
-            <div v-else style="padding:8px; text-align:center; margin-top:100px;">
-                <img src="../../assets/gallery/noFace.jpg">
+            <div v-else style="padding:8px; text-align:center; margin-top:160px; color:#C0C0C0;">
+                <img src="../../assets/gallery/Oops.svg" style="width:200px;">
+                <p>
+                    게시된 Chuck의 인물 데이터가<br>
+                    충분하지 않아요!
+                </p>
             </div>
         </div>
     </div>
 </template>
-
 <script>
 import { mapGetters } from "vuex"
 import { mapMutations } from "vuex"
@@ -36,18 +40,18 @@ export default {
             selectCount: 0,
         };
     },
-    created() {
-        let num = 0
-        if(this.getFaceDataGallery.gallery_list) num = this.getFaceDataGallery.gallery_list.length
-        for(let i = 0; i < num; i++) {
-            this.checkArr.push(false)
-        }
-    },
     computed: {
         ...mapGetters([
             'getSelectedGroup',
             'getFaceDataGallery',
         ])
+    },
+    watch: {
+        getFaceDataGallery: function() {
+            this.checkArr = []
+            this.selectCount = 0
+            this.$forceUpdate()
+        }
     },
     methods: {
         ...mapMutations([

@@ -6,7 +6,7 @@
             <div class="floor-wrapper">
                 <div class="floor">
                     <div class="book-list">       
-                        <div v-for="(book, i) in books" :key="i" class="book-item" @click="selectBook(book)">
+                        <div v-for="(book, i) in books" :key="i" class="book-item" @click="selectBook(book, i)">
                             <img class="cover" :src="require(`../assets/books/book${(i % 10)}.png`)"/>
                             <div class="bookTitle">{{ book.name }}</div>
                             <div class="bookIntro">{{ book.intro.slice(0, 10) }}</div>
@@ -26,8 +26,8 @@
 
             <transition name="menu" tag="div">
                 <template v-if="selected">
-                    <div class="side-menu">
-                        <div  v-if="this.bookgen === false" style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
+                    <div class="side-menu" :style="bg[index]">
+                        <div  v-if="this.bookgen === false" style="position:absolute; bottom:100px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
                             <div class="group-title">{{ selectedBook.name }}</div>
                             <div class="group-intro">{{ selectedBook.intro }}</div>
@@ -35,8 +35,9 @@
                         </div>
                         <div v-else style="position:absolute; bottom:80px; width:300px; left:50%; transform:translate(-168px);">
                             <img class="logo" src="../assets/logo.svg">
-                            <input class="description" v-model="createBook.name" placeholder="그룹명을 입력해주세요." />
-                            <textarea class="description" rows=3 v-model="createBook.intro" placeholder="그룹 소개를 입력해주세요." style="resize:none;" />
+                            <input class="group-name" v-model="createBook.name" placeholder="그룹명을 입력해주세요" style="outline:none;" />
+                            <hr size="0.5" color="#E0E0E0" width="70%">
+                            <textarea class="description" rows=3 v-model="createBook.intro" placeholder="그룹 소개를 입력해주세요" style="resize:none; outline:none;" />
                             <div class="create" @click="uploadGroup">그룹 만들기</div>
                         </div>
                     </div>
@@ -65,6 +66,40 @@ export default {
                 name: '',
                 intro: '',
             },
+            index: '0',
+            bg: [
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_0.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_1.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_2.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_3.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_4.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_5.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_6.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_7.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_8.png')})`
+                },
+                {
+                    backgroundImage: `url(${require('../assets/select_group/select_group_9.png')})`
+                },
+                
+            ],
         };
     },
     mounted() {
@@ -108,23 +143,17 @@ export default {
             }
         },
         selectBook(book, index) {
+            this.index = index;
             this.bookgen = false;
             this.selected = true;
             this.selectedBook = book;
-            
-            // $(".sido-menu").css({"background":"url('../assets/select_group/select_group_3.png')"}); 	
-
-            // let el = document.getElementsByClassName('side-menu')
-            // console.log(el) 
-            // console.log(el.length)
-            // ??
         },
         closeMenu() {
             this.selected = false;
         },
         addGroup() {
-            this.selectedBook.name = '';
-            this.selectedBook.intro = '';
+            this.createBook.name = '';
+            this.createBook.intro = '';
             this.bookgen = true;
             this.selected = true;
         }
@@ -258,7 +287,6 @@ export default {
     left: 50%;
     transform: translate(-368px);
     margin: 0 auto;
-    background-image: url("../assets/select_group/select_group_0.png");
     background-size: cover;
 
     .group-title {
@@ -275,20 +303,29 @@ export default {
         height: 100px;
         width: 200px;
         line-height: 1.7;
-        font-size: 15px;
+        font-size: 16px;
         position: relative;
         margin: 0 auto;
         margin-bottom: 40px;
         text-overflow: ellipsis;
         overflow: hidden;
     }
-
-    .description {
+    .group-name {
         line-height: 1.7;
-        font-size: 15px;
+        font-size: 20px;
         position: relative;
         width: 200px;
         margin: 0 auto;
+        text-overflow: ellipsis;
+        overflow: hidden;
+    }
+    .description {
+        line-height: 1.7;
+        font-size: 16px;
+        position: relative;
+        width: 200px;
+        margin: 0 auto;
+        margin-top: 40px;
         margin-bottom: 40px;
         text-overflow: ellipsis;
         overflow: hidden;
