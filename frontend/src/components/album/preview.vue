@@ -94,6 +94,12 @@ export default {
       return font;
     },
     generatePdf() {
+      let backgroundUrl = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB3aWR0aD0iNDY0IiBoZWlnaHQ9IjMxOCIgdmlld0JveD0iMCAwIDQ2NCAzMTgiPg0KICA8ZGVmcz4NCiAgICA8c3R5bGU+DQogICAgICAuY2xzLTEgew0KICAgICAgICBmaWxsOiAjZmZmOw0KICAgICAgfQ0KDQogICAgICAuY2xzLTIgew0KICAgICAgICBmaWx0ZXI6IHVybCgj7IKs6rCB7ZiVXzI3Mik7DQogICAgICB9DQogICAgPC9zdHlsZT4NCiAgICA8ZmlsdGVyIGlkPSLsgqzqsIHtmJVfMjcyIiB4PSIwIiB5PSIwIiB3aWR0aD0iNDY0IiBoZWlnaHQ9IjMxOCIgZmlsdGVyVW5pdHM9InVzZXJTcGFjZU9uVXNlIj4NCiAgICAgIDxmZU9mZnNldCBkeT0iMyIgaW5wdXQ9IlNvdXJjZUFscGhhIi8+DQogICAgICA8ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIzIiByZXN1bHQ9ImJsdXIiLz4NCiAgICAgIDxmZUZsb29kIGZsb29kLW9wYWNpdHk9IjAuMTYxIi8+DQogICAgICA8ZmVDb21wb3NpdGUgb3BlcmF0b3I9ImluIiBpbjI9ImJsdXIiLz4NCiAgICAgIDxmZUNvbXBvc2l0ZSBpbj0iU291cmNlR3JhcGhpYyIvPg0KICAgIDwvZmlsdGVyPg0KICA8L2RlZnM+DQogIDxnIGNsYXNzPSJjbHMtMiIgdHJhbnNmb3JtPSJtYXRyaXgoMSwgMCwgMCwgMSwgMCwgMCkiPg0KICAgIDxyZWN0IGlkPSLsgqzqsIHtmJVfMjcyLTIiIGRhdGEtbmFtZT0i7IKs6rCB7ZiVIDI3MiIgY2xhc3M9ImNscy0xIiB3aWR0aD0iNDQ2IiBoZWlnaHQ9IjMwMCIgcng9IjUiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDkgNikiLz4NCiAgPC9nPg0KPC9zdmc+DQo="
+      let topleftUrl = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5Ni41NTMiIGhlaWdodD0iNTcuMzI4IiB2aWV3Qm94PSIwIDAgOTYuNTUzIDU3LjMyOCI+DQogIDxkZWZzPg0KICAgIDxzdHlsZT4NCiAgICAgIC5jbHMtMSB7DQogICAgICAgIGZpbGw6ICNlZWU3ZDU7DQogICAgICAgIG9wYWNpdHk6IDAuNjU7DQogICAgICB9DQogICAgPC9zdHlsZT4NCiAgPC9kZWZzPg0KICA8cmVjdCBpZD0i7IKs6rCB7ZiVXzI3MyIgZGF0YS1uYW1lPSLsgqzqsIHtmJUgMjczIiBjbGFzcz0iY2xzLTEiIHdpZHRoPSI5MC44MSIgaGVpZ2h0PSIzMy42IiB0cmFuc2Zvcm09InRyYW5zbGF0ZSgwIDI1LjAzMSkgcm90YXRlKC0xNikiLz4NCjwvc3ZnPg0K"
+      let toprightUrl = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI1NS45NTgiIGhlaWdodD0iOTYuNDEyIiB2aWV3Qm94PSIwIDAgNTUuOTU4IDk2LjQxMiI+DQogIDxkZWZzPg0KICAgIDxzdHlsZT4NCiAgICAgIC5jbHMtMSB7DQogICAgICAgIGZpbGw6ICNlZWU3ZDU7DQogICAgICAgIG9wYWNpdHk6IDAuNjU7DQogICAgICB9DQogICAgPC9zdHlsZT4NCiAgPC9kZWZzPg0KICA8cmVjdCBpZD0i7IKs6rCB7ZiVXzI3NiIgZGF0YS1uYW1lPSLsgqzqsIHtmJUgMjc2IiBjbGFzcz0iY2xzLTEiIHdpZHRoPSI5MC44MSIgaGVpZ2h0PSIzMy42IiB0cmFuc2Zvcm09Im1hdHJpeCgtMC4yNTksIC0wLjk2NiwgMC45NjYsIC0wLjI1OSwgMjMuNTAzLCA5Ni40MTIpIi8+DQo8L3N2Zz4NCg=="
+      let bottomleftUrl = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI5Ni44MjUiIGhlaWdodD0iNjIuNjMyIiB2aWV3Qm94PSIwIDAgOTYuODI1IDYyLjYzMiI+DQogIDxkZWZzPg0KICAgIDxzdHlsZT4NCiAgICAgIC5jbHMtMSB7DQogICAgICAgIGZpbGw6ICNlZWU3ZDU7DQogICAgICAgIG9wYWNpdHk6IDAuNjU7DQogICAgICB9DQogICAgPC9zdHlsZT4NCiAgPC9kZWZzPg0KICA8cmVjdCBpZD0i7IKs6rCB7ZiVXzI3NSIgZGF0YS1uYW1lPSLsgqzqsIHtmJUgMjc1IiBjbGFzcz0iY2xzLTEiIHdpZHRoPSI5MC44MSIgaGVpZ2h0PSIzMy42IiB0cmFuc2Zvcm09Im1hdHJpeCgtMC45NCwgLTAuMzQyLCAwLjM0MiwgLTAuOTQsIDg1LjMzMywgNjIuNjMyKSIvPg0KPC9zdmc+DQo="
+      let bottomrightUrl = "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI4Ny45NzEiIGhlaWdodD0iODcuOTcxIiB2aWV3Qm94PSIwIDAgODcuOTcxIDg3Ljk3MSI+DQogIDxkZWZzPg0KICAgIDxzdHlsZT4NCiAgICAgIC5jbHMtMSB7DQogICAgICAgIGZpbGw6ICNlZWU3ZDU7DQogICAgICAgIG9wYWNpdHk6IDAuNjU7DQogICAgICB9DQogICAgPC9zdHlsZT4NCiAgPC9kZWZzPg0KICA8cmVjdCBpZD0i7IKs6rCB7ZiVXzI3NCIgZGF0YS1uYW1lPSLsgqzqsIHtmJUgMjc0IiBjbGFzcz0iY2xzLTEiIHdpZHRoPSI5MC44MSIgaGVpZ2h0PSIzMy41OTkiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDAgNjQuMjEyKSByb3RhdGUoLTQ1KSIvPg0KPC9zdmc+DQo="
+
       let font = this.getFont();
       var doc = new jsPDF();
       doc.addFileToVFS("MaplestoryLight.ttf", font);
@@ -106,6 +112,11 @@ export default {
       doc.text(this.$store.getters.getName, 120, 260);
 
       for (let index = 0; index < this.selectedChucks.length; index++) {
+        doc.addImage(backgroundUrl, 40, 200, 130, 100);
+        doc.addImage(topleftUrl, 40, 200, 130, 100);
+        doc.addImage(toprightUrl, 40, 200, 130, 100);
+        doc.addImage(bottomleftUrl, 40, 200, 130, 100);
+        doc.addImage(bottomrightUrl, 40, 200, 130, 100);
         const element = this.selectedChucks[index];
         console.log(element)
         let img = new Image();
