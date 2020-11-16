@@ -174,7 +174,8 @@ export default {
             })
         },
         forceFileDownload(response) {
-            console.log(response)
+            console.log(response.data)
+            console.log(response.data.config.url)
             const headers = response.headers;
             const blob = new Blob([response.data], {type: headers['content-type']});
             const link = document.createElement('a');
