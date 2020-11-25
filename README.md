@@ -1,16 +1,18 @@
 ## Project. Chuck<br>
-<img src="./frontend/src/assets/logo.svg"><br>
+<img src="./frontend/src/assets/logo.svg" width="400"><br>
 척이 된 이유? -> 추억 추억 추억 추억 춱춱춱,,,척.... chuck?<br>
 holy.... got it?
 
 #### 아날로그와 디지털 그 어딘가의 공유 다이어리 서비스<br>
 
-## :point_up: <b style="">서비스/주요 기능 소개</b>
+## **:point_up: 서비스/주요 기능 소개**
+#### 주요 기능 소개 
  - https://youtu.be/rda2yyuy5RA
  
 #### 와이어프레임 프로토타입
-https://xd.adobe.com/view/45bb03c3-da09-4b9b-8ec3-c1dc157e2a3a-10e8/?fullscreen&hints=off
+ - https://xd.adobe.com/view/45bb03c3-da09-4b9b-8ec3-c1dc157e2a3a-10e8/?fullscreen&hints=off
 
+<br><br>
 
 ## **:two_hearts: 팀원 소개 및 역할**
 
@@ -34,12 +36,10 @@ SSAFY 3기 자율 프로젝트 서울 2반 쓰는척 팀<br>
 >5주차 - 개발 완료 및 버그체크 및 전수테스트, UCC영상 제작 및 발표자료 준비
 >6주차 - 산출물 제출, 프로젝트 발표 및 완료<br>
 >7주차 - 최종발표<br>
-<br>
-
 
 <br><br>
 
-#### 업데이트 플랜 혹은 추후에 업데이트 할지도 모르는 확장성과 개발 항목
+## **:thinking:업데이트 플랜**
 - 글 감정 분석으로 선택된 사진들에 대하여 어울리는 노래를 추천하는 기능
 - 사진 공유기능 또는 게시글 공유기능(사진+텍스트)
 - 아무래도 그룹, 사람들이 모이는 공간이기때문에 커뮤니티 적인 요소가 필요해도 좋겠다 싶음. 예를들어 채팅방이라던지? 
@@ -49,13 +49,9 @@ SSAFY 3기 자율 프로젝트 서울 2반 쓰는척 팀<br>
 아니면 일회성으로? 불러오게 하려면 따로 저장소가 필요할것 동영상은 저장소에서 바로 실행 할 수 있도록 플레이 리스트. pdf는 PDF뷰어로 그 페이지에서 볼 수 있도록 하는 디테일
 시간이 남으면 이런 부분을 추가하는것도 나쁘지 않을듯
 
+<br><br>
 
-<br><br><br>
--------------------------------------------------------------------------------------------------------------------
-<br><br><br>
-
-
-### :star: <b>Develop Rules</b>
+##**:star:Develop Rules**
 
 1) Back-End
 - Using Language : Java
