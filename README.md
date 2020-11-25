@@ -1,9 +1,10 @@
-## Project. Chuck<br>
+## **:open_file_folder:Project. Chuck**
 <img src="./frontend/src/assets/logo.svg" width="400"><br>
 척이 된 이유? -> 추억 추억 추억 추억 춱춱춱,,,척.... chuck?<br>
 holy.... got it?
 
-#### 아날로그와 디지털 그 어딘가의 공유 다이어리 서비스<br>
+#### 아날로그와 디지털 그 어딘가의 공유 다이어리 서비스
+<br<br>
 
 ## **:point_up: 서비스/주요 기능 소개**
 #### 주요 기능 소개 
@@ -51,7 +52,7 @@ SSAFY 3기 자율 프로젝트 서울 2반 쓰는척 팀<br>
 
 <br><br>
 
-##**:star:Develop Rules**
+## **:star:Develop Rules**
 
 1) Back-End
 - Using Language : Java
